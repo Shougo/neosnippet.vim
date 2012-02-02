@@ -43,9 +43,9 @@ Changelog		|neocomplcache-snippets-complete-changelog|
 ==============================================================================
 INTRODUCTION					*neocomplcache-snippets-complete-introduction*
 
-This source analyzes snippet files for completion.  The plugin offer a function
-similar with snipMate.vim and snippetsEmu.vim.  Because you can search a
-snippet with a function of neocomplcache, you may omit trouble to learn.
+This source analyzes snippet files for completion. The source offer a function
+similar with snipMate.vim and snippetsEmu.vim. Because you can search a snippet
+with a function of neocomplcache, you may omit trouble to learn.
 
 ==============================================================================
 INSTALL						*neocomplcache-snippets-complete-install*
@@ -205,7 +205,6 @@ neocomplcache snippet feature, define below mappings in your .vimrc.
 	imap <C-l>    <Plug>(neocomplcache_snippets_expand)
 	smap <C-l>    <Plug>(neocomplcache_snippets_expand)
 <
-
 Placeholder feature is available.
 >
 	snippet     if
@@ -262,8 +261,13 @@ UNITE SOURCES					*neocomplcache-snippets-complete-unite-sources*
 
 						*neocomplcache-snippets-complete-unite-source-snippet*
 snippet
+		The candidates are neocomplcache snippets. The kinds are "snippet".
+		Normally, used in |<Plug>(neocomplcache_start_unite_snippet)| mappings.
+		But you can execute by ":Unite snippet".
+		You can edit snippet file in "edit" action.
+		Examples:
 >
-		imap <C-s>  <Plug>(neocomplcache_start_unite_complete)
+		imap <C-s>  <Plug>(neocomplcache_start_unite_snippet)
 <
 source actions
 
@@ -277,6 +281,7 @@ CHANGELOG					*neocomplcache-snippets-complete-changelog*
 
 2012-02-02
 - Initial version.
+- Improved documentation.
 
 ==============================================================================
 vim:tw=78:ts=8:ft=help:norl:noet:fen:fdl=0:noet:
