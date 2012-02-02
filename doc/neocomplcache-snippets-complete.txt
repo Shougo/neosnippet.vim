@@ -32,11 +32,6 @@ Interface		|neocomplcache-snippets-complete-interface|
   Variables		  |neocomplcache-snippets-complete-variables|
   Key mappings		  |neocomplcache-snippets-complete-key-mappings|
 Examples		|neocomplcache-snippets-complete-examples|
-Plugins			|neocomplcache-snippets-complete-plugins|
-  User plugins		  |neocomplcache-snippets-complete-user-plugins|
-Create plugin		|neocomplcache-snippets-complete-create-plugin|
-ToDo			|neocomplcache-todo|
-Bugs			|neocomplcache-bugs|
 Snippet syntax		|neocomplcache-snippets-complete-snippet-syntax|
 Changelog		|neocomplcache-snippets-complete-changelog|
 
@@ -131,6 +126,10 @@ KEY MAPPINGS 					*neocomplcache-snippets-complete-key-mappings*
 		Jump to the next place holder. Do not expand any snippet. When
 		you do not want to expand a snippet name, use this
 		keymapping.
+
+<Plug>(neocomplcache_start_unite_snippet)	*<Plug>(neocomplcache_start_unite_snippet)*
+		Start unite snippet source.
+		Note: This mappings is available in insert mode.
 
 neocomplcache#sources#snippets_complete#expandable()
 						*neocomplcache#sources#snippets_complete#expandable()*
