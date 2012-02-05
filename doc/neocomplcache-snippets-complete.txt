@@ -278,6 +278,9 @@ snippet						*neocomplcache-snippets-complete-unite-action-snippet*
 ==============================================================================
 CHANGELOG					*neocomplcache-snippets-complete-changelog*
 
+2012-02-05
+- Fixed variable name.
+
 2012-02-02
 - Initial version.
 - Improved documentation.
