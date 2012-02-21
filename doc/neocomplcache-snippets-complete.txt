@@ -176,8 +176,11 @@ Example:
 	        ${2}
 	    endif
 <
-By the way, it is warned that the snippet name is already defined by same snippet file.
-When you want to overwrite explicitly, as follows:
+snippet {snippet_name} syntax is the snippet name.
+abbr {abbr_name} is the completion abbrevation (same to completion "abbr" key).
+prev_word '^' means this snippet is enabled only in line head.
+By the way, it is warned that the snippet name is already defined by same
+snippet file.  When you want to overwrite explicitly, as follows:
 >
 	delete snippets_name
 <
@@ -277,6 +280,9 @@ snippet						*neocomplcache-snippets-complete-unite-action-snippet*
 
 ==============================================================================
 CHANGELOG					*neocomplcache-snippets-complete-changelog*
+
+2012-02-21
+- Improved documentation.
 
 2012-02-05
 - Fixed variable name.
