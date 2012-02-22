@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: snippets_complete.vim
 " AUTHOR:  Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 05 Feb 2012.
+" Last Modified: 22 Feb 2012.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -436,8 +436,16 @@ function! s:load_snippets(snippet, snippets_file)"{{{
 endfunction"}}}
 
 function! s:get_cursor_keyword_snippet(snippets, cur_text)"{{{
-  let cur_word = matchstr(a:cur_text, neocomplcache#get_keyword_pattern_end().'\|\h\w*\W\+$')
-  if !has_key(a:snippets, cur_word)
+  let cur_word = matchstr(a:cur_text,
+        \ neocomplcache#get_keyword_pattern_end().'\|\h\w*\W\+$')
+
+  " Check prev_word.
+  let prev_word = neocomplcache#get_prev_word(cur_word)
+  let pattern = printf('(!has_key(v:val, "prev_word") || v:val.prev_word ==# %s)',
+        \ string(prev_word))
+
+  let dict = filter(copy(a:snippets), pattern)
+  if !has_key(dict, cur_word)
     let cur_word = ''
   endif
 
@@ -452,16 +460,19 @@ function! s:get_cursor_snippet(snippets, cur_text)"{{{
   return cur_word
 endfunction"}}}
 function! s:snippets_force_expand(cur_text, col)"{{{
-  let cur_word = s:get_cursor_snippet(neocomplcache#sources#snippets_complete#get_snippets(), a:cur_text)
+  let cur_word = s:get_cursor_snippet(
+        \ neocomplcache#sources#snippets_complete#get_snippets(), a:cur_text)
 
-  call neocomplcache#sources#snippets_complete#expand(a:cur_text, a:col, cur_word)
+  call neocomplcache#sources#snippets_complete#expand(
+        \ a:cur_text, a:col, cur_word)
 endfunction"}}}
 function! s:snippets_expand_or_jump(cur_text, col)"{{{
   let cur_word = s:get_cursor_keyword_snippet(
         \ neocomplcache#sources#snippets_complete#get_snippets(), a:cur_text)
   if cur_word != ''
     " Found snippet trigger.
-    call neocomplcache#sources#snippets_complete#expand(a:cur_text, a:col, cur_word)
+    call neocomplcache#sources#snippets_complete#expand(
+          \ a:cur_text, a:col, cur_word)
   else
     call s:snippets_force_jump(a:cur_text, a:col)
   endif
@@ -473,7 +484,8 @@ function! s:snippets_jump_or_expand(cur_text, col)"{{{
     " Found snippet placeholder.
     call s:snippets_force_jump(a:cur_text, a:col)
   else
-    call neocomplcache#sources#snippets_complete#expand(a:cur_text, a:col, cur_word)
+    call neocomplcache#sources#snippets_complete#expand(
+          \ a:cur_text, a:col, cur_word)
   endif
 endfunction"}}}
 function! neocomplcache#sources#snippets_complete#expand(cur_text, col, trigger_name)"{{{

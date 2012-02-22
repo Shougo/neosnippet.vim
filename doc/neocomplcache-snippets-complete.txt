@@ -281,6 +281,9 @@ snippet						*neocomplcache-snippets-complete-unite-action-snippet*
 ==============================================================================
 CHANGELOG					*neocomplcache-snippets-complete-changelog*
 
+2012-02-22
+- Fixed prev_word behavior.
+
 2012-02-21
 - Improved documentation.
 
