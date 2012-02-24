@@ -298,9 +298,9 @@ function! s:set_snippet_pattern(dict)"{{{
         \ '<Snip> ' : '[Snip] '
 
   let abbr = has_key(a:dict, 'abbr')? a:dict.abbr :
-        \substitute(a:dict.word,
-        \ '\${\d\+\%(:.\{-}\)\?\\\@<!}\|\$<\d\+\%(:.\{-}\)\?\\\@<!>\|'
-        \ '\$\d\+\|<\%(\\n\|\\t\)>\|\s\+', ' ', 'g')
+        \ substitute(a:dict.word,
+        \   '\${\d\+\%(:.\{-}\)\?\\\@<!}\|\$<\d\+\%(:.\{-}\)\?\\\@<!>\|'.
+        \   '\$\d\+\|<\%(\\n\|\\t\)>\|\s\+', ' ', 'g')
   let abbr = (g:neocomplcache_max_keyword_width >= 0 &&
         \ len(abbr) > g:neocomplcache_max_keyword_width)?
         \ printf(abbr_pattern, abbr, abbr[-8:]) : abbr
