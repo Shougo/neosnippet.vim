@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: snippets_complete.vim
 " AUTHOR:  Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 22 Feb 2012.
+" Last Modified: 24 Feb 2012.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -290,18 +290,24 @@ function! s:set_snippet_dict(snippet_pattern, snippet_dict, dup_check, snippets_
   endif
 endfunction"}}}
 function! s:set_snippet_pattern(dict)"{{{
-  let abbr_pattern = printf('%%.%ds..%%s', g:neocomplcache_max_keyword_width-10)
+  let abbr_pattern = printf('%%.%ds..%%s',
+        \ g:neocomplcache_max_keyword_width-10)
 
   let word = substitute(a:dict.word, '\%(<\\n>\)\+$', '', '')
-  let menu_pattern = a:dict.word =~ '\${\d\+\%(:.\{-}\)\?\\\@<!}' ? '<Snip> ' : '[Snip] '
+  let menu_pattern = a:dict.word =~ '\${\d\+\%(:.\{-}\)\?\\\@<!}' ?
+        \ '<Snip> ' : '[Snip] '
 
-  let abbr = has_key(a:dict, 'abbr')? a:dict.abbr : 
-        \substitute(a:dict.word, '\${\d\+\%(:.\{-}\)\?\\\@<!}\|\$<\d\+\%(:.\{-}\)\?\\\@<!>\|\$\d\+\|<\%(\\n\|\\t\)>\|\s\+', ' ', 'g')
-  let abbr = (g:neocomplcache_max_keyword_width >= 0 && len(abbr) > g:neocomplcache_max_keyword_width)?
+  let abbr = has_key(a:dict, 'abbr')? a:dict.abbr :
+        \substitute(a:dict.word,
+        \ '\${\d\+\%(:.\{-}\)\?\\\@<!}\|\$<\d\+\%(:.\{-}\)\?\\\@<!>\|'
+        \ '\$\d\+\|<\%(\\n\|\\t\)>\|\s\+', ' ', 'g')
+  let abbr = (g:neocomplcache_max_keyword_width >= 0 &&
+        \ len(abbr) > g:neocomplcache_max_keyword_width)?
         \ printf(abbr_pattern, abbr, abbr[-8:]) : abbr
 
   let dict = {
-        \ 'word' : a:dict.name, 'snip' : word, 'abbr' : a:dict.name,
+        \ 'word' : a:dict.name,
+        \ 'snip' : word, 'abbr' : a:dict.name,
         \ 'description' : word,
         \ 'menu' : menu_pattern . abbr, 'dup' : 1
         \}
