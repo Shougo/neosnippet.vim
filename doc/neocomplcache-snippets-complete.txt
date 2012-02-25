@@ -281,6 +281,9 @@ snippet						*neocomplcache-snippets-complete-unite-action-snippet*
 ==============================================================================
 CHANGELOG					*neocomplcache-snippets-complete-changelog*
 
+2012-02-25
+- Improved split().
+
 2012-02-24
 - Improved a bit.
 
