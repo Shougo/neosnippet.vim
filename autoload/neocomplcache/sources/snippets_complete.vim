@@ -234,7 +234,7 @@ endfunction"}}}
 function! neocomplcache#sources#snippets_complete#expandable()"{{{
   let ret = 0
 
-  if neocomplcache#sources#snippets_complete#expandable_trigger()
+  if neocomplcache#sources#snippets_complete#force_expandable()
     let ret += 1
   endif
 
@@ -244,7 +244,7 @@ function! neocomplcache#sources#snippets_complete#expandable()"{{{
 
   return ret
 endfunction"}}}
-function! neocomplcache#sources#snippets_complete#expandable_trigger()"{{{
+function! neocomplcache#sources#snippets_complete#force_expandable()"{{{
   let snippets = neocomplcache#sources#snippets_complete#get_snippets()
   let cur_text = neocomplcache#get_cur_text(1)
 
