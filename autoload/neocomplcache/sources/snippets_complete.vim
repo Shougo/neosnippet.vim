@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: snippets_complete.vim
 " AUTHOR:  Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 25 Feb 2012.
+" Last Modified: 03 Mar 2012.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -232,22 +232,28 @@ function! s:keyword_filter(list, cur_keyword_str)"{{{
 endfunction"}}}
 
 function! neocomplcache#sources#snippets_complete#expandable()"{{{
-  let snippets = neocomplcache#sources#snippets_complete#get_snippets()
-  let cur_text = neocomplcache#get_cur_text(1)
-
   let ret = 0
 
-  if s:get_cursor_keyword_snippet(snippets, cur_text) != ''
-    " Found snippet trigger.
+  if neocomplcache#sources#snippets_complete#expandable_trigger()
     let ret += 1
   endif
 
-  if search('\${\d\+\%(:.\{-}\)\?\\\@<!}\|\$<\d\+\%(:.\{-}\)\?\\\@<!>', 'nw') > 0
-    " Found snippet placeholder.
+  if neocomplcache#sources#snippets_complete#jumpable()
     let ret += 2
   endif
 
   return ret
+endfunction"}}}
+function! neocomplcache#sources#snippets_complete#expandable_trigger()"{{{
+  let snippets = neocomplcache#sources#snippets_complete#get_snippets()
+  let cur_text = neocomplcache#get_cur_text(1)
+
+  " Found snippet trigger.
+  return s:get_cursor_keyword_snippet(snippets, cur_text) != ''
+endfunction"}}}
+function! neocomplcache#sources#snippets_complete#jumpable()"{{{
+  " Found snippet placeholder.
+  return search('\${\d\+\%(:.\{-}\)\?\\\@<!}\|\$<\d\+\%(:.\{-}\)\?\\\@<!>', 'nw') > 0
 endfunction"}}}
 
 function! s:caching()"{{{
