@@ -294,6 +294,9 @@ snippet						*neocomplcache-snippets-complete-unite-action-snippet*
 ==============================================================================
 CHANGELOG					*neocomplcache-snippets-complete-changelog*
 
+2012-03-06
+- Improved ftplugin.
+
 2012-03-03
 - Added neocomplcache#sources#snippets_complete#force_expandable() and
   neocomplcache#sources#snippets_complete#jumpable().
