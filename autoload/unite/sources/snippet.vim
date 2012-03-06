@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: snippet.vim
 " AUTHOR:  Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 02 Feb 2012.
+" Last Modified: 07 Mar 2012.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -53,8 +53,10 @@ let s:source = {
       \ }
 
 function! s:source.hooks.on_init(args, context) "{{{
-  let a:context.source__cur_keyword_pos = s:get_keyword_pos(neocomplcache#get_cur_text(1))
-  let a:context.source__snippets = sort(values(neocomplcache#sources#snippets_complete#get_snippets()), 's:compare_words')
+  let a:context.source__cur_keyword_pos =
+        \ s:get_keyword_pos(neocomplcache#get_cur_text(1))
+  let a:context.source__snippets =
+        \ sort(values(neocomplcache#sources#snippets_complete#get_snippets()), 's:compare_words')
 endfunction"}}}
 
 function! s:source.gather_candidates(args, context) "{{{
@@ -88,7 +90,8 @@ let s:action_table.expand = {
 function! s:action_table.expand.func(candidate)"{{{
   let context = unite#get_context()
   call neocomplcache#sources#snippets_complete#expand(
-        \ neocomplcache#get_cur_text(1), context.col,
+        \ neocomplcache#get_cur_text(1) . a:candidate.action__complete_word,
+        \ context.col,
         \ a:candidate.action__complete_word)
 endfunction"}}}
 
