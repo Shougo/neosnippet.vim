@@ -297,6 +297,7 @@ CHANGELOG					*neocomplcache-snippets-complete-changelog*
 2012-03-07
 - Added snippet source.
 - Fixed snippet source behavior.
+- Improved snippet source.
 
 2012-03-06
 - Improved ftplugin.

@@ -56,7 +56,8 @@ function! s:source.hooks.on_init(args, context) "{{{
   let a:context.source__cur_keyword_pos =
         \ s:get_keyword_pos(neocomplcache#get_cur_text(1))
   let a:context.source__snippets =
-        \ sort(values(neocomplcache#sources#snippets_complete#get_snippets()), 's:compare_words')
+        \ sort(values(neocomplcache#sources#snippets_complete#get_snippets()),
+        \  's:compare_words')
 endfunction"}}}
 
 function! s:source.gather_candidates(args, context) "{{{
@@ -88,11 +89,13 @@ let s:action_table.expand = {
       \ 'description' : 'expand snippet',
       \ }
 function! s:action_table.expand.func(candidate)"{{{
+  let cur_text = neocomplcache#get_cur_text(1)
+  let [_, cur_keyword_str] =
+        \ neocomplcache#match_word(cur_text)
   let context = unite#get_context()
   call neocomplcache#sources#snippets_complete#expand(
-        \ neocomplcache#get_cur_text(1) . a:candidate.action__complete_word,
-        \ context.col,
-        \ a:candidate.action__complete_word)
+        \ cur_text . a:candidate.action__complete_word[len(cur_keyword_str)],
+        \ context.col, a:candidate.action__complete_word)
 endfunction"}}}
 
 let s:action_table.preview = {
@@ -117,13 +120,8 @@ unlet! s:action_table
 "}}}
 
 function! unite#sources#snippet#start_complete() "{{{
-  let winheight =
-        \ (&pumheight != 0) ? &pumheight : (winheight(0) - winline())
-
-  return unite#start_complete(['snippet'], {
-        \ 'winheight' : winheight,
-        \ 'auto_resize' : 1,
-        \ })
+  return unite#start_complete(['snippet'],
+        \ { 'input': neocomplcache#get_cur_text(1) })
 endfunction "}}}
 
 function! s:compare_words(i1, i2)"{{{
