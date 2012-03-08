@@ -568,6 +568,8 @@ function! s:expand_newline()"{{{
 
   let formatoptions = &l:formatoptions
   setlocal formatoptions-=r
+  let equalprg = &l:equalprg
+  setlocal equalprg=
 
   while match >= 0
     let end = getline('.')[matchend(getline('.'), '<\\n>') :]
@@ -581,12 +583,18 @@ function! s:expand_newline()"{{{
     silent execute 'normal!'
           \ (match+1 >= col('$')? 'a' : 'i')."\<CR>"
 
+    let pos = getpos('.')
+    startinsert!
+    normal! ==
+    call setpos('.', pos)
+
     " Next match.
     let match = match(getline('.'), '<\\n>')
     let s:end_snippet += 1
   endwhile
 
   let &l:formatoptions = formatoptions
+  let &l:equalprg = equalprg
 endfunction"}}}
 function! s:expand_tabline()"{{{
   let tablines = split(getline('.'), '<\\n>')

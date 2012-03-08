@@ -297,6 +297,7 @@ CHANGELOG					*neocomplcache-snippets-complete-changelog*
 
 2012-03-08
 - Use shiftwidth instead of softabstop.
+- Fixed plugin indentation problem.
 
 2012-03-07
 - Added snippet source.
