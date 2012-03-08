@@ -262,9 +262,10 @@ But must escape inner '}'. '\' is eacape sequence.
 	snippet div
 	<div ${1:id="${2:someid\}"}>${3}</div>${4}
 <
-If you indented by hard tab, neocomplcache don't use indent plugin.  This
-feature is useful when you use the language whose indent plugin is
-powerless(example: PHP).
+If you indented by hard tab in snippet file, neocomplcache will use shiftwidth
+instead of the original indent function provided by Vim. This feature is useful
+when you use the language whose indent file can not work very well(example:
+PHP).
 >
 	snippet if
 		if (${1:/* condition */}) {
