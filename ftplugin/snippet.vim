@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: snippets.vim
 " AUTHOR:  Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 06 Mar 2012.
+" Last Modified: 08 Mar 2012.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -32,10 +32,12 @@ if !exists('b:undo_ftplugin')
 endif
 
 setlocal expandtab
-setlocal shiftwidth=&tabstop
-setlocal softtabstop=&tabstop
+let &l:shiftwidth=&tabstop
+let &l:softtabstop=&tabstop
 
 let b:undo_ftplugin .= '
     \ | setlocal expandtab< shiftwidth< softtabstop< tabstop<
     \'
 
+let &cpo = s:save_cpo
+unlet s:save_cpo
