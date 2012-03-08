@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: snippets_complete.vim
 " AUTHOR:  Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 07 Mar 2012.
+" Last Modified: 08 Mar 2012.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -597,7 +597,7 @@ function! s:expand_tabline()"{{{
   for tabline in tablines[1:]
     if &expandtab
       let tabline = substitute(tabline, '<\\t>',
-            \ repeat(' ', &softtabstop ? &softtabstop : &shiftwidth), 'g')
+            \ repeat(' ', &shiftwidth), 'g')
     else
       let tabline = substitute(tabline, '<\\t>', '\t', 'g')
     endif
