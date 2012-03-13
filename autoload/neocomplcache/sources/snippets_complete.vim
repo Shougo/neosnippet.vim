@@ -89,25 +89,33 @@ function! s:source.initialize()"{{{
     " Supported conceal features.
     augroup neocomplcache
       autocmd BufNewFile,BufRead,ColorScheme *
-            \ syn match   neocomplcacheExpandSnippets
-            \ '\${\d\+\%(:.\{-}\)\?\\\@<!}\|\$<\d\+\%(:.\{-}\)\?\\\@<!>\|\$\d\+' conceal cchar=$
+            \ execute 'syn match   neocomplcacheExpandSnippets'
+            \  "'".s:get_placeholder_marker_pattern(). '\|'
+            \ .s:get_sync_placeholder_marker_pattern().'\|'
+            \ .s:get_mirror_placeholder_marker_pattern()."'"
+            \ 'conceal cchar=$'
     augroup END
   else
     augroup neocomplcache
       autocmd BufNewFile,BufRead,ColorScheme *
-            \ syn match   neocomplcacheExpandSnippets
-            \ '\${\d\+\%(:.\{-}\)\?\\\@<!}\|\$<\d\+\%(:.\{-}\)\?\\\@<!>\|\$\d\+'
+            \ execute 'syn match   neocomplcacheExpandSnippets'
+            \  "'".s:get_placeholder_marker_pattern(). '\|'
+            \ .s:get_sync_placeholder_marker_pattern().'\|'
+            \ .s:get_mirror_placeholder_marker_pattern()."'"
     augroup END
   endif
 
   hi def link NeoComplCacheExpandSnippets Special
 
   command! -nargs=? -complete=customlist,neocomplcache#filetype_complete
-        \ NeoComplCacheEditSnippets call s:edit_snippets(<q-args>, 0)
+        \ NeoComplCacheEditSnippets
+        \ call s:edit_snippets(<q-args>, 0)
   command! -nargs=? -complete=customlist,neocomplcache#filetype_complete
-        \ NeoComplCacheEditRuntimeSnippets call s:edit_snippets(<q-args>, 1)
+        \ NeoComplCacheEditRuntimeSnippets
+        \ call s:edit_snippets(<q-args>, 1)
   command! -nargs=? -complete=customlist,neocomplcache#filetype_complete
-        \ NeoComplCacheCachingSnippets call s:caching_snippets(<q-args>)
+        \ NeoComplCacheCachingSnippets
+        \ call s:caching_snippets(<q-args>)
 
   " Select mode mappings.
   if !exists('g:neocomplcache_disable_select_mode_mappings')
@@ -543,9 +551,10 @@ function! neocomplcache#sources#snippets_complete#expand(cur_text, col, trigger_
   let next_col = len(snippet_lines[-1]) + 1
   let snippet_lines[-1] = snippet_lines[-1] . next_line
 
-  call setline(line('.'), snippet_lines)
-  call cursor(0, next_col)
-
+  call setline(line('.'), snippet_lines[0])
+  if len(snippet_lines) > 1
+    call append(line('.'), snippet_lines[1:])
+  endif
   call s:indent_snippet(begin_line, end_line)
   if has('folding') && foldclosed(line('.'))
     " Open fold.
@@ -770,9 +779,18 @@ function! neocomplcache#sources#snippets_complete#get_snippets()"{{{
   return snippets
 endfunction"}}}
 
-function! s:SID_PREFIX()
+function! s:get_placeholder_marker_pattern()"{{{
+  return '\${\d\+\%(:.\{-}\)\?\\\@<!}'
+endfunction"}}}
+function! s:get_sync_placeholder_marker_pattern()"{{{
+  return '\$<\d\+\%(:.\{-}\)\?\\\@<!>'
+endfunction"}}}
+function! s:get_mirror_placeholder_marker_pattern()"{{{
+  return '\$\d\+'
+endfunction"}}}
+function! s:SID_PREFIX()"{{{
   return matchstr(expand('<sfile>'), '<SNR>\d\+_')
-endfunction
+endfunction"}}}
 
 " Plugin key-mappings.
 inoremap <silent><expr> <Plug>(neocomplcache_snippets_expand)
