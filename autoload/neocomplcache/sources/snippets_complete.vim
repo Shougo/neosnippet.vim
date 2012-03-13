@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: snippets_complete.vim
 " AUTHOR:  Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 08 Mar 2012.
+" Last Modified: 14 Mar 2012.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -299,22 +299,23 @@ function! s:set_snippet_pattern(dict)"{{{
   let abbr_pattern = printf('%%.%ds..%%s',
         \ g:neocomplcache_max_keyword_width-10)
 
-  let word = substitute(a:dict.word, '\%(<\\n>\)\+$', '', '')
-  let menu_pattern = a:dict.word =~ '\${\d\+\%(:.\{-}\)\?\\\@<!}' ?
+  let a:dict.word = substitute(a:dict.word, '\n$', '', '')
+  let menu_pattern =
+        \ (a:dict.word =~ '\${\d\+\%(:.\{-}\)\?\\\@<!}') ?
         \ '<Snip> ' : '[Snip] '
 
   let abbr = has_key(a:dict, 'abbr')? a:dict.abbr :
         \ substitute(a:dict.word,
         \   '\${\d\+\%(:.\{-}\)\?\\\@<!}\|\$<\d\+\%(:.\{-}\)\?\\\@<!>\|'.
-        \   '\$\d\+\|<\%(\\n\|\\t\)>\|\s\+', ' ', 'g')
+        \   '\$\d\+\|\s\+\|\n', ' ', 'g')
   let abbr = (g:neocomplcache_max_keyword_width >= 0 &&
         \ len(abbr) > g:neocomplcache_max_keyword_width)?
         \ printf(abbr_pattern, abbr, abbr[-8:]) : abbr
 
   let dict = {
         \ 'word' : a:dict.name,
-        \ 'snip' : word, 'abbr' : a:dict.name,
-        \ 'description' : word,
+        \ 'snip' : a:dict.word, 'abbr' : a:dict.name,
+        \ 'description' : a:dict.word,
         \ 'menu' : menu_pattern . abbr, 'dup' : 1
         \}
   if has_key(a:dict, 'prev_word')
@@ -408,7 +409,8 @@ function! s:load_snippets(snippet, snippets_file)"{{{
         call neocomplcache#print_error('Warning: ' . a:snippets_file . ':'
               \ . linenr . ': duplicated snippet name `'
               \ . snippet_pattern.name . '`')
-        call neocomplcache#print_error('Please delete this snippet name before.')
+        call neocomplcache#print_error(
+              \ 'Please delete this snippet name before.')
       endif
     elseif has_key(snippet_pattern, 'name')
       " Only in snippets.
@@ -423,17 +425,13 @@ function! s:load_snippets(snippet, snippets_file)"{{{
       elseif line =~ '^\s'
         if snippet_pattern.word == ''
           let snippet_pattern.word = matchstr(line, '^\s\+\zs.*$')
-        elseif line =~ '^\t'
-          let line = substitute(line, '^\s', '', '')
-          let snippet_pattern.word .= '<\n>' .
-                \ substitute(line, '^\t\+', repeat('<\\t>',
-                \ matchend(line, '^\t\+')), '')
         else
-          let snippet_pattern.word .= '<\n>' . matchstr(line, '^\s\+\zs.*$')
+          let snippet_pattern.word .= "\n"
+                \ . matchstr(line, '^\s\+\zs.*$')
         endif
       elseif line =~ '^$'
         " Blank line.
-        let snippet_pattern.word .= '<\n>'
+        let snippet_pattern.word .= "\n"
       endif
     endif
 
@@ -500,6 +498,7 @@ function! s:snippets_jump_or_expand(cur_text, col)"{{{
           \ a:cur_text, a:col, cur_word)
   endif
 endfunction"}}}
+
 function! neocomplcache#sources#snippets_complete#expand(cur_text, col, trigger_name)"{{{
   if a:trigger_name == ''
     let pos = getpos('.')
@@ -523,26 +522,31 @@ function! neocomplcache#sources#snippets_complete#expand(cur_text, col, trigger_
   if snip_word =~ '\\\@<!`.*\\\@<!`'
     let snip_word = s:eval_snippet(snip_word)
   endif
-  if snip_word =~ '\n'
-    let snip_word = substitute(snip_word, '\n', '<\\n>', 'g')
-  endif
 
   " Substitute escaped `.
   let snip_word = substitute(snip_word, '\\`', '`', 'g')
 
   " Insert snippets.
   let next_line = getline('.')[a:col-1 :]
-  call setline(line('.'), cur_text . snip_word . next_line)
-  let pos = getpos('.')
-  let pos[2] = len(cur_text)+len(snip_word)+1
-  call setpos('.', pos)
-  let next_col = len(cur_text)+len(snip_word)+1
+  let snippet_lines = split(snip_word, '\n', 1)
+  if empty(snippet_lines)
+    return
+  endif
 
-  if snip_word =~ '<\\t>'
-    call s:expand_tabline()
-  else
-    call s:expand_newline()
-  end
+  let begin_line = line('.')
+  let end_line = line('.') + len(snippet_lines) - 1
+  let s:begin_snippet = begin_line
+  let s:end_snippet = end_line
+  let s:snippet_holder_cnt = 1
+
+  let snippet_lines[0] = cur_text . snippet_lines[0]
+  let next_col = len(snippet_lines[-1]) + 1
+  let snippet_lines[-1] = snippet_lines[-1] . next_line
+
+  call setline(line('.'), snippet_lines)
+  call cursor(0, next_col)
+
+  call s:indent_snippet(begin_line, end_line)
   if has('folding') && foldclosed(line('.'))
     " Open fold.
     silent! normal! zO
@@ -560,64 +564,29 @@ function! neocomplcache#sources#snippets_complete#expand(cur_text, col, trigger_
   let &l:iminsert = 0
   let &l:imsearch = 0
 endfunction"}}}
-function! s:expand_newline()"{{{
-  let match = match(getline('.'), '<\\n>')
-  let s:snippet_holder_cnt = 1
-  let s:begin_snippet = line('.')
-  let s:end_snippet = line('.')
-
-  let formatoptions = &l:formatoptions
-  setlocal formatoptions-=r
+function! s:indent_snippet(begin, end)"{{{
   let equalprg = &l:equalprg
   setlocal equalprg=
 
-  while match >= 0
-    let end = getline('.')[matchend(getline('.'), '<\\n>') :]
-    " Substitute CR.
-    silent! execute 's/<\\n>//' . (&gdefault ? 'g' : '')
+  for line_nr in range(a:begin, a:end)
+    call cursor(line_nr, 0)
 
-    " Return.
-    let pos = getpos('.')
-    let pos[2] = match+1
-    call setpos('.', pos)
-    silent execute 'normal!'
-          \ (match+1 >= col('$')? 'a' : 'i')."\<CR>"
-
-    let pos = getpos('.')
-    startinsert!
-    normal! ==
-    call setpos('.', pos)
-
-    " Next match.
-    let match = match(getline('.'), '<\\n>')
-    let s:end_snippet += 1
-  endwhile
-
-  let &l:formatoptions = formatoptions
-  let &l:equalprg = equalprg
-endfunction"}}}
-function! s:expand_tabline()"{{{
-  let tablines = split(getline('.'), '<\\n>')
-
-  let indent = matchstr(tablines[0], '^\s\+')
-  let line = line('.')
-  call setline(line, tablines[0])
-  for tabline in tablines[1:]
-    if &expandtab
-      let tabline = substitute(tabline, '<\\t>',
-            \ repeat(' ', &shiftwidth), 'g')
+    if &l:expandtab && getline('.') =~ '^\t\+'
+      " Expand tab.
+      cal setline('.', substitute(getline('.'),
+            \ '^\t\+', repeat(' ', &shiftwidth *
+            \    len(matchstr(getline('.'), '^\t\+'))), ''))
     else
-      let tabline = substitute(tabline, '<\\t>', '\t', 'g')
+      let pos = getpos('.')
+      startinsert!
+      normal! ==
+      call setpos('.', pos)
     endif
-
-    call append(line, indent . tabline)
-    let line += 1
   endfor
 
-  let s:snippet_holder_cnt = 1
-  let s:begin_snippet = line('.')
-  let s:end_snippet = line('.') + len(tablines) - 1
+  let &l:equalprg = equalprg
 endfunction"}}}
+
 function! s:snippets_force_jump(cur_text, col)"{{{
   if !s:search_snippet_range(s:begin_snippet, s:end_snippet)
     if s:snippet_holder_cnt != 0
