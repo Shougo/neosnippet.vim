@@ -548,6 +548,14 @@ function! neocomplcache#sources#snippets_complete#expand(cur_text, col, trigger_
   " Substitute escaped `.
   let snip_word = substitute(snip_word, '\\`', '`', 'g')
 
+  " Substitute markers.
+  let snip_word = substitute(snip_word,
+        \ s:get_placeholder_marker_substitute_pattern(),
+        \ '<`\1`>', 'g')
+  let snip_word = substitute(snip_word,
+        \ s:get_mirror_placeholder_marker_substitute_pattern(),
+        \ '<|\1|>', 'g')
+
   " Insert snippets.
   let next_line = getline('.')[a:col-1 :]
   let snippet_lines = split(snip_word, '\n', 1)
@@ -820,25 +828,25 @@ function! neocomplcache#sources#snippets_complete#get_snippets()"{{{
 endfunction"}}}
 
 function! s:get_placeholder_marker_pattern()"{{{
-  return '\${\d\+\%(:.\{-}\)\?\\\@<!}'
+  return '<`\d\+\%(:.\{-}\)\?\\\@<!`>'
 endfunction"}}}
 function! s:get_placeholder_marker_substitute_pattern()"{{{
-  return '\${\zs\d\+\%(:.\{-}\)\?\\\@<!\ze}'
+  return '\${\(\d\+\%(:.\{-}\)\?\\\@<!\)}'
 endfunction"}}}
 function! s:get_placeholder_marker_default_pattern()"{{{
-  return '\${\d\+:\zs.\{-}\ze\\\@<!}'
+  return '<`\d\+:\zs.\{-}\ze\\\@<!`>'
 endfunction"}}}
 function! s:get_sync_placeholder_marker_pattern()"{{{
-  return '\$<\d\+\%(:.\{-}\)\?\\\@<!>'
+  return '<{\d\+\%(:.\{-}\)\?\\\@<!}>'
 endfunction"}}}
 function! s:get_sync_placeholder_marker_default_pattern()"{{{
-  return '\$<\d\+:\zs.\{-}\ze\\\@<!>'
+  return '<{\d\+:\zs.\{-}\ze\\\@<!}>'
 endfunction"}}}
 function! s:get_mirror_placeholder_marker_pattern()"{{{
-  return '\$\d\+'
+  return '<|\d\+|>'
 endfunction"}}}
 function! s:get_mirror_placeholder_marker_substitute_pattern()"{{{
-  return '\$\zs\d\+\ze'
+  return '\$\(\d\+\)'
 endfunction"}}}
 function! s:SID_PREFIX()"{{{
   return matchstr(expand('<sfile>'), '<SNR>\d\+_')

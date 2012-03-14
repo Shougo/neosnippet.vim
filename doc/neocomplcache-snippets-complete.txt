@@ -299,6 +299,7 @@ CHANGELOG					*neocomplcache-snippets-complete-changelog*
 - Refactored expand snippet behavior.
 - Fixed expand bug.
 - Refactored substitute patterns.
+- Changed marker patterns.
 
 2012-03-08
 - Use shiftwidth instead of softabstop.
