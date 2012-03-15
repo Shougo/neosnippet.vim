@@ -772,7 +772,7 @@ function! s:search_sync_placeholder(start, end, number)"{{{
           \ substitute(s:get_placeholder_marker_pattern(),
           \ '\\d\\+', '\\zs\\d\\+\\ze', ''))
     return search(substitute(
-          \ s:get_mirror_placeholder_marker_pattern()
+          \ s:get_mirror_placeholder_marker_pattern(),
           \ '\\d\\+', cnt, ''), 'nw') > 0 ? cnt : 0
   endif
 
