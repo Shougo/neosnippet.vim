@@ -686,7 +686,7 @@ function! s:get_snippet_range(begin_line, begin_patterns, end_line, end_patterns
   endif
 
   call setpos('.', pos)
-  return sort([begin, end])
+  return [begin, end]
 endfunction"}}}
 function! s:search_snippet_range(start, end, cnt)"{{{
   call s:substitute_placeholder_marker(a:start, a:end, a:cnt)
