@@ -577,7 +577,9 @@ function! neocomplcache#sources#snippets_complete#expand(cur_text, col, trigger_
   let end_patterns =  (end_line < line('$')) ?
         \ [getline(end_line + 1)] : []
   call add(s:snippets_expand_stack, {
+        \ 'begin_line' : begin_line,
         \ 'begin_patterns' : begin_patterns,
+        \ 'end_line' : end_line,
         \ 'end_patterns' : end_patterns,
         \ 'holder_cnt' : 1,
         \ })
@@ -592,6 +594,7 @@ function! neocomplcache#sources#snippets_complete#expand(cur_text, col, trigger_
     startinsert!
   endif
 
+  echomsg line('.')
   if snip_word =~ s:get_placeholder_marker_pattern()
     call s:snippets_force_jump(a:cur_text, a:col)
   endif
@@ -631,7 +634,9 @@ function! s:snippets_force_jump(cur_text, col)"{{{
   let expand_info = s:snippets_expand_stack[-1]
   " Search patterns.
   let [begin, end] = s:get_snippet_range(
+        \ expand_info.begin_line,
         \ expand_info.begin_patterns,
+        \ expand_info.end_line,
         \ expand_info.end_patterns)
   if s:search_snippet_range(begin, end, expand_info.holder_cnt)
     " Next count.
@@ -649,20 +654,24 @@ function! s:snippets_force_jump(cur_text, col)"{{{
 
   return s:search_outof_range(a:col)
 endfunction"}}}
-function! s:get_snippet_range(start_patterns, end_patterns)"{{{
-  if empty(a:start_patterns)
-    let start = line('.') - 50
+function! s:get_snippet_range(begin_line, begin_patterns, end_line, end_patterns)"{{{
+  let pos = getpos('.')
+
+  call cursor(a:begin_line, 0)
+  if empty(a:begin_patterns)
+    let begin = line('.') - 50
   else
-    let start = search(neocomplcache#util#escape_pattern(
-          \ a:start_patterns[0]), 'bnW')
-    if start < 0
-      let start = line('.') - 50
+    let begin = search(neocomplcache#util#escape_pattern(
+          \ a:begin_patterns[0]), 'bnW')
+    if begin < 0
+      let begin = line('.') - 50
     endif
   endif
-  if start <= 0
-    let start = 1
+  if begin <= 0
+    let begin = 1
   endif
 
+  call cursor(a:end_line, 0)
   if empty(a:end_patterns)
     let end = line('.') + 50
   else
@@ -676,7 +685,8 @@ function! s:get_snippet_range(start_patterns, end_patterns)"{{{
     let end = line('$')
   endif
 
-  return [start, end]
+  call setpos('.', pos)
+  return [begin, end]
 endfunction"}}}
 function! s:search_snippet_range(start, end, cnt)"{{{
   call s:substitute_placeholder_marker(a:start, a:end, a:cnt)
