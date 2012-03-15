@@ -295,6 +295,9 @@ snippet						*neocomplcache-snippets-complete-unite-action-snippet*
 ==============================================================================
 CHANGELOG					*neocomplcache-snippets-complete-changelog*
 
+2012-03-16
+- Fixed snippets indentation.
+
 2012-03-15
 - Improved search snippet markers behavior.
 - Don't conceal default codes.

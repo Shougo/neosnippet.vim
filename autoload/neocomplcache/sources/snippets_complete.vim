@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: snippets_complete.vim
 " AUTHOR:  Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 15 Mar 2012.
+" Last Modified: 16 Mar 2012.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -443,7 +443,7 @@ function! s:load_snippets(snippet, snippets_file)"{{{
           let snippet_pattern.word = matchstr(line, '^\s\+\zs.*$')
         else
           let snippet_pattern.word .= "\n"
-                \ . matchstr(line, '^\s\+\zs.*$')
+                \ . matchstr(line, '^\%(\t\| *\)\zs.*$')
         endif
       elseif line =~ '^$'
         " Blank line.
@@ -607,21 +607,27 @@ function! s:indent_snippet(begin, end)"{{{
   let equalprg = &l:equalprg
   setlocal equalprg=
 
+  let pos = getpos('.')
+
+  let base_indent = matchstr(getline(a:begin), '^\s\+')
   for line_nr in range(a:begin, a:end)
     call cursor(line_nr, 0)
 
-    if &l:expandtab && getline('.') =~ '^\t\+'
-      " Expand tab.
-      cal setline('.', substitute(getline('.'),
-            \ '^\t\+', repeat(' ', &shiftwidth *
-            \    len(matchstr(getline('.'), '^\t\+'))), ''))
+    if getline('.') =~ '^\t\+'
+      if &l:expandtab
+        " Expand tab.
+        cal setline('.', substitute(getline('.'),
+              \ '^\t\+', repeat(' ', &shiftwidth *
+              \    len(matchstr(getline('.'), '^\t\+'))), ''))
+      elseif line_nr != a:begin
+        call setline('.', base_indent . getline('.'))
+      endif
     else
-      let pos = getpos('.')
-      startinsert!
       silent normal! ==
-      call setpos('.', pos)
     endif
   endfor
+
+  call setpos('.', pos)
 
   let &l:equalprg = equalprg
 endfunction"}}}
