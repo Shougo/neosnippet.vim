@@ -594,7 +594,6 @@ function! neocomplcache#sources#snippets_complete#expand(cur_text, col, trigger_
     startinsert!
   endif
 
-  echomsg line('.')
   if snip_word =~ s:get_placeholder_marker_pattern()
     call s:snippets_force_jump(a:cur_text, a:col)
   endif
