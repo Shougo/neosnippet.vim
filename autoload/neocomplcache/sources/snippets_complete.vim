@@ -660,9 +660,9 @@ function! s:get_snippet_range(begin_line, begin_patterns, end_line, end_patterns
   if empty(a:begin_patterns)
     let begin = line('.') - 50
   else
-    let begin = search(neocomplcache#util#escape_pattern(
-          \ a:begin_patterns[0]), 'bnW')
-    if begin < 0
+    let [begin, _] = searchpos('^' . neocomplcache#util#escape_pattern(
+          \ a:begin_patterns[0]) . '$', 'bnW')
+    if begin <= 0
       let begin = line('.') - 50
     endif
   endif
@@ -674,9 +674,9 @@ function! s:get_snippet_range(begin_line, begin_patterns, end_line, end_patterns
   if empty(a:end_patterns)
     let end = line('.') + 50
   else
-    let end = search(neocomplcache#util#escape_pattern(
-          \ a:end_patterns[0]), 'nW')
-    if end < 0
+    let [end, _] = searchpos('^' . neocomplcache#util#escape_pattern(
+          \ a:end_patterns[0]) . '$', 'nW')
+    if end <= 0
       let end = line('.') + 50
     endif
   endif
