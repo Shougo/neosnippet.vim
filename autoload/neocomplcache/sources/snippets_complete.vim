@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: snippets_complete.vim
 " AUTHOR:  Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 14 Mar 2012.
+" Last Modified: 15 Mar 2012.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -27,9 +27,6 @@
 let s:save_cpo = &cpo
 set cpo&vim
 
-let s:begin_snippet = 0
-let s:end_snippet = 0
-
 if !exists('s:snippets')
   let s:snippets = {}
 endif
@@ -42,9 +39,7 @@ let s:source = {
 function! s:source.initialize()"{{{
   " Initialize.
   let s:snippets = {}
-  let s:begin_snippet = 0
-  let s:end_snippet = 0
-  let s:snippet_holder_cnt = 1
+  let s:snippets_expand_stack = []
 
   if !exists('g:neocomplcache_snippets_disable_runtime_snippets')
     let g:neocomplcache_snippets_disable_runtime_snippets = 0
@@ -565,9 +560,6 @@ function! neocomplcache#sources#snippets_complete#expand(cur_text, col, trigger_
 
   let begin_line = line('.')
   let end_line = line('.') + len(snippet_lines) - 1
-  let s:begin_snippet = begin_line
-  let s:end_snippet = end_line
-  let s:snippet_holder_cnt = 1
 
   let snippet_lines[0] = cur_text . snippet_lines[0]
   let next_col = len(snippet_lines[-1]) + 1
@@ -577,7 +569,19 @@ function! neocomplcache#sources#snippets_complete#expand(cur_text, col, trigger_
   if len(snippet_lines) > 1
     call append(line('.'), snippet_lines[1:])
   endif
+
   call s:indent_snippet(begin_line, end_line)
+
+  let begin_patterns = (begin_line > 1) ?
+        \ [getline(begin_line - 1)] : []
+  let end_patterns =  (end_line < line('$')) ?
+        \ [getline(end_line + 1)] : []
+  call add(s:snippets_expand_stack, {
+        \ 'begin_patterns' : begin_patterns,
+        \ 'end_patterns' : end_patterns,
+        \ 'holder_cnt' : 1,
+        \ })
+
   if has('folding') && foldclosed(line('.'))
     " Open fold.
     silent! normal! zO
@@ -619,46 +623,72 @@ function! s:indent_snippet(begin, end)"{{{
 endfunction"}}}
 
 function! s:snippets_force_jump(cur_text, col)"{{{
-  if !s:search_snippet_range(s:begin_snippet, s:end_snippet)
-    if s:snippet_holder_cnt != 0
-      " Search placeholder 0.
-      let s:snippet_holder_cnt = 0
-      if s:search_snippet_range(s:begin_snippet, s:end_snippet)
-        return 1
-      endif
-    endif
-
-    " Not found.
-    let s:begin_snippet = 1
-    let s:end_snippet = 0
-    let s:snippet_holder_cnt = 1
-
+  " Get patterns and count.
+  if empty(s:snippets_expand_stack)
     return s:search_outof_range(a:col)
   endif
 
-  return 0
-endfunction"}}}
-function! s:search_snippet_range(start, end)"{{{
-  call s:substitute_placeholder_marker(a:start, a:end)
+  let expand_info = s:snippets_expand_stack[-1]
+  " Search patterns.
+  let [begin, end] = s:get_snippet_range(
+        \ expand_info.begin_patterns,
+        \ expand_info.end_patterns)
+  if s:search_snippet_range(begin, end, expand_info.holder_cnt)
+    " Next count.
+    let expand_info.holder_cnt += 1
+    return 1
+  endif
 
-  let pattern = substitute(s:get_placeholder_marker_pattern(),
-        \ '\\d\\+', s:snippet_holder_cnt, '')
+  " Search placeholder 0.
+  if s:search_snippet_range(begin, end, 0)
+    return 1
+  endif
+
+  " Not found.
+  let s:snippets_expand_stack = s:snippets_expand_stack[: -2]
+
+  return s:search_outof_range(a:col)
+endfunction"}}}
+function! s:get_snippet_range(start_patterns, end_patterns)"{{{
+  if empty(a:start_patterns)
+    let start = line('.') - 50
+  else
+    let start = search(neocomplcache#util#escape_pattern(
+          \ a:start_patterns[0]), 'bnW')
+  endif
+  if start <= 0
+    let start = 1
+  endif
+
+  if empty(a:end_patterns)
+    let end = line('.') + 50
+  else
+    let end = search(neocomplcache#util#escape_pattern(
+          \ a:end_patterns[0]), 'nW')
+  endif
+  if end > line('$')
+    let end = line('$')
+  endif
+
+  return [start, end]
+endfunction"}}}
+function! s:search_snippet_range(start, end, cnt)"{{{
+  call s:substitute_placeholder_marker(a:start, a:end, a:cnt)
+
+  let pattern = substitute(
+        \ s:get_placeholder_marker_pattern(), '\\d\\+', a:cnt, '')
 
   let line = a:start
   for line in filter(range(a:start, a:end),
         \ 'getline(v:val) =~ pattern')
-    call s:expand_placeholder(a:start, a:end,
-          \ s:snippet_holder_cnt, line)
-
-    " Next count.
-    let s:snippet_holder_cnt += 1
+    call s:expand_placeholder(a:start, a:end, a:cnt, line)
     return 1
   endfor
 
   return 0
 endfunction"}}}
 function! s:search_outof_range(col)"{{{
-  call s:substitute_placeholder_marker(1, 0)
+  call s:substitute_placeholder_marker(1, 0, 0)
 
   let pattern = s:get_placeholder_marker_pattern()
   if search(pattern, 'w') > 0
@@ -745,14 +775,14 @@ function! s:search_sync_placeholder(start, end, number)"{{{
           \ '\\d\\+', a:number, '')
   for line in filter(range(a:start, a:end),
         \ 'getline(v:val) =~ pattern')
-    return s:snippet_holder_cnt
+    return 1
   endfor
 
   return 0
 endfunction"}}}
-function! s:substitute_placeholder_marker(start, end)"{{{
-  if s:snippet_holder_cnt > 1
-    let cnt = s:snippet_holder_cnt-1
+function! s:substitute_placeholder_marker(start, end, snippet_holder_cnt)"{{{
+  if a:snippet_holder_cnt > 1
+    let cnt = a:snippet_holder_cnt-1
     let marker = substitute(s:get_sync_placeholder_marker_pattern(),
         \ '\\d\\+', cnt, '')
     let line = a:start

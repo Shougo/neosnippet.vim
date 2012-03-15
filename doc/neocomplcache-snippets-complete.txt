@@ -295,6 +295,9 @@ snippet						*neocomplcache-snippets-complete-unite-action-snippet*
 ==============================================================================
 CHANGELOG					*neocomplcache-snippets-complete-changelog*
 
+2012-03-15
+- Improved search snippet markers behavior.
+
 2012-03-14
 - Refactored expand snippet behavior.
 - Fixed expand bug.
