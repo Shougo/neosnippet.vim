@@ -655,6 +655,9 @@ function! s:get_snippet_range(start_patterns, end_patterns)"{{{
   else
     let start = search(neocomplcache#util#escape_pattern(
           \ a:start_patterns[0]), 'bnW')
+    if start < 0
+      let start = line('.') - 50
+    endif
   endif
   if start <= 0
     let start = 1
@@ -665,6 +668,9 @@ function! s:get_snippet_range(start_patterns, end_patterns)"{{{
   else
     let end = search(neocomplcache#util#escape_pattern(
           \ a:end_patterns[0]), 'nW')
+    if end < 0
+      let end = line('.') + 50
+    endif
   endif
   if end > line('$')
     let end = line('$')
@@ -766,7 +772,7 @@ function! s:search_sync_placeholder(start, end, number)"{{{
           \ substitute(s:get_placeholder_marker_pattern(),
           \ '\\d\\+', '\\zs\\d\\+\\ze', ''))
     return search(substitute(
-          \ s:get_mirror_placeholder_marker_pattern(),
+          \ s:get_mirror_placeholder_marker_pattern()
           \ '\\d\\+', cnt, ''), 'nw') > 0 ? cnt : 0
   endif
 
