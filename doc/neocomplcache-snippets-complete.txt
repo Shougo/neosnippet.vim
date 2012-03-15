@@ -297,6 +297,7 @@ CHANGELOG					*neocomplcache-snippets-complete-changelog*
 
 2012-03-15
 - Improved search snippet markers behavior.
+- Don't conceal default codes.
 
 2012-03-14
 - Refactored expand snippet behavior.

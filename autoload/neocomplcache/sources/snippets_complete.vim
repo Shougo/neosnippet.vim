@@ -84,9 +84,11 @@ function! s:source.initialize()"{{{
     " Supported conceal features.
     augroup neocomplcache
       autocmd BufNewFile,BufRead,ColorScheme *
+            \ syn match   neocomplcacheExpandSnippets
+            \ '<`\d\+:\|`>\|<{\d\+:\|}>' conceal
+      autocmd BufNewFile,BufRead,ColorScheme *
             \ execute 'syn match   neocomplcacheExpandSnippets'
-            \  "'".s:get_placeholder_marker_pattern(). '\|'
-            \ .s:get_sync_placeholder_marker_pattern().'\|'
+            \  '''<`\d\+\\\@<!`>\|<{\d\+\\\@<!}>\|'
             \ .s:get_mirror_placeholder_marker_pattern()."'"
             \ 'conceal cchar=$'
     augroup END
