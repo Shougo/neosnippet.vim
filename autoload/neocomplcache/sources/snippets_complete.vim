@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: snippets_complete.vim
 " AUTHOR:  Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 16 Mar 2012.
+" Last Modified: 17 Mar 2012.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -203,8 +203,6 @@ function! s:doc_dict.search(cur_text)"{{{
   call add(ret, { 'text' : snip.word, 'highlight' : 'String' })
   call add(ret, { 'text' : ' ' })
   call add(ret, { 'text' : snip.menu, 'highlight' : 'Special' })
-  call add(ret, { 'text' : ' ' })
-  call add(ret, { 'text' : snip.snip})
 
   return ret
 endfunction"}}}
@@ -275,35 +273,35 @@ function! s:caching()"{{{
 endfunction"}}}
 
 function! s:set_snippet_dict(snippet_pattern, snippet_dict, dup_check, snippets_file)"{{{
-  if has_key(a:snippet_pattern, 'name')
-    let pattern = s:set_snippet_pattern(a:snippet_pattern)
-    let action_pattern = '^snippet\s\+' . a:snippet_pattern.name . '$'
-    let a:snippet_dict[a:snippet_pattern.name] = pattern
-    let a:dup_check[a:snippet_pattern.name] = 1
-
-    if has_key(a:snippet_pattern, 'alias')
-      for alias in a:snippet_pattern.alias
-        let alias_pattern = copy(pattern)
-        let alias_pattern.word = alias
-
-        let abbr = (g:neocomplcache_max_keyword_width >= 0 &&
-              \       len(alias) > g:neocomplcache_max_keyword_width) ?
-              \ printf(abbr_pattern, alias, alias[-8:]) : alias
-        let alias_pattern.abbr = abbr
-        let alias_pattern.action__path = a:snippets_file
-        let alias_pattern.action__pattern = action_pattern
-        let alias_pattern.real_name = a:snippet_pattern.name
-
-        let a:snippet_dict[alias] = alias_pattern
-        let a:dup_check[alias] = 1
-      endfor
-    endif
-
-    let snippet = a:snippet_dict[a:snippet_pattern.name]
-    let snippet.action__path = a:snippets_file
-    let snippet.action__pattern = action_pattern
-    let snippet.real_name = a:snippet_pattern.name
+  if !has_key(a:snippet_pattern, 'name')
+    return
   endif
+
+  let pattern = s:set_snippet_pattern(a:snippet_pattern)
+  let action_pattern = '^snippet\s\+' . a:snippet_pattern.name . '$'
+  let a:snippet_dict[a:snippet_pattern.name] = pattern
+  let a:dup_check[a:snippet_pattern.name] = 1
+
+  for alias in get(a:snippet_pattern, 'alias', [])
+    let alias_pattern = copy(pattern)
+    let alias_pattern.word = alias
+
+    let abbr = (g:neocomplcache_max_keyword_width >= 0 &&
+          \       len(alias) > g:neocomplcache_max_keyword_width) ?
+          \ printf(abbr_pattern, alias, alias[-8:]) : alias
+    let alias_pattern.abbr = abbr
+    let alias_pattern.action__path = a:snippets_file
+    let alias_pattern.action__pattern = action_pattern
+    let alias_pattern.real_name = a:snippet_pattern.name
+
+    let a:snippet_dict[alias] = alias_pattern
+    let a:dup_check[alias] = 1
+  endfor
+
+  let snippet = a:snippet_dict[a:snippet_pattern.name]
+  let snippet.action__path = a:snippets_file
+  let snippet.action__pattern = action_pattern
+  let snippet.real_name = a:snippet_pattern.name
 endfunction"}}}
 function! s:set_snippet_pattern(dict)"{{{
   let abbr_pattern = printf('%%.%ds..%%s',

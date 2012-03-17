@@ -295,6 +295,9 @@ snippet						*neocomplcache-snippets-complete-unite-action-snippet*
 ==============================================================================
 CHANGELOG					*neocomplcache-snippets-complete-changelog*
 
+2012-03-17
+- Fixed for echodoc.
+
 2012-03-16
 - Fixed snippets indentation.
 
