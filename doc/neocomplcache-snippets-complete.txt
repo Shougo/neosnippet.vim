@@ -295,6 +295,9 @@ snippet						*neocomplcache-snippets-complete-unite-action-snippet*
 ==============================================================================
 CHANGELOG					*neocomplcache-snippets-complete-changelog*
 
+2012-03-18
+- Fixed for expandtab.
+
 2012-03-17
 - Fixed for echodoc.
 

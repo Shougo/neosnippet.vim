@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: snippets_complete.vim
 " AUTHOR:  Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 17 Mar 2012.
+" Last Modified: 19 Mar 2012.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -615,7 +615,7 @@ function! s:indent_snippet(begin, end)"{{{
       if &l:expandtab
         " Expand tab.
         cal setline('.', substitute(getline('.'),
-              \ '^\t\+', repeat(' ', &shiftwidth *
+              \ '^\t\+', base_indent . repeat(' ', &shiftwidth *
               \    len(matchstr(getline('.'), '^\t\+'))), ''))
       elseif line_nr != a:begin
         call setline('.', base_indent . getline('.'))
