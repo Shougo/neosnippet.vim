@@ -295,6 +295,9 @@ snippet						*neocomplcache-snippets-complete-unite-action-snippet*
 ==============================================================================
 CHANGELOG					*neocomplcache-snippets-complete-changelog*
 
+2012-03-19
+- Fixed substitute marker.
+
 2012-03-18
 - Fixed for expandtab.
 

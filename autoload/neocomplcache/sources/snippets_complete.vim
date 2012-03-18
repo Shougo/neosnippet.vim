@@ -804,20 +804,21 @@ endfunction"}}}
 function! s:substitute_placeholder_marker(start, end, snippet_holder_cnt)"{{{
   if a:snippet_holder_cnt > 1
     let cnt = a:snippet_holder_cnt-1
-    let marker = substitute(s:get_sync_placeholder_marker_pattern(),
+    let sync_marker = substitute(s:get_sync_placeholder_marker_pattern(),
         \ '\\d\\+', cnt, '')
+    let mirror_marker = substitute(
+          \ s:get_mirror_placeholder_marker_pattern(),
+          \ '\\d\\+', cnt, '')
     let line = a:start
 
     for line in range(a:start, a:end)
-      if getline(line) =~ marker
+      if getline(line) =~ sync_marker
         let sub = escape(matchstr(getline(line),
               \ substitute(s:get_sync_placeholder_marker_default_pattern(),
               \ '\\d\\+', cnt, '')), '/\')
-        silent execute printf('%d,%ds/' . substitute(
-              \ s:get_mirror_placeholder_marker_pattern(),
-              \ '\\d\\+', cnt, '') . '/%s/'
-              \ . (&gdefault ? '' : 'g'), a:start, a:end, sub)
-        call setline(line, substitute(getline('.'), marker, sub, 'g'))
+        silent execute printf('%d,%ds/' . mirror_marker . '/%s/'
+          \ . (&gdefault ? '' : 'g'), a:start, a:end, sub)
+        call setline(line, substitute(getline(line), sync_marker, sub, ''))
       endif
     endfor
   elseif search(s:get_sync_placeholder_marker_pattern(), 'wb') > 0
@@ -826,13 +827,14 @@ function! s:substitute_placeholder_marker(start, end, snippet_holder_cnt)"{{{
     let cnt = matchstr(getline('.'),
           \ substitute(s:get_sync_placeholder_marker_pattern(),
           \ '\\d\\+', '\\zs\\d\\+\\ze', ''))
-    silent execute printf('%%s/' . substitute(
-          \ s:get_mirror_placeholder_marker_pattern(),
-          \ '\\d\\+', cnt, '') . '/%s/'
+    silent execute printf('%%s/' . mirror_marker . '/%s/'
           \ . (&gdefault ? 'g' : ''), sub)
-    let marker = substitute(s:get_sync_placeholder_marker_pattern(),
+    let sync_marker = substitute(s:get_sync_placeholder_marker_pattern(),
         \ '\\d\\+', cnt, '')
-    call setline('.', substitute(getline('.'), marker, sub, 'g'))
+    let mirror_marker = substitute(
+          \ s:get_mirror_placeholder_marker_pattern(),
+          \ '\\d\\+', cnt, '')
+    call setline('.', substitute(getline('.'), sync_marker, sub, ''))
   endif
 endfunction"}}}
 function! s:trigger(function)"{{{
