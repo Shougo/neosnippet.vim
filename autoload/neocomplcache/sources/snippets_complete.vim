@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: snippets_complete.vim
 " AUTHOR:  Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 19 Mar 2012.
+" Last Modified: 23 Mar 2012.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -796,7 +796,7 @@ function! s:search_sync_placeholder(start, end, number)"{{{
           \ '\\d\\+', a:number, '')
   for line in filter(range(a:start, a:end),
         \ 'getline(v:val) =~ pattern')
-    return 1
+    return a:number
   endfor
 
   return 0
