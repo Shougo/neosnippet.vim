@@ -295,6 +295,9 @@ snippet						*neocomplcache-snippets-complete-unite-action-snippet*
 ==============================================================================
 CHANGELOG					*neocomplcache-snippets-complete-changelog*
 
+2012-04-05
+- Fixed nested placeholder problem.
+
 2012-03-23
 - Fixed substitute pattern bug.
 

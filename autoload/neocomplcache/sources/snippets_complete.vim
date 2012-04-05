@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: snippets_complete.vim
 " AUTHOR:  Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 23 Mar 2012.
+" Last Modified: 05 Apr 2012.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -744,6 +744,14 @@ function! s:expand_placeholder(start, end, holder_cnt, line)"{{{
         \ '\\d\\+', a:holder_cnt, '')
   let default = substitute(
         \ matchstr(current_line, default_pattern), '\\\ze.', '', 'g')
+  " Substitute marker.
+  let default = substitute(default,
+        \ s:get_placeholder_marker_substitute_pattern(),
+        \ '<`\1`>', 'g')
+  let default = substitute(default,
+        \ s:get_mirror_placeholder_marker_substitute_pattern(),
+        \ '<|\1|>', 'g')
+
   let default_len = len(default)
 
   let pos = getpos('.')
