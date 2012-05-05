@@ -175,7 +175,7 @@ EXAMPLES					*neocomplcache-snippets-complete-examples*
 	endif
 <
 ==============================================================================
-SNIPPET SYNTAX					*neocomplcache-snippets-complete-snippet-completion*
+SNIPPET SYNTAX					*neocomplcache-snippets-complete-snippet-syntax*
 
 neocomplcache has built-in snippet feature. The snippet syntax resembles
 |snipMate|.
