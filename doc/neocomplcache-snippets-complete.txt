@@ -85,14 +85,14 @@ g:neocomplcache_snippets_dir			*g:neocomplcache_snippets_dir*
 		which appointed here, neocomplcache will ignore.  User
 		defined snippet files are read after having read a normal
 		snippet files.  It is overwritten redundant snippet.
-		
+
 		There is not this variable unless a user defines it by oneself.
 
 g:neocomplcache_disable_select_mode_mappings	*g:neocomplcache_disable_select_mode_mappings*
 		This variable control whether you invalidate Key-mappings of
 		Select-mode which snippets_complete performs.  You had
 		better usually validate it.
-		
+
 		Default value is 1.
 
 g:neocomplcache_snippets_disable_runtime_snippets
@@ -108,7 +108,7 @@ KEY MAPPINGS 					*neocomplcache-snippets-complete-key-mappings*
 <Plug>(neocomplcache_snippets_expand)		*<Plug>(neocomplcache_snippets_expand)*
 		Expand a cursor snippet of plural lines. When there is not
 		snippet, jump to the next placeholder.
-		
+
 		Note: cursor snippet must be match keyword patterns.
 		For example if snippet name is ".", snippets_complete don't expand it.
 		If you expand snippet ".",  Please use
@@ -164,11 +164,11 @@ EXAMPLES					*neocomplcache-snippets-complete-examples*
 	" Plugin key-mappings.
 	imap <C-k>     <Plug>(neocomplcache_snippets_expand)
 	smap <C-k>     <Plug>(neocomplcache_snippets_expand)
-	
+
 	" SuperTab like snippets behavior.
 	"imap <expr><TAB> neocomplcache#sources#snippets_complete#expandable() ?
 	" \ "\<Plug>(neocomplcache_snippets_expand)" : pumvisible() ? "\<C-n>" : "\<TAB>"
-	
+
 	" For snippet_complete marker.
 	if has('conceal')
 	  set conceallevel=2 concealcursor=i
