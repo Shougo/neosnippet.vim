@@ -295,6 +295,9 @@ snippet						*neocomplcache-snippets-complete-unite-action-snippet*
 ==============================================================================
 CHANGELOG					*neocomplcache-snippets-complete-changelog*
 
+2012-05-12
+- Improved c snip.
+
 2012-05-03
 - Released ver.2.0.
 
