@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: snippets_complete.vim
 " AUTHOR:  Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 05 Apr 2012.
+" Last Modified: 17 May 2012.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -76,8 +76,6 @@ function! s:source.initialize()"{{{
     autocmd FileType * call s:caching()
     " Recaching events
     autocmd BufWritePost *.snip,*.snippets call s:caching_snippets(expand('<afile>:t:r'))
-    " Detect syntax file.
-    autocmd BufNewFile,BufRead *.snip,*.snippets set filetype=snippet
   augroup END"}}}
 
   if has('conceal')
