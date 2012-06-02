@@ -300,6 +300,9 @@ snippet						*neocomplcache-snippets-complete-unite-action-snippet*
 ==============================================================================
 CHANGELOG					*neocomplcache-snippets-complete-changelog*
 
+2012-06-02
+- Fixed exapnd indentation.
+
 2012-05-16
 - Added ftdetect file.
 
