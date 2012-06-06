@@ -31,6 +31,7 @@ Interface		|neocomplcache-snippets-complete-interface|
   Commands		  |neocomplcache-snippets-complete-commands|
   Variables		  |neocomplcache-snippets-complete-variables|
   Key mappings		  |neocomplcache-snippets-complete-key-mappings|
+  Functions		  |neocomplcache-snippets-complete-functions|
 Examples		|neocomplcache-snippets-complete-examples|
 Snippet syntax		|neocomplcache-snippets-complete-snippet-syntax|
 Changelog		|neocomplcache-snippets-complete-changelog|
@@ -159,6 +160,15 @@ neocomplcache#sources#snippets_complete#jumpable()
 		Use this function with imap <expr>. It checks whether cursor
 		text is an existing placeholder in current buffer.
 		Useful for saving keymappings.
+
+------------------------------------------------------------------------------
+FUNCTIONS					*neocomplcache-snippets-complete-functions*
+
+neocomplcache#sources#snippets_complete#get_snippets_dir()
+						*neocomplcache#sources#snippets_complete#get_snippets_dir()*
+		Gets snippet directories. This directories contain runtime
+		snippets directories and |g:neocomplcache_snippets_dir|
+		directories.
 
 ==============================================================================
 EXAMPLES					*neocomplcache-snippets-complete-examples*
