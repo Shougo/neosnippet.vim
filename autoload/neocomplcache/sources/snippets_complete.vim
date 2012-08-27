@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: snippets_complete.vim
 " AUTHOR:  Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 02 Aug 2012.
+" Last Modified: 27 Aug 2012.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -254,6 +254,7 @@ function! neocomplcache#sources#snippets_complete#force_expandable()"{{{
 
   " Found snippet trigger.
   return s:get_cursor_keyword_snippet(snippets, cur_text) != ''
+        \ || s:get_cursor_snippet(snippets, cur_text) != ''
 endfunction"}}}
 function! neocomplcache#sources#snippets_complete#jumpable()"{{{
   " Found snippet placeholder.
