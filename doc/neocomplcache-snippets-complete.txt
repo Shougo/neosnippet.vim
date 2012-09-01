@@ -309,6 +309,9 @@ snippet						*neocomplcache-snippets-complete-unite-action-snippet*
 ==============================================================================
 CHANGELOG					*neocomplcache-snippets-complete-changelog*
 
+2012-08-30
+- Changed <Plug>(neocomplcache_snippets_expand) behavior.
+
 2012-08-27
 - Fixed neocomplcache#sources#snippets_complete#force_expandable().
 
