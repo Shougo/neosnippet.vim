@@ -309,6 +309,9 @@ snippet						*neocomplcache-snippets-complete-unite-action-snippet*
 ==============================================================================
 CHANGELOG					*neocomplcache-snippets-complete-changelog*
 
+2012-09-06
+- Added neocomplcache__convertable attribute.
+
 2012-08-27
 - Fixed neocomplcache#sources#snippets_complete#force_expandable().
 

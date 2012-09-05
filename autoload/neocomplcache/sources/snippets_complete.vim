@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: snippets_complete.vim
 " AUTHOR:  Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 27 Aug 2012.
+" Last Modified: 05 Sep 2012.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -230,6 +230,8 @@ function! s:keyword_filter(list, cur_keyword_str)"{{{
       endif
       let snippet.menu = '`Snip` ' . snippet.menu
     endif
+
+    let snippet.neocomplcache__convertable = 0
   endfor
 
   return list
