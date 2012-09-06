@@ -116,10 +116,8 @@ KEY MAPPINGS 					*neocomplcache-snippets-complete-key-mappings*
 		Expand a cursor snippet of plural lines. When there is not a
 		snippet, jump to next placeholder.
 
-		Note: cursor snippet must be match keyword patterns.
-		For example if snippet name is ".", snippets_complete don't expand it.
-		If you expand snippet ".",  Please use
-		|<Plug>(neocomplcache_snippets_force_expand)|.
+		Note: It searches cursor snippet from keyword patterns in the
+		first.
 
 <Plug>(neocomplcache_snippets_jump)		*<Plug>(neocomplcache_snippets_jump)*
 		Jump to next placeholder. If there is no placeholder, expand a
@@ -311,6 +309,9 @@ CHANGELOG					*neocomplcache-snippets-complete-changelog*
 
 2012-09-06
 - Added neocomplcache__convertable attribute.
+
+2012-08-30
+- Changed <Plug>(neocomplcache_snippets_expand) behavior.
 
 2012-08-27
 - Fixed neocomplcache#sources#snippets_complete#force_expandable().

@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: snippets_complete.vim
 " AUTHOR:  Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 05 Sep 2012.
+" Last Modified: 06 Sep 2012.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -499,6 +499,13 @@ function! s:snippets_expand_or_jump(cur_text, col)"{{{
   let cur_word = s:get_cursor_keyword_snippet(
         \ neocomplcache#sources#snippets_complete#get_snippets(),
         \ a:cur_text)
+  if cur_word == ''
+    " Check by force_expand.
+    let cur_word = s:get_cursor_snippet(
+          \ neocomplcache#sources#snippets_complete#get_snippets(),
+          \ a:cur_text)
+  endif
+
   if cur_word != ''
     " Found snippet trigger.
     call neocomplcache#sources#snippets_complete#expand(
