@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: snippets_complete.vim
 " AUTHOR:  Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 06 Sep 2012.
+" Last Modified: 23 Sep 2012.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -443,10 +443,13 @@ function! s:load_snippets(snippet, snippets_file)"{{{
       elseif line =~ '^\s'
         if snippet_pattern.word != ''
           let snippet_pattern.word .= "\n"
+        else
+          " Substitute Tab character.
+          let line = substitute(line, '^\t', '', '')
         endif
 
         let snippet_pattern.word .=
-                \ matchstr(line, '^\%(\t\| *\)\zs.*$')
+                \ matchstr(line, '^ *\zs.*$')
       elseif line =~ '^$'
         " Blank line.
         let snippet_pattern.word .= "\n"
@@ -623,13 +626,16 @@ function! s:indent_snippet(begin, end)"{{{
     call cursor(line_nr, 0)
 
     if getline('.') =~ '^\t\+'
+      " Delete head tab character.
+      let current_line = substitute(getline('.'), '^\t', '', '')
+
       if &l:expandtab
         " Expand tab.
-        cal setline('.', substitute(getline('.'),
+        cal setline('.', substitute(current_line,
               \ '^\t\+', base_indent . repeat(' ', &shiftwidth *
-              \    len(matchstr(getline('.'), '^\t\+'))), ''))
+              \    len(matchstr(current_line, '^\t\+'))), ''))
       elseif line_nr != a:begin
-        call setline('.', base_indent . getline('.'))
+        call setline('.', base_indent . current_line)
       endif
     else
       silent normal! ==
