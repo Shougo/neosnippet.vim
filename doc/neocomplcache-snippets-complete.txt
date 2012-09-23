@@ -72,15 +72,15 @@ COMMANDS 					*neocomplcache-snippets-complete-commands*
 		Re-cache will be done automatically when you save the file.
 
 :NeoComplCacheEditRuntimeSnippets [filetype]	*:NeoComplCacheEditRuntimeSnippets*
-		Edit [filetype] snippets.
-		Select current buffer's filetype when [filetype] was omitted.
+		Opens [filetype] snippets to edit.  It automatically selects
+		current buffer's filetype unless you specify [filetype].
 
-		If [filetype] snippet file doesn't exist, create it
+		If [filetype] snippet file doesn't exist, it creates one
 		automatically.
 
 		This command edits a runtime snippet file with
-		snippets_complete.
-		Re-cache will be automatically done when you save the file.
+		snippets_complete.  Re-cache will be done automatically when
+		you save the file.
 
 ------------------------------------------------------------------------------
 VARIABLES 					*neocomplcache-snippets-complete-variables*
@@ -91,7 +91,7 @@ g:neocomplcache_snippets_dir			*g:neocomplcache_snippets_dir*
 		If the directory doesn't exist, it is ignored.
 
 		User defined snippets were read after normal snippet files,
-		redundant snippets will be overwritten.
+		so redundant snippets will be overwritten.
 
 		This variable doesn't exist unless you declare it.
 
@@ -104,8 +104,8 @@ g:neocomplcache_disable_select_mode_mappings	*g:neocomplcache_disable_select_mod
 
 g:neocomplcache_snippets_disable_runtime_snippets
 						*g:neocomplcache_snippets_disable_runtime_snippets*
-		If this variable is 1, runtime snippets isn't loaded.
-		This variable is useful to avoid conflicting snippets.
+		If this variable is 1, runtime snippets won't be loaded.
+		This variable is useful to avoid snippets conflictions.
 
 		Default value is 0.
 
@@ -113,8 +113,8 @@ g:neocomplcache_snippets_disable_runtime_snippets
 KEY MAPPINGS 					*neocomplcache-snippets-complete-key-mappings*
 
 <Plug>(neocomplcache_snippets_expand)		*<Plug>(neocomplcache_snippets_expand)*
-		Expand a cursor snippet of plural lines. When there is not a
-		snippet, jump to next placeholder.
+		Expands a cursor snippet of plural lines. When there is no
+		snippet, jumps to the next placeholder.
 
 		Note: It searches cursor snippet from keyword patterns in the
 		first.
