@@ -869,8 +869,15 @@ function! s:substitute_placeholder_marker(start, end, snippet_holder_cnt)"{{{
 endfunction"}}}
 function! s:trigger(function)"{{{
   let cur_text = neocomplcache#get_cur_text(1)
+
+  let col = col('.')
+  if mode() !=# 'i'
+    " Fix column.
+    let col += 2
+  endif
+
   return printf("\<ESC>:call %s(%s,%d)\<CR>",
-        \ a:function, string(cur_text), col('.'))
+        \ a:function, string(cur_text), col)
 endfunction"}}}
 function! s:eval_snippet(snippet_text)"{{{
   let snip_word = ''
