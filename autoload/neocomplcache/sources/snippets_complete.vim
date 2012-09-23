@@ -459,6 +459,11 @@ function! s:load_snippets(snippet, snippets_file)"{{{
     let linenr += 1
   endfor
 
+  if snippet_pattern.word !~ '\\\@<!${0}'
+    " Add placeholder.
+    let snippet_pattern.word .= '${0}'
+  endif
+
   " Set previous snippet.
   call s:set_snippet_dict(snippet_pattern,
         \ a:snippet, dup_check, a:snippets_file)

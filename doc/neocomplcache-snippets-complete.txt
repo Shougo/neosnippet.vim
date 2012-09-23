@@ -309,6 +309,7 @@ CHANGELOG					*neocomplcache-snippets-complete-changelog*
 
 2012-09-23
 - Fixed substitute tab character.
+- Improved cursor position.
 
 2012-09-06
 - Added neocomplcache__convertable attribute.
