@@ -57,19 +57,19 @@ INTERFACE					*neocomplcache-snippets-complete-interface*
 COMMANDS 					*neocomplcache-snippets-complete-commands*
 
 :NeoComplCacheCachingSnippets [filetype]	*:NeoComplCacheCachingSnippets*
-		Caching [filetype] snippets.
-		Select current buffer's filetype when [filetype] was omitted.
+		Makes cache of [filetype] snippets.  It automatically selects
+		current buffer's filetype unless you specify [filetype].
 
 :NeoComplCacheEditSnippets [filetype]		*:NeoComplCacheEditSnippets*
-		Edit [filetype] snippets.
-		Select current buffer's filetype when [filetype] was omitted.
+		Opens [filetype] snippets to edit.  It automatically selects
+		current buffer's filetype unless you specify [filetype].
 
-		If [filetype] snippet file doesn't exist, create it
+		If [filetype] snippet file doesn't exist, it creates one
 		automatically.
 
 		This command edits a snippet file in
-		|g:neocomplcache_snippets_dir| with precedence.  
-		Re-cache will be automatically done when you save the file.
+		|g:neocomplcache_snippets_dir| with precedence.
+		Re-cache will be done automatically when you save the file.
 
 :NeoComplCacheEditRuntimeSnippets [filetype]	*:NeoComplCacheEditRuntimeSnippets*
 		Edit [filetype] snippets.
@@ -87,7 +87,7 @@ VARIABLES 					*neocomplcache-snippets-complete-variables*
 
 g:neocomplcache_snippets_dir			*g:neocomplcache_snippets_dir*
 		This variable appoints a path to user-defined snippet files.
-		You can set multiple values in comma-serparted form.
+		You can set multiple values in comma-separated form.
 		If the directory doesn't exist, it is ignored.
 
 		User defined snippets were read after normal snippet files,
