@@ -187,8 +187,7 @@ EXAMPLES					*neocomplcache-snippets-complete-examples*
 ==============================================================================
 SNIPPET SYNTAX					*neocomplcache-snippets-complete-snippet-syntax*
 
-neocomplcache has built-in snippet feature. The snippet syntax resembles
-|snipMate|.
+The snippet syntax is similar to |snipMate|.
 
 Example:
 >
