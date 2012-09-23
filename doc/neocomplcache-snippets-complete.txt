@@ -311,6 +311,8 @@ CHANGELOG					*neocomplcache-snippets-complete-changelog*
 - Fixed substitute tab character.
 - Improved cursor position.
 - Fixed column in select mode.
+- Added lua snip.
+- Improved javascript snip.
 
 2012-09-06
 - Added neocomplcache__convertable attribute.
