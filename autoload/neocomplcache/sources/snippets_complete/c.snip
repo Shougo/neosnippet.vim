@@ -63,7 +63,7 @@ abbr        struct {}
 
 # Typedef struct
 snippet struct_typedef
-    typedef struct ${1:name}{
+    typedef struct ${1:name} {
         ${0:/* data */}
     };
 
@@ -112,7 +112,7 @@ abbr include-guard
 
 # Tertiary conditional
 snippet conditional
-    (${1:/* condition */})? ${2:a} : ${3:b}
+    (${1:/* condition */}) ? ${2:a} : ${3:b}
 
 # Typedef
 snippet typedef
