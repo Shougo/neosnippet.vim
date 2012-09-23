@@ -1,4 +1,4 @@
-*neocomplcache-snippets-complete-snippets-complete.txt*
+*neocomplcache-snippets-complete.txt*
 				neocomplcache complete snippets source
 
 Version: 2.0
@@ -23,7 +23,7 @@ License: MIT license  {{{
     SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 }}}
 
-CONTENTS					*neocomplcache-snippets-complete-contents*
+CONTENTS			*neocomplcache-snippets-complete-contents*
 
 Introduction		|neocomplcache-snippets-complete-introduction|
 Install			|neocomplcache-snippets-complete-install|
