@@ -6,7 +6,7 @@ abbr        if end
 
 snippet     def
 abbr        def end
-    def ${1:func_name}
+    def ${1:method_name}
         ${2}
     end
 
@@ -23,16 +23,22 @@ abbr        do |var| end
     end
 
 snippet     block
-abbr        { |var| }
+abbr        { }
     {
         ${1}
     }
 
 snippet     blockvar
-abbr        { |var| }
-    { |${1:var}|
+abbr        {|var| }
+    {|${1:var}|
         ${2}
     }
+
+snippet     fileopen
+abbr        File.open(filename) do end
+    File.open(${1:filename}, '${2:w}') do |${3:io}|
+        ${0}
+    end
 
 snippet     edn
 abbr        => end?

@@ -312,6 +312,7 @@ CHANGELOG					*neocomplcache-snippets-complete-changelog*
 - Fixed column in select mode.
 - Added lua snip.
 - Improved javascript snip.
+- Improved ruby snip.
 
 2012-09-06
 - Added neocomplcache__convertable attribute.
