@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: snippets_complete.vim
 " AUTHOR:  Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 23 Sep 2012.
+" Last Modified: 27 Sep 2012.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -309,8 +309,8 @@ function! s:set_snippet_pattern(dict)"{{{
         \ g:neocomplcache_max_keyword_width-10)
 
   let a:dict.word = substitute(a:dict.word, '\n$', '', '')
-  let menu_pattern =
-        \ (a:dict.word =~ '\${\d\+\%(:.\{-}\)\?\\\@<!}') ?
+  let menu_pattern = (a:dict.word =~
+        \ s:get_placeholder_marker_substitute_pattern()) ?
         \ '<Snip> ' : '[Snip] '
 
   let abbr = get(a:dict, 'abbr', substitute(a:dict.word,
@@ -459,7 +459,8 @@ function! s:load_snippets(snippet, snippets_file)"{{{
     let linenr += 1
   endfor
 
-  if snippet_pattern.word !~ '\\\@<!${0}'
+  if snippet_pattern.word !~
+        \ s:get_placeholder_marker_substitute_pattern()
     " Add placeholder.
     let snippet_pattern.word .= '${0}'
   endif

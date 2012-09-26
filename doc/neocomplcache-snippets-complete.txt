@@ -304,7 +304,10 @@ snippet						*neocomplcache-snippets-complete-unite-action-snippet*
 	preview		View snippet definition
 
 ==============================================================================
-CHANGELOG					*neocomplcache-snippets-complete-changelog*
+CHANGELOG			*neocomplcache-snippets-complete-changelog*
+
+2012-09-27
+- Improved add placeholder behavior.
 
 2012-09-23
 - Fixed substitute tab character.
