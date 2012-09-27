@@ -137,13 +137,13 @@ KEY MAPPINGS 					*neocomplcache-snippets-complete-key-mappings*
 neocomplcache#sources#snippets_complete#expandable()
 						*neocomplcache#sources#snippets_complete#expandable()*
 		Use this function with imap <expr>. It checks whether cursor
-		text is snippets trigger or existing placeholder in current
-		buffer. Useful for saving keymappings.
-		Return value is
-		0 : not found
-		1 : cursor text is snippets trigger
-		2 : existing placeholder in current buffer
-		3 : both found.
+		text is a snippet trigger or a placeholder exists in the
+		current buffer. It's useful for saving keymappings.
+		Return value is not just a boolean but either
+		0: not found
+		1: cursor text is a snippet trigger
+		2: a placeholder exists in the current buffer
+		3: both found
 >
 		imap <expr><C-l> neocomplcache#sources#snippets_complete#expandable() ?
 		\ "\<Plug>(neocomplcache_snippets_expand)" : "\<C-n>"
@@ -151,7 +151,7 @@ neocomplcache#sources#snippets_complete#expandable()
 neocomplcache#sources#snippets_complete#force_expandable()
 						*neocomplcache#sources#snippets_complete#force_expandable()*
 		Use this function with imap <expr>. It checks whether cursor
-		text is snippets trigger. Useful for saving keymappings.
+		text is snippet trigger. Useful for saving keymappings.
 
 neocomplcache#sources#snippets_complete#jumpable()
 						*neocomplcache#sources#snippets_complete#jumpable()*
@@ -308,6 +308,7 @@ CHANGELOG			*neocomplcache-snippets-complete-changelog*
 
 2012-09-27
 - Improved add placeholder behavior.
+- Fixed wrong indentation when 'expandtab'.
 
 2012-09-23
 - Fixed substitute tab character.
