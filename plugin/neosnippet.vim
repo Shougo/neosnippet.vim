@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: neosnippet.vim
 " AUTHOR:  Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 27 Sep 2012.
+" Last Modified: 28 Sep 2012.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -37,43 +37,55 @@ set cpo&vim
 " Obsolute options check."{{{
 "}}}
 " Global options definition."{{{
+if !exists('g:neocomplcache_snippets_disable_runtime_snippets')
+  let g:neocomplcache_snippets_disable_runtime_snippets = 0
+endif
 "}}}
 
 " Plugin key-mappings."{{{
-imap <silent> <Plug>(neosnippet_expand_or_jump)
-      \ <Plug>(neosnippet_expand_or_jump_impl)
-smap <silent> <Plug>(neosnippet_expand_or_jump)
-      \ <Plug>(neosnippet_expand_or_jump_impl)
-imap <silent> <Plug>(neosnippet_jump_or_expand)
-      \ <Plug>(neosnippet_jump_or_expand_impl)
-smap <silent> <Plug>(neosnippet_jump_or_expand)
-      \ <Plug>(neosnippet_jump_or_expand_impl)
-imap <silent> <Plug>(neosnippet_expand)
-      \ <Plug>(neosnippet_expand_impl)
-smap <silent> <Plug>(neosnippet_expand)
-      \ <Plug>(neosnippet_expand_impl)
-imap <silent> <Plug>(neosnippet_jump)
-      \ <Plug>(neosnippet_jump_impl)
-smap <silent> <Plug>(neosnippet_jump)
-      \ <Plug>(neosnippet_jump_impl)
+inoremap <silent><expr> <Plug>(neosnippet_expand_or_jump)
+      \ neosnippet#expand_or_jump_impl()
+snoremap <silent><expr> <Plug>(neosnippet_expand_or_jump)
+      \ neosnippet#expand_or_jump_impl()
+inoremap <silent><expr> <Plug>(neosnippet_jump_or_expand)
+      \ neosnippet#jump_or_expand_impl()
+snoremap <silent><expr> <Plug>(neosnippet_jump_or_expand)
+      \ neosnippet#jump_or_expand_impl()
+inoremap <silent><expr> <Plug>(neosnippet_expand)
+      \ neosnippet#expand_impl()
+snoremap <silent><expr> <Plug>(neosnippet_expand)
+      \ neosnippet#expand_impl()
+inoremap <silent><expr> <Plug>(neosnippet_jump)
+      \ neosnippet#jump_impl()
+snoremap <silent><expr> <Plug>(neosnippet_jump)
+      \ neosnippet#jump_impl()
 
 imap <silent> <Plug>(neocomplcache_snippets_expand)
-      \ <Plug>(neosnippet_expand_or_jump_impl)
+      \ <Plug>(neosnippet_expand_or_jump)
 smap <silent> <Plug>(neocomplcache_snippets_expand)
-      \ <Plug>(neosnippet_expand_or_jump_impl)
+      \ <Plug>(neosnippet_expand_or_jump)
 imap <silent> <Plug>(neocomplcache_snippets_jump)
-      \ <Plug>(neosnippet_jump_or_expand_impl)
+      \ <Plug>(neosnippet_jump_or_expand)
 smap <silent> <Plug>(neocomplcache_snippets_jump)
-      \ <Plug>(neosnippet_jump_or_expand_impl)
+      \ <Plug>(neosnippet_jump_or_expand)
 imap <silent> <Plug>(neocomplcache_snippets_force_expand)
-      \ <Plug>(neosnippet_expand_impl)
+      \ <Plug>(neosnippet_expand)
 smap <silent> <Plug>(neocomplcache_snippets_force_expand)
-      \ <Plug>(neosnippet_expand_impl)
+      \ <Plug>(neosnippet_expand)
 imap <silent> <Plug>(neocomplcache_snippets_force_jump)
-      \ <Plug>(neosnippet_jump_impl)
+      \ <Plug>(neosnippet_jump)
 smap <silent> <Plug>(neocomplcache_snippets_force_jump)
-      \ <Plug>(neosnippet_jump_impl)
+      \ <Plug>(neosnippet_jump)
 "}}}
+
+augroup neosnippet"{{{
+  autocmd!
+  " Set caching event.
+  autocmd FileType * call neosnippet#caching()
+  " Recaching events
+  autocmd BufWritePost *.snip,*.snippets
+        \ call neosnippet#caching_snippets(expand('<afile>:t:r'))
+augroup END"}}}
 
 let g:loaded_neosnippet = 1
 
