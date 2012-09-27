@@ -635,7 +635,7 @@ function! s:indent_snippet(begin, end)"{{{
       " Delete head tab character.
       let current_line = substitute(getline('.'), '^\t', '', '')
 
-      if &l:expandtab
+      if &l:expandtab && current_line =~ '^\t\+'
         " Expand tab.
         cal setline('.', substitute(current_line,
               \ '^\t\+', base_indent . repeat(' ', &shiftwidth *
