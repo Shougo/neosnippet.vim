@@ -868,18 +868,6 @@ function! s:substitute_placeholder_marker(start, end, snippet_holder_cnt)"{{{
     call setline('.', substitute(getline('.'), sync_marker, sub, ''))
   endif
 endfunction"}}}
-function! s:trigger(function)"{{{
-  let cur_text = neocomplcache#get_cur_text(1)
-
-  let col = col('.')
-  if mode() !=# 'i'
-    " Fix column.
-    let col += 2
-  endif
-
-  return printf("\<ESC>:call %s(%s,%d)\<CR>",
-        \ a:function, string(cur_text), col)
-endfunction"}}}
 function! s:eval_snippet(snippet_text)"{{{
   let snip_word = ''
   let prev_match = 0
@@ -938,26 +926,40 @@ endfunction"}}}
 function! s:get_mirror_placeholder_marker_substitute_pattern()"{{{
   return '\$\(\d\+\)'
 endfunction"}}}
+
 function! s:SID_PREFIX()"{{{
   return matchstr(expand('<sfile>'), '<SNR>\d\+_')
 endfunction"}}}
 
+function! s:trigger(function)"{{{
+  let cur_text = neocomplcache#get_cur_text(1)
+
+  let col = col('.')
+  if mode() !=# 'i'
+    " Fix column.
+    let col += 2
+  endif
+
+  return printf("\<ESC>:call %s(%s,%d)\<CR>",
+        \ a:function, string(cur_text), col)
+endfunction"}}}
+
 " Plugin key-mappings.
-inoremap <silent><expr> <Plug>(neocomplcache_snippets_expand)
+inoremap <silent><expr> <Plug>(neosnippet_expand_or_jump_impl)
       \ <SID>trigger(<SID>SID_PREFIX().'snippets_expand_or_jump')
-snoremap <silent><expr> <Plug>(neocomplcache_snippets_expand)
+snoremap <silent><expr> <Plug>(neosnippet_expand_or_jump_impl)
       \ <SID>trigger(<SID>SID_PREFIX().'snippets_expand_or_jump')
-inoremap <silent><expr> <Plug>(neocomplcache_snippets_jump)
+inoremap <silent><expr> <Plug>(neosnippet_jump_or_expand_impl)
       \ <SID>trigger(<SID>SID_PREFIX().'snippets_jump_or_expand')
-snoremap <silent><expr> <Plug>(neocomplcache_snippets_jump)
+snoremap <silent><expr> <Plug>(neosnippet_jump_or_expand_impl)
       \ <SID>trigger(<SID>SID_PREFIX().'snippets_jump_or_expand')
-inoremap <silent><expr> <Plug>(neocomplcache_snippets_force_expand)
+inoremap <silent><expr> <Plug>(neosnippet_expand_impl)
       \ <SID>trigger(<SID>SID_PREFIX().'snippets_force_expand')
-snoremap <silent><expr> <Plug>(neocomplcache_snippets_force_expand)
+snoremap <silent><expr> <Plug>(neosnippet_expand_impl)
       \ <SID>trigger(<SID>SID_PREFIX().'snippets_force_expand')
-inoremap <silent><expr> <Plug>(neocomplcache_snippets_force_jump)
+inoremap <silent><expr> <Plug>(neosnippet_jump_impl)
       \ <SID>trigger(<SID>SID_PREFIX().'snippets_force_jump')
-snoremap <silent><expr> <Plug>(neocomplcache_snippets_force_jump)
+snoremap <silent><expr> <Plug>(neosnippet_jump_impl)
       \ <SID>trigger(<SID>SID_PREFIX().'snippets_force_jump')
 
 let &cpo = s:save_cpo

@@ -320,6 +320,7 @@ CHANGELOG			*neosnippet-changelog*
 2012-09-27
 - Ver.3 development is started.
 - Renamed documentation.
+- Renamed keymappings.
 
 ------------------------------------------------------------------------------
 ChangeLog 2.0:
