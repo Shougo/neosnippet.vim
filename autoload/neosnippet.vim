@@ -177,7 +177,7 @@ endfunction"}}}
 
 function! neosnippet#caching()"{{{
   for filetype in neocomplcache#get_source_filetypes(
-        \ neocomplcache#get_context_filetype(1))
+        \ neosnippet#get_filetype())
     if !has_key(s:snippets, filetype)
       call neosnippet#caching_snippets(filetype)
     endif
@@ -235,10 +235,9 @@ function! s:set_snippet_pattern(dict)"{{{
 endfunction"}}}
 
 function! s:edit_snippets(filetype, isruntime)"{{{
-  if a:filetype == ''
-    let filetype = neocomplcache#get_context_filetype(1)
-  else
-    let filetype = a:filetype
+  let filetype = a:filetype
+  if filetype == ''
+    let filetype = neosnippet#get_filetype()
   endif
 
   " Edit snippet file.
@@ -373,7 +372,7 @@ endfunction"}}}
 
 function! s:get_prev_word(cur_keyword_str)"{{{
   let keyword_pattern = '\S\+'
-  let line_part = neocomplcache#get_cur_text()[: -1-len(a:cur_keyword_str)]
+  let line_part = neosnippet#util#get_cur_text()[: -1-len(a:cur_keyword_str)]
   let prev_word_end = matchend(line_part, keyword_pattern)
   if prev_word_end > 0
     let word_end = matchend(line_part, keyword_pattern, prev_word_end)
@@ -799,7 +798,7 @@ function! neosnippet#get_snippets()"{{{
   endif
 
   " Get buffer filetype.
-  let filetype = neocomplcache#get_context_filetype(1)
+  let filetype = neosnippet#get_filetype()
 
   let snippets = {}
   for source in neocomplcache#get_sources_list(s:snippets, filetype)
@@ -811,6 +810,10 @@ function! neosnippet#get_snippets()"{{{
 endfunction"}}}
 function! neosnippet#get_snippets_dir()"{{{
   return s:snippets_dir
+endfunction"}}}
+function! neosnippet#get_filetype()"{{{
+  return exists('*neocomplcache#get_context_filetype') ?
+        \ neocomplcache#get_context_filetype(1) : &filetype
 endfunction"}}}
 
 function! s:get_placeholder_marker_pattern()"{{{

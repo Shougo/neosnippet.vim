@@ -325,6 +325,7 @@ CHANGELOG			*neosnippet-changelog*
 - Deleted neocomplcache#util functions.
 - Refactored variables.
 - Deleted s:get_cursor_keyword_snippet().
+- Improved for filetype.
 
 2012-09-27
 - Ver.3 development is started.
