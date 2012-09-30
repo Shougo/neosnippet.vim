@@ -401,6 +401,7 @@ CHANGELOG			*neosnippet-changelog*
 - Improved documentation.
 - Changed neocomplcache source behavior.
 - Renamed commands.
+- Fixed snippet source errors.
 
 2012-09-27
 - Ver.3 development is started.
