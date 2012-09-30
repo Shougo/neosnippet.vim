@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: snippet.vim
 " AUTHOR:  Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 07 Mar 2012.
+" Last Modified: 30 Sep 2012.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -45,7 +45,7 @@ function! unite#sources#snippet#define() "{{{
   return s:source
 endfunction "}}}
 
-" neocomplcache snippet source.
+" neosnippet source.
 let s:source = {
       \ 'name': 'snippet',
       \ 'hooks' : {},
@@ -54,10 +54,9 @@ let s:source = {
 
 function! s:source.hooks.on_init(args, context) "{{{
   let a:context.source__cur_keyword_pos =
-        \ s:get_keyword_pos(neocomplcache#get_cur_text(1))
+        \ s:get_keyword_pos(neosnippet#util#get_cur_text())
   let a:context.source__snippets =
-        \ sort(values(neocomplcache#sources#snippets_complete#get_snippets()),
-        \  's:compare_words')
+        \ sort(values(neosnippet#get_snippets()), 's:compare_words')
 endfunction"}}}
 
 function! s:source.gather_candidates(args, context) "{{{
@@ -89,11 +88,10 @@ let s:action_table.expand = {
       \ 'description' : 'expand snippet',
       \ }
 function! s:action_table.expand.func(candidate)"{{{
-  let cur_text = neocomplcache#get_cur_text(1)
-  let [_, cur_keyword_str] =
-        \ neocomplcache#match_word(cur_text)
+  let cur_text = neosnippet#util#get_cur_text()
+  let cur_keyword_str = matchstr(cur_text, '\S\+$')
   let context = unite#get_context()
-  call neocomplcache#sources#snippets_complete#expand(
+  call neosnippet#expand(
         \ cur_text . a:candidate.action__complete_word[len(cur_keyword_str)],
         \ context.col, a:candidate.action__complete_word)
 endfunction"}}}
@@ -121,14 +119,14 @@ unlet! s:action_table
 
 function! unite#sources#snippet#start_complete() "{{{
   return unite#start_complete(['snippet'],
-        \ { 'input': neocomplcache#get_cur_text(1) })
+        \ { 'input': neosnippet#util#get_cur_text() })
 endfunction "}}}
 
 function! s:compare_words(i1, i2)"{{{
   return a:i1.menu - a:i2.menu
 endfunction"}}}
 function! s:get_keyword_pos(cur_text)"{{{
-  let [cur_keyword_pos, cur_keyword_str] = neocomplcache#match_word(a:cur_text)
+  let cur_keyword_pos = match(a:cur_text, '\S\+$')
   if cur_keyword_pos < 0
     " Empty string.
     return len(a:cur_text)
