@@ -55,7 +55,7 @@ function! s:source.get_keyword_list(cur_keyword_str)"{{{
 
   for filetype in neocomplcache#get_source_filetypes(
         \ neosnippet#get_filetype())
-    if !has_key(s:snippets, filetype)
+    if !has_key(all_snippets, filetype)
       " Caching snippets.
       call neosnippet#caching_snippets(filetype)
     endif

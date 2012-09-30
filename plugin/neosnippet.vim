@@ -71,6 +71,11 @@ imap <silent> <Plug>(neocomplcache_snippets_force_jump)
       \ <Plug>(neosnippet_jump)
 smap <silent> <Plug>(neocomplcache_snippets_force_jump)
       \ <Plug>(neosnippet_jump)
+
+imap <silent> <Plug>(neocomplcache_start_unite_snippet)
+      \ <Plug>(neosnippet_start_unite_snippet)
+inoremap <expr><silent> <Plug>(neosnippet_start_unite_snippet)
+      \ unite#sources#snippet#start_complete()
 "}}}
 
 augroup neosnippet"{{{
