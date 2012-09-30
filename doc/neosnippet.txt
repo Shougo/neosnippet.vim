@@ -46,9 +46,11 @@ neocomplcache interface, you might have less trouble learning it.
 ==============================================================================
 INSTALL						*neosnippet-install*
 
-1: Install neocomplcache (https://github.com/Shougo/neocomplcache).
-2: Extract the file and put files in your Vim directory
+1: Extract the file and put files in your Vim directory
    (usually ~/.vim/ or Program Files/Vim/vimfiles on Windows).
+
+Note: If you want to complete snippets, you must install neocomplcache
+(https://github.com/Shougo/neocomplcache).
 
 ==============================================================================
 INTERFACE					*neosnippet-interface*
