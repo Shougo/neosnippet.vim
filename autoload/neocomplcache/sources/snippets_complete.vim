@@ -29,13 +29,15 @@ set cpo&vim
 
 let s:source = {
       \ 'name' : 'snippets_complete',
-      \ 'kind' : 'plugin',
+      \ 'kind' : 'complfunc',
       \}
 
 function! s:source.initialize()"{{{
   " Initialize.
   call neocomplcache#set_dictionary_helper(
         \ g:neocomplcache_source_rank, 'snippets_complete', 8)
+  call neocomplcache#set_completion_length('snippets_complete',
+        \ g:neocomplcache_auto_completion_start_length)
 endfunction"}}}
 
 function! s:source.finalize()"{{{
@@ -50,7 +52,11 @@ function! s:source.finalize()"{{{
   endif
 endfunction"}}}
 
-function! s:source.get_keyword_list(cur_keyword_str)"{{{
+function! s:source.get_keyword_pos(cur_text)"{{{
+  return match(a:cur_text, '\S\+$')
+endfunction"}}}
+
+function! s:source.get_complete_words(cur_keyword_pos, cur_keyword_str)"{{{
   let all_snippets = neosnippet#get_snippets()
 
   for filetype in neocomplcache#get_source_filetypes(

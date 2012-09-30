@@ -368,6 +368,7 @@ CHANGELOG			*neosnippet-changelog*
 - Improved for filetype.
 - Improved filetype complete.
 - Improved documentation.
+- Changed neocomplcache source behavior.
 
 2012-09-27
 - Ver.3 development is started.
