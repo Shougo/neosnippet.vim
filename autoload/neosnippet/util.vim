@@ -80,6 +80,9 @@ function! neosnippet#util#get_cur_text()"{{{
         \      matchstr(getline('.'),
         \         '^.*\%' . col('.') . 'c' . (mode() ==# 'i' ? '' : '.'))
 endfunction"}}}
+function! neosnippet#util#print_error(string)"{{{
+  echohl Error | echomsg a:string | echohl None
+endfunction"}}}
 
 let &cpo = s:save_cpo
 unlet s:save_cpo

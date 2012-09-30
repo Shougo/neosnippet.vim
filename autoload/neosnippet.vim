@@ -52,7 +52,7 @@ function! s:initialize()"{{{
           \ + s:runtime_dir
   endif
 
-  for dir in split(g:neocomplcache_snippets_dir, '\s*,\s*')
+  for dir in split(g:neosnippet#snippets_directory, '\s*,\s*')
     let dir = neosnippet#util#expand(dir)
     if !isdirectory(dir)
       call mkdir(dir, 'p')
@@ -134,7 +134,7 @@ function! s:doc_dict.search(cur_text)"{{{
 
   let snippets = neosnippet#get_snippets()
 
-  let cur_word = s:get_cursor_keyword_snippet(snippets, a:cur_text)
+  let cur_word = s:get_cursor_snippet(snippets, a:cur_text)
   if cur_word == ''
     return []
   endif
@@ -167,8 +167,7 @@ function! neosnippet#force_expandable()"{{{
   let cur_text = neosnippet#util#get_cur_text(1)
 
   " Found snippet trigger.
-  return s:get_cursor_keyword_snippet(snippets, cur_text) != ''
-        \ || s:get_cursor_snippet(snippets, cur_text) != ''
+  return s:get_cursor_snippet(snippets, cur_text) != ''
 endfunction"}}}
 function! neosnippet#jumpable()"{{{
   " Found snippet placeholder.
@@ -323,11 +322,11 @@ function! s:load_snippets(snippet, snippets_file)"{{{
 
       " Check for duplicated names.
       if has_key(dup_check, snippet_pattern.name)
-        call neocomplcache#print_error(
+        call neosnippet#util#print_error(
               \ 'Warning: ' . a:snippets_file . ':'
               \ . linenr . ': duplicated snippet name `'
               \ . snippet_pattern.name . '`')
-        call neocomplcache#print_error(
+        call neosnippet#util#print_error(
               \ 'Please delete this snippet name before.')
       endif
     elseif has_key(snippet_pattern, 'name')
@@ -372,21 +371,25 @@ function! s:load_snippets(snippet, snippets_file)"{{{
   return a:snippet
 endfunction"}}}
 
-function! s:get_cursor_keyword_snippet(snippets, cur_text)"{{{
-  let cur_word = matchstr(a:cur_text,
-        \ neocomplcache#get_keyword_pattern_end().'\|\h\w*\W\+$')
+function! s:get_prev_word(cur_keyword_str)"{{{
+  let keyword_pattern = '\S\+'
+  let line_part = neocomplcache#get_cur_text()[: -1-len(a:cur_keyword_str)]
+  let prev_word_end = matchend(line_part, keyword_pattern)
+  if prev_word_end > 0
+    let word_end = matchend(line_part, keyword_pattern, prev_word_end)
+    if word_end >= 0
+      while word_end >= 0
+        let prev_word_end = word_end
+        let word_end = matchend(line_part, keyword_pattern, prev_word_end)
+      endwhile
+    endif
 
-  " Check prev_word.
-  let prev_word = neocomplcache#get_prev_word(cur_word)
-  let pattern = printf('(!has_key(v:val, "prev_word") || v:val.prev_word ==# %s)',
-        \ string(prev_word))
-
-  let dict = filter(copy(a:snippets), pattern)
-  if !has_key(dict, cur_word)
-    let cur_word = ''
+    let prev_word = matchstr(line_part[: prev_word_end-1], keyword_pattern . '$')
+  else
+    let prev_word = '^'
   endif
 
-  return cur_word
+  return prev_word
 endfunction"}}}
 function! s:get_cursor_snippet(snippets, cur_text)"{{{
   let cur_word = matchstr(a:cur_text, '\S\+$')
@@ -405,7 +408,7 @@ function! s:snippets_force_expand(cur_text, col)"{{{
         \ a:cur_text, a:col, cur_word)
 endfunction"}}}
 function! s:snippets_expand_or_jump(cur_text, col)"{{{
-  let cur_word = s:get_cursor_keyword_snippet(
+  let cur_word = s:get_cursor_snippet(
         \ neosnippet#get_snippets(),
         \ a:cur_text)
   if cur_word == ''
@@ -424,7 +427,7 @@ function! s:snippets_expand_or_jump(cur_text, col)"{{{
   endif
 endfunction"}}}
 function! s:snippets_jump_or_expand(cur_text, col)"{{{
-  let cur_word = s:get_cursor_keyword_snippet(
+  let cur_word = s:get_cursor_snippet(
         \ neosnippet#get_snippets(), a:cur_text)
   if search(s:get_placeholder_marker_pattern(). '\|'
             \ .s:get_sync_placeholder_marker_pattern(), 'nw') > 0
@@ -837,7 +840,7 @@ function! s:SID_PREFIX()"{{{
 endfunction"}}}
 
 function! s:trigger(function)"{{{
-  let cur_text = neocomplcache#get_cur_text(1)
+  let cur_text = neosnippet#util#get_cur_text(1)
 
   let col = col('.')
   if mode() !=# 'i'
