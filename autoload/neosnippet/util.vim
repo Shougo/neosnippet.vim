@@ -73,6 +73,14 @@ function! neosnippet#util#set_dictionary_helper(...)"{{{
   return call(s:V.set_dictionary_helper, a:000)
 endfunction"}}}
 
+function! neosnippet#util#get_cur_text()"{{{
+  return
+        \ (mode() ==# 'i' ? (col('.')-1) : col('.')) >= len(getline('.')) ?
+        \      getline('.') :
+        \      matchstr(getline('.'),
+        \         '^.*\%' . col('.') . 'c' . (mode() ==# 'i' ? '' : '.'))
+endfunction"}}}
+
 let &cpo = s:save_cpo
 unlet s:save_cpo
 

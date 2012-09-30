@@ -164,7 +164,7 @@ function! neosnippet#expandable()"{{{
 endfunction"}}}
 function! neosnippet#force_expandable()"{{{
   let snippets = neosnippet#force_expandable()
-  let cur_text = neocomplcache#get_cur_text(1)
+  let cur_text = neosnippet#util#get_cur_text(1)
 
   " Found snippet trigger.
   return s:get_cursor_keyword_snippet(snippets, cur_text) != ''
@@ -199,10 +199,6 @@ function! s:set_snippet_dict(snippet_pattern, snippet_dict, dup_check, snippets_
     let alias_pattern = copy(pattern)
     let alias_pattern.word = alias
 
-    let abbr = (g:neocomplcache_max_keyword_width >= 0 &&
-          \       len(alias) > g:neocomplcache_max_keyword_width) ?
-          \ printf(abbr_pattern, alias, alias[-8:]) : alias
-    let alias_pattern.abbr = abbr
     let alias_pattern.action__path = a:snippets_file
     let alias_pattern.action__pattern = action_pattern
     let alias_pattern.real_name = a:snippet_pattern.name
@@ -217,9 +213,6 @@ function! s:set_snippet_dict(snippet_pattern, snippet_dict, dup_check, snippets_
   let snippet.real_name = a:snippet_pattern.name
 endfunction"}}}
 function! s:set_snippet_pattern(dict)"{{{
-  let abbr_pattern = printf('%%.%ds..%%s',
-        \ g:neocomplcache_max_keyword_width-10)
-
   let a:dict.word = substitute(a:dict.word, '\n$', '', '')
   let menu_pattern = (a:dict.word =~
         \ s:get_placeholder_marker_substitute_pattern()) ?
@@ -229,9 +222,6 @@ function! s:set_snippet_pattern(dict)"{{{
         \   s:get_placeholder_marker_pattern(). '\|'.
         \   s:get_mirror_placeholder_marker_pattern().
         \   '\|\s\+\|\n', ' ', 'g'))
-  let abbr = (g:neocomplcache_max_keyword_width >= 0 &&
-        \ len(abbr) > g:neocomplcache_max_keyword_width)?
-        \ printf(abbr_pattern, abbr, abbr[-8:]) : abbr
 
   let dict = {
         \ 'word' : a:dict.name,
@@ -298,8 +288,6 @@ endfunction"}}}
 function! s:load_snippets(snippet, snippets_file)"{{{
   let dup_check = {}
   let snippet_pattern = { 'word' : '' }
-  let abbr_pattern = printf('%%.%ds..%%s',
-        \ g:neocomplcache_max_keyword_width-10)
 
   let linenr = 1
 
