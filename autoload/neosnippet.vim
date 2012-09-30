@@ -36,6 +36,13 @@ call neosnippet#util#set_default('g:neosnippet#disable_select_mode_mappings',
       \ 0, 'g:neocomplcache_disable_select_mode_mappings')
 "}}}
 
+" Variables  "{{{
+let s:neosnippet_options = [
+      \ '-runtime',
+      \ '-vertical', '-horizontal', '-direction=', '-split',
+      \]
+"}}}
+
 function! s:initialize()"{{{
   " Initialize.
   let s:snippets_expand_stack = []
@@ -101,7 +108,7 @@ function! s:initialize()"{{{
   endif"}}}
 
   " Caching _ snippets.
-  call neosnippet#caching_snippets('_')
+  call neosnippet#make_cache('_')
 
   " Initialize check.
   call neosnippet#caching()
@@ -166,7 +173,7 @@ function! neosnippet#jumpable()"{{{
 endfunction"}}}
 
 function! neosnippet#caching()"{{{
-  call neosnippet#caching_snippets(&filetype)
+  call neosnippet#make_cache(&filetype)
 endfunction"}}}
 
 function! s:set_snippet_dict(snippet_pattern, snippet_dict, dup_check, snippets_file)"{{{
@@ -219,25 +226,30 @@ function! s:set_snippet_pattern(dict)"{{{
   return dict
 endfunction"}}}
 
-function! neosnippet#edit_snippets(filetype, isruntime)"{{{
-  let filetype = a:filetype
+function! neosnippet#edit_snippets(args)"{{{
+  let [args, options] = neosnippet#util#parse_options(
+        \ a:args, s:neosnippet_options)
+
+  let filetype = get(args, 0, '')
   if filetype == ''
     let filetype = neosnippet#get_filetype()
   endif
 
+  let options = s:initialize_options(options)
+
+  if options.runtime && empty(s:runtime_dir)
+        \ || !options.runtime && empty(s:snippets_dir)
+    return
+  endif
+
   " Edit snippet file.
-  if a:isruntime
-    if empty(s:runtime_dir)
-      return
-    endif
+  let filename = (options.runtime ? s:runtime_dir[0] : s:snippets_dir[-1])
+        \ .'/'.filetype.'.snip'
 
-    let filename = s:runtime_dir[0].'/'.filetype.'.snip'
-  else
-    if empty(s:snippets_dir)
-      return
-    endif
-
-    let filename = s:snippets_dir[-1].'/'.filetype.'.snip'
+  if options.split
+    " Split window.
+    execute options.direction
+          \ (options.vertical ? 'vnew' : 'new')
   endif
 
   if filereadable(filename)
@@ -249,7 +261,26 @@ function! neosnippet#edit_snippets(filetype, isruntime)"{{{
   endif
 endfunction"}}}
 
-function! neosnippet#caching_snippets(filetype)"{{{
+function! s:initialize_options(options)"{{{
+  let default_options = {
+        \ 'runtime' : 0,
+        \ 'vertical' : 0,
+        \ 'direction' : 'belowleft',
+        \ 'split' : 0,
+        \ }
+
+  let options = extend(default_options, a:options)
+
+  " Complex initializer.
+  if has_key(options, 'horizontal')
+    " Disable vertically.
+    let context.vertical = 0
+  endif
+
+  return options
+endfunction"}}}
+
+function! neosnippet#make_cache(filetype)"{{{
   let filetype = a:filetype == '' ?
         \ &filetype : a:filetype
   if filetype ==# ''
@@ -782,7 +813,7 @@ endfunction"}}}
 function! neosnippet#get_snippets()"{{{
   if !has_key(s:snippets, '_')
     " Caching _ snippets.
-    call neosnippet#caching_snippets('_')
+    call neosnippet#make_cache('_')
   endif
 
   " Get buffer filetype.
@@ -808,6 +839,10 @@ function! s:get_sources_list(snippets, filetype)"{{{
         \ neocomplcache#get_sources_list(a:snippets, a:filetype) : a:filetype
 endfunction"}}}
 
+function! neosnippet#edit_complete(arglead, cmdline, cursorpos)"{{{
+  return filter(s:neosnippet_options + neosnippet#filetype_complete(
+        \ a:arglead, a:cmdline, a:cursorpos), 'stridx(v:val, a:arglead) == 0')
+endfunction"}}}
 " Complete filetype helper.
 function! neosnippet#filetype_complete(arglead, cmdline, cursorpos)"{{{
   " Dup check.

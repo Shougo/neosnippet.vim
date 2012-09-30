@@ -88,15 +88,23 @@ augroup neosnippet"{{{
 augroup END"}}}
 
 " Commands."{{{
+command! -nargs=? -complete=customlist,neosnippet#edit_complete
+      \ NeoSnippetEdit
+      \ call neosnippet#edit_snippets(<q-args>)
+
 command! -nargs=? -complete=customlist,neosnippet#filetype_complete
-      \ NeoComplCacheEditSnippets
-      \ call neosnippet#edit_snippets(<q-args>, 0)
-command! -nargs=? -complete=customlist,neosnippet#filetype_complete
-      \ NeoComplCacheEditRuntimeSnippets
-      \ call neosnippet#edit_snippets(<q-args>, 1)
+      \ NeoSnippetMakeCache
+      \ call neosnippet#make_cache(<q-args>)
+
 command! -nargs=? -complete=customlist,neosnippet#filetype_complete
       \ NeoComplCacheCachingSnippets
-      \ call neosnippet#caching_snippets(<q-args>)
+      \ NeoSnippetMakeCache <args>
+command! -nargs=? -complete=customlist,neosnippet#filetype_complete
+      \ NeoComplCacheEditSnippets
+      \ NeoSnippetEdit <args>
+command! -nargs=? -complete=customlist,neosnippet#filetype_complete
+      \ NeoComplCacheEditRuntimeSnippets
+      \ NeoSnippetEdit -runtime <args>
 "}}}
 
 let g:loaded_neosnippet = 1

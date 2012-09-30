@@ -58,34 +58,65 @@ INTERFACE					*neosnippet-interface*
 ------------------------------------------------------------------------------
 COMMANDS 					*neosnippet-commands*
 
-:NeoComplCacheCachingSnippets [filetype]
-					*:NeoComplCacheCachingSnippets*
+:NeoSnippetMakeCache [filetype]
+						*:NeoSnippetMakeCache*
 		Makes cache of [filetype] snippets.  It automatically selects
 		current buffer's filetype unless you specify [filetype].
 
-:NeoComplCacheEditSnippets [filetype]
+						*:NeoSnippetMakeCache-options*
+		{options} are options for the command.  You may give the
+		following parameters for a option; you must escape with "\"
+		when it contains spaces.
+
+					*neosnippet-edit-options-vertical*
+		-vertical
+		Splits window vertically.
+
+					*neosnippet-edit-options-horizontal*
+		-horizontal
+		Splits window horizontally.
+		
+		The behavior is undefined when both options are defined.
+
+					*neosnippet-edit-options-direction*
+		-direction={direction}
+		Defines split position rule. The default value is "belowleft".
+
+					*neosnippet-edit-options-split*
+		-split
+		Split buffer.
+
+					*neosnippet-edit-options-runtime*
+		-runtime
+		Edit runtime snippets instead of user snippets.
+
+					*:NeoComplCacheCachingSnippets*
+		Note: |:NeoComplCacheCachingSnippets| is obsolute name.
+
+:NeoSnippetEdit [{options}] [filetype]
+					*:NeoSnippetEdit*
+		Opens [filetype] snippets to edit.  It automatically selects
+		current buffer's filetype unless you specify [filetype].
+
+		If [filetype] snippet file doesn't exist, it creates one
+		automatically.
+
+		It edits a snippet file in |g:neosnippet#snippets_directory|
+		with precedence.
+		Re-make cache will be done automatically when you save the
+		file.
+
 					*:NeoComplCacheEditSnippets*
-		Opens [filetype] snippets to edit.  It automatically selects
-		current buffer's filetype unless you specify [filetype].
+		Note: |:NeoComplCacheEditSnippets| is obsolute name.
 
-		If [filetype] snippet file doesn't exist, it creates one
-		automatically.
+:NeoComplCacheEdit -runtime [filetype]
 
-		This command edits a snippet file in
-		|g:neosnippet#snippets_directory| with precedence.
-		Re-cache will be done automatically when you save the file.
+		It edits a runtime snippet file with neosnippet.
+		Re-make cache will be done automatically when you save the
+		file.
 
-:NeoComplCacheEditRuntimeSnippets [filetype]
 					*:NeoComplCacheEditRuntimeSnippets*
-		Opens [filetype] snippets to edit.  It automatically selects
-		current buffer's filetype unless you specify [filetype].
-
-		If [filetype] snippet file doesn't exist, it creates one
-		automatically.
-
-		This command edits a runtime snippet file with
-		snippets_complete.  Re-cache will be done automatically when
-		you save the file.
+		Note: |:NeoComplCacheEditRuntimeSnippets| is obsolute name.
 
 ------------------------------------------------------------------------------
 VARIABLES 					*neosnippet-variables*
@@ -274,8 +305,8 @@ Eval snippet feature is available.
 	prev_word   '^'
 	    `expand("%")`
 <
-If you use |:NeoComplCacheEditSnippets| command for easy snippet editing, the
-file will be loaded automatically when you save the file.
+If you use |:NeoSnippetEdit| command for easy snippet editing, the file will
+be loaded automatically when you save the file.
 
 Neosnippet doesn't map snippet-expand key by default. If you want to use
 snippet feature, you can define below mappings in your .vimrc:
@@ -369,6 +400,7 @@ CHANGELOG			*neosnippet-changelog*
 - Improved filetype complete.
 - Improved documentation.
 - Changed neocomplcache source behavior.
+- Renamed commands.
 
 2012-09-27
 - Ver.3 development is started.

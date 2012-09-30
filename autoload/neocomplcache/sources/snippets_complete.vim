@@ -40,18 +40,6 @@ function! s:source.initialize()"{{{
         \ g:neocomplcache_auto_completion_start_length)
 endfunction"}}}
 
-function! s:source.finalize()"{{{
-  delcommand NeoComplCacheEditSnippets
-  delcommand NeoComplCacheEditRuntimeSnippets
-  delcommand NeoComplCacheCachingSnippets
-
-  hi clear NeoComplCacheExpandSnippets
-
-  if neocomplcache#exists_echodoc()
-    call echodoc#unregister('snippets_complete')
-  endif
-endfunction"}}}
-
 function! s:source.get_keyword_pos(cur_text)"{{{
   return match(a:cur_text, '\S\+$')
 endfunction"}}}
@@ -63,7 +51,7 @@ function! s:source.get_complete_words(cur_keyword_pos, cur_keyword_str)"{{{
         \ neosnippet#get_filetype())
     if !has_key(all_snippets, filetype)
       " Caching snippets.
-      call neosnippet#caching_snippets(filetype)
+      call neosnippet#make_cache(filetype)
     endif
   endfor
 

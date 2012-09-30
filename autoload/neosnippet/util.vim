@@ -84,6 +84,30 @@ function! neosnippet#util#print_error(string)"{{{
   echohl Error | echomsg a:string | echohl None
 endfunction"}}}
 
+function! neosnippet#util#parse_options(args, options_list)"{{{
+  let args = []
+  let options = {}
+  for arg in split(a:args, '\%(\\\@<!\s\)\+')
+    let arg = substitute(arg, '\\\( \)', '\1', 'g')
+
+    let matched_list = filter(copy(a:options_list),
+          \  'stridx(arg, v:val) == 0')
+    for option in matched_list
+      let key = substitute(substitute(option, '-', '_', 'g'), '=$', '', '')[1:]
+      let options[key] = (option =~ '=$') ?
+            \ arg[len(option) :] : 1
+      break
+    endfor
+
+    if empty(matched_list)
+      call add(args, arg)
+    endif
+  endfor
+
+  return [args, options]
+endfunction"}}}
+
+
 let &cpo = s:save_cpo
 unlet s:save_cpo
 
