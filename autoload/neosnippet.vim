@@ -164,7 +164,7 @@ function! neosnippet#expandable()"{{{
 endfunction"}}}
 function! neosnippet#force_expandable()"{{{
   let snippets = neosnippet#force_expandable()
-  let cur_text = neosnippet#util#get_cur_text(1)
+  let cur_text = neosnippet#util#get_cur_text()
 
   " Found snippet trigger.
   return s:get_cursor_snippet(snippets, cur_text) != ''
@@ -843,7 +843,7 @@ function! s:SID_PREFIX()"{{{
 endfunction"}}}
 
 function! s:trigger(function)"{{{
-  let cur_text = neosnippet#util#get_cur_text(1)
+  let cur_text = neosnippet#util#get_cur_text()
 
   let col = col('.')
   if mode() !=# 'i'
