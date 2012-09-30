@@ -54,6 +54,13 @@ function! neosnippet#util#iconv(...)"{{{
   return call(s:V.iconv, a:000)
 endfunction"}}}
 
+function! neosnippet#util#expand(path)"{{{
+  return s:V.substitute_path_separator(
+        \ (a:path =~ '^\~') ? substitute(a:path, '^\~', expand('~'), '') :
+        \ (a:path =~ '^\$\h\w*') ? substitute(a:path,
+        \               '^\$\h\w*', '\=eval(submatch(0))', '') :
+        \ a:path)
+endfunction"}}}
 function! neosnippet#util#set_dictionary_helper(...)"{{{
   return call(s:V.set_dictionary_helper, a:000)
 endfunction"}}}
