@@ -84,7 +84,7 @@ augroup neosnippet"{{{
   autocmd FileType * call neosnippet#caching()
   " Recaching events
   autocmd BufWritePost *.snip,*.snippets
-        \ call neosnippet#caching_snippets(expand('<afile>:t:r'))
+        \ call neosnippet#make_cache(expand('<afile>:t:r'))
 augroup END"}}}
 
 " Commands."{{{
