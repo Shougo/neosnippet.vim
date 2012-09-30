@@ -317,6 +317,9 @@ snippet					*neosnippet-unite-action-snippet*
 ==============================================================================
 CHANGELOG			*neosnippet-changelog*
 
+2012-09-30
+- Changed runtime directory.
+
 2012-09-27
 - Ver.3 development is started.
 - Renamed documentation.

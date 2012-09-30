@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: neosnippet.vim
 " AUTHOR:  Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 28 Sep 2012.
+" Last Modified: 30 Sep 2012.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -33,7 +33,7 @@ function! s:initialize()"{{{
 
   let s:snippets_dir = []
   let s:runtime_dir = split(globpath(&runtimepath,
-        \ 'autoload/neosnippet'), '\n')
+        \ 'autoload/neosnippet/snippets'), '\n')
 
   if !g:neocomplcache_snippets_disable_runtime_snippets
     " Set snippets dir.
