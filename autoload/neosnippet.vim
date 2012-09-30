@@ -160,7 +160,7 @@ function! neosnippet#expandable()"{{{
   return ret
 endfunction"}}}
 function! neosnippet#force_expandable()"{{{
-  let snippets = neosnippet#force_expandable()
+  let snippets = neosnippet#get_snippets()
   let cur_text = neosnippet#util#get_cur_text()
 
   " Found snippet trigger.
