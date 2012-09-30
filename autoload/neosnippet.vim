@@ -796,7 +796,7 @@ function! neosnippet#get_snippets()"{{{
 
   return snippets
 endfunction"}}}
-function! neosnippet#get_snippets_dir()"{{{
+function! neosnippet#get_snippets_directory()"{{{
   return s:snippets_dir
 endfunction"}}}
 function! neosnippet#get_filetype()"{{{

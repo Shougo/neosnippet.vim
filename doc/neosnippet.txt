@@ -72,7 +72,7 @@ COMMANDS 					*neosnippet-commands*
 		automatically.
 
 		This command edits a snippet file in
-		|g:neocomplcache_snippets_dir| with precedence.
+		|g:neosnippet#snippets_directory| with precedence.
 		Re-cache will be done automatically when you save the file.
 
 :NeoComplCacheEditRuntimeSnippets [filetype]
@@ -164,16 +164,16 @@ KEY MAPPINGS 					*neosnippet-key-mappings*
 		Note: |<Plug>(neocomplcache_snippets_force_jump)| is
 		obsolute name.
 
-i_<Plug>(neocomplcache_start_unite_snippet)
-				*i_<Plug>(neocomplcache_start_unite_snippet)*
+i_<Plug>(neosnippet_start_snippet)
+				*i_<Plug>(neosnippet_start_snippet)*
 		Start unite snippet source.
 
 				*<Plug>(neocomplcache_start_unite_snippet)*
 		Note: |<Plug>(neocomplcache_start_unite_snippet)| is obsolute
 		name.
 
-neocomplcache#sources#snippets_complete#expandable()
-			*neocomplcache#sources#snippets_complete#expandable()*
+neosnippet#expandable()
+						*neosnippet#expandable()*
 		Use this function with imap <expr>. It checks whether cursor
 		text is a snippet trigger or a placeholder exists in the
 		current buffer. It's useful for saving keymappings.
@@ -183,39 +183,52 @@ neocomplcache#sources#snippets_complete#expandable()
 		2: a placeholder exists in the current buffer
 		3: both found
 >
-		imap <expr><C-l> neocomplcache#sources#snippets_complete#expandable() ?
-		\ "\<Plug>(neocomplcache_snippets_expand)" : "\<C-n>"
+		imap <expr><C-l> neosnippet#expandable() ?
+		\ "\<Plug>(neosnippet_expand_or_jump)" : "\<C-n>"
 <
-neocomplcache#sources#snippets_complete#force_expandable()
+		*neocomplcache#sources#snippets_complete#expandable()*
 		*neocomplcache#sources#snippets_complete#force_expandable()*
-		Use this function with imap <expr>. It checks whether cursor
-		text is snippet trigger. Useful for saving keymappings.
+		Note:
+		|neocomplcache#sources#snippets_complete#expandable()|
+		and
+		|neocomplcache#sources#snippets_complete#force_expandable()|
+		is obsolute name.
 
-neocomplcache#sources#snippets_complete#jumpable()
-		*neocomplcache#sources#snippets_complete#jumpable()*
+neosnippet#jumpable()
+						*neosnippet#jumpable()*
 		Use this function with imap <expr>. It checks whether cursor
 		text is an existing placeholder in current buffer.
 		Useful for saving keymappings.
 
+		*neocomplcache#sources#snippets_complete#jumpable()*
+		Note: |neocomplcache#sources#snippets_complete#jumpable()| is
+		obsolute name.
+
 ------------------------------------------------------------------------------
 FUNCTIONS					*neosnippet-functions*
 
-neocomplcache#sources#snippets_complete#get_snippets_dir()
-		*neocomplcache#sources#snippets_complete#get_snippets_dir()*
+neosnippet#get_snippets_directory()
+					*neosnippet#get_snippets_directory()*
 		Gets snippet directories. This directories contain runtime
-		snippets directories and |g:neocomplcache_snippets_dir|
+		snippets directories and |g:neosnippet#snippets_directory|
 		directories.
+
+		*neocomplcache#sources#snippets_complete#get_snippets_dir()*
+		Note:
+		|neocomplcache#sources#snippets_complete#get_snippets_dir()|
+		is obsolute name.
 
 ==============================================================================
 EXAMPLES					*neosnippet-examples*
 >
 	" Plugin key-mappings.
-	imap <C-k>     <Plug>(neosnippet_expand)
-	smap <C-k>     <Plug>(neosnippet_expand)
+	imap <C-k>     <Plug>(neosnippet_expand_or_jump)
+	smap <C-k>     <Plug>(neosnippet_expand_or_jump)
 
 	" SuperTab like snippets behavior.
 	"imap <expr><TAB> neosnippet#expandable() ?
-	" \ "\<Plug>(neosnippet_expand)" : pumvisible() ? "\<C-n>" : "\<TAB>"
+	" \ "\<Plug>(neosnippet_expand_or_jump)"
+	" \: pumvisible() ? "\<C-n>" : "\<TAB>"
 
 	" For snippet_complete marker.
 	if has('conceal')
@@ -264,11 +277,11 @@ Eval snippet feature is available.
 If you use |:NeoComplCacheEditSnippets| command for easy snippet editing, the
 file will be loaded automatically when you save the file.
 
-Neocomplcache doesn't map snippet-expand key by default. If you want to use
+Neosnippet doesn't map snippet-expand key by default. If you want to use
 snippet feature, you can define below mappings in your .vimrc:
 >
-	imap <C-l>    <Plug>(neocomplcache_snippets_expand)
-	smap <C-l>    <Plug>(neocomplcache_snippets_expand)
+	imap <C-l>    <Plug>(neosnippet_expand_or_jump)
+	smap <C-l>    <Plug>(neosnippet_expand_or_jump)
 <
 
 Placeholder feature is available.
@@ -281,7 +294,7 @@ Placeholder feature is available.
 	    endif
 <
 '_' snippet feature is supported. '_' snippet is loaded in all filetypes.
-And neocomplcache can load snipMate snippets.
+And neosnippet can load snipMate snippets.
 
 Alias feature is supported. Separator is ' ' or ','.
 >
@@ -297,7 +310,7 @@ The placeholder value can't contain new lines. Below snippet is illegal:
 			${3:# do smth}}
 <
 Multi snippet feature is supported in snipMate.
-neocomplcache substitutes trigger and descriptions spaces to '_'.
+neosnippet substitutes trigger and descriptions spaces to '_'.
 >
 	snippet trigger description1
 		hoge
@@ -305,7 +318,7 @@ neocomplcache substitutes trigger and descriptions spaces to '_'.
 		piyo
 <
 You choose snippet <C-n> or <C-p> and expand it with
-|<Plug>(neocomplcache_snippets_expand)| key-mappings.
+|<Plug>(neosnippet_expand_or_jump)| key-mappings.
 
 Nested placeholder feature is supported.
 But must escape inner '}'. '\' is eacape sequence.
@@ -313,7 +326,7 @@ But must escape inner '}'. '\' is eacape sequence.
 	snippet div
 	<div ${1:id="${2:someid\}"}>${3}</div>${4}
 <
-If you use hard tab for indentation in snippet file, neocomplcache will use
+If you use hard tab for indentation in snippet file, neosnippet will use
 'shiftwidth' instead of Vim indent plugin. This feature is useful while some
 languages' indent files can not work very well (e.g.: PHP, Python).
 >
@@ -327,14 +340,14 @@ UNITE SOURCES					*neosnippet-unite-sources*
 
 					*neosnippet-unite-source-snippet*
 snippet
-		The candidates are neocomplcache snippets. The kinds are
+		The candidates are neosnippet snippets. The kinds are
 		"snippet".  Normally used in
-		|<Plug>(neocomplcache_start_unite_snippet)| mappings.
+		|<Plug>(neosnippet_start_unite_snippet)| mappings.
 		But you can execute it by ":Unite snippet".
 		You can edit snippet file in "edit" action.
 		Examples:
 >
-		imap <C-s>  <Plug>(neocomplcache_start_unite_snippet)
+		imap <C-s>  <Plug>(neosnippet_start_unite_snippet)
 <
 source actions
 
@@ -354,6 +367,7 @@ CHANGELOG			*neosnippet-changelog*
 - Deleted s:get_cursor_keyword_snippet().
 - Improved for filetype.
 - Improved filetype complete.
+- Improved documentation.
 
 2012-09-27
 - Ver.3 development is started.

@@ -120,7 +120,7 @@ function! neocomplcache#sources#snippets_complete#get_snippets()"{{{
   return neosnippet#get_snippets()
 endfunction"}}}
 function! neocomplcache#sources#snippets_complete#get_snippets_dir()"{{{
-  return neosnippet#get_snippets_dir()
+  return neosnippet#get_snippets_directory()
 endfunction"}}}
 
 let &cpo = s:save_cpo
