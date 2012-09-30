@@ -27,6 +27,15 @@
 let s:save_cpo = &cpo
 set cpo&vim
 
+" Global options definition."{{{
+call neosnippet#util#set_default('g:neosnippet#disable_runtime_snippets',
+      \ 0, 'g:neocomplcache_snippets_disable_runtime_snippets')
+call neosnippet#util#set_default('g:neosnippet#snippets_directory',
+      \ '', 'g:neocomplcache_snippets_dir')
+call neosnippet#util#set_default('g:neosnippet#disable_select_mode_mappings',
+      \ 0, 'g:neocomplcache_disable_select_mode_mappings')
+"}}}
+
 function! s:initialize()"{{{
   " Initialize.
   let s:snippets_expand_stack = []
@@ -35,7 +44,7 @@ function! s:initialize()"{{{
   let s:runtime_dir = split(globpath(&runtimepath,
         \ 'autoload/neosnippet/snippets'), '\n')
 
-  if !g:neocomplcache_snippets_disable_runtime_snippets
+  if !g:neosnippet#disable_runtime_snippets
     " Set snippets dir.
     let s:snippets_dir += (exists('g:snippets_dir') ?
           \ split(g:snippets_dir, '\s*,\s*')
@@ -43,25 +52,23 @@ function! s:initialize()"{{{
           \ + s:runtime_dir
   endif
 
-  if exists('g:neocomplcache_snippets_dir')
-    for dir in split(g:neocomplcache_snippets_dir, '\s*,\s*')
-      let dir = neosnippet#util#expand(dir)
-      if !isdirectory(dir)
-        call mkdir(dir, 'p')
-      endif
-      call add(s:snippets_dir, dir)
-    endfor
-  endif
+  for dir in split(g:neocomplcache_snippets_dir, '\s*,\s*')
+    let dir = neosnippet#util#expand(dir)
+    if !isdirectory(dir)
+      call mkdir(dir, 'p')
+    endif
+    call add(s:snippets_dir, dir)
+  endfor
   call map(s:snippets_dir, 'substitute(v:val, "[\\\\/]$", "", "")')
 
   if has('conceal')
     " Supported conceal features.
     augroup neosnippet
       autocmd BufNewFile,BufRead,ColorScheme *
-            \ syn match   neocomplcacheExpandSnippets
+            \ syn match   neosnippetExpandSnippets
             \ '<`\d\+:\|`>\|<{\d\+:\|}>' conceal
       autocmd BufNewFile,BufRead,ColorScheme *
-            \ execute 'syn match   neocomplcacheExpandSnippets'
+            \ execute 'syn match   neosnippetExpandSnippets'
             \  '''<`\d\+\\\@<!`>\|<{\d\+\\\@<!}>\|'
             \ .s:get_mirror_placeholder_marker_pattern()."'"
             \ 'conceal cchar=$'
@@ -69,14 +76,14 @@ function! s:initialize()"{{{
   else
     augroup neosnippet
       autocmd BufNewFile,BufRead,ColorScheme *
-            \ execute 'syn match   neocomplcacheExpandSnippets'
+            \ execute 'syn match   neosnippetExpandSnippets'
             \  "'".s:get_placeholder_marker_pattern(). '\|'
             \ .s:get_sync_placeholder_marker_pattern().'\|'
             \ .s:get_mirror_placeholder_marker_pattern()."'"
     augroup END
   endif
 
-  hi def link NeoComplCacheExpandSnippets Special
+  hi def link neosnippetExpandSnippets Special
 
   command! -nargs=? -complete=customlist,neocomplcache#filetype_complete
         \ NeoComplCacheEditSnippets
@@ -88,8 +95,8 @@ function! s:initialize()"{{{
         \ NeoComplCacheCachingSnippets
         \ call neosnippet#caching_snippets(<q-args>)
 
-  " Select mode mappings.
-  if !exists('g:neocomplcache_disable_select_mode_mappings')
+  " Select mode mappings."{{{
+  if g:neosnippet#disable_select_mode_mappings
     snoremap <CR>     a<BS>
     snoremap <BS> a<BS>
     snoremap <right> <ESC>a
@@ -101,7 +108,7 @@ function! s:initialize()"{{{
     snoremap ^ a<BS>^
     snoremap \ a<BS>\
     snoremap <C-x> a<BS><c-x>
-  endif
+  endif"}}}
 
   " Caching _ snippets.
   call neosnippet#caching_snippets('_')
@@ -109,14 +116,14 @@ function! s:initialize()"{{{
   " Initialize check.
   call neosnippet#caching()
 
-  if neocomplcache#exists_echodoc()
+  if get(g:, 'loaded_echodoc', 0)
     call echodoc#register('snippets_complete', s:doc_dict)
   endif
 endfunction"}}}
 
 " For echodoc."{{{
 let s:doc_dict = {
-      \ 'name' : 'snippets_complete',
+      \ 'name' : 'neosnippet',
       \ 'rank' : 100,
       \ 'filetypes' : {},
       \ }

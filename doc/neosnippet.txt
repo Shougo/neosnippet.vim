@@ -321,6 +321,7 @@ CHANGELOG			*neosnippet-changelog*
 - Changed runtime directory.
 - Vitalized.
 - Deleted neocomplcache#util functions.
+- Refactored variables.
 
 2012-09-27
 - Ver.3 development is started.

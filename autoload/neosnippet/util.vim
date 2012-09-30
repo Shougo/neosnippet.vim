@@ -61,6 +61,14 @@ function! neosnippet#util#expand(path)"{{{
         \               '^\$\h\w*', '\=eval(submatch(0))', '') :
         \ a:path)
 endfunction"}}}
+function! neosnippet#util#set_default(var, val, ...)  "{{{
+  if !exists(a:var) || type({a:var}) != type(a:val)
+    let alternate_var = get(a:000, 0, '')
+
+    let {a:var} = exists(alternate_var) ?
+          \ {alternate_var} : a:val
+  endif
+endfunction"}}}
 function! neosnippet#util#set_dictionary_helper(...)"{{{
   return call(s:V.set_dictionary_helper, a:000)
 endfunction"}}}

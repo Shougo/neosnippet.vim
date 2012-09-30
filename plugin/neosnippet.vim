@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: neosnippet.vim
 " AUTHOR:  Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 28 Sep 2012.
+" Last Modified: 30 Sep 2012.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -35,11 +35,6 @@ let s:save_cpo = &cpo
 set cpo&vim
 
 " Obsolute options check."{{{
-"}}}
-" Global options definition."{{{
-if !exists('g:neocomplcache_snippets_disable_runtime_snippets')
-  let g:neocomplcache_snippets_disable_runtime_snippets = 0
-endif
 "}}}
 
 " Plugin key-mappings."{{{
