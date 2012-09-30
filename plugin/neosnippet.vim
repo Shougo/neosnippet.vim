@@ -82,6 +82,18 @@ augroup neosnippet"{{{
         \ call neosnippet#caching_snippets(expand('<afile>:t:r'))
 augroup END"}}}
 
+" Commands."{{{
+command! -nargs=? -complete=customlist,neosnippet#filetype_complete
+      \ NeoComplCacheEditSnippets
+      \ call neosnippet#edit_snippets(<q-args>, 0)
+command! -nargs=? -complete=customlist,neosnippet#filetype_complete
+      \ NeoComplCacheEditRuntimeSnippets
+      \ call neosnippet#edit_snippets(<q-args>, 1)
+command! -nargs=? -complete=customlist,neosnippet#filetype_complete
+      \ NeoComplCacheCachingSnippets
+      \ call neosnippet#caching_snippets(<q-args>)
+"}}}
+
 let g:loaded_neosnippet = 1
 
 let &cpo = s:save_cpo

@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: snippets_complete.vim
 " AUTHOR:  Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 28 Sep 2012.
+" Last Modified: 30 Sep 2012.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -53,11 +53,13 @@ endfunction"}}}
 function! s:source.get_keyword_list(cur_keyword_str)"{{{
   let all_snippets = neosnippet#get_snippets()
 
-  let filetype = neocomplcache#get_context_filetype()
-  if !has_key(all_snippets, filetype)
-    " Caching snippets.
-    call neosnippet#caching_snippets(filetype)
-  endif
+  for filetype in neocomplcache#get_source_filetypes(
+        \ neosnippet#get_filetype())
+    if !has_key(s:snippets, filetype)
+      " Caching snippets.
+      call neosnippet#caching_snippets(filetype)
+    endif
+  endfor
 
   return s:keyword_filter(neocomplcache#dup_filter(
         \ values(all_snippets)), a:cur_keyword_str)

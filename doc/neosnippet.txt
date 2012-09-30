@@ -326,6 +326,7 @@ CHANGELOG			*neosnippet-changelog*
 - Refactored variables.
 - Deleted s:get_cursor_keyword_snippet().
 - Improved for filetype.
+- Improved filetype complete.
 
 2012-09-27
 - Ver.3 development is started.

@@ -85,16 +85,6 @@ function! s:initialize()"{{{
 
   hi def link neosnippetExpandSnippets Special
 
-  command! -nargs=? -complete=customlist,neocomplcache#filetype_complete
-        \ NeoComplCacheEditSnippets
-        \ call s:edit_snippets(<q-args>, 0)
-  command! -nargs=? -complete=customlist,neocomplcache#filetype_complete
-        \ NeoComplCacheEditRuntimeSnippets
-        \ call s:edit_snippets(<q-args>, 1)
-  command! -nargs=? -complete=customlist,neocomplcache#filetype_complete
-        \ NeoComplCacheCachingSnippets
-        \ call neosnippet#caching_snippets(<q-args>)
-
   " Select mode mappings."{{{
   if g:neosnippet#disable_select_mode_mappings
     snoremap <CR>     a<BS>
@@ -176,12 +166,7 @@ function! neosnippet#jumpable()"{{{
 endfunction"}}}
 
 function! neosnippet#caching()"{{{
-  for filetype in neocomplcache#get_source_filetypes(
-        \ neosnippet#get_filetype())
-    if !has_key(s:snippets, filetype)
-      call neosnippet#caching_snippets(filetype)
-    endif
-  endfor
+  call neosnippet#caching_snippets(&filetype)
 endfunction"}}}
 
 function! s:set_snippet_dict(snippet_pattern, snippet_dict, dup_check, snippets_file)"{{{
@@ -234,7 +219,7 @@ function! s:set_snippet_pattern(dict)"{{{
   return dict
 endfunction"}}}
 
-function! s:edit_snippets(filetype, isruntime)"{{{
+function! neosnippet#edit_snippets(filetype, isruntime)"{{{
   let filetype = a:filetype
   if filetype == ''
     let filetype = neosnippet#get_filetype()
@@ -267,6 +252,9 @@ endfunction"}}}
 function! neosnippet#caching_snippets(filetype)"{{{
   let filetype = a:filetype == '' ?
         \ &filetype : a:filetype
+  if filetype ==# ''
+    let filetype = 'nothing'
+  endif
 
   let snippet = {}
   let snippets_files =
@@ -801,7 +789,7 @@ function! neosnippet#get_snippets()"{{{
   let filetype = neosnippet#get_filetype()
 
   let snippets = {}
-  for source in neocomplcache#get_sources_list(s:snippets, filetype)
+  for source in s:get_sources_list(s:snippets, filetype)
       call extend(snippets, source, 'keep')
   endfor
   call extend(snippets, copy(s:snippets['_']), 'keep')
@@ -814,6 +802,27 @@ endfunction"}}}
 function! neosnippet#get_filetype()"{{{
   return exists('*neocomplcache#get_context_filetype') ?
         \ neocomplcache#get_context_filetype(1) : &filetype
+endfunction"}}}
+function! s:get_sources_list(snippets, filetype)"{{{
+  return exists('*neocomplcache#get_sources_list') ?
+        \ neocomplcache#get_sources_list(a:snippets, a:filetype) : a:filetype
+endfunction"}}}
+
+" Complete filetype helper.
+function! neosnippet#filetype_complete(arglead, cmdline, cursorpos)"{{{
+  " Dup check.
+  let ret = {}
+  for item in map(
+        \ split(globpath(&runtimepath, 'syntax/*.vim'), '\n') +
+        \ split(globpath(&runtimepath, 'indent/*.vim'), '\n') +
+        \ split(globpath(&runtimepath, 'ftplugin/*.vim'), '\n')
+        \ , 'fnamemodify(v:val, ":t:r")')
+    if !has_key(ret, item) && item =~ '^'.a:arglead
+      let ret[item] = 1
+    endif
+  endfor
+
+  return sort(keys(ret))
 endfunction"}}}
 
 function! s:get_placeholder_marker_pattern()"{{{
