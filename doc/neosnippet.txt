@@ -319,6 +319,7 @@ CHANGELOG			*neosnippet-changelog*
 
 2012-09-30
 - Changed runtime directory.
+- Vitalized.
 
 2012-09-27
 - Ver.3 development is started.
