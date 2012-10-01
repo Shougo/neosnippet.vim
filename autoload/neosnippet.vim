@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: neosnippet.vim
 " AUTHOR:  Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 30 Sep 2012.
+" Last Modified: 01 Oct 2012.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -149,22 +149,20 @@ endfunction"}}}
 function! neosnippet#expandable()"{{{
   let ret = 0
 
-  if neosnippet#force_expandable()
+  let snippets = neosnippet#get_snippets()
+  let cur_text = neosnippet#util#get_cur_text()
+
+  " Check snippet trigger.
+  if s:get_cursor_snippet(snippets, cur_text) != ''
     let ret += 1
   endif
 
+  " Check jumpable.
   if neosnippet#jumpable()
     let ret += 2
   endif
 
   return ret
-endfunction"}}}
-function! neosnippet#force_expandable()"{{{
-  let snippets = neosnippet#get_snippets()
-  let cur_text = neosnippet#util#get_cur_text()
-
-  " Found snippet trigger.
-  return s:get_cursor_snippet(snippets, cur_text) != ''
 endfunction"}}}
 function! neosnippet#jumpable()"{{{
   " Found snippet placeholder.
