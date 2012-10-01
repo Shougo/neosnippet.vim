@@ -179,7 +179,7 @@ KEY MAPPINGS 					*neosnippet-key-mappings*
 		name.
 
 <Plug>(neosnippet_expand)
-				*<Plug>(neocomplcache_snippets_force_expand)*
+						*<Plug>(neosnippet_expand)*
 		Expand a cursor snippet. Does nothing if there is no snippet.
 
 				*<Plug>(neocomplcache_snippets_force_expand)*
