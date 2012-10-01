@@ -392,6 +392,7 @@ CHANGELOG			*neosnippet-changelog*
 
 2012-10-01
 - Deleted neosnippet#force_expandable().
+- Improved python snippets.
 
 2012-09-30
 - Changed runtime directory.
