@@ -63,7 +63,23 @@ COMMANDS 					*neosnippet-commands*
 		Makes cache of [filetype] snippets.  It automatically selects
 		current buffer's filetype unless you specify [filetype].
 
-						*:NeoSnippetMakeCache-options*
+					*:NeoComplCacheCachingSnippets*
+		Note: |:NeoComplCacheCachingSnippets| is obsolute name.
+
+:NeoSnippetEdit [{options}] [filetype]
+					*:NeoSnippetEdit*
+		Opens [filetype] snippets to edit.  It automatically selects
+		current buffer's filetype unless you specify [filetype].
+
+		If [filetype] snippet file doesn't exist, it creates one
+		automatically.
+
+		It edits a snippet file in |g:neosnippet#snippets_directory|
+		with precedence.
+		Re-make cache will be done automatically when you save the
+		file.
+
+					*:NeoComplCacheEditSnippets*
 		{options} are options for the command.  You may give the
 		following parameters for a option; you must escape with "\"
 		when it contains spaces.
@@ -90,23 +106,6 @@ COMMANDS 					*neosnippet-commands*
 		-runtime
 		Edit runtime snippets instead of user snippets.
 
-					*:NeoComplCacheCachingSnippets*
-		Note: |:NeoComplCacheCachingSnippets| is obsolute name.
-
-:NeoSnippetEdit [{options}] [filetype]
-					*:NeoSnippetEdit*
-		Opens [filetype] snippets to edit.  It automatically selects
-		current buffer's filetype unless you specify [filetype].
-
-		If [filetype] snippet file doesn't exist, it creates one
-		automatically.
-
-		It edits a snippet file in |g:neosnippet#snippets_directory|
-		with precedence.
-		Re-make cache will be done automatically when you save the
-		file.
-
-					*:NeoComplCacheEditSnippets*
 		Note: |:NeoComplCacheEditSnippets| is obsolute name.
 
 :NeoComplCacheEdit -runtime [filetype]
