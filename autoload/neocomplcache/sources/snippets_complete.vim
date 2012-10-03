@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: snippets_complete.vim
 " AUTHOR:  Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 27 Sep 2012.
+" Last Modified: 03 Oct 2012.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -111,6 +111,9 @@ function! s:source.initialize()"{{{
   command! -nargs=? -complete=customlist,neocomplcache#filetype_complete
         \ NeoComplCacheCachingSnippets
         \ call s:caching_snippets(<q-args>)
+
+  inoremap <expr><silent> <Plug>(neocomplcache_start_unite_snippet)
+        \ unite#sources#snippet#start_complete()
 
   " Select mode mappings.
   if !exists('g:neocomplcache_disable_select_mode_mappings')
