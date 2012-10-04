@@ -141,8 +141,7 @@ g:neosnippet#disable_select_mode_mappings
 		This variable controls whether to disable Key-mappings in
 		|Select-mode| when snippets_complete performs.  Usually you
 		had better enable it.
-		Note: It must be set in .vimrc.
-
+		
 				*g:neocomplcache_disable_select_mode_mappings*
 		Note: |g:neocomplcache_disable_select_mode_mappings| is
 		obsolute name.
@@ -151,15 +150,29 @@ g:neosnippet#disable_select_mode_mappings
 
 g:neosnippet#disable_runtime_snippets
 				*g:neosnippet#disable_runtime_snippets*
-		If this variable is 1, runtime snippets won't be loaded.
+		This is dictionary variable. The key is filetype.  If the
+		value is 1, runtime snippets won't be loaded.
+		If the key is "_", it will be used for default filetype.
 		This variable is useful to avoid snippets conflictions.
 		Note: It must be set in .vimrc.
 
+		For example:
+>
+		let g:neosnippet#disable_runtime_snippets = {
+		\   'c' : 1, 'cpp' : 1,
+		\ }
+		
+		" Like g:neocomplcache_snippets_disable_runtime_snippets
+		" behavior.
+		let g:neosnippet#disable_runtime_snippets = {
+		\   '_' : 1,
+		\ }
+<
 			*g:neocomplcache_snippets_disable_runtime_snippets*
 		Note: |g:neocomplcache_snippets_disable_runtime_snippets| is
 		obsolute name.
 
-		Default value is 0.
+		Default value is {}.
 
 ------------------------------------------------------------------------------
 KEY MAPPINGS 					*neosnippet-key-mappings*
@@ -399,6 +412,7 @@ CHANGELOG			*neosnippet-changelog*
 - Changed :NeoSnippetEdit behavior.
 - Added scala snip.
 - Fixed s:get_cursor_snippet().
+- Changed g:neosnippet#disable_runtime_snippets behavior.
 
 2012-10-01
 - Deleted neosnippet#force_expandable().

@@ -28,11 +28,13 @@ let s:save_cpo = &cpo
 set cpo&vim
 
 " Global options definition."{{{
-call neosnippet#util#set_default('g:neosnippet#disable_runtime_snippets',
-      \ 0, 'g:neocomplcache_snippets_disable_runtime_snippets')
-call neosnippet#util#set_default('g:neosnippet#snippets_directory',
+call neosnippet#util#set_default(
+      \ 'g:neosnippet#disable_runtime_snippets', {})
+call neosnippet#util#set_default(
+      \ 'g:neosnippet#snippets_directory',
       \ '', 'g:neocomplcache_snippets_dir')
-call neosnippet#util#set_default('g:neosnippet#disable_select_mode_mappings',
+call neosnippet#util#set_default(
+      \ 'g:neosnippet#disable_select_mode_mappings',
       \ 0, 'g:neocomplcache_disable_select_mode_mappings')
 "}}}
 
@@ -47,18 +49,21 @@ function! s:initialize()"{{{
   " Initialize.
   let s:snippets_expand_stack = []
 
-  let s:snippets_dir = []
-  let s:runtime_dir = split(globpath(&runtimepath,
-        \ 'autoload/neosnippet/snippets'), '\n')
-
-  if !g:neosnippet#disable_runtime_snippets
-    " Set snippets dir.
-    let s:snippets_dir += (exists('g:snippets_dir') ?
-          \ split(g:snippets_dir, '\s*,\s*')
-          \ : split(globpath(&runtimepath, 'snippets'), '\n'))
-          \ + s:runtime_dir
+  if get(g:, 'neocomplcache_snippets_disable_runtime_snippets', 0)
+    " Set for backward compatibility.
+    let g:neosnippet#disable_runtime_snippets._ = 1
   endif
 
+  " Set runtime dir.
+  let s:runtime_dir = split(globpath(&runtimepath,
+        \ 'autoload/neosnippet/snippets'), '\n')
+  let s:runtime_dir += (exists('g:snippets_dir') ?
+        \ split(g:snippets_dir, '\s*,\s*')
+        \ : split(globpath(&runtimepath, 'snippets'), '\n'))
+  call map(s:runtime_dir, 'substitute(v:val, "[\\\\/]$", "", "")')
+
+  " Set snippets_dir.
+  let s:snippets_dir = []
   for dir in split(g:neosnippet#snippets_directory, '\s*,\s*')
     let dir = neosnippet#util#expand(dir)
     if !isdirectory(dir)
@@ -294,15 +299,16 @@ function! neosnippet#make_cache(filetype)"{{{
     let filetype = 'nothing'
   endif
 
+  let snippets_dir = neosnippet#get_snippets_directory()
   let snippet = {}
   let snippets_files =
-        \   split(globpath(join(s:snippets_dir, ','),
+        \   split(globpath(join(snippets_dir, ','),
         \   filetype .  '.snip*'), '\n')
-        \ + split(globpath(join(s:snippets_dir, ','),
+        \ + split(globpath(join(snippets_dir, ','),
         \   filetype .  '_*.snip*'), '\n')
-        \ + split(globpath(join(s:snippets_dir, ','),
+        \ + split(globpath(join(snippets_dir, ','),
         \   filetype .  '/*.snip*'), '\n')
-  for snippets_file in snippets_files
+  for snippets_file in reverse(snippets_files)
     call s:load_snippets(snippet, snippets_file)
   endfor
 
@@ -324,7 +330,9 @@ function! s:load_snippets(snippet, snippets_file)"{{{
     if line =~ '^include'
       " Include snippets.
       let snippet_file = matchstr(line, '^include\s\+\zs.*$')
-      for snippets_file in split(globpath(join(s:snippets_dir, ','),
+
+      for snippets_file in split(globpath(join(
+            \ neosnippet#get_snippets_directory(), ','),
             \ snippet_file), '\n')
         call s:load_snippets(a:snippet, snippets_file)
       endfor
@@ -830,7 +838,14 @@ function! neosnippet#get_snippets()"{{{
           \ || v:val.prev_word ==# %s", string(prev_word)))
 endfunction"}}}
 function! neosnippet#get_snippets_directory()"{{{
-  return s:snippets_dir
+  let snippets_dir = copy(s:snippets_dir)
+  if !get(g:neosnippet#disable_runtime_snippets,
+        \ neosnippet#get_filetype(),
+        \ get(g:neosnippet#disable_runtime_snippets, '_', 0))
+    let snippets_dir += s:runtime_dir
+  endif
+
+  return snippets_dir
 endfunction"}}}
 function! neosnippet#get_filetype()"{{{
   return exists('*neocomplcache#get_context_filetype') ?
