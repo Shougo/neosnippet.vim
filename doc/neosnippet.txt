@@ -141,6 +141,7 @@ g:neosnippet#disable_select_mode_mappings
 		This variable controls whether to disable Key-mappings in
 		|Select-mode| when snippets_complete performs.  Usually you
 		had better enable it.
+		Note: It must be set in .vimrc.
 
 				*g:neocomplcache_disable_select_mode_mappings*
 		Note: |g:neocomplcache_disable_select_mode_mappings| is
@@ -152,6 +153,7 @@ g:neosnippet#disable_runtime_snippets
 				*g:neosnippet#disable_runtime_snippets*
 		If this variable is 1, runtime snippets won't be loaded.
 		This variable is useful to avoid snippets conflictions.
+		Note: It must be set in .vimrc.
 
 			*g:neocomplcache_snippets_disable_runtime_snippets*
 		Note: |g:neocomplcache_snippets_disable_runtime_snippets| is
