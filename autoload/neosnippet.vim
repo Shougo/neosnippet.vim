@@ -241,8 +241,17 @@ function! neosnippet#edit_snippets(args)"{{{
   endif
 
   " Edit snippet file.
-  let filename = (options.runtime ? s:runtime_dir[0] : s:snippets_dir[-1])
-        \ .'/'.filetype.'.snip'
+  let snippet_dir = (options.runtime ? s:runtime_dir[0] : s:snippets_dir[-1])
+  let filename = snippet_dir .'/'.filetype
+
+  if isdirectory(filename)
+    " Edit in snippet directory.
+    let filename .= '/'.filetype
+  endif
+
+  if filename !~ '\.snip*$'
+    let filename .= '.snip'
+  endif
 
   if options.split
     " Split window.

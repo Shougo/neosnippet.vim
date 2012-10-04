@@ -70,6 +70,9 @@ COMMANDS 					*neosnippet-commands*
 					*:NeoSnippetEdit*
 		Opens [filetype] snippets to edit.  It automatically selects
 		current buffer's filetype unless you specify [filetype].
+		
+		If [filetype] snippets has a directory, it automatically edit
+		"[filetype].snip" in [filetype] subdirectory.
 
 		If [filetype] snippet file doesn't exist, it creates one
 		automatically.
@@ -391,6 +394,7 @@ CHANGELOG			*neosnippet-changelog*
 
 2012-10-04
 - Refactored snippets filter.
+- Changed :NeoSnippetEdit behavior.
 
 2012-10-01
 - Deleted neosnippet#force_expandable().
