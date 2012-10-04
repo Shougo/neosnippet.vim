@@ -281,7 +281,7 @@ function! s:initialize_options(options)"{{{
   " Complex initializer.
   if has_key(options, 'horizontal')
     " Disable vertically.
-    let context.vertical = 0
+    let options.vertical = 0
   endif
 
   return options
