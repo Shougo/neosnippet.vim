@@ -418,11 +418,8 @@ function! s:get_prev_word(cur_keyword_str)"{{{
 endfunction"}}}
 function! s:get_cursor_snippet(snippets, cur_text)"{{{
   let cur_word = matchstr(a:cur_text, '\S\+$')
-  while cur_word != '' && !has_key(a:snippets, cur_word)
-    let cur_word = cur_word[1:]
-  endwhile
 
-  return cur_word
+  return has_key(a:snippets, cur_word) ? cur_word : ''
 endfunction"}}}
 function! s:snippets_expand(cur_text, col)"{{{
   let cur_word = s:get_cursor_snippet(
@@ -463,14 +460,7 @@ function! s:snippets_jump(cur_text, col)"{{{
 endfunction"}}}
 function! s:snippets_expand_or_jump(cur_text, col)"{{{
   let cur_word = s:get_cursor_snippet(
-        \ neosnippet#get_snippets(),
-        \ a:cur_text)
-  if cur_word == ''
-    " Check by force_expand.
-    let cur_word = s:get_cursor_snippet(
-          \ neosnippet#get_snippets(),
-          \ a:cur_text)
-  endif
+        \ neosnippet#get_snippets(), a:cur_text)
 
   if cur_word != ''
     " Found snippet trigger.

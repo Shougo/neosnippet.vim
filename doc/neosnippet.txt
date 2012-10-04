@@ -396,6 +396,7 @@ CHANGELOG			*neosnippet-changelog*
 - Refactored snippets filter.
 - Changed :NeoSnippetEdit behavior.
 - Added scala snip.
+- Fixed s:get_cursor_snippet().
 
 2012-10-01
 - Deleted neosnippet#force_expandable().
