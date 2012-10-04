@@ -197,8 +197,8 @@ KEY MAPPINGS 					*neosnippet-key-mappings*
 		Note: |<Plug>(neocomplcache_snippets_force_jump)| is
 		obsolute name.
 
-i_<Plug>(neosnippet_start_snippet)
-				*i_<Plug>(neosnippet_start_snippet)*
+i_<Plug>(neosnippet_start_unite_snippet)
+				*i_<Plug>(neosnippet_start_unite_snippet)*
 		Start unite snippet source.
 
 				*<Plug>(neocomplcache_start_unite_snippet)*
