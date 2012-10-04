@@ -221,11 +221,9 @@ function! s:set_snippet_pattern(dict)"{{{
         \ 'word' : a:dict.name,
         \ 'snip' : a:dict.word, 'abbr' : a:dict.name,
         \ 'description' : a:dict.word,
-        \ 'menu' : menu_pattern . abbr, 'dup' : 1
+        \ 'menu' : menu_pattern.abbr,
+        \ 'dup' : 1, 'is_head' : get(a:dict, 'is_head', 0),
         \}
-  if has_key(a:dict, 'prev_word')
-    let dict.prev_word = a:dict.prev_word
-  endif
   return dict
 endfunction"}}}
 
@@ -370,8 +368,12 @@ function! s:load_snippets(snippet, snippets_file)"{{{
         let snippet_pattern.alias = split(matchstr(line,
               \ '^alias\s\+\zs.*$'), '[,[:space:]]\+')
       elseif line =~ '^prev_word\s'
-        let snippet_pattern.prev_word = matchstr(line,
+        let prev_word = matchstr(line,
               \ '^prev_word\s\+[''"]\zs.*\ze[''"]$')
+        if prev_word == '^'
+          " For backward compatibility.
+          let snippet_pattern.is_head = 1
+        endif
       elseif line =~ '^\s'
         if snippet_pattern.word != ''
           let snippet_pattern.word .= "\n"
@@ -404,25 +406,13 @@ function! s:load_snippets(snippet, snippets_file)"{{{
   return a:snippet
 endfunction"}}}
 
-function! s:get_prev_word(cur_keyword_str)"{{{
+function! s:is_beginning_of_line(cur_text)"{{{
   let keyword_pattern = '\S\+'
-  let line_part = neosnippet#util#get_cur_text()[: -1-len(a:cur_keyword_str)]
+  let cur_keyword_str = matchstr(a:cur_text, keyword_pattern.'$')
+  let line_part = a:cur_text[: -1-len(cur_keyword_str)]
   let prev_word_end = matchend(line_part, keyword_pattern)
-  if prev_word_end > 0
-    let word_end = matchend(line_part, keyword_pattern, prev_word_end)
-    if word_end >= 0
-      while word_end >= 0
-        let prev_word_end = word_end
-        let word_end = matchend(line_part, keyword_pattern, prev_word_end)
-      endwhile
-    endif
 
-    let prev_word = matchstr(line_part[: prev_word_end-1], keyword_pattern . '$')
-  else
-    let prev_word = '^'
-  endif
-
-  return prev_word
+  return prev_word_end <= 0
 endfunction"}}}
 function! s:get_cursor_snippet(snippets, cur_text)"{{{
   let cur_word = matchstr(a:cur_text, '\S\+$')
@@ -830,12 +820,11 @@ function! neosnippet#get_snippets()"{{{
   endfor
   call extend(snippets, copy(s:snippets['_']), 'keep')
 
-  let cur_keyword_str = matchstr(
-        \ neosnippet#util#get_cur_text(), '\S\+$')
-  let prev_word = s:get_prev_word(cur_keyword_str)
+  if !s:is_beginning_of_line(neosnippet#util#get_cur_text())
+    call filter(snippets, '!v:val.is_head')
+  endif
 
-  return filter(snippets, printf("!has_key(v:val, 'prev_word')
-          \ || v:val.prev_word ==# %s", string(prev_word)))
+  return snippets
 endfunction"}}}
 function! neosnippet#get_snippets_directory()"{{{
   let snippets_dir = copy(s:snippets_dir)

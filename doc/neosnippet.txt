@@ -413,6 +413,7 @@ CHANGELOG			*neosnippet-changelog*
 - Added scala snip.
 - Fixed s:get_cursor_snippet().
 - Changed g:neosnippet#disable_runtime_snippets behavior.
+- Changed prev_word behavior.
 
 2012-10-01
 - Deleted neosnippet#force_expandable().
