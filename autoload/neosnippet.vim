@@ -263,7 +263,7 @@ function! s:initialize_options(options)"{{{
   let default_options = {
         \ 'runtime' : 0,
         \ 'vertical' : 0,
-        \ 'direction' : 'belowleft',
+        \ 'direction' : 'below',
         \ 'split' : 0,
         \ }
 
