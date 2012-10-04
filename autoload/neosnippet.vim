@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: neosnippet.vim
 " AUTHOR:  Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 01 Oct 2012.
+" Last Modified: 04 Oct 2012.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -415,13 +415,42 @@ function! s:get_cursor_snippet(snippets, cur_text)"{{{
 
   return cur_word
 endfunction"}}}
-function! s:snippets_force_expand(cur_text, col)"{{{
+function! s:snippets_expand(cur_text, col)"{{{
   let cur_word = s:get_cursor_snippet(
         \ neosnippet#get_snippets(),
         \ a:cur_text)
 
   call neosnippet#expand(
         \ a:cur_text, a:col, cur_word)
+endfunction"}}}
+function! s:snippets_jump(cur_text, col)"{{{
+  " Get patterns and count.
+  if empty(s:snippets_expand_stack)
+    return s:search_outof_range(a:col)
+  endif
+
+  let expand_info = s:snippets_expand_stack[-1]
+  " Search patterns.
+  let [begin, end] = s:get_snippet_range(
+        \ expand_info.begin_line,
+        \ expand_info.begin_patterns,
+        \ expand_info.end_line,
+        \ expand_info.end_patterns)
+  if s:search_snippet_range(begin, end, expand_info.holder_cnt)
+    " Next count.
+    let expand_info.holder_cnt += 1
+    return 1
+  endif
+
+  " Search placeholder 0.
+  if s:search_snippet_range(begin, end, 0)
+    return 1
+  endif
+
+  " Not found.
+  let s:snippets_expand_stack = s:snippets_expand_stack[: -2]
+
+  return s:search_outof_range(a:col)
 endfunction"}}}
 function! s:snippets_expand_or_jump(cur_text, col)"{{{
   let cur_word = s:get_cursor_snippet(
@@ -439,7 +468,7 @@ function! s:snippets_expand_or_jump(cur_text, col)"{{{
     call neosnippet#expand(
           \ a:cur_text, a:col, cur_word)
   else
-    call s:snippets_force_jump(a:cur_text, a:col)
+    call s:snippets_jump(a:cur_text, a:col)
   endif
 endfunction"}}}
 function! s:snippets_jump_or_expand(cur_text, col)"{{{
@@ -448,7 +477,7 @@ function! s:snippets_jump_or_expand(cur_text, col)"{{{
   if search(s:get_placeholder_marker_pattern(). '\|'
             \ .s:get_sync_placeholder_marker_pattern(), 'nw') > 0
     " Found snippet placeholder.
-    call s:snippets_force_jump(a:cur_text, a:col)
+    call s:snippets_jump(a:cur_text, a:col)
   else
     call neosnippet#expand(
           \ a:cur_text, a:col, cur_word)
@@ -534,7 +563,7 @@ function! neosnippet#expand(cur_text, col, trigger_name)"{{{
   endif
 
   if snip_word =~ s:get_placeholder_marker_pattern()
-    call s:snippets_force_jump(a:cur_text, a:col)
+    call s:snippets_jump(a:cur_text, a:col)
   endif
 
   let &l:iminsert = 0
@@ -572,35 +601,6 @@ function! s:indent_snippet(begin, end)"{{{
   let &l:equalprg = equalprg
 endfunction"}}}
 
-function! s:snippets_force_jump(cur_text, col)"{{{
-  " Get patterns and count.
-  if empty(s:snippets_expand_stack)
-    return s:search_outof_range(a:col)
-  endif
-
-  let expand_info = s:snippets_expand_stack[-1]
-  " Search patterns.
-  let [begin, end] = s:get_snippet_range(
-        \ expand_info.begin_line,
-        \ expand_info.begin_patterns,
-        \ expand_info.end_line,
-        \ expand_info.end_patterns)
-  if s:search_snippet_range(begin, end, expand_info.holder_cnt)
-    " Next count.
-    let expand_info.holder_cnt += 1
-    return 1
-  endif
-
-  " Search placeholder 0.
-  if s:search_snippet_range(begin, end, 0)
-    return 1
-  endif
-
-  " Not found.
-  let s:snippets_expand_stack = s:snippets_expand_stack[: -2]
-
-  return s:search_outof_range(a:col)
-endfunction"}}}
 function! s:get_snippet_range(begin_line, begin_patterns, end_line, end_patterns)"{{{
   let pos = getpos('.')
 
@@ -823,7 +823,12 @@ function! neosnippet#get_snippets()"{{{
   endfor
   call extend(snippets, copy(s:snippets['_']), 'keep')
 
-  return snippets
+  let cur_keyword_str = matchstr(
+        \ neosnippet#util#get_cur_text(), '\S\+$')
+  let prev_word = s:get_prev_word(cur_keyword_str)
+
+  return filter(snippets, printf("!has_key(v:val, 'prev_word')
+          \ || v:val.prev_word ==# %s", string(prev_word)))
 endfunction"}}}
 function! neosnippet#get_snippets_directory()"{{{
   return s:snippets_dir
@@ -905,10 +910,10 @@ function! neosnippet#jump_or_expand_impl()
   return s:trigger(s:SID_PREFIX().'snippets_jump_or_expand')
 endfunction
 function! neosnippet#expand_impl()
-  return s:trigger(s:SID_PREFIX().'snippets_force_expand')
+  return s:trigger(s:SID_PREFIX().'snippets_expand')
 endfunction
 function! neosnippet#jump_impl()
-  return s:trigger(s:SID_PREFIX().'snippets_force_jump')
+  return s:trigger(s:SID_PREFIX().'snippets_jump')
 endfunction
 
 if !exists('s:snippets')

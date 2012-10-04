@@ -390,6 +390,9 @@ snippet					*neosnippet-unite-action-snippet*
 ==============================================================================
 CHANGELOG			*neosnippet-changelog*
 
+2012-10-04
+- Refactored snippets filter.
+
 2012-10-01
 - Deleted neosnippet#force_expandable().
 - Improved python snippets.

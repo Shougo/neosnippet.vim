@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: snippets_complete.vim
 " AUTHOR:  Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 30 Sep 2012.
+" Last Modified: 04 Oct 2012.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -62,13 +62,9 @@ endfunction"}}}
 function! s:keyword_filter(list, cur_keyword_str)"{{{
   let keyword_escape = neocomplcache#keyword_escape(a:cur_keyword_str)
 
-  let prev_word = neocomplcache#get_prev_word(a:cur_keyword_str)
   " Keyword filter.
-  let pattern = printf('v:val.word =~ %s &&'.
-        \ '(!has_key(v:val, "prev_word") || v:val.prev_word == %s)',
-        \ string('^' . keyword_escape), string(prev_word))
-
-  let list = filter(a:list, pattern)
+  let list = filter(a:list, printf('v:val.word =~ %s',
+        \ string('^' . keyword_escape)))
 
   " Substitute abbr.
   let abbr_pattern = printf('%%.%ds..%%s',
