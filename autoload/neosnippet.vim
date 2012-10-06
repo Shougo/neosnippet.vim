@@ -266,7 +266,7 @@ function! neosnippet#edit_snippets(args)"{{{
     edit `=filename`
   else
     enew
-    setfiletype snippet
+    silent! setfiletype snippet
     saveas `=filename`
   endif
 endfunction"}}}
