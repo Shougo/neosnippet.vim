@@ -573,9 +573,12 @@ function! s:indent_snippet(begin, end)"{{{
   try
     setlocal equalprg=
 
-    " Indent begin line.
-    call cursor(a:begin, 0)
-    silent normal! ==
+    " Check use of indent plugin.
+    if getline(a:begin+1) !~ '^\t\+'
+      " Indent begin line.
+      call cursor(a:begin, 0)
+      silent normal! ==
+    endif
 
     let base_indent = matchstr(getline(a:begin), '^\s\+')
     for line_nr in range(a:begin+1, a:end)
