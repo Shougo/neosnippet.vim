@@ -74,9 +74,6 @@ COMMANDS 					*neosnippet-commands*
 		If [filetype] snippets has a directory, it automatically edit
 		"[filetype].snip" in [filetype] subdirectory.
 
-		If [filetype] snippet file doesn't exist, it creates one
-		automatically.
-
 		It edits a snippet file in |g:neosnippet#snippets_directory|
 		with precedence.
 		Re-make cache will be done automatically when you save the
@@ -410,6 +407,7 @@ CHANGELOG			*neosnippet-changelog*
 2012-10-06
 - Improved indent snippet behavior.
 - Fixed substitute marker.
+- Fixed for E749.
 
 2012-10-04
 - Refactored snippets filter.
