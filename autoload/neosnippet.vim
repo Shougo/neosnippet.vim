@@ -657,7 +657,7 @@ function! s:search_outof_range(col)"{{{
 
   let pattern = s:get_placeholder_marker_pattern()
   if search(pattern, 'w') > 0
-    call s:expand_placeholder(line('.'), 0, '\d\+', line('.'))
+    call s:expand_placeholder(line('.'), 0, '\\d\\+', line('.'))
     return 1
   endif
 

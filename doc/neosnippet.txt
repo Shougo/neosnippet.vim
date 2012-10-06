@@ -409,6 +409,7 @@ CHANGELOG			*neosnippet-changelog*
 
 2012-10-06
 - Improved indent snippet behavior.
+- Fixed substitute marker.
 
 2012-10-04
 - Refactored snippets filter.
