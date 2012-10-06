@@ -262,7 +262,10 @@ function! neosnippet#edit_snippets(args)"{{{
           \ (options.vertical ? 'vnew' : 'new')
   endif
 
-  edit `=filename`
+  try
+    edit `=filename`
+  catch /^Vim\%((\a\+)\)\=:E749/
+  endtry
 endfunction"}}}
 
 function! s:initialize_options(options)"{{{
