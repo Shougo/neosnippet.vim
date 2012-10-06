@@ -262,13 +262,7 @@ function! neosnippet#edit_snippets(args)"{{{
           \ (options.vertical ? 'vnew' : 'new')
   endif
 
-  if filereadable(filename)
-    edit `=filename`
-  else
-    enew
-    silent! setfiletype snippet
-    saveas `=filename`
-  endif
+  edit `=filename`
 endfunction"}}}
 
 function! s:initialize_options(options)"{{{
