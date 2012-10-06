@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: neosnippet.vim
 " AUTHOR:  Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 04 Oct 2012.
+" Last Modified: 06 Oct 2012.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -568,34 +568,39 @@ function! neosnippet#expand(cur_text, col, trigger_name)"{{{
 endfunction"}}}
 function! s:indent_snippet(begin, end)"{{{
   let equalprg = &l:equalprg
-  setlocal equalprg=
-
   let pos = getpos('.')
 
-  let base_indent = matchstr(getline(a:begin), '^\s\+')
-  for line_nr in range(a:begin+1, a:end)
-    call cursor(line_nr, 0)
+  try
+    setlocal equalprg=
 
-    if getline('.') =~ '^\t\+'
-      " Delete head tab character.
-      let current_line = substitute(getline('.'), '^\t', '', '')
+    " Indent begin line.
+    call cursor(a:begin, 0)
+    silent normal! ==
 
-      if &l:expandtab && current_line =~ '^\t\+'
-        " Expand tab.
-        cal setline('.', substitute(current_line,
-              \ '^\t\+', base_indent . repeat(' ', &shiftwidth *
-              \    len(matchstr(current_line, '^\t\+'))), ''))
-      elseif line_nr != a:begin
-        call setline('.', base_indent . current_line)
+    let base_indent = matchstr(getline(a:begin), '^\s\+')
+    for line_nr in range(a:begin+1, a:end)
+      call cursor(line_nr, 0)
+
+      if getline('.') =~ '^\t\+'
+        " Delete head tab character.
+        let current_line = substitute(getline('.'), '^\t', '', '')
+
+        if &l:expandtab && current_line =~ '^\t\+'
+          " Expand tab.
+          cal setline('.', substitute(current_line,
+                \ '^\t\+', base_indent . repeat(' ', &shiftwidth *
+                \    len(matchstr(current_line, '^\t\+'))), ''))
+        elseif line_nr != a:begin
+          call setline('.', base_indent . current_line)
+        endif
+      else
+        silent normal! ==
       endif
-    else
-      silent normal! ==
-    endif
-  endfor
-
-  call setpos('.', pos)
-
-  let &l:equalprg = equalprg
+    endfor
+  finally
+    let &l:equalprg = equalprg
+    call setpos('.', pos)
+  endtry
 endfunction"}}}
 
 function! s:get_snippet_range(begin_line, begin_patterns, end_line, end_patterns)"{{{

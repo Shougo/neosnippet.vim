@@ -407,6 +407,9 @@ snippet					*neosnippet-unite-action-snippet*
 ==============================================================================
 CHANGELOG			*neosnippet-changelog*
 
+2012-10-06
+- Improved indent snippet behavior.
+
 2012-10-04
 - Refactored snippets filter.
 - Changed :NeoSnippetEdit behavior.
