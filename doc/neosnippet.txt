@@ -64,7 +64,7 @@ COMMANDS 					*neosnippet-commands*
 		current buffer's filetype unless you specify [filetype].
 
 					*:NeoComplCacheCachingSnippets*
-		Note: |:NeoComplCacheCachingSnippets| is obsolute name.
+		Note: |:NeoComplCacheCachingSnippets| is obsolete name.
 
 :NeoSnippetEdit [{options}] [filetype]
 					*:NeoSnippetEdit*
@@ -106,7 +106,7 @@ COMMANDS 					*neosnippet-commands*
 		-runtime
 		Edit runtime snippets instead of user snippets.
 
-		Note: |:NeoComplCacheEditSnippets| is obsolute name.
+		Note: |:NeoComplCacheEditSnippets| is obsolete name.
 
 :NeoComplCacheEdit -runtime [filetype]
 
@@ -115,7 +115,7 @@ COMMANDS 					*neosnippet-commands*
 		file.
 
 					*:NeoComplCacheEditRuntimeSnippets*
-		Note: |:NeoComplCacheEditRuntimeSnippets| is obsolute name.
+		Note: |:NeoComplCacheEditRuntimeSnippets| is obsolete name.
 
 ------------------------------------------------------------------------------
 VARIABLES 					*neosnippet-variables*
@@ -129,7 +129,7 @@ g:neosnippet#snippets_directory		*g:neosnippet#snippets_directory*
 		so redundant snippets will be overwritten.
 
 						*g:neocomplcache_snippets_dir*
-		Note: |g:neocomplcache_snippets_dir| is obsolute name.
+		Note: |g:neocomplcache_snippets_dir| is obsolete name.
 
 		This variable doesn't exist unless you declare it.
 
@@ -141,7 +141,7 @@ g:neosnippet#disable_select_mode_mappings
 		
 				*g:neocomplcache_disable_select_mode_mappings*
 		Note: |g:neocomplcache_disable_select_mode_mappings| is
-		obsolute name.
+		obsolete name.
 
 		Default value is 1.
 
@@ -167,7 +167,7 @@ g:neosnippet#disable_runtime_snippets
 <
 			*g:neocomplcache_snippets_disable_runtime_snippets*
 		Note: |g:neocomplcache_snippets_disable_runtime_snippets| is
-		obsolute name.
+		obsolete name.
 
 		Default value is {}.
 
@@ -180,7 +180,7 @@ KEY MAPPINGS 					*neosnippet-key-mappings*
 		snippet, jumps to the next placeholder.
 
 				*<Plug>(neocomplcache_snippets_expand)*
-		Note: |<Plug>(neocomplcache_snippets_expand)| is obsolute
+		Note: |<Plug>(neocomplcache_snippets_expand)| is obsolete
 		name.
 
 <Plug>(neosnippet_jump_or_expand)
@@ -189,7 +189,7 @@ KEY MAPPINGS 					*neosnippet-key-mappings*
 		multiline cursor snippet.
 
 				*<Plug>(neocomplcache_snippets_jump)*
-		Note: |<Plug>(neocomplcache_snippets_jump)| is obsolute
+		Note: |<Plug>(neocomplcache_snippets_jump)| is obsolete
 		name.
 
 <Plug>(neosnippet_expand)
@@ -198,7 +198,7 @@ KEY MAPPINGS 					*neosnippet-key-mappings*
 
 				*<Plug>(neocomplcache_snippets_force_expand)*
 		Note: |<Plug>(neocomplcache_snippets_force_expand)| is
-		obsolute name.
+		obsolete name.
 
 <Plug>(neosnippet_jump)
 						*<Plug>(neosnippet_jump)*
@@ -207,14 +207,14 @@ KEY MAPPINGS 					*neosnippet-key-mappings*
 
 				*<Plug>(neocomplcache_snippets_force_jump)*
 		Note: |<Plug>(neocomplcache_snippets_force_jump)| is
-		obsolute name.
+		obsolete name.
 
 i_<Plug>(neosnippet_start_unite_snippet)
 				*i_<Plug>(neosnippet_start_unite_snippet)*
 		Start unite snippet source.
 
 				*<Plug>(neocomplcache_start_unite_snippet)*
-		Note: |<Plug>(neocomplcache_start_unite_snippet)| is obsolute
+		Note: |<Plug>(neocomplcache_start_unite_snippet)| is obsolete
 		name.
 
 neosnippet#expandable()
@@ -237,7 +237,7 @@ neosnippet#expandable()
 		|neocomplcache#sources#snippets_complete#expandable()|
 		and
 		|neocomplcache#sources#snippets_complete#force_expandable()|
-		is obsolute name.
+		is obsolete name.
 
 neosnippet#jumpable()
 						*neosnippet#jumpable()*
@@ -247,7 +247,7 @@ neosnippet#jumpable()
 
 		*neocomplcache#sources#snippets_complete#jumpable()*
 		Note: |neocomplcache#sources#snippets_complete#jumpable()| is
-		obsolute name.
+		obsolete name.
 
 ------------------------------------------------------------------------------
 FUNCTIONS					*neosnippet-functions*
@@ -261,7 +261,7 @@ neosnippet#get_snippets_directory()
 		*neocomplcache#sources#snippets_complete#get_snippets_dir()*
 		Note:
 		|neocomplcache#sources#snippets_complete#get_snippets_dir()|
-		is obsolute name.
+		is obsolete name.
 
 ==============================================================================
 EXAMPLES					*neosnippet-examples*
