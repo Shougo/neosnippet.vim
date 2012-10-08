@@ -65,3 +65,11 @@ prev_word   '^'
     function! ${1:func_name}(arglead, cmdline, cursorpos)
         return filter(${2:list}, 'stridx(v:val, a:arglead) == 0')
     endfunction
+
+snippet     augroup
+abbr        augroup with autocmds
+prev_word   '^'
+    augroup ${1}
+        autocmd!
+        autocmd ${2:event}
+    augroup END
