@@ -211,7 +211,9 @@ KEY MAPPINGS 					*neosnippet-key-mappings*
 
 i_<Plug>(neosnippet_start_unite_snippet)
 				*i_<Plug>(neosnippet_start_unite_snippet)*
-		Start unite snippet source.
+		Start unite snippet source. You can expand a snippet by unite
+		interface.
+		Note: |unite.vim| is required.
 
 				*<Plug>(neocomplcache_start_unite_snippet)*
 		Note: |<Plug>(neocomplcache_start_unite_snippet)| is obsolete
