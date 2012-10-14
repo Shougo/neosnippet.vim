@@ -73,7 +73,7 @@ abbr        enum {}
         ${0}
     };
 
-# main function.
+# hard-tab is necessary; C indent doesn't support this.
 snippet main
 	int main(int argc, char const* argv[])
 	{
@@ -119,10 +119,12 @@ snippet typedef
     typedef ${1:base_type} ${2:custom_type};
 
 snippet printf
-    printf("${1}\n"${2});${0}
+abbr    printf("...\n", ...);
+    printf("${1}\n", ${2});
 
 snippet fprintf
-    fprintf(${1:stderr}, "${2}\n"${3});${0}
+abbr    fprintf(..., "...\n", ...);
+    fprintf(${1:stderr}, "${2}\n"${3});
 
 snippet comment
 alias /*
@@ -133,3 +135,10 @@ snippet sizeof
 alias size
     sizeof(${0})
 
+snippet helloworld
+    #include <stdio.h>
+    int main(int argc, char const* argv[])
+    {
+        puts("hello, world!");
+        return 0;
+    }
