@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: snippet.vim
 " AUTHOR:  Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 30 Sep 2012.
+" Last Modified: 15 Oct 2012.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -118,6 +118,20 @@ unlet! s:action_table
 "}}}
 
 function! unite#sources#snippet#start_complete() "{{{
+  if !exists(':Unite')
+    call neosnippet#util#print_error(
+          \ 'unite.vim is not installed.')
+    call neosnippet#util#print_error(
+          \ 'Please install unite.vim Ver.1.5 or above.')
+    return ''
+  elseif unite#version() < 300
+    call neosnippet#util#print_error(
+          \ 'Your unite.vim is too old.')
+    call neosnippet#util#print_error(
+          \ 'Please install unite.vim Ver.3.0 or above.')
+    return ''
+  endif
+
   return unite#start_complete(['snippet'],
         \ { 'input': neosnippet#util#get_cur_text() })
 endfunction "}}}
