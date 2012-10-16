@@ -1,7 +1,7 @@
-*neocomplcache-snippets-complete.txt*
-				neocomplcache complete snippets source
+*neosnippet.txt*
+		neo-snippet plugin contains neocomplcache snippets source
 
-Version: 2.0
+Version: 3.0
 Author : Shougo <Shougo.Matsu@gmail.com>
 License: MIT license  {{{
     Permission is hereby granted, free of charge, to any person obtaining
@@ -23,69 +23,104 @@ License: MIT license  {{{
     SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 }}}
 
-CONTENTS			*neocomplcache-snippets-complete-contents*
+CONTENTS			*neosnippet-contents*
 
-Introduction		|neocomplcache-snippets-complete-introduction|
-Install			|neocomplcache-snippets-complete-install|
-Interface		|neocomplcache-snippets-complete-interface|
-  Commands		  |neocomplcache-snippets-complete-commands|
-  Variables		  |neocomplcache-snippets-complete-variables|
-  Key mappings		  |neocomplcache-snippets-complete-key-mappings|
-  Functions		  |neocomplcache-snippets-complete-functions|
-Examples		|neocomplcache-snippets-complete-examples|
-Snippet syntax		|neocomplcache-snippets-complete-snippet-syntax|
-Changelog		|neocomplcache-snippets-complete-changelog|
+Introduction		|neosnippet-introduction|
+Install			|neosnippet-install|
+Interface		|neosnippet-interface|
+  Commands		  |neosnippet-commands|
+  Variables		  |neosnippet-variables|
+  Key mappings		  |neosnippet-key-mappings|
+  Functions		  |neosnippet-functions|
+Examples		|neosnippet-examples|
+Snippet syntax		|neosnippet-snippet-syntax|
+Changelog		|neosnippet-changelog|
 
 ==============================================================================
-INTRODUCTION					*neocomplcache-snippets-complete-introduction*
+INTRODUCTION					*neosnippet-introduction*
 
 This source analyzes snippet files for completion, offers functionality
 similar to snipMate.vim or snippetsEmu.vim.  Since you can choose snippet with
 neocomplcache interface, you might have less trouble learning it.
 
 ==============================================================================
-INSTALL						*neocomplcache-snippets-complete-install*
+INSTALL						*neosnippet-install*
 
-1: Install neocomplcache (https://github.com/Shougo/neocomplcache).
-2: Extract the file and put files in your Vim directory
+1: Extract the file and put files in your Vim directory
    (usually ~/.vim/ or Program Files/Vim/vimfiles on Windows).
 
+Note: If you want to complete snippets, you must install neocomplcache
+(https://github.com/Shougo/neocomplcache).
+
 ==============================================================================
-INTERFACE					*neocomplcache-snippets-complete-interface*
+INTERFACE					*neosnippet-interface*
 
 ------------------------------------------------------------------------------
-COMMANDS 					*neocomplcache-snippets-complete-commands*
+COMMANDS 					*neosnippet-commands*
 
-:NeoComplCacheCachingSnippets [filetype]	*:NeoComplCacheCachingSnippets*
+:NeoSnippetMakeCache [filetype]
+						*:NeoSnippetMakeCache*
 		Makes cache of [filetype] snippets.  It automatically selects
 		current buffer's filetype unless you specify [filetype].
 
-:NeoComplCacheEditSnippets [filetype]		*:NeoComplCacheEditSnippets*
+					*:NeoComplCacheCachingSnippets*
+		Note: |:NeoComplCacheCachingSnippets| is obsolete name.
+
+:NeoSnippetEdit [{options}] [filetype]
+					*:NeoSnippetEdit*
 		Opens [filetype] snippets to edit.  It automatically selects
 		current buffer's filetype unless you specify [filetype].
+		
+		If [filetype] snippets has a directory, it automatically edit
+		"[filetype].snip" in [filetype] subdirectory.
 
-		If [filetype] snippet file doesn't exist, it creates one
-		automatically.
+		It edits a snippet file in |g:neosnippet#snippets_directory|
+		with precedence.
+		Re-make cache will be done automatically when you save the
+		file.
 
-		This command edits a snippet file in
-		|g:neocomplcache_snippets_dir| with precedence.
-		Re-cache will be done automatically when you save the file.
+					*:NeoComplCacheEditSnippets*
+		{options} are options for the command.  You may give the
+		following parameters for a option; you must escape with "\"
+		when it contains spaces.
 
-:NeoComplCacheEditRuntimeSnippets [filetype]	*:NeoComplCacheEditRuntimeSnippets*
-		Opens [filetype] snippets to edit.  It automatically selects
-		current buffer's filetype unless you specify [filetype].
+					*neosnippet-edit-options-vertical*
+		-vertical
+		Splits window vertically.
 
-		If [filetype] snippet file doesn't exist, it creates one
-		automatically.
+					*neosnippet-edit-options-horizontal*
+		-horizontal
+		Splits window horizontally.
+		
+		The behavior is undefined when both options are defined.
 
-		This command edits a runtime snippet file with
-		snippets_complete.  Re-cache will be done automatically when
-		you save the file.
+					*neosnippet-edit-options-direction*
+		-direction={direction}
+		Defines split position rule. The default value is "belowleft".
+
+					*neosnippet-edit-options-split*
+		-split
+		Split buffer.
+
+					*neosnippet-edit-options-runtime*
+		-runtime
+		Edit runtime snippets instead of user snippets.
+
+		Note: |:NeoComplCacheEditSnippets| is obsolete name.
+
+:NeoComplCacheEdit -runtime [filetype]
+
+		It edits a runtime snippet file with neosnippet.
+		Re-make cache will be done automatically when you save the
+		file.
+
+					*:NeoComplCacheEditRuntimeSnippets*
+		Note: |:NeoComplCacheEditRuntimeSnippets| is obsolete name.
 
 ------------------------------------------------------------------------------
-VARIABLES 					*neocomplcache-snippets-complete-variables*
+VARIABLES 					*neosnippet-variables*
 
-g:neocomplcache_snippets_dir			*g:neocomplcache_snippets_dir*
+g:neosnippet#snippets_directory		*g:neosnippet#snippets_directory*
 		This variable appoints a path to user-defined snippet files.
 		You can set multiple values in comma-separated form.
 		If the directory doesn't exist, it is ignored.
@@ -93,49 +128,99 @@ g:neocomplcache_snippets_dir			*g:neocomplcache_snippets_dir*
 		User defined snippets were read after normal snippet files,
 		so redundant snippets will be overwritten.
 
+						*g:neocomplcache_snippets_dir*
+		Note: |g:neocomplcache_snippets_dir| is obsolete name.
+
 		This variable doesn't exist unless you declare it.
 
-g:neocomplcache_disable_select_mode_mappings	*g:neocomplcache_disable_select_mode_mappings*
+g:neosnippet#disable_select_mode_mappings
+				*g:neosnippet#disable_select_mode_mappings*
 		This variable controls whether to disable Key-mappings in
 		|Select-mode| when snippets_complete performs.  Usually you
 		had better enable it.
+		
+				*g:neocomplcache_disable_select_mode_mappings*
+		Note: |g:neocomplcache_disable_select_mode_mappings| is
+		obsolete name.
 
 		Default value is 1.
 
-g:neocomplcache_snippets_disable_runtime_snippets
-						*g:neocomplcache_snippets_disable_runtime_snippets*
-		If this variable is 1, runtime snippets won't be loaded.
+g:neosnippet#disable_runtime_snippets
+				*g:neosnippet#disable_runtime_snippets*
+		This is dictionary variable. The key is filetype.  If the
+		value is 1, runtime snippets won't be loaded.
+		If the key is "_", it will be used for default filetype.
 		This variable is useful to avoid snippets conflictions.
+		Note: It must be set in .vimrc.
 
-		Default value is 0.
+		For example:
+>
+		let g:neosnippet#disable_runtime_snippets = {
+		\   'c' : 1, 'cpp' : 1,
+		\ }
+		
+		" Like g:neocomplcache_snippets_disable_runtime_snippets
+		" behavior.
+		let g:neosnippet#disable_runtime_snippets = {
+		\   '_' : 1,
+		\ }
+<
+			*g:neocomplcache_snippets_disable_runtime_snippets*
+		Note: |g:neocomplcache_snippets_disable_runtime_snippets| is
+		obsolete name.
+
+		Default value is {}.
 
 ------------------------------------------------------------------------------
-KEY MAPPINGS 					*neocomplcache-snippets-complete-key-mappings*
+KEY MAPPINGS 					*neosnippet-key-mappings*
 
-<Plug>(neocomplcache_snippets_expand)		*<Plug>(neocomplcache_snippets_expand)*
+<Plug>(neosnippet_expand_or_jump)
+					*<Plug>(neosnippet_expand_or_jump)*
 		Expands a cursor snippet of plural lines. When there is no
 		snippet, jumps to the next placeholder.
 
-		Note: It searches cursor snippet from keyword patterns in the
-		first.
+				*<Plug>(neocomplcache_snippets_expand)*
+		Note: |<Plug>(neocomplcache_snippets_expand)| is obsolete
+		name.
 
-<Plug>(neocomplcache_snippets_jump)		*<Plug>(neocomplcache_snippets_jump)*
+<Plug>(neosnippet_jump_or_expand)
+				*<Plug>(neosnippet_jump_or_expand)*
 		Jump to next placeholder. If there is no placeholder, expand a
 		multiline cursor snippet.
 
-<Plug>(neocomplcache_snippets_force_expand)	*<Plug>(neocomplcache_snippets_force_expand)*
+				*<Plug>(neocomplcache_snippets_jump)*
+		Note: |<Plug>(neocomplcache_snippets_jump)| is obsolete
+		name.
+
+<Plug>(neosnippet_expand)
+						*<Plug>(neosnippet_expand)*
 		Expand a cursor snippet. Does nothing if there is no snippet.
 
-<Plug>(neocomplcache_snippets_force_jump)	*<Plug>(neocomplcache_snippets_force_jump)*
+				*<Plug>(neocomplcache_snippets_force_expand)*
+		Note: |<Plug>(neocomplcache_snippets_force_expand)| is
+		obsolete name.
+
+<Plug>(neosnippet_jump)
+						*<Plug>(neosnippet_jump)*
 		Jump to next place holder. Do not expand any snippet. When
 		you do not want to expand a snippet name, use this keymapping.
 
-<Plug>(neocomplcache_start_unite_snippet)	*<Plug>(neocomplcache_start_unite_snippet)*
-		Start unite snippet source.
-		Note: This mappings is available in insert mode.
+				*<Plug>(neocomplcache_snippets_force_jump)*
+		Note: |<Plug>(neocomplcache_snippets_force_jump)| is
+		obsolete name.
 
-neocomplcache#sources#snippets_complete#expandable()
-						*neocomplcache#sources#snippets_complete#expandable()*
+i_<Plug>(neosnippet_start_unite_snippet)
+				*i_<Plug>(neosnippet_start_unite_snippet)*
+		Start unite snippet source. You can expand a snippet by unite
+		interface.
+		Note: |unite.vim| is required.
+
+				*<Plug>(neocomplcache_start_unite_snippet)*
+		Note: |<Plug>(neocomplcache_start_unite_snippet)| is obsolete
+		name.
+
+neosnippet#expandable()
+						*neosnippet#expandable()*
 		Use this function with imap <expr>. It checks whether cursor
 		text is a snippet trigger or a placeholder exists in the
 		current buffer. It's useful for saving keymappings.
@@ -145,39 +230,55 @@ neocomplcache#sources#snippets_complete#expandable()
 		2: a placeholder exists in the current buffer
 		3: both found
 >
-		imap <expr><C-l> neocomplcache#sources#snippets_complete#expandable() ?
-		\ "\<Plug>(neocomplcache_snippets_expand)" : "\<C-n>"
+		imap <expr><C-l> neosnippet#expandable() ?
+		\ "\<Plug>(neosnippet_expand_or_jump)" : "\<C-n>"
 <
-neocomplcache#sources#snippets_complete#force_expandable()
-						*neocomplcache#sources#snippets_complete#force_expandable()*
-		Use this function with imap <expr>. It checks whether cursor
-		text is snippet trigger. Useful for saving keymappings.
+		*neocomplcache#sources#snippets_complete#expandable()*
+		*neocomplcache#sources#snippets_complete#force_expandable()*
+		Note:
+		|neocomplcache#sources#snippets_complete#expandable()|
+		and
+		|neocomplcache#sources#snippets_complete#force_expandable()|
+		is obsolete name.
 
-neocomplcache#sources#snippets_complete#jumpable()
-						*neocomplcache#sources#snippets_complete#jumpable()*
+neosnippet#jumpable()
+						*neosnippet#jumpable()*
 		Use this function with imap <expr>. It checks whether cursor
 		text is an existing placeholder in current buffer.
 		Useful for saving keymappings.
 
-------------------------------------------------------------------------------
-FUNCTIONS					*neocomplcache-snippets-complete-functions*
+		*neocomplcache#sources#snippets_complete#jumpable()*
+		Note: |neocomplcache#sources#snippets_complete#jumpable()| is
+		obsolete name.
 
-neocomplcache#sources#snippets_complete#get_snippets_dir()
-						*neocomplcache#sources#snippets_complete#get_snippets_dir()*
+------------------------------------------------------------------------------
+FUNCTIONS					*neosnippet-functions*
+
+neosnippet#get_snippets_directory()
+					*neosnippet#get_snippets_directory()*
 		Gets snippet directories. This directories contain runtime
-		snippets directories and |g:neocomplcache_snippets_dir|
+		snippets directories and |g:neosnippet#snippets_directory|
 		directories.
 
+		*neocomplcache#sources#snippets_complete#get_snippets_dir()*
+		Note:
+		|neocomplcache#sources#snippets_complete#get_snippets_dir()|
+		is obsolete name.
+
 ==============================================================================
-EXAMPLES					*neocomplcache-snippets-complete-examples*
+EXAMPLES					*neosnippet-examples*
 >
 	" Plugin key-mappings.
-	imap <C-k>     <Plug>(neocomplcache_snippets_expand)
-	smap <C-k>     <Plug>(neocomplcache_snippets_expand)
+	imap <C-k>     <Plug>(neosnippet_expand_or_jump)
+	smap <C-k>     <Plug>(neosnippet_expand_or_jump)
 
 	" SuperTab like snippets behavior.
-	"imap <expr><TAB> neocomplcache#sources#snippets_complete#expandable() ?
-	" \ "\<Plug>(neocomplcache_snippets_expand)" : pumvisible() ? "\<C-n>" : "\<TAB>"
+	"imap <expr><TAB> neosnippet#expandable() ?
+	" \ "\<Plug>(neosnippet_expand_or_jump)"
+	" \: pumvisible() ? "\<C-n>" : "\<TAB>"
+	"smap <expr><TAB> neosnippet#expandable() ?
+	" \ "\<Plug>(neosnippet_expand_or_jump)"
+	" \: "\<TAB>"
 
 	" For snippet_complete marker.
 	if has('conceal')
@@ -185,7 +286,7 @@ EXAMPLES					*neocomplcache-snippets-complete-examples*
 	endif
 <
 ==============================================================================
-SNIPPET SYNTAX					*neocomplcache-snippets-complete-snippet-syntax*
+SNIPPET SYNTAX					*neosnippet-snippet-syntax*
 
 The snippet syntax is similar to |snipMate|.
 
@@ -199,7 +300,8 @@ Example:
 	    endif
 <
 snippet {snippet_name} syntax is the snippet name.
-abbr {abbr_name} is the completion abbrevation (same to completion "abbr" key).
+abbr {abbr_name} is the completion abbrevation (same to completion "abbr"
+key).
 prev_word '^' means this snippet is enabled only in line head.
 
 By the way, it is warned that the snippet name was already defined by other
@@ -222,14 +324,14 @@ Eval snippet feature is available.
 	prev_word   '^'
 	    `expand("%")`
 <
-If you use |:NeoComplCacheEditSnippets| command for easy snippet editing, the
-file will be loaded automatically when you save the file.
+If you use |:NeoSnippetEdit| command for easy snippet editing, the file will
+be loaded automatically when you save the file.
 
-Neocomplcache doesn't map snippet-expand key by default. If you want to use
+Neosnippet doesn't map snippet-expand key by default. If you want to use
 snippet feature, you can define below mappings in your .vimrc:
 >
-	imap <C-l>    <Plug>(neocomplcache_snippets_expand)
-	smap <C-l>    <Plug>(neocomplcache_snippets_expand)
+	imap <C-l>    <Plug>(neosnippet_expand_or_jump)
+	smap <C-l>    <Plug>(neosnippet_expand_or_jump)
 <
 
 Placeholder feature is available.
@@ -242,7 +344,7 @@ Placeholder feature is available.
 	    endif
 <
 '_' snippet feature is supported. '_' snippet is loaded in all filetypes.
-And neocomplcache can load snipMate snippets.
+And neosnippet can load snipMate snippets.
 
 Alias feature is supported. Separator is ' ' or ','.
 >
@@ -258,7 +360,7 @@ The placeholder value can't contain new lines. Below snippet is illegal:
 			${3:# do smth}}
 <
 Multi snippet feature is supported in snipMate.
-neocomplcache substitutes trigger and descriptions spaces to '_'.
+neosnippet substitutes trigger and descriptions spaces to '_'.
 >
 	snippet trigger description1
 		hoge
@@ -266,7 +368,7 @@ neocomplcache substitutes trigger and descriptions spaces to '_'.
 		piyo
 <
 You choose snippet <C-n> or <C-p> and expand it with
-|<Plug>(neocomplcache_snippets_expand)| key-mappings.
+|<Plug>(neosnippet_expand_or_jump)| key-mappings.
 
 Nested placeholder feature is supported.
 But must escape inner '}'. '\' is eacape sequence.
@@ -274,7 +376,7 @@ But must escape inner '}'. '\' is eacape sequence.
 	snippet div
 	<div ${1:id="${2:someid\}"}>${3}</div>${4}
 <
-If you use hard tab for indentation in snippet file, neocomplcache will use
+If you use hard tab for indentation in snippet file, neosnippet will use
 'shiftwidth' instead of Vim indent plugin. This feature is useful while some
 languages' indent files can not work very well (e.g.: PHP, Python).
 >
@@ -284,27 +386,70 @@ languages' indent files can not work very well (e.g.: PHP, Python).
 		}
 <
 ==============================================================================
-UNITE SOURCES					*neocomplcache-snippets-complete-unite-sources*
+UNITE SOURCES					*neosnippet-unite-sources*
 
-						*neocomplcache-snippets-complete-unite-source-snippet*
+					*neosnippet-unite-source-snippet*
 snippet
-		The candidates are neocomplcache snippets. The kinds are "snippet".
-		Normally used in |<Plug>(neocomplcache_start_unite_snippet)| mappings.
+		The candidates are neosnippet snippets. The kinds are
+		"snippet".  Normally used in
+		|<Plug>(neosnippet_start_unite_snippet)| mappings.
 		But you can execute it by ":Unite snippet".
 		You can edit snippet file in "edit" action.
 		Examples:
 >
-		imap <C-s>  <Plug>(neocomplcache_start_unite_snippet)
+		imap <C-s>  <Plug>(neosnippet_start_unite_snippet)
 <
 source actions
 
-snippet						*neocomplcache-snippets-complete-unite-action-snippet*
+snippet					*neosnippet-unite-action-snippet*
 	expand		Expand snippet (default action)
 	edit		Edit snippet
 	preview		View snippet definition
 
 ==============================================================================
-CHANGELOG			*neocomplcache-snippets-complete-changelog*
+CHANGELOG			*neosnippet-changelog*
+
+2012-10-07
+- Improved vim snip.
+- Improved c snip.
+
+2012-10-06
+- Improved indent snippet behavior.
+- Fixed substitute marker.
+- Fixed for E749.
+
+2012-10-04
+- Refactored snippets filter.
+- Changed :NeoSnippetEdit behavior.
+- Added scala snip.
+- Fixed s:get_cursor_snippet().
+- Changed g:neosnippet#disable_runtime_snippets behavior.
+- Changed prev_word behavior.
+
+2012-10-01
+- Deleted neosnippet#force_expandable().
+- Improved python snippets.
+
+2012-09-30
+- Changed runtime directory.
+- Vitalized.
+- Deleted neocomplcache#util functions.
+- Refactored variables.
+- Deleted s:get_cursor_keyword_snippet().
+- Improved for filetype.
+- Improved filetype complete.
+- Improved documentation.
+- Changed neocomplcache source behavior.
+- Renamed commands.
+- Fixed snippet source errors.
+
+2012-09-27
+- Ver.3 development is started.
+- Renamed documentation.
+- Renamed keymappings.
+
+------------------------------------------------------------------------------
+ChangeLog 2.0:
 
 2012-09-27
 - Improved add placeholder behavior.

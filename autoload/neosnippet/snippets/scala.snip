@@ -1,0 +1,42 @@
+snippet     match
+abbr        match {\n  case .. => ..
+	match {
+		case ${1} => ${0}
+	}
+
+snippet     try
+abbr        try {} catch { case ... }
+prev_word   '^'
+	try {
+		${1}
+	} catch {
+		case e${2:: Exception} => ${0}
+	}
+
+snippet     p
+abbr        println()
+prev_word   '^'
+	println(${1})${0}
+
+snippet     pn
+abbr        println('name, name)
+prev_word   '^'
+	println('${1:name}, $1)${0}
+
+snippet     main
+abbr        def main(args: Array[String]) {
+prev_word   '^'
+	def main(args: Array[String]) {
+		${0}
+	}
+
+snippet     hello
+abbr        object HelloWorld { def main(...) }
+	object HelloWorld {
+		def main(args: Array[String]) {
+			println("Hello, world!")
+		}
+	}
+
+# scala's indent plugin doesn't work well. use hard-tab for this snippet.
+# vim: set noexpandtab :
