@@ -63,3 +63,13 @@ abbr        const_cast<>()
 snippet     dynamic_cast
 abbr        dynamic_cast<>()
     dynamic_cast<${1}>(${2})${0}
+
+snippet helloworld
+abbr        #include<iostream>\nint main...
+    #include <iostream>
+    int main(int argc, char const* argv[])
+    {
+        using namespace std;
+        cout << "hello, world!" << endl;
+        return 0;
+    }

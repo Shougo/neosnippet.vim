@@ -411,6 +411,7 @@ CHANGELOG			*neosnippet-changelog*
 
 2012-10-15
 - Improved lua snip.
+- Improved c++ snip.
 
 2012-10-07
 - Improved vim snip.
