@@ -686,7 +686,7 @@ function! s:expand_placeholder(start, end, holder_cnt, line)"{{{
         \ s:get_placeholder_marker_default_pattern(),
         \ '\\d\\+', a:holder_cnt, '')
   let default = substitute(
-        \ matchstr(current_line, default_pattern), '\\\ze.', '', 'g')
+        \ matchstr(current_line, default_pattern), '\\\ze[^\\]', '', 'g')
   " Substitute marker.
   let default = substitute(default,
         \ s:get_placeholder_marker_substitute_pattern(),
