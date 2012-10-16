@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: snippets_complete.vim
 " AUTHOR:  Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 06 Oct 2012.
+" Last Modified: 17 Oct 2012.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -60,11 +60,18 @@ function! s:source.get_complete_words(cur_keyword_pos, cur_keyword_str)"{{{
 endfunction"}}}
 
 function! s:keyword_filter(list, cur_keyword_str)"{{{
-  let keyword_escape = neocomplcache#keyword_escape(a:cur_keyword_str)
-
   " Keyword filter.
-  let list = filter(a:list, printf('v:val.word =~ %s',
-        \ string('^' . keyword_escape)))
+
+  " Uniq by real_name.
+  let dict = {}
+  for snippet in neocomplcache#keyword_filter(a:list, a:cur_keyword_str)
+    if !has_key(dict, snippet.real_name) ||
+          \ len(dict[snippet.real_name].word) > len(snippet.word)
+      let dict[snippet.real_name] = snippet
+    endif
+  endfor
+
+  let list = values(dict)
 
   " Substitute abbr.
   let abbr_pattern = printf('%%.%ds..%%s',

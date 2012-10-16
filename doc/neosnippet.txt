@@ -409,6 +409,9 @@ snippet					*neosnippet-unite-action-snippet*
 ==============================================================================
 CHANGELOG			*neosnippet-changelog*
 
+2012-10-17
+- Fixed alias problem.
+
 2012-10-15
 - Improved lua snip.
 - Improved c++ snip.

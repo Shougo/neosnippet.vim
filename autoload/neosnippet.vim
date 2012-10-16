@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: neosnippet.vim
 " AUTHOR:  Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 06 Oct 2012.
+" Last Modified: 17 Oct 2012.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -218,8 +218,7 @@ function! s:set_snippet_pattern(dict)"{{{
         \   '\|\s\+\|\n', ' ', 'g'))
 
   let dict = {
-        \ 'word' : a:dict.name,
-        \ 'snip' : a:dict.word, 'abbr' : a:dict.name,
+        \ 'word' : a:dict.name, 'snip' : a:dict.word,
         \ 'description' : a:dict.word,
         \ 'menu' : menu_pattern.abbr,
         \ 'dup' : 1, 'is_head' : get(a:dict, 'is_head', 0),
