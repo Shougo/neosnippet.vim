@@ -35,3 +35,41 @@ snippet     enum_scoped
 abbr        enum struct {}
     enum struct { ${1} }
 
+# static assert ( C++11 feature )
+snippet     static_assert
+abbr        static_assert(,"")
+    static_assert( ${1}, "${2}" );${0}
+
+delete      namespace
+snippet     namespace
+abbr        namespace {}
+prev_word   '^'
+    namespace ${1:name}
+        ${0}
+    } // namespace $1
+
+snippet     static_cast
+abbr        static_cast<>()
+    static_cast<${1}>(${2})${0}
+
+snippet     reinterpret_cast
+abbr        reinterpret_cast<>()
+    reinterpret_cast<${1}>(${2})${0}
+
+snippet     const_cast
+abbr        const_cast<>()
+    const_cast<${1}>(${2})${0}
+
+snippet     dynamic_cast
+abbr        dynamic_cast<>()
+    dynamic_cast<${1}>(${2})${0}
+
+snippet helloworld
+abbr        #include<iostream>\nint main...
+    #include <iostream>
+    int main(int argc, char const* argv[])
+    {
+        using namespace std;
+        cout << "hello, world!" << endl;
+        return 0;
+    }

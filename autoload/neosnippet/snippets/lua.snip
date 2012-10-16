@@ -1,8 +1,9 @@
+# lua's indent plugin doesn't work well partly with markers. Use hard-tab for some of this snippet.
 snippet func
 alias   function
-  function ${1:function_name}(${2:argument})
-    ${0:// body...}
-  end
+	function ${1:function_name}(${2:argument})
+		${0:// body...}
+	end
 
 snippet if
   if (${1:true}) then
@@ -17,4 +18,10 @@ snippet for
 snippet forin
   for ${2:k}, ${3:v} in ${1:ipairs(xs)} do
     ${0}
+  end
+
+snippet print_table
+abbr    for k, v in ipairs(table) do
+  for (k, v) in ipairs(${1:table}) do
+    print(k, v)
   end
