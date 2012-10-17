@@ -319,6 +319,11 @@ Snippet include feature is available.
 >
 	include c.snip
 <
+If you want to include a whole filetype directory snippets.
+>
+	include javascript/*
+<
+
 Eval snippet feature is available.
 >
 	snippet     hoge
