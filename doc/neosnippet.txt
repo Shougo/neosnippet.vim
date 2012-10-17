@@ -148,7 +148,8 @@ g:neosnippet#disable_select_mode_mappings
 g:neosnippet#disable_runtime_snippets
 				*g:neosnippet#disable_runtime_snippets*
 		This is dictionary variable. The key is filetype.  If the
-		value is 1, runtime snippets won't be loaded.
+		value is 1, all runtime snippets won't be loaded in the
+		specified filetype.
 		If the key is "_", it will be used for default filetype.
 		This variable is useful to avoid snippets conflictions.
 		Note: It must be set in .vimrc.
