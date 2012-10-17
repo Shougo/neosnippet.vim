@@ -160,7 +160,7 @@ g:neosnippet#disable_runtime_snippets
 		\ }
 		
 		" Like g:neocomplcache_snippets_disable_runtime_snippets
-		" behavior.
+		" behavior(all runtime snippets are disabled).
 		let g:neosnippet#disable_runtime_snippets = {
 		\   '_' : 1,
 		\ }
