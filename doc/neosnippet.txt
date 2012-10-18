@@ -419,6 +419,7 @@ CHANGELOG			*neosnippet-changelog*
 - Fixed alias problem.
 - Improved escape placeholder.
 - Fixed s:get_sources_list().
+- Added unite__new_candidate action in snippet source.
 
 2012-10-15
 - Improved lua snip.

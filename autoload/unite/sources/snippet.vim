@@ -114,6 +114,30 @@ function! s:action_table.preview.func(candidates)"{{{
   endfor
 endfunction"}}}
 
+let s:action_table.unite__new_candidate = {
+      \ 'description' : 'add new snippet',
+      \ 'is_quit' : 1,
+      \ }
+function! s:action_table.unite__new_candidate.func(candidate)"{{{
+  call unite#take_action('open', a:candidate)
+  if &filetype != 'snippet'
+    " Open failed.
+    return
+  endif
+
+  if getline('$') != ''
+    " Append line.
+    call append('$', '')
+  endif
+
+  call append('$', ['snippet     ', 'abbr        ',
+        \ "prev_word   '^'", '    '])
+
+  call cursor(line('$') - 3, 0)
+  call cursor(0, col('$'))
+endfunction"}}}
+
+
 let s:source.action_table = s:action_table
 unlet! s:action_table
 "}}}
