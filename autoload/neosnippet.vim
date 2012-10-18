@@ -209,7 +209,8 @@ endfunction"}}}
 function! s:set_snippet_pattern(dict)"{{{
   let a:dict.word = substitute(a:dict.word, '\n$', '', '')
   let menu_pattern = (a:dict.word =~
-        \ s:get_placeholder_marker_substitute_pattern()) ?
+        \ s:get_placeholder_marker_substitute_pattern()
+        \ . '.*' . s:get_placeholder_marker_substitute_pattern()) ?
         \ '<Snip> ' : '[Snip] '
 
   let abbr = get(a:dict, 'abbr', substitute(a:dict.word,
