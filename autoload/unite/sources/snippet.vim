@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: snippet.vim
 " AUTHOR:  Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 15 Oct 2012.
+" Last Modified: 18 Oct 2012.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -73,6 +73,7 @@ function! s:source.gather_candidates(args, context) "{{{
         \   'action__pattern' : keyword.action__pattern,
         \   'source__menu' : keyword.menu,
         \   'source__snip' : keyword.snip,
+        \   'source__snip_ref' : keyword,
         \ }
 
     call add(list, dict)
@@ -113,7 +114,7 @@ function! s:action_table.preview.func(candidates)"{{{
   endfor
 endfunction"}}}
 
-let s:source.action_table['*'] = s:action_table
+let s:source.action_table = s:action_table
 unlet! s:action_table
 "}}}
 

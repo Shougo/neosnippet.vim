@@ -418,6 +418,7 @@ CHANGELOG			*neosnippet-changelog*
 2012-10-17
 - Fixed alias problem.
 - Improved escape placeholder.
+- Fixed s:get_sources_list().
 
 2012-10-15
 - Improved lua snip.

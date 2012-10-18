@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: neosnippet.vim
 " AUTHOR:  Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 17 Oct 2012.
+" Last Modified: 18 Oct 2012.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -815,11 +815,8 @@ function! neosnippet#get_snippets()"{{{
     call neosnippet#make_cache('_')
   endif
 
-  " Get buffer filetype.
-  let filetype = neosnippet#get_filetype()
-
   let snippets = {}
-  for source in s:get_sources_list(s:snippets, filetype)
+  for source in s:get_sources_list(s:snippets, neosnippet#get_filetype())
       call extend(snippets, source, 'keep')
   endfor
   call extend(snippets, copy(s:snippets['_']), 'keep')
@@ -846,7 +843,8 @@ function! neosnippet#get_filetype()"{{{
 endfunction"}}}
 function! s:get_sources_list(snippets, filetype)"{{{
   return exists('*neocomplcache#get_sources_list') ?
-        \ neocomplcache#get_sources_list(a:snippets, a:filetype) : a:filetype
+        \ neocomplcache#get_sources_list(a:snippets, a:filetype) :
+        \ get(a:snippets, a:filetype, [])
 endfunction"}}}
 
 function! neosnippet#edit_complete(arglead, cmdline, cursorpos)"{{{
