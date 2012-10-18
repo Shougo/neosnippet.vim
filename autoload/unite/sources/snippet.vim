@@ -119,6 +119,12 @@ let s:action_table.unite__new_candidate = {
       \ 'is_quit' : 1,
       \ }
 function! s:action_table.unite__new_candidate.func(candidate)"{{{
+  let trigger = unite#util#input('Please input snippet trigger: ')
+  if trigger == ''
+    echo 'Canceled.'
+    return
+  endif
+
   call unite#take_action('open', a:candidate)
   if &filetype != 'snippet'
     " Open failed.
@@ -130,10 +136,10 @@ function! s:action_table.unite__new_candidate.func(candidate)"{{{
     call append('$', '')
   endif
 
-  call append('$', ['snippet     ', 'abbr        ',
+  call append('$', ['snippet     ' . trigger, 'abbr        ' . trigger,
         \ "prev_word   '^'", '    '])
 
-  call cursor(line('$') - 3, 0)
+  call cursor(line('$'), 0)
   call cursor(0, col('$'))
 endfunction"}}}
 
