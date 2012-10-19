@@ -296,7 +296,7 @@ Example:
 	snippet     if
 	abbr        if endif
 	prev_word   '^'
-	    if $<1:condition>
+	    if ${1:condition}
 	        ${2}
 	    endif
 <
@@ -340,7 +340,7 @@ snippet feature, you can define below mappings in your .vimrc:
 	smap <C-l>    <Plug>(neosnippet_expand_or_jump)
 <
 
-Placeholder feature is available.
+Placeholder feature is available. The string after ":" is default value.
 >
 	snippet     if
 	abbr        if endif
@@ -349,8 +349,13 @@ Placeholder feature is available.
 	        ${2}
 	    endif
 <
-'_' snippet feature is supported. '_' snippet is loaded in all filetypes.
-And neosnippet can load snipMate snippets.
+Note: To contain "}" character in default value, you must escape "}".
+>
+	snippet test
+	    ${1:escape \} value}
+<
+'_' (global) snippet feature is supported. '_' snippet is loaded in all
+filetypes.  And neosnippet can load snipMate snippets.
 
 Alias feature is supported. Separator is ' ' or ','.
 >
@@ -362,26 +367,36 @@ When you jump next, it is synchlonized. $0 is last jump placeholder.
 The placeholder value can't contain new lines. Below snippet is illegal:
 >
 	snippet test
-		${1:constructor: (${2:args\}) ->
-			${3:# do smth}}
+	    ${1:constructor: (${2:args\}) ->
+	        ${3:# do smth}}
 <
 Multi snippet feature is supported in snipMate.
 neosnippet substitutes trigger and descriptions spaces to '_'.
 >
 	snippet trigger description1
-		hoge
+	    hoge
 	snippet trigger description2
-		piyo
+	    piyo
 <
 You choose snippet <C-n> or <C-p> and expand it with
 |<Plug>(neosnippet_expand_or_jump)| key-mappings.
 
 Nested placeholder feature is supported.
-But must escape inner '}'. '\' is eacape sequence.
+But must escape inner "}". "\" is eacape sequence.
 >
 	snippet div
-	<div ${1:id="${2:someid\}"}>${3}</div>${4}
+	    <div ${1:id="${2:someid\}"}>${3}</div>${4}
 <
+In following snippet, you must escape "}" twice.
+>
+	snippet     catch
+	prev_word '^'
+	    catch ${1:/${2:pattern: empty, E484, Vim(cmdname):{errmsg\\}\}/}
+<
+Because ${1:} substitutes the pattern to "/${2:pattern: empty, E484,
+Vim(cmdname):{errmsg\}}" and ${2:} substitutes the pattern to "pattern:
+empty, E484, Vim(cmdname):{errmsg}"
+
 If you use hard tab for indentation in snippet file, neosnippet will use
 'shiftwidth' instead of Vim indent plugin. This feature is useful while some
 languages' indent files can not work very well (e.g.: PHP, Python).
@@ -417,6 +432,7 @@ CHANGELOG			*neosnippet-changelog*
 
 2012-10-19
 - Fixed syntax highlight.
+- Improved documentation.
 
 2012-10-18
 - Fixed s:get_sources_list().

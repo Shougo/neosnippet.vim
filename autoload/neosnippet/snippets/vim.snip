@@ -50,6 +50,10 @@ prev_word   '^'
         ${3}
     endtry
 
+snippet     catch
+prev_word '^'
+    catch ${1:/${2:pattern: empty, E484, Vim(cmdname):{errmsg\\}\}/}
+
 snippet     log
 prev_word   '^'
     echomsg string(${1})
