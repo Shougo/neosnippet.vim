@@ -334,6 +334,12 @@ Eval snippet feature is available.
 	prev_word   '^'
 	    `expand("%")`
 <
+Note: You want to use backticks in snippet, you must escape backticks.
+>
+	snippet code
+	abbr code
+	    \`${1}\`${2}
+<
 If you use |:NeoSnippetEdit| command for easy snippet editing, the file will
 be loaded automatically when you save the file.
 
