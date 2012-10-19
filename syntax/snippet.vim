@@ -36,7 +36,8 @@ endif
 syn region  SnippetPrevWord             start=+'+ end=+'+ contained
 syn region  SnippetPrevWord             start=+"+ end=+"+ contained
 syn region  SnippetEval                 start=+\\\@<!`+ end=+\\\@<!`+ contained
-syn match   SnippetWord                 '^\s\+.*$' contains=SnippetEval,SnippetExpand,SnippetEscape
+syn match   SnippetWord                 '^\s\+.*$' contains=
+      \SnippetEval,SnippetExpand,SnippetEscape,SnippetVariable
 syn match   SnippetExpand               '\${\d\+\%(:.\{-}\)\?\\\@<!}' contained
 syn match   SnippetVariable             '\$\d\+' contained
 syn match   SnippetComment              '^#.*$'

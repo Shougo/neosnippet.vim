@@ -415,6 +415,9 @@ snippet					*neosnippet-unite-action-snippet*
 ==============================================================================
 CHANGELOG			*neosnippet-changelog*
 
+2012-10-19
+- Fixed syntax highlight.
+
 2012-10-18
 - Fixed s:get_sources_list().
 - Added unite__new_candidate action in snippet source.
