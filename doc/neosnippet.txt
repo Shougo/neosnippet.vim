@@ -127,6 +127,10 @@ g:neosnippet#snippets_directory		*g:neosnippet#snippets_directory*
 
 		User defined snippets were read after normal snippet files,
 		so redundant snippets will be overwritten.
+		
+		Note: Neosnippet loads filetype snippet files.
+		If you are editing "vim" filetypes files, neosnippet wll load
+		"vim.snip*" and "vim_*.snip*" and "vim/**/*.snip" snippet files.
 
 						*g:neocomplcache_snippets_dir*
 		Note: |g:neocomplcache_snippets_dir| is obsolete name.
