@@ -438,6 +438,7 @@ CHANGELOG			*neosnippet-changelog*
 - Fixed syntax highlight.
 - Improved documentation.
 - Search snippets recursively.
+- Fixed make cache behavior.
 
 2012-10-18
 - Fixed s:get_sources_list().

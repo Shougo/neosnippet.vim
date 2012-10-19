@@ -179,6 +179,10 @@ function! neosnippet#caching()"{{{
   call neosnippet#make_cache(&filetype)
 endfunction"}}}
 
+function! neosnippet#recaching()"{{{
+  let s:snippets = {}
+endfunction"}}}
+
 function! s:set_snippet_dict(snippet_pattern, snippet_dict, dup_check, snippets_file)"{{{
   if !has_key(a:snippet_pattern, 'name')
     return
@@ -292,6 +296,10 @@ function! neosnippet#make_cache(filetype)"{{{
         \ &filetype : a:filetype
   if filetype ==# ''
     let filetype = 'nothing'
+  endif
+
+  if has_key(s:snippets, filetype)
+    return
   endif
 
   let snippets_dir = neosnippet#get_snippets_directory()
@@ -811,16 +819,11 @@ function! s:eval_snippet(snippet_text)"{{{
   return snip_word
 endfunction"}}}
 function! neosnippet#get_snippets()"{{{
-  if !has_key(s:snippets, '_')
-    " Caching _ snippets.
-    call neosnippet#make_cache('_')
-  endif
-
   let snippets = {}
-  for source in s:get_sources_list(s:snippets, neosnippet#get_filetype())
-      call extend(snippets, source, 'keep')
+  for filetype in s:get_sources_filetypes(neosnippet#get_filetype())
+    call neosnippet#make_cache(filetype)
+    call extend(snippets, s:snippets[filetype], 'keep')
   endfor
-  call extend(snippets, copy(s:snippets['_']), 'keep')
 
   if !s:is_beginning_of_line(neosnippet#util#get_cur_text())
     call filter(snippets, '!v:val.is_head')
@@ -842,10 +845,10 @@ function! neosnippet#get_filetype()"{{{
   return exists('*neocomplcache#get_context_filetype') ?
         \ neocomplcache#get_context_filetype(1) : &filetype
 endfunction"}}}
-function! s:get_sources_list(snippets, filetype)"{{{
-  return exists('*neocomplcache#get_sources_list') ?
-        \ neocomplcache#get_sources_list(a:snippets, a:filetype) :
-        \ get(a:snippets, a:filetype, [])
+function! s:get_sources_filetypes(filetype)"{{{
+  return (exists('*neocomplcache#get_source_filetypes') ?
+        \ neocomplcache#get_source_filetypes(a:filetype) :
+        \ [a:filetype]) + ['_']
 endfunction"}}}
 
 function! neosnippet#edit_complete(arglead, cmdline, cursorpos)"{{{
