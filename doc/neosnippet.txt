@@ -433,6 +433,7 @@ CHANGELOG			*neosnippet-changelog*
 2012-10-19
 - Fixed syntax highlight.
 - Improved documentation.
+- Search snippets recursively.
 
 2012-10-18
 - Fixed s:get_sources_list().

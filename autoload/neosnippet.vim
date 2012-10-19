@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: neosnippet.vim
 " AUTHOR:  Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 18 Oct 2012.
+" Last Modified: 19 Oct 2012.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -302,7 +302,7 @@ function! neosnippet#make_cache(filetype)"{{{
         \ + split(globpath(join(snippets_dir, ','),
         \   filetype .  '_*.snip*'), '\n')
         \ + split(globpath(join(snippets_dir, ','),
-        \   filetype .  '/*.snip*'), '\n')
+        \   filetype .  '/**/*.snip*'), '\n')
   for snippets_file in reverse(snippets_files)
     call s:load_snippets(snippet, snippets_file)
   endfor
