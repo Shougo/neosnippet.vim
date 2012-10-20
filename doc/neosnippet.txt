@@ -374,7 +374,7 @@ Alias feature is available. The separator is either ' ' or ','.
 	alias hoge hogera hogehoge
 <
 Synchronized placeholder feature is supported.  $1 is synchronized to ${1}.
-When you jump next, it is synchlonized. $0 is last jump placeholder.
+When you jump next, it is synchronized. $0 is last jump placeholder.
 
 The placeholder value can't contain new lines. Below snippet is illegal:
 >
