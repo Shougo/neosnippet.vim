@@ -364,10 +364,12 @@ Note: To contain "}" character in default value, you must escape "}".
 	snippet test
 	    ${1:escape \} value}
 <
-'_' (global) snippet feature is supported. '_' snippet is loaded in all
-filetypes.  And neosnippet can load snipMate snippets.
+'_' (global) snippet feature is available. Neosnippet loads '_' snippet for
+all filetypes.
 
-Alias feature is supported. Separator is ' ' or ','.
+Neosnippet can load snipMate snippets as well.
+
+Alias feature is available. The separator is either ' ' or ','.
 >
 	alias hoge hogera hogehoge
 <
