@@ -418,6 +418,15 @@ languages' indent files can not work very well (e.g.: PHP, Python).
 			${2:// code...}
 		}
 <
+"options word" means this snippet is expanded by word boundary.
+Note: The trigger must be word(digits or alphabet characters or "_")
+characters.
+>
+	snippet     date
+	options     word
+	    `strftime("%d %b %Y")`
+<
+
 ==============================================================================
 UNITE SOURCES					*neosnippet-unite-sources*
 
@@ -444,6 +453,7 @@ CHANGELOG			*neosnippet-changelog*
 
 2012-10-21
 - Added options head.
+- Added options word.
 
 2012-10-19
 - Fixed syntax highlight.
