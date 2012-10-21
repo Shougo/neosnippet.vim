@@ -458,6 +458,7 @@ CHANGELOG			*neosnippet-changelog*
 - Added options head.
 - Added options word.
 - Improved options word behavior.
+- Use head instead of prev_word.
 
 2012-10-20
 - Improved scala snip.

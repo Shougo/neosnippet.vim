@@ -1,8 +1,8 @@
 snippet     snippet
-abbr        snippet abbr prev_word <snippet code>
+abbr        snippet abbr options <snippet code>
 alias       snip
-prev_word   '^'
+options     head
     snippet     ${1:trigger}
     abbr        ${2:abbr}
-    prev_word   '^'
+    options     head
         ${3:snippet code}

@@ -6,7 +6,7 @@ abbr        match {\n  case .. => ..
 
 snippet     try
 abbr        try {} catch { case ... }
-prev_word   '^'
+options     head
 	try {
 		${1}
 	} catch {
@@ -23,14 +23,14 @@ abbr        println('name, name)
 
 snippet     main
 abbr        def main(args: Array[String]) {
-prev_word   '^'
+options     head
 	def main(args: Array[String]) {
 		${0}
 	}
 
 snippet     hello
 abbr        object HelloWorld { def main(...) }
-prev_word   '^'
+options     head
 	object HelloWorld {
 		def main(args: Array[String]) {
 			println("Hello, world!")

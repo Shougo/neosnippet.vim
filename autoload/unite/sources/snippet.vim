@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: snippet.vim
 " AUTHOR:  Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 18 Oct 2012.
+" Last Modified: 21 Oct 2012.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -136,8 +136,12 @@ function! s:action_table.unite__new_candidate.func(candidate)"{{{
     call append('$', '')
   endif
 
-  call append('$', ['snippet     ' . trigger, 'abbr        ' . trigger,
-        \ "prev_word   '^'", '    '])
+  call append('$', [
+        \ 'snippet     ' . trigger,
+        \ 'abbr        ' . trigger,
+        \ 'options     head',
+        \ '    '
+        \ ])
 
   call cursor(line('$'), 0)
   call cursor(0, col('$'))

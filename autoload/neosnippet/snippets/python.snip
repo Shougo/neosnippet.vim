@@ -1,13 +1,13 @@
 snippet     class
 abbr        class Class(...): ...
-prev_word   '^'
+options     head
 	class ${1:name}(${2:object}):
 		def __init__(self, ${3}):
 			${0}
 
 snippet     classd
 abbr        class Class(...): "..."
-prev_word   '^'
+options     head
 	class ${1:name}(${2:object}):
 		"""${3:class documentation}"""
 		def __init__(self, ${4}):
@@ -16,45 +16,45 @@ prev_word   '^'
 
 snippet     def
 abbr        def function(...): ...
-prev_word   '^'
+options     head
 	def ${1:name}(${2}):
 		${0}
 
 snippet     defd
 abbr        def function(...): """..."""
-prev_word   '^'
+options     head
 	def ${1:name}(${2}):
 		"""${3:function documentation}"""
 		${0}
 
 snippet     defm
 abbr        def method(self, ...): ...
-prev_word   '^'
+options     head
 	def ${1:name}(self, ${2}):
 		${0}
 
 snippet     defmd
 abbr        def method(self, ...): "..."
-prev_word   '^'
+options     head
 	def ${1:name}(self, ${2}):
 		"""${3:method documentation}"""
 		${0}
 
 snippet     elif
 abbr        elif ...: ...
-prev_word   '^'
+options     head
 	elif ${1:condition}:
 		${0}
 
 snippet     else
 abbr        else: ...
-prev_word   '^'
+options     head
 	else:
 		${0}
 
 snippet     fileidiom
 abbr        f = None try: f = open(...) finally: ...
-prev_word   '^'
+options     head
 	${1:f} = None
 	try:
 		$1 = open(${2})
@@ -65,25 +65,25 @@ prev_word   '^'
 
 snippet     for
 abbr        for ... in ...: ...
-prev_word   '^'
+options     head
 	for ${1:value} in ${2:list}:
 		${0}
 
 snippet     if
 abbr        if ...: ...
-prev_word   '^'
+options     head
 	if ${1:condition}:
 		${0}
 
 snippet     ifmain
 abbr        if __name__ == '__main__': ...
-prev_word   '^'
+options     head
 	if __name__ == '__main__':
 		${0}
 
 snippet     tryexcept
 abbr        try: ... except ...: ...
-prev_word   '^'
+options     head
 	try:
 		${1}
 	except ${2:ExceptionClass}:
@@ -91,7 +91,7 @@ prev_word   '^'
 
 snippet     tryfinally
 abbr        try: ... finally: ...
-prev_word   '^'
+options     head
 	try:
 		${1}
 	finally:
@@ -99,7 +99,7 @@ prev_word   '^'
 
 snippet     while
 abbr        while ...: ...
-prev_word   '^'
+options     head
 	while ${1:condition}:
 		${0}
 

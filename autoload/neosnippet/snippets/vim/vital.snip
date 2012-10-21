@@ -12,7 +12,7 @@ abbr        import
 
 snippet     vital_import
 abbr        let s:M = s:V.import('...')
-prev_word   '^'
+options     head
   let ${1:s:M} = ${2:s:V}.import('${3:Module}')
 
 snippet     vital_load_without_call

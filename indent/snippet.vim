@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: snippets.vim
 " AUTHOR:  Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 19 Sep 2011.
+" Last Modified: 21 Oct 2012.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -45,8 +45,8 @@ function! SnippetsIndent()"{{{
 
     if prev_line =~ '^\s*$'
         return 0
-    elseif prev_line =~ '^\%(include\|snippet\|abbr\|prev_word\|rank\|delete\|alias\|condition\)'
-                \&& line !~ '^\s*\%(include\|snippet\|abbr\|prev_word\|rank\|delete\|alias\|condition\)'
+    elseif prev_line =~ '^\%(include\|snippet\|abbr\|prev_word\|delete\|alias\|options\)'
+                \&& line !~ '^\s*\%(include\|snippet\|abbr\|prev_word\|delete\|alias\|options\)'
         return &shiftwidth
     else
         return match(line, '\S')
