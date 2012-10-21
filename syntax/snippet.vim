@@ -43,7 +43,8 @@ syn match   SnippetVariable             '\$\d\+' contained
 syn match   SnippetComment              '^#.*$'
 syn match   SnippetEscape               '\\[`]' contained
 
-syn match   SnippetKeyword              '^\%(include\|snippet\|abbr\|prev_word\|delete\|alias\)' contained
+syn match   SnippetKeyword              '^\%(include\|snippet\|abbr\|prev_word\|delete\|alias\|options\)' contained
+syn keyword   SnippetOption             head word contained
 syn match   SnippetPrevWords            '^prev_word\s\+.*$' contains=SnippetPrevWord,SnippetKeyword
 syn match   SnippetStatementName        '^snippet\s.*$' contains=SnippetName,SnippetKeyword
 syn match   SnippetName                 '\s\+.*$' contained
@@ -57,6 +58,7 @@ syn match   SnippetStatementDelete      '^delete\s.*$' contains=SnippetDelete,Sn
 syn match   SnippetDelete               '\s\+.*$' contained
 syn match   SnippetStatementAlias       '^alias\s.*$' contains=SnippetAlias,SnippetKeyword
 syn match   SnippetAlias                '\s\+.*$' contained
+syn match   SnippetStatementOptions     '^options\s.*$' contains=SnippetOption,SnippetKeyword
 
 hi def link SnippetKeyword Statement
 hi def link SnippetPrevWord String
@@ -69,6 +71,7 @@ hi def link SnippetVariable Special
 hi def link SnippetComment Comment
 hi def link SnippetInclude PreProc
 hi def link SnippetDelete PreProc
+hi def link SnippetOption PreProc
 hi def link SnippetAlias Identifier
 hi def link SnippetEscape Special
 

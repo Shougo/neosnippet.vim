@@ -299,7 +299,7 @@ Example:
 >
 	snippet     if
 	abbr        if endif
-	prev_word   '^'
+	options     head
 	    if ${1:condition}
 	        ${2}
 	    endif
@@ -307,7 +307,9 @@ Example:
 snippet {snippet_name} syntax is the snippet name.
 abbr {abbr_name} is the completion abbrevation (same to completion "abbr"
 key).
-prev_word '^' means this snippet is enabled only in line head.
+
+"options head" means this snippet is enabled only in line head.
+Note: prev_word '^' is duplicated keyword.
 
 By the way, it is warned that the snippet name was already defined by other
 snippet file.  If you want to overwrite it explicitly, please use:
@@ -331,7 +333,7 @@ If you want to include a whole filetype directory snippets.
 Eval snippet feature is available.
 >
 	snippet     hoge
-	prev_word   '^'
+	options     head
 	    `expand("%")`
 <
 Note: You want to use backticks in snippet, you must escape backticks.
@@ -354,7 +356,7 @@ Placeholder feature is available. The string after ":" is default value.
 >
 	snippet     if
 	abbr        if endif
-	prev_word   '^'
+	options     head
 	    if ${1:condition}
 	        ${2}
 	    endif
@@ -399,8 +401,8 @@ But must escape inner "}". "\" is eacape sequence.
 <
 In following snippet, you must escape "}" twice.
 >
-	snippet     catch
-	prev_word '^'
+	snippet  catch
+	options  head
 	    catch ${1:/${2:pattern: empty, E484, Vim(cmdname):{errmsg\\}\}/}
 <
 Because ${1:} substitutes the pattern to "/${2:pattern: empty, E484,
@@ -439,6 +441,9 @@ snippet					*neosnippet-unite-action-snippet*
 
 ==============================================================================
 CHANGELOG			*neosnippet-changelog*
+
+2012-10-21
+- Added options head.
 
 2012-10-19
 - Fixed syntax highlight.

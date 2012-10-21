@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: neosnippet.vim
 " AUTHOR:  Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 19 Oct 2012.
+" Last Modified: 21 Oct 2012.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -226,7 +226,7 @@ function! s:set_snippet_pattern(dict)"{{{
         \ 'word' : a:dict.name, 'snip' : a:dict.word,
         \ 'description' : a:dict.word,
         \ 'menu' : menu_pattern.abbr,
-        \ 'dup' : 1, 'is_head' : get(a:dict, 'is_head', 0),
+        \ 'dup' : 1, 'options' : a:dict.options,
         \}
   return dict
 endfunction"}}}
@@ -320,7 +320,8 @@ endfunction"}}}
 
 function! s:load_snippets(snippet, snippets_file)"{{{
   let dup_check = {}
-  let snippet_pattern = { 'word' : '' }
+  let snippet_pattern = { 'word' : '',
+        \ 'options' : { 'head' : 0, 'word' : 0 } }
 
   let linenr = 1
 
@@ -349,7 +350,8 @@ function! s:load_snippets(snippet, snippets_file)"{{{
         " Set previous snippet.
         call s:set_snippet_dict(snippet_pattern,
               \ a:snippet, dup_check, a:snippets_file)
-        let snippet_pattern = { 'word' : '' }
+        let snippet_pattern = { 'word' : '',
+              \ 'options' : { 'head' : 0, 'word' : 0 } }
       endif
 
       let snippet_pattern.name =
@@ -377,8 +379,21 @@ function! s:load_snippets(snippet, snippets_file)"{{{
               \ '^prev_word\s\+[''"]\zs.*\ze[''"]$')
         if prev_word == '^'
           " For backward compatibility.
-          let snippet_pattern.is_head = 1
+          let snippet_pattern.options.head = 1
+        else
+          call neosnippet#util#print_error(
+                \ 'prev_word must be "^" character.')
         endif
+      elseif line =~ '^options\s\+'
+        for option in split(matchstr(line,
+              \ '^options\s\+\zs.*$'), '[,[:space:]]\+')
+          if !has_key(snippet_pattern.options, option)
+            call neosnippet#util#print_error(
+                  \ printf('invalid option name : %s is detected.', option)
+          else
+            let snippet_pattern.options[option] = 1
+          endif
+        endfor
       elseif line =~ '^\s'
         if snippet_pattern.word != ''
           let snippet_pattern.word .= "\n"
@@ -827,7 +842,7 @@ function! neosnippet#get_snippets()"{{{
   endfor
 
   if !s:is_beginning_of_line(neosnippet#util#get_cur_text())
-    call filter(snippets, '!v:val.is_head')
+    call filter(snippets, '!v:val.options.head')
   endif
 
   return snippets

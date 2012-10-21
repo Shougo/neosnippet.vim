@@ -1,18 +1,18 @@
 snippet     if
 abbr        if endif
-prev_word   '^'
+options     head
     if ${1:condition}
         ${0}
     endif
 
-snippet elseif
-prev_word   '^'
+snippet     elseif
+options     head
     elseif ${1:/* condition */}
         ${0}
 
 snippet     ifelse
 abbr        if else endif
-prev_word   '^'
+options     head
     if ${1:condition}
         ${2}
     else
@@ -21,14 +21,14 @@ prev_word   '^'
 
 snippet     for
 abbr        for in endfor
-prev_word   '^'
+options     head
     for ${1:var} in ${2:list}
         ${0}
     endfor
 
 snippet     while
 abbr        while endwhile
-prev_word   '^'
+options     head
     while ${1:condition}
         ${0}
     endwhile
@@ -36,14 +36,14 @@ prev_word   '^'
 snippet     function
 abbr        func endfunc
 alias       func
-prev_word   '^'
+options     head
     function! ${1:func_name}(${2})
         ${0}
     endfunction
 
 snippet     try
 abbr        try endtry
-prev_word   '^'
+options     head
     try
         ${1}
     catch /${2:pattern}/
@@ -51,28 +51,28 @@ prev_word   '^'
     endtry
 
 snippet     catch
-prev_word '^'
+options     head
     catch ${1:/${2:pattern: empty, E484, Vim(cmdname):{errmsg\\}\}/}
 
 snippet     log
-prev_word   '^'
+options     head
     echomsg string(${1})
 
 snippet     command
 abbr        command call function
-prev_word   '^'
+options     head
     command! ${1:command_name} call ${2:func_name}
 
 snippet     customlist
 abbr        customlist complete function
-prev_word   '^'
+options     head
     function! ${1:func_name}(arglead, cmdline, cursorpos)
         return filter(${2:list}, 'stridx(v:val, a:arglead) == 0')
     endfunction
 
 snippet     augroup
 abbr        augroup with autocmds
-prev_word   '^'
+options     head
     augroup ${1}
         autocmd!
         autocmd ${2:event}
