@@ -15,13 +15,11 @@ prev_word   '^'
 
 snippet     p
 abbr        println()
-prev_word   '^'
-	println(${1})${0}
+	println(${1})
 
 snippet     pn
 abbr        println('name, name)
-prev_word   '^'
-	println('${1:name}, $1)${0}
+	println('${1:name}, $1)
 
 snippet     main
 abbr        def main(args: Array[String]) {
@@ -32,6 +30,7 @@ prev_word   '^'
 
 snippet     hello
 abbr        object HelloWorld { def main(...) }
+prev_word   '^'
 	object HelloWorld {
 		def main(args: Array[String]) {
 			println("Hello, world!")
