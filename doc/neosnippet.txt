@@ -446,6 +446,7 @@ CHANGELOG			*neosnippet-changelog*
 2012-10-20
 - Improved scala snip.
 - Added haskell snip.
+- Added vim/vital snip.
 
 2012-10-19
 - Fixed syntax highlight.
