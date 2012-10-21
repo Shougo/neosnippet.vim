@@ -389,7 +389,7 @@ function! s:load_snippets(snippet, snippets_file)"{{{
               \ '^options\s\+\zs.*$'), '[,[:space:]]\+')
           if !has_key(snippet_pattern.options, option)
             call neosnippet#util#print_error(
-                  \ printf('invalid option name : %s is detected.', option)
+                  \ printf('invalid option name : %s is detected.', option))
           else
             let snippet_pattern.options[option] = 1
           endif
