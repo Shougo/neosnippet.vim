@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: util.vim
 " AUTHOR: Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 30 Sep 2012.
+" Last Modified: 23 Oct 2012.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -55,11 +55,12 @@ function! neosnippet#util#iconv(...)"{{{
 endfunction"}}}
 
 function! neosnippet#util#expand(path)"{{{
-  return s:V.substitute_path_separator(
-        \ (a:path =~ '^\~') ? substitute(a:path, '^\~', expand('~'), '') :
+  let path = (a:path =~ '^\~') ?
+        \       substitute(a:path, '^\~', expand('~'), '') :
         \ (a:path =~ '^\$\h\w*') ? substitute(a:path,
         \               '^\$\h\w*', '\=eval(submatch(0))', '') :
-        \ a:path)
+        \ a:path
+  return s:V.substitute_path_separator(fnamemodify(path, ':p'))
 endfunction"}}}
 function! neosnippet#util#set_default(var, val, ...)  "{{{
   if !exists(a:var) || type({a:var}) != type(a:val)
