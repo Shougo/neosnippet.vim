@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: neosnippet.vim
 " AUTHOR:  Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 21 Oct 2012.
+" Last Modified: 25 Oct 2012.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -835,7 +835,7 @@ function! s:eval_snippet(snippet_text)"{{{
     endif
     let prev_match = matchend(a:snippet_text,
           \ '\\\@<!`.\{-}\\\@<!`', match)
-    sandbox let snip_word .= eval(
+    let snip_word .= eval(
           \ a:snippet_text[match+1 : prev_match - 2])
 
     let match = match(a:snippet_text, '\\\@<!`.\{-}\\\@<!`', prev_match)
