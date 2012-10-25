@@ -4,6 +4,7 @@ abbr        vital#of('...')
 
 snippet     vital_of
 abbr        let s:V = vital#of('...')
+options     head
   let ${1:s:V} = vital#of('${2:vital}')
 
 snippet     vital_import_without_let
@@ -21,6 +22,7 @@ abbr        s:V.load('...')
 
 snippet     vital_load
 abbr        call s:V.load('...')
+options     head
   call ${1:s:V}.load('${2:Module}')
 
 # FAQ
