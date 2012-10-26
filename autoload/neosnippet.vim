@@ -549,6 +549,11 @@ function! neosnippet#expand(cur_text, col, trigger_name)"{{{
         \ '<|\1|>', 'g')
 
   " Insert snippets.
+  if has('folding')
+    let foldmethod = &l:foldmethod
+    let &l:foldmethod = 'manual'
+  endif
+
   let next_line = getline('.')[a:col-1 :]
   let snippet_lines = split(snip_word, '\n', 1)
   if empty(snippet_lines)
@@ -581,14 +586,15 @@ function! neosnippet#expand(cur_text, col, trigger_name)"{{{
         \ 'holder_cnt' : 1,
         \ })
 
-  if has('folding') && foldclosed(line('.'))
-    " Open fold.
-    silent! normal! zO
-  endif
   if next_col < col('$')
     startinsert
   else
     startinsert!
+  endif
+
+  if has('folding')
+    let &l:foldmethod = foldmethod
+    silent execute begin_line . ',' . end_line . 'foldopen!'
   endif
 
   if snip_word =~ s:get_placeholder_marker_pattern()

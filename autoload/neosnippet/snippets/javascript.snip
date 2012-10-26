@@ -6,7 +6,7 @@ options head
 
 snippet function
 alias   func
-options word
+options head
   function ${1:function_name}(${2:argument}) {
     ${0:// body...}
   }
@@ -19,7 +19,7 @@ options head
 
 
 snippet f
-options head
+options word
   function(${1}) { ${0:$TM_SELECTED_TEXT} };
 
 snippet if
