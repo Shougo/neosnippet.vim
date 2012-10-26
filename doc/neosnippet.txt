@@ -454,6 +454,9 @@ snippet					*neosnippet-unite-action-snippet*
 ==============================================================================
 CHANGELOG			*neosnippet-changelog*
 
+2012-10-26
+- Improved javascript snippet file.
+
 2012-10-25
 - Deleted sandbox execution.
 
