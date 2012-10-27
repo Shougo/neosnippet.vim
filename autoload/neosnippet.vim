@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: neosnippet.vim
 " AUTHOR:  Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 25 Oct 2012.
+" Last Modified: 27 Oct 2012.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -263,7 +263,7 @@ function! neosnippet#edit_snippets(args)"{{{
   if options.split
     " Split window.
     execute options.direction
-          \ (options.vertical ? 'vnew' : 'new')
+          \ (options.vertical ? 'vsplit' : 'split')
   endif
 
   try
