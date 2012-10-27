@@ -935,7 +935,7 @@ function! s:clear_select_mode_mappings()"{{{
   redir END
 
   for line in map(filter(split(mappings, '\n'),
-        \ "v:val !~# '<Plug>(\\%(neosnippet\\|neocomplcache_snippets\\)_[^)]*'"),
+        \ "v:val !~# 'neosnippet\\|neocomplcache_snippets'"),
         \ "substitute(v:val, '<NL>', '<C-J>', 'g')")
     let map = matchstr(line, '^\a*\s*\zs\S\+')
     let map = substitute(map, '<NL>', '<C-j>', 'g')
