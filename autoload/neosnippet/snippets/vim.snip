@@ -77,3 +77,11 @@ options     head
         autocmd!
         autocmd ${2:event}
     augroup END
+
+snippet     redir
+abbr        redir => var
+options     head
+	redir => ${1}
+		${2:}
+	redir END
+

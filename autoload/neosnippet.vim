@@ -35,7 +35,7 @@ call neosnippet#util#set_default(
       \ '', 'g:neocomplcache_snippets_dir')
 call neosnippet#util#set_default(
       \ 'g:neosnippet#disable_select_mode_mappings',
-      \ 0, 'g:neocomplcache_disable_select_mode_mappings')
+      \ 1, 'g:neocomplcache_disable_select_mode_mappings')
 "}}}
 
 " Variables  "{{{
@@ -99,17 +99,7 @@ function! s:initialize()"{{{
 
   " Select mode mappings."{{{
   if g:neosnippet#disable_select_mode_mappings
-    snoremap <CR>     a<BS>
-    snoremap <BS> a<BS>
-    snoremap <right> <ESC>a
-    snoremap <left> <ESC>bi
-    snoremap ' a<BS>'
-    snoremap ` a<BS>`
-    snoremap % a<BS>%
-    snoremap U a<BS>U
-    snoremap ^ a<BS>^
-    snoremap \ a<BS>\
-    snoremap <C-x> a<BS><c-x>
+    autocmd neosnippet BufEnter * call s:clear_select_mode_mappings()
   endif"}}}
 
   " Caching _ snippets.
@@ -937,6 +927,22 @@ function! s:trigger(function)"{{{
 
   return printf("\<ESC>:call %s(%s,%d)\<CR>",
         \ a:function, string(cur_text), col)
+endfunction"}}}
+
+function! s:clear_select_mode_mappings()"{{{
+  redir => mappings
+    silent! smap
+  redir END
+
+  for line in map(filter(split(mappings, '\n'),
+        \ "v:val !~# '<Plug>(\\%(neosnippet\\|neocomplcache_snippets\\)_[^)]*'"),
+        \ "substitute(v:val, '<NL>', '<C-J>', 'g')")
+    let map = matchstr(line, '^\a*\s*\zs\S\+')
+    let map = substitute(map, '<NL>', '<C-j>', 'g')
+
+    silent! execute 'sunmap' map
+    silent! execute 'sunmap <buffer>' map
+  endfor
 endfunction"}}}
 
 " Plugin key-mappings.
