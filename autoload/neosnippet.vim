@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: neosnippet.vim
 " AUTHOR:  Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 27 Oct 2012.
+" Last Modified: 28 Oct 2012.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -207,10 +207,15 @@ function! s:set_snippet_pattern(dict)"{{{
         \ . '.*' . s:get_placeholder_marker_substitute_pattern()) ?
         \ '<Snip> ' : '[Snip] '
 
-  let abbr = get(a:dict, 'abbr', substitute(a:dict.word,
+  if !has_key(a:dict, 'abbr') || a:dict.abbr == ''
+    " Set default abbr.
+    let abbr = substitute(a:dict.word,
         \   s:get_placeholder_marker_pattern(). '\|'.
         \   s:get_mirror_placeholder_marker_pattern().
-        \   '\|\s\+\|\n', ' ', 'g'))
+        \   '\|\s\+\|\n', ' ', 'g')
+  else
+    let abbr = a:dict.abbr
+  endif
 
   let dict = {
         \ 'word' : a:dict.name, 'snip' : a:dict.word,
@@ -351,9 +356,12 @@ function! s:load_snippets(snippet, snippets_file)"{{{
       " SnipMate snippets may have duplicate names, but different
       " descriptions (abbrs).
       if has_key(dup_check, snippet_pattern.name)
-        let snippet_pattern.name =
-             \ substitute(matchstr(line, '^snippet\s\+\zs.*$'),
-             \     '\s\+', '_', 'g')
+        let description = matchstr(line, '^snippet\s\+\zs.*$')
+        if description !=# snippet_pattern.name
+          " Convert description.
+          let snippet_pattern.name =
+                \ substitute(description, '\W\+', '_', 'g')
+        endif
       endif
 
       " Collect the description (abbr) of the snippet, if set on snippet line.
