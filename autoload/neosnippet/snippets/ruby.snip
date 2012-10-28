@@ -8,6 +8,13 @@ snippet     def       def … end
         ${2}
     end
 
+snippet     def       def … rescue … end
+    def ${1:method_name}
+        ${2}
+    rescue ${3:StandardError} => ${4:error}
+        ${5}
+    end
+
 snippet     do        do … end
     do
         ${1}

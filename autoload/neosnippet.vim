@@ -344,7 +344,17 @@ function! s:load_snippets(snippet, snippets_file)"{{{
               \ 'options' : { 'head' : 0, 'word' : 0 } }
       endif
 
+      " Try using the name without the description (abbr).
       let snippet_pattern.name = matchstr(line, '^snippet\s\+\zs\S\+')
+
+      " Fall back to using the name and description (abbr) combined.
+      " SnipMate snippets may have duplicate names, but different
+      " descriptions (abbrs).
+      if has_key(dup_check, snippet_pattern.name)
+        let snippet_pattern.name =
+             \ substitute(matchstr(line, '^snippet\s\+\zs.*$'),
+             \     '\s\+', '_', 'g')
+      endif
 
       " Collect the description (abbr) of the snippet, if set on snippet line.
       " This is for compatibility with SnipMate-style snippets.
