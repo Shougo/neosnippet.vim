@@ -50,6 +50,16 @@ options     head
         ${3}
     endtry
 
+snippet     tryfinally
+abbr        try ... finally ... endtry
+alias       tryf
+options     head
+    try
+        ${1}
+    finally
+        ${2}
+    endtry
+
 snippet     catch
 options     head
     catch ${1:/${2:pattern: empty, E484, Vim(cmdname):{errmsg\\}\}/}

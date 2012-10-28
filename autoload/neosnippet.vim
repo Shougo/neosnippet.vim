@@ -575,39 +575,42 @@ function! neosnippet#expand(cur_text, col, trigger_name)"{{{
     let &l:foldmethod = 'manual'
   endif
 
-  call setline('.', snippet_lines[0])
-  if len(snippet_lines) > 1
-    call append('.', snippet_lines[1:])
-  endif
+  try
+    call setline('.', snippet_lines[0])
+    if len(snippet_lines) > 1
+      call append('.', snippet_lines[1:])
+    endif
 
-  call s:indent_snippet(begin_line, end_line)
+    call s:indent_snippet(begin_line, end_line)
 
-  let begin_patterns = (begin_line > 1) ?
-        \ [getline(begin_line - 1)] : []
-  let end_patterns =  (end_line < line('$')) ?
-        \ [getline(end_line + 1)] : []
-  call add(s:snippets_expand_stack, {
-        \ 'begin_line' : begin_line,
-        \ 'begin_patterns' : begin_patterns,
-        \ 'end_line' : end_line,
-        \ 'end_patterns' : end_patterns,
-        \ 'holder_cnt' : 1,
-        \ })
+    let begin_patterns = (begin_line > 1) ?
+          \ [getline(begin_line - 1)] : []
+    let end_patterns =  (end_line < line('$')) ?
+          \ [getline(end_line + 1)] : []
+    call add(s:snippets_expand_stack, {
+          \ 'begin_line' : begin_line,
+          \ 'begin_patterns' : begin_patterns,
+          \ 'end_line' : end_line,
+          \ 'end_patterns' : end_patterns,
+          \ 'holder_cnt' : 1,
+          \ })
 
-  if next_col < col('$')
-    startinsert
-  else
-    startinsert!
-  endif
+    if next_col < col('$')
+      startinsert
+    else
+      startinsert!
+    endif
 
-  if snip_word =~ s:get_placeholder_marker_pattern()
-    call s:snippets_jump(a:cur_text, a:col)
-  endif
+    if snip_word =~ s:get_placeholder_marker_pattern()
+      call s:snippets_jump(a:cur_text, a:col)
+    endif
+  finally
+    if has('folding')
+      let &l:foldmethod = foldmethod
+      silent! execute begin_line . ',' . end_line . 'foldopen!'
+    endif
+  endtry
 
-  if has('folding')
-    let &l:foldmethod = foldmethod
-    silent! execute begin_line . ',' . end_line . 'foldopen!'
-  endif
   let &l:iminsert = 0
   let &l:imsearch = 0
 endfunction"}}}
