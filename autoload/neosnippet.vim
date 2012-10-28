@@ -73,27 +73,24 @@ function! s:initialize()"{{{
   endfor
   call map(s:snippets_dir, 'substitute(v:val, "[\\\\/]$", "", "")')
 
-  if has('conceal')
-    " Supported conceal features.
-    augroup neosnippet
+  augroup neosnippet
+    autocmd BufNewFile,BufRead,ColorScheme *
+          \ execute 'syn match neosnippetExpandSnippets'
+          \  "'".s:get_placeholder_marker_pattern(). '\|'
+          \ .s:get_sync_placeholder_marker_pattern().'\|'
+          \ .s:get_mirror_placeholder_marker_pattern()."'"
+          \ 'containedin=ALL'
+    if has('conceal')
       autocmd BufNewFile,BufRead,ColorScheme *
-            \ syn match   neosnippetExpandSnippets
-            \ '<`\d\+:\|`>\|<{\d\+:\|}>' conceal
-      autocmd BufNewFile,BufRead,ColorScheme *
-            \ execute 'syn match   neosnippetExpandSnippets'
-            \  '''<`\d\+\\\@<!`>\|<{\d\+\\\@<!}>\|'
-            \ .s:get_mirror_placeholder_marker_pattern()."'"
-            \ 'conceal cchar=$'
-    augroup END
-  else
-    augroup neosnippet
-      autocmd BufNewFile,BufRead,ColorScheme *
-            \ execute 'syn match   neosnippetExpandSnippets'
-            \  "'".s:get_placeholder_marker_pattern(). '\|'
-            \ .s:get_sync_placeholder_marker_pattern().'\|'
-            \ .s:get_mirror_placeholder_marker_pattern()."'"
-    augroup END
-  endif
+            \ syn region neosnippetConcealExpandSnippets
+            \ matchgroup=neosnippetExpandSnippets
+            \ start='<`\d\+:\=\|<{\d\+:\=\|<|'
+            \ end='`>\|}>\||>'
+            \ containedin=ALL
+            \ concealends
+    endif
+  augroup END
+  doautocmd neosnippet BufRead
 
   hi def link neosnippetExpandSnippets Special
 
