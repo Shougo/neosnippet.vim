@@ -552,13 +552,14 @@ function! neosnippet#expand(cur_text, col, trigger_name)"{{{
   let next_col = len(snippet_lines[-1]) + 1
   let snippet_lines[-1] = snippet_lines[-1] . next_line
 
+  if has('folding')
+    let foldmethod = &l:foldmethod
+    let &l:foldmethod = 'manual'
+  endif
+
   call setline('.', snippet_lines[0])
   if len(snippet_lines) > 1
     call append('.', snippet_lines[1:])
-  endif
-
-  if has('folding')
-    silent! execute begin_line . ',' . end_line . 'foldopen!'
   endif
 
   call s:indent_snippet(begin_line, end_line)
@@ -585,6 +586,10 @@ function! neosnippet#expand(cur_text, col, trigger_name)"{{{
     call s:snippets_jump(a:cur_text, a:col)
   endif
 
+  if has('folding')
+    let &l:foldmethod = foldmethod
+    silent! execute begin_line . ',' . end_line . 'foldopen!'
+  endif
   let &l:iminsert = 0
   let &l:imsearch = 0
 endfunction"}}}
