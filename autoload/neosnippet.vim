@@ -353,7 +353,7 @@ function! s:load_snippets(snippet, snippets_file)"{{{
       if has_key(dup_check, snippet_pattern.name)
         let snippet_pattern.name =
              \ substitute(matchstr(line, '^snippet\s\+\zs.*$'),
-             \     '\s\+', '_', 'g')
+             \     '\s\+\|\.', '_', 'g')
       endif
 
       " Collect the description (abbr) of the snippet, if set on snippet line.
