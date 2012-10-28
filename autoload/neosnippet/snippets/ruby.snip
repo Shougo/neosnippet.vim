@@ -1,47 +1,46 @@
-snippet     if
-abbr        if end
+snippet     if        if … end
     if ${1:condition}
         ${2}
     end
 
-snippet     def
-abbr        def end
+snippet     def       def … end
     def ${1:method_name}
         ${2}
     end
 
-snippet     do
-abbr        do end
+snippet     def       def … rescue … end
+    def ${1:method_name}
+        ${2}
+    rescue ${3:StandardError} => ${4:error}
+        ${5}
+    end
+
+snippet     do        do … end
     do
         ${1}
     end
 
-snippet     dovar
-abbr        do |var| end
+snippet     dovar     do |var|…end
     do |${1:var}|
         ${2}
     end
 
-snippet     block
-abbr        { }
+snippet     block     { … }
     {
         ${1}
     }
 
-snippet     blockvar
-abbr        {|var| }
+snippet     blockvar  {|var| … }
     {|${1:var}|
         ${2}
     }
 
-snippet     fileopen
-abbr        File.open(filename) do end
+snippet     fileopen  File.open(filename) do … end
     File.open(${1:filename}, '${2:w}') do |${3:io}|
         ${0}
     end
 
-snippet     edn
-abbr        => end?
+snippet     edn       => end?
     end
 
 snippet     urlencode
