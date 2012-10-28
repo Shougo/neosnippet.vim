@@ -344,9 +344,11 @@ function! s:load_snippets(snippet, snippets_file)"{{{
               \ 'options' : { 'head' : 0, 'word' : 0 } }
       endif
 
-      let snippet_pattern.name =
-            \ substitute(matchstr(line, '^snippet\s\+\zs.*$'),
-            \     '\s', '_', 'g')
+      let snippet_pattern.name = matchstr(line, '^snippet\s\+\zs\S\+')
+
+      " Collect the description (abbr) of the snippet, if set on snippet line.
+      " This is for compatibility with SnipMate-style snippets.
+      let snippet_pattern.abbr = matchstr(line, '^snippet\s\+\S\+\s\+\zs.*$')
 
       " Check for duplicated names.
       if has_key(dup_check, snippet_pattern.name)
@@ -358,7 +360,8 @@ function! s:load_snippets(snippet, snippets_file)"{{{
               \ 'Please delete this snippet name before.')
       endif
     elseif has_key(snippet_pattern, 'name')
-      " Only in snippets.
+      " Allow overriding/setting of the description (abbr) of the snippet.
+      " This will override what was set via the snippet line.
       if line =~ '^abbr\s'
         let snippet_pattern.abbr = matchstr(line, '^abbr\s\+\zs.*$')
       elseif line =~ '^alias\s'
