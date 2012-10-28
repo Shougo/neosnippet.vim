@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: snippets_complete.vim
 " AUTHOR:  Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 21 Oct 2012.
+" Last Modified: 28 Oct 2012.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -53,23 +53,7 @@ function! s:source.get_keyword_pos(cur_text)"{{{
 endfunction"}}}
 
 function! s:source.get_complete_words(cur_keyword_pos, cur_keyword_str)"{{{
-  return s:keyword_filter(neocomplcache#dup_filter(
-        \ values(neosnippet#get_snippets())), a:cur_keyword_str)
-endfunction"}}}
-
-function! s:keyword_filter(list, cur_keyword_str)"{{{
-  " Keyword filter.
-
-  " Uniq by real_name.
-  let dict = {}
-  for snippet in neocomplcache#keyword_filter(a:list, a:cur_keyword_str)
-    if !has_key(dict, snippet.real_name) ||
-          \ len(dict[snippet.real_name].word) > len(snippet.word)
-      let dict[snippet.real_name] = snippet
-    endif
-  endfor
-
-  let list = values(dict)
+  let list = s:keyword_filter(neosnippet#get_snippets(), a:cur_keyword_str)
 
   " Substitute abbr.
   let abbr_pattern = printf('%%.%ds..%%s',
@@ -90,6 +74,27 @@ function! s:keyword_filter(list, cur_keyword_str)"{{{
   endfor
 
   return list
+endfunction"}}}
+
+function! s:keyword_filter(snippets, cur_keyword_str)"{{{
+  " Uniq by real_name.
+  let dict = {}
+  let list = neocomplcache#keyword_filter(
+        \ values(a:snippets), a:cur_keyword_str)
+
+  " Add cur_keyword_str snippet.
+  if has_key(a:snippets, a:cur_keyword_str)
+    call add(list, a:snippets[a:cur_keyword_str])
+  endif
+
+  for snippet in neocomplcache#dup_filter(list)
+    if !has_key(dict, snippet.real_name) ||
+          \ len(dict[snippet.real_name].word) > len(snippet.word)
+      let dict[snippet.real_name] = snippet
+    endif
+  endfor
+
+  return values(dict)
 endfunction"}}}
 
 
