@@ -182,7 +182,7 @@ function! s:set_snippet_dict(snippet_dict, snippets, dup_check, snippets_file)"{
     let alias_snippet = copy(snippet)
     let alias_snippet.word = alias
 
-    let a:snippet_dict[alias] = alias_snippet
+    let a:snippets[alias] = alias_snippet
     let a:dup_check[alias] = alias_snippet
   endfor
 endfunction"}}}
