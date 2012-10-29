@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: neosnippet.vim
 " AUTHOR:  Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 29 Oct 2012.
+" Last Modified: 30 Oct 2012.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -735,6 +735,10 @@ function! s:expand_placeholder(start, end, holder_cnt, line)"{{{
         \ '\\d\\+', a:holder_cnt, '')
   let default = substitute(
         \ matchstr(current_line, default_pattern), '\\\ze[^\\]', '', 'g')
+
+  let neosnippet = neosnippet#get_current_neosnippet()
+  let neosnippet.selected_text = default
+
   " Substitute marker.
   let default = substitute(default,
         \ s:get_placeholder_marker_substitute_pattern(),
@@ -973,6 +977,7 @@ function! neosnippet#get_selected_text(type, ...)
   let sel_save = &selection
   let &selection = 'inclusive'
   let reg_save = @@
+  let pos = getpos('.')
 
   try
     " Invoked from Visual mode, use '< and '> marks.
@@ -991,6 +996,7 @@ function! neosnippet#get_selected_text(type, ...)
   finally
     let &selection = sel_save
     let @@ = reg_save
+    call setpos('.', pos)
   endtry
 endfunction
 

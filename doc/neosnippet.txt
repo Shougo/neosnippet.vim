@@ -361,6 +361,16 @@ Placeholder feature is available. The string after ":" is default value.
 	        ${2}
 	    endif
 <
+Commented placeholder feature is available. If the default value starts with
+"#:", neosnippet will the delete default value when jump to next placeholder.
+>
+	snippet     if
+	abbr        if endif
+	options     head
+	    if ${1:#:condition}
+	        ${2}
+	    endif
+<
 Note: To contain "}" character in default value, you must escape "}".
 >
 	snippet test
@@ -453,6 +463,9 @@ snippet					*neosnippet-unite-action-snippet*
 
 ==============================================================================
 CHANGELOG			*neosnippet-changelog*
+
+2012-10-30
+- Implemented commented placeholder.
 
 2012-10-29
 - Improved parse of snippets file.
