@@ -518,7 +518,9 @@ function! s:snippets_jump_or_expand(cur_text, col)"{{{
 endfunction"}}}
 
 function! neosnippet#expand(cur_text, col, trigger_name)"{{{
-  if a:trigger_name == ''
+  let snippets = neosnippet#get_snippets()
+
+  if a:trigger_name == '' || !has_key(snippets, a:trigger_name)
     let pos = getpos('.')
     let pos[2] = len(a:cur_text)+1
     call setpos('.', pos)
@@ -532,7 +534,6 @@ function! neosnippet#expand(cur_text, col, trigger_name)"{{{
     return
   endif
 
-  let snippets = neosnippet#get_snippets()
   let snippet = snippets[a:trigger_name]
   let cur_text = a:cur_text[: -1-len(a:trigger_name)]
 
@@ -577,7 +578,9 @@ function! neosnippet#expand(cur_text, col, trigger_name)"{{{
       call append('.', snippet_lines[1:])
     endif
 
-    call s:indent_snippet(begin_line, end_line)
+    if begin_line != end_line
+      call s:indent_snippet(begin_line, end_line)
+    endif
 
     let begin_patterns = (begin_line > 1) ?
           \ [getline(begin_line - 1)] : []
@@ -591,7 +594,7 @@ function! neosnippet#expand(cur_text, col, trigger_name)"{{{
           \ 'holder_cnt' : 1,
           \ })
 
-    if next_col < col('$')
+    if next_line != ''
       startinsert
     else
       startinsert!
@@ -609,6 +612,24 @@ function! neosnippet#expand(cur_text, col, trigger_name)"{{{
 
   let &l:iminsert = 0
   let &l:imsearch = 0
+endfunction"}}}
+function! neosnippet#expand_target()"{{{
+  let trigger = input('Please input snippet trigger: ',
+        \ '', 'customlist,neosnippet#snippet_complete')
+  let neosnippet = neosnippet#get_current_neosnippet()
+  if !has_key(neosnippet#get_snippets(), trigger)
+    let neosnippet.target = ''
+    return
+  endif
+
+  let neosnippet.target = substitute(
+        \ neosnippet#get_selected_text(visualmode(), 1), '\n$', '', '')
+  call neosnippet#delete_selected_text(visualmode(), 1)
+
+  call setline('.', matchstr(neosnippet.target, '^\s*') . trigger)
+  startinsert!
+
+  call neosnippet#expand(getline('.'), col('$'), trigger)
 endfunction"}}}
 function! s:indent_snippet(begin, end)"{{{
   let equalprg = &l:equalprg
@@ -729,14 +750,24 @@ function! s:expand_placeholder(start, end, holder_cnt, line)"{{{
         \ '\\d\\+', a:holder_cnt, '')
   let current_line = getline(a:line)
   let match = match(current_line, pattern)
+  let neosnippet = neosnippet#get_current_neosnippet()
 
   let default_pattern = substitute(
         \ s:get_placeholder_marker_default_pattern(),
         \ '\\d\\+', a:holder_cnt, '')
   let default = substitute(
-        \ matchstr(current_line, default_pattern), '\\\ze[^\\]', '', 'g')
+        \ matchstr(current_line, default_pattern),
+        \ '\\\ze[^\\]', '', 'g')
 
-  let neosnippet = neosnippet#get_current_neosnippet()
+  if default =~ '^TARGET\>' && neosnippet.target != ''
+    let default = ''
+    let is_target = 1
+  else
+    let is_target = 0
+  endif
+
+  let default = substitute(default, '^TARGET:\?\>', '', '')
+
   let neosnippet.selected_text = default
 
   " Substitute marker.
@@ -768,6 +799,11 @@ function! s:expand_placeholder(start, end, holder_cnt, line)"{{{
 
   call setpos('.', pos)
 
+  if is_target
+    " Expand target
+    return s:expand_target_placeholder(a:line, match+1)
+  endif
+
   if default_len > 0
     " Select default value.
     let len = default_len-1
@@ -782,6 +818,51 @@ function! s:expand_placeholder(start, end, holder_cnt, line)"{{{
   else
     startinsert!
   endif
+endfunction"}}}
+function! s:expand_target_placeholder(line, col)"{{{
+  " Expand target
+  let neosnippet = neosnippet#get_current_neosnippet()
+  let next_line = getline(a:line)[a:col-1 :]
+  let target_lines = split(neosnippet.target, '\n', 1)
+
+  let cur_text = getline(a:line)[: a:col-2]
+  let target_lines[0] = cur_text . target_lines[0]
+  let next_col = len(target_lines[-1]) + 1
+  let target_lines[-1] = target_lines[-1] . next_line
+
+  let begin_line = a:line
+  let end_line = a:line + len(target_lines) - 1
+
+  if has('folding')
+    let foldmethod = &l:foldmethod
+    let &l:foldmethod = 'manual'
+  endif
+
+  try
+    call setline(a:line, target_lines[0])
+    if len(target_lines) > 1
+      call append(a:line, target_lines[1:])
+    endif
+
+    call cursor(end_line, 0)
+
+    if begin_line != end_line
+      call s:indent_snippet(begin_line, end_line)
+    endif
+
+    if next_line != ''
+      startinsert
+    else
+      startinsert!
+    endif
+  finally
+    if has('folding')
+      let &l:foldmethod = foldmethod
+      silent! execute begin_line . ',' . end_line . 'foldopen!'
+    endif
+  endtry
+
+  let neosnippet.target = ''
 endfunction"}}}
 function! s:search_sync_placeholder(start, end, number)"{{{
   if a:end == 0
@@ -866,6 +947,7 @@ function! neosnippet#get_current_neosnippet()"{{{
   if !exists('b:neosnippet')
     let b:neosnippet = {
           \ 'selected_text' : '',
+          \ 'target' : '',
           \}
   endif
 
@@ -924,6 +1006,10 @@ function! neosnippet#filetype_complete(arglead, cmdline, cursorpos)"{{{
 
   return sort(keys(ret))
 endfunction"}}}
+function! neosnippet#snippet_complete(arglead, cmdline, cursorpos)"{{{
+  return filter(keys(neosnippet#get_snippets()),
+        \ 'stridx(v:val, a:arglead) == 0')
+endfunction"}}}
 
 function! s:get_placeholder_marker_pattern()"{{{
   return '<`\d\+\%(:.\{-}\)\?\\\@<!`>'
@@ -973,7 +1059,7 @@ function! s:trigger(function)"{{{
   return expr
 endfunction"}}}
 
-function! neosnippet#get_selected_text(type, ...)
+function! neosnippet#get_selected_text(type, ...)"{{{
   let sel_save = &selection
   let &selection = 'inclusive'
   let reg_save = @@
@@ -991,14 +1077,36 @@ function! neosnippet#get_selected_text(type, ...)
       silent exe "normal! `[v`]y"
     endif
 
-    let neosnippet = neosnippet#get_current_neosnippet()
-    let neosnippet.selected_text = @@
+    return @@
   finally
     let &selection = sel_save
     let @@ = reg_save
     call setpos('.', pos)
   endtry
-endfunction
+endfunction"}}}
+function! neosnippet#delete_selected_text(type, ...)"{{{
+  let sel_save = &selection
+  let &selection = 'inclusive'
+  let reg_save = @@
+  let pos = getpos('.')
+
+  try
+    " Invoked from Visual mode, use '< and '> marks.
+    if a:0
+      silent exe "normal! `<" . a:type . "`>d"
+    elseif a:type == 'line'
+      silent exe "normal! '[V']d"
+    elseif a:type == 'block'
+      silent exe "normal! `[\<C-V>`]d"
+    else
+      silent exe "normal! `[v`]d"
+    endif
+  finally
+    let &selection = sel_save
+    let @@ = reg_save
+    call setpos('.', pos)
+  endtry
+endfunction"}}}
 
 function! neosnippet#clear_select_mode_mappings()"{{{
   if !g:neosnippet#disable_select_mode_mappings

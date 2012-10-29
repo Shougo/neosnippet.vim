@@ -2,19 +2,19 @@ snippet     if
 abbr        if endif
 options     head
     if ${1:#:condition}
-        ${0}
+        ${0:TARGET}
     endif
 
 snippet     elseif
 options     head
     elseif ${1:/* condition */}
-        ${0}
+        ${0:TARGET}
 
 snippet     ifelse
 abbr        if else endif
 options     head
     if ${1:#:condition}
-        ${2}
+        ${2:TARGET}
     else
         ${3}
     endif
@@ -23,14 +23,14 @@ snippet     for
 abbr        for in endfor
 options     head
     for ${1:#:var} in ${2:#:list}
-        ${0}
+        ${0:TARGET}
     endfor
 
 snippet     while
 abbr        while endwhile
 options     head
     while ${1:#:condition}
-        ${0}
+        ${0:TARGET}
     endwhile
 
 snippet     function
@@ -38,14 +38,14 @@ abbr        func endfunc
 alias       func
 options     head
     function! ${1:#:func_name}(${2})
-        ${0}
+        ${0:TARGET}
     endfunction
 
 snippet     try
 abbr        try endtry
 options     head
     try
-        ${1}
+        ${1:TARGET}
     catch /${2:#:pattern}/
         ${3}
     endtry
@@ -55,7 +55,7 @@ abbr        try ... finally ... endtry
 alias       tryf
 options     head
     try
-        ${1}
+        ${1:TARGET}
     finally
         ${2}
     endtry
@@ -67,7 +67,7 @@ options     head
 snippet     echomsg
 alias       log
 options     head
-    echomsg string(${1})
+    echomsg string(${1:TARGET})
 
 snippet     command
 abbr        command call function
@@ -93,6 +93,6 @@ snippet     redir
 abbr        redir => var
 options     head
 	redir => ${1:#:var}
-		${2:}
+		${2::TARGET}
 	redir END
 
