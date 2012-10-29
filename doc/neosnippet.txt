@@ -456,6 +456,7 @@ CHANGELOG			*neosnippet-changelog*
 
 2012-10-29
 - Improved parse of snippets file.
+- Improved syntax of markers.
 
 2012-10-28
 - Improved snipMate compatibility.
