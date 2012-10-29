@@ -94,11 +94,6 @@ function! s:initialize()"{{{
 
   hi def link neosnippetExpandSnippets Special
 
-  " Select mode mappings."{{{
-  if g:neosnippet#disable_select_mode_mappings
-    autocmd neosnippet BufEnter * call s:clear_select_mode_mappings()
-  endif"}}}
-
   " Caching _ snippets.
   call neosnippet#make_cache('_')
 
@@ -956,7 +951,11 @@ function! s:trigger(function)"{{{
         \ a:function, string(cur_text), col)
 endfunction"}}}
 
-function! s:clear_select_mode_mappings()"{{{
+function! neosnippet#clear_select_mode_mappings()"{{{
+  if !g:neosnippet#disable_select_mode_mappings
+    return
+  endif
+
   redir => mappings
     silent! smap
   redir END
@@ -970,6 +969,14 @@ function! s:clear_select_mode_mappings()"{{{
     silent! execute 'sunmap' map
     silent! execute 'sunmap <buffer>' map
   endfor
+
+  " Define default select mode mappings.
+  snoremap <CR>     a<BS>
+  snoremap <BS>     a<BS>
+  snoremap <Del>    a<BS>
+  snoremap <C-h>    a<BS>
+  snoremap <right> <ESC>a
+  snoremap <left>  <ESC>bi
 endfunction"}}}
 
 " Plugin key-mappings.
