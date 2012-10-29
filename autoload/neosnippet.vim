@@ -74,14 +74,14 @@ function! s:initialize()"{{{
   call map(s:snippets_dir, 'substitute(v:val, "[\\\\/]$", "", "")')
 
   augroup neosnippet
-    autocmd BufNewFile,BufRead,ColorScheme *
+    autocmd BufNewFile,BufRead,Syntax *
           \ execute 'syntax match neosnippetExpandSnippets'
           \  "'".s:get_placeholder_marker_pattern(). '\|'
           \ .s:get_sync_placeholder_marker_pattern().'\|'
           \ .s:get_mirror_placeholder_marker_pattern()."'"
           \ 'containedin=ALL oneline'
     if has('conceal')
-      autocmd BufNewFile,BufRead,ColorScheme *
+      autocmd BufNewFile,BufRead,Syntax *
             \ syntax region neosnippetConcealExpandSnippets
             \ matchgroup=neosnippetExpandSnippets
             \ start='<`\d\+:\=\|<{\d\+:\=\|<|'
