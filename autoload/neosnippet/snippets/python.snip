@@ -1,49 +1,49 @@
 snippet     class
 abbr        class Class(...): ...
 options     head
-	class ${1:name}(${2:object}):
+	class ${1:#:name}(${2:#:object}):
 		def __init__(self, ${3}):
 			${0}
 
 snippet     classd
 abbr        class Class(...): "..."
 options     head
-	class ${1:name}(${2:object}):
-		"""${3:class documentation}"""
+	class ${1:#:name}(${2:#:object}):
+		"""${3:#:class documentation}"""
 		def __init__(self, ${4}):
-			"""${5:__init__ documentation}"""
+			"""${5:#:__init__ documentation}"""
 			${0}
 
 snippet     def
 abbr        def function(...): ...
 options     head
-	def ${1:name}(${2}):
+	def ${1:#:name}(${2}):
 		${0}
 
 snippet     defd
 abbr        def function(...): """..."""
 options     head
-	def ${1:name}(${2}):
-		"""${3:function documentation}"""
+	def ${1:#:name}(${2}):
+		"""${3:#:function documentation}"""
 		${0}
 
 snippet     defm
 abbr        def method(self, ...): ...
 options     head
-	def ${1:name}(self, ${2}):
+	def ${1:#:name}(self, ${2}):
 		${0}
 
 snippet     defmd
 abbr        def method(self, ...): "..."
 options     head
 	def ${1:name}(self, ${2}):
-		"""${3:method documentation}"""
+		"""${3:#:method documentation}"""
 		${0}
 
 snippet     elif
 abbr        elif ...: ...
 options     head
-	elif ${1:condition}:
+	elif ${1:#:condition}:
 		${0}
 
 snippet     else
@@ -66,13 +66,13 @@ options     head
 snippet     for
 abbr        for ... in ...: ...
 options     head
-	for ${1:value} in ${2:list}:
+	for ${1:#:value} in ${2:#:list}:
 		${0}
 
 snippet     if
 abbr        if ...: ...
 options     head
-	if ${1:condition}:
+	if ${1:#:condition}:
 		${0}
 
 snippet     ifmain
@@ -86,7 +86,7 @@ abbr        try: ... except ...: ...
 options     head
 	try:
 		${1}
-	except ${2:ExceptionClass}:
+	except ${2:#:ExceptionClass}:
 		${3}
 
 snippet     tryfinally
@@ -100,6 +100,6 @@ options     head
 snippet     while
 abbr        while ...: ...
 options     head
-	while ${1:condition}:
+	while ${1:#:condition}:
 		${0}
 

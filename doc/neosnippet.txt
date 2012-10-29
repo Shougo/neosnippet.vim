@@ -466,6 +466,7 @@ CHANGELOG			*neosnippet-changelog*
 
 2012-10-30
 - Implemented commented placeholder.
+- Improved python snippets.
 
 2012-10-29
 - Improved parse of snippets file.
