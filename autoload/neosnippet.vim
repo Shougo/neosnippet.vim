@@ -463,7 +463,7 @@ function! s:snippets_expand(cur_text, col)"{{{
   call neosnippet#expand(
         \ a:cur_text, a:col, cur_word)
 endfunction"}}}
-function! s:snippets_jump(cur_text, col)"{{{
+function! neosnippet#jump(cur_text, col)"{{{
   " Get patterns and count.
   if empty(s:snippets_expand_stack)
     return s:search_outof_range(a:col)
@@ -501,7 +501,7 @@ function! s:snippets_expand_or_jump(cur_text, col)"{{{
     call neosnippet#expand(
           \ a:cur_text, a:col, cur_word)
   else
-    call s:snippets_jump(a:cur_text, a:col)
+    call neosnippet#jump(a:cur_text, a:col)
   endif
 endfunction"}}}
 function! s:snippets_jump_or_expand(cur_text, col)"{{{
@@ -510,7 +510,7 @@ function! s:snippets_jump_or_expand(cur_text, col)"{{{
   if search(s:get_placeholder_marker_pattern(). '\|'
             \ .s:get_sync_placeholder_marker_pattern(), 'nw') > 0
     " Found snippet placeholder.
-    call s:snippets_jump(a:cur_text, a:col)
+    call neosnippet#jump(a:cur_text, a:col)
   else
     call neosnippet#expand(
           \ a:cur_text, a:col, cur_word)
@@ -601,7 +601,7 @@ function! neosnippet#expand(cur_text, col, trigger_name)"{{{
     endif
 
     if snip_word =~ s:get_placeholder_marker_pattern()
-      call s:snippets_jump(a:cur_text, a:col)
+      call neosnippet#jump(a:cur_text, a:col)
     endif
   finally
     if has('folding')
@@ -615,9 +615,11 @@ function! neosnippet#expand(cur_text, col, trigger_name)"{{{
 endfunction"}}}
 function! neosnippet#expand_target()"{{{
   let trigger = input('Please input snippet trigger: ',
-        \ '', 'customlist,neosnippet#snippet_complete')
+        \ '', 'customlist,neosnippet#complete_target_snippets')
   let neosnippet = neosnippet#get_current_neosnippet()
-  if !has_key(neosnippet#get_snippets(), trigger)
+  if !has_key(neosnippet#get_snippets(), trigger) ||
+        \ neosnippet#get_snippets()[trigger].snip !~#
+        \   s:get_placeholder_target_marker_pattern()
     let neosnippet.target = ''
     return
   endif
@@ -863,6 +865,8 @@ function! s:expand_target_placeholder(line, col)"{{{
   endtry
 
   let neosnippet.target = ''
+
+  call neosnippet#jump(neosnippet#util#get_cur_text(), col('.'))
 endfunction"}}}
 function! s:search_sync_placeholder(start, end, number)"{{{
   if a:end == 0
@@ -1006,11 +1010,15 @@ function! neosnippet#filetype_complete(arglead, cmdline, cursorpos)"{{{
 
   return sort(keys(ret))
 endfunction"}}}
-function! neosnippet#snippet_complete(arglead, cmdline, cursorpos)"{{{
-  return filter(keys(neosnippet#get_snippets()),
-        \ 'stridx(v:val, a:arglead) == 0')
+function! neosnippet#complete_target_snippets(arglead, cmdline, cursorpos)"{{{
+  return map(filter(values(neosnippet#get_snippets()),
+        \ "stridx(v:val.word, a:arglead) == 0
+        \ && v:val.snip =~# s:get_placeholder_target_marker_pattern()"), 'v:val.word')
 endfunction"}}}
 
+function! s:get_placeholder_target_marker_pattern()"{{{
+  return '\${\d\+:TARGET\%(:.\{-}\)\?\\\@<!}'
+endfunction"}}}
 function! s:get_placeholder_marker_pattern()"{{{
   return '<`\d\+\%(:.\{-}\)\?\\\@<!`>'
 endfunction"}}}
