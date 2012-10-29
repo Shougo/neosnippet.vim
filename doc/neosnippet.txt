@@ -458,6 +458,7 @@ CHANGELOG			*neosnippet-changelog*
 - Improved parse of snippets file.
 - Improved syntax of markers.
 - Improved clear select mode mappings.
+- Added get_selected_text().
 
 2012-10-28
 - Improved snipMate compatibility.

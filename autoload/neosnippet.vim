@@ -858,6 +858,15 @@ function! s:eval_snippet(snippet_text)"{{{
 
   return snip_word
 endfunction"}}}
+function! neosnippet#get_current_neosnippet()"{{{
+  if !exists('b:neosnippet')
+    let b:neosnippet = {
+          \ 'selected_text' : '',
+          \}
+  endif
+
+  return b:neosnippet
+endfunction"}}}
 function! neosnippet#get_snippets()"{{{
   let snippets = {}
   for filetype in s:get_sources_filetypes(neosnippet#get_filetype())
@@ -942,14 +951,48 @@ function! s:trigger(function)"{{{
   let cur_text = neosnippet#util#get_cur_text()
 
   let col = col('.')
+  let expr = ''
   if mode() !=# 'i'
     " Fix column.
     let col += 2
   endif
 
-  return printf("\<ESC>:call %s(%s,%d)\<CR>",
+  " Get selected text.
+  let neosnippet = neosnippet#get_current_neosnippet()
+  if mode() ==# 's' && neosnippet.selected_text =~ '^#:'
+    let expr .= "a\<BS>"
+  endif
+
+  let expr .= printf("\<ESC>:call %s(%s,%d)\<CR>",
         \ a:function, string(cur_text), col)
+
+  return expr
 endfunction"}}}
+
+function! neosnippet#get_selected_text(type, ...)
+  let sel_save = &selection
+  let &selection = 'inclusive'
+  let reg_save = @@
+
+  try
+    " Invoked from Visual mode, use '< and '> marks.
+    if a:0
+      silent exe "normal! `<" . a:type . "`>y"
+    elseif a:type == 'line'
+      silent exe "normal! '[V']y"
+    elseif a:type == 'block'
+      silent exe "normal! `[\<C-V>`]y"
+    else
+      silent exe "normal! `[v`]y"
+    endif
+
+    let neosnippet = neosnippet#get_current_neosnippet()
+    let neosnippet.selected_text = @@
+  finally
+    let &selection = sel_save
+    let @@ = reg_save
+  endtry
+endfunction
 
 function! neosnippet#clear_select_mode_mappings()"{{{
   if !g:neosnippet#disable_select_mode_mappings

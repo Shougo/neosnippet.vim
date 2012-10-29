@@ -55,6 +55,8 @@ inoremap <silent><expr> <Plug>(neosnippet_jump)
 snoremap <silent><expr> <Plug>(neosnippet_jump)
       \ neosnippet#jump_impl()
 
+" <C-v>:call neosnippet#get_selected_text(visualmode(), 1)<CR><C-v>
+
 imap <silent> <Plug>(neocomplcache_snippets_expand)
       \ <Plug>(neosnippet_expand_or_jump)
 smap <silent> <Plug>(neocomplcache_snippets_expand)
@@ -62,7 +64,7 @@ smap <silent> <Plug>(neocomplcache_snippets_expand)
 imap <silent> <Plug>(neocomplcache_snippets_jump)
       \ <Plug>(neosnippet_jump_or_expand)
 smap <silent> <Plug>(neocomplcache_snippets_jump)
-      \ <Plug>(neosnippet_jump_or_expand)
+      \ <Plug>(neosnippet_expand_or_jump)
 imap <silent> <Plug>(neocomplcache_snippets_force_expand)
       \ <Plug>(neosnippet_expand)
 smap <silent> <Plug>(neocomplcache_snippets_force_expand)

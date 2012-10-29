@@ -1,7 +1,7 @@
 snippet     if
 abbr        if endif
 options     head
-    if ${1:condition}
+    if ${1:#:condition}
         ${0}
     endif
 
@@ -13,7 +13,7 @@ options     head
 snippet     ifelse
 abbr        if else endif
 options     head
-    if ${1:condition}
+    if ${1:#:condition}
         ${2}
     else
         ${3}
@@ -22,14 +22,14 @@ options     head
 snippet     for
 abbr        for in endfor
 options     head
-    for ${1:var} in ${2:list}
+    for ${1:#:var} in ${2:#:list}
         ${0}
     endfor
 
 snippet     while
 abbr        while endwhile
 options     head
-    while ${1:condition}
+    while ${1:#:condition}
         ${0}
     endwhile
 
@@ -37,7 +37,7 @@ snippet     function
 abbr        func endfunc
 alias       func
 options     head
-    function! ${1:func_name}(${2})
+    function! ${1:#:func_name}(${2})
         ${0}
     endfunction
 
@@ -46,7 +46,7 @@ abbr        try endtry
 options     head
     try
         ${1}
-    catch /${2:pattern}/
+    catch /${2:#:pattern}/
         ${3}
     endtry
 
@@ -62,7 +62,7 @@ options     head
 
 snippet     catch
 options     head
-    catch ${1:/${2:pattern: empty, E484, Vim(cmdname):{errmsg\\}\}/}
+    catch ${1:/${2:#:pattern: empty, E484, Vim(cmdname):{errmsg\\}\}/}
 
 snippet     echomsg
 alias       log
@@ -72,13 +72,13 @@ options     head
 snippet     command
 abbr        command call function
 options     head
-    command! ${1:command_name} call ${2:func_name}
+    command! ${1:#:command_name} call ${2:#:func_name}
 
 snippet     customlist
 abbr        customlist complete function
 options     head
-    function! ${1:func_name}(arglead, cmdline, cursorpos)
-        return filter(${2:list}, 'stridx(v:val, a:arglead) == 0')
+    function! ${1:#:func_name}(arglead, cmdline, cursorpos)
+        return filter(${2:#:list}, 'stridx(v:val, a:arglead) == 0')
     endfunction
 
 snippet     augroup
@@ -86,13 +86,13 @@ abbr        augroup with autocmds
 options     head
     augroup ${1}
         autocmd!
-        autocmd ${2:event}
+        autocmd ${2:#:event}
     augroup END
 
 snippet     redir
 abbr        redir => var
 options     head
-	redir => ${1}
+	redir => ${1:#:var}
 		${2:}
 	redir END
 
