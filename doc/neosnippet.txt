@@ -181,6 +181,8 @@ KEY MAPPINGS 					*neosnippet-key-mappings*
 
 <Plug>(neosnippet_expand_or_jump)
 					*<Plug>(neosnippet_expand_or_jump)*
+s_<Plug>(neosnippet_expand_or_jump)
+					*s_<Plug>(neosnippet_expand_or_jump)*
 		Expands a cursor snippet of plural lines. When there is no
 		snippet, jumps to the next placeholder.
 
@@ -190,6 +192,8 @@ KEY MAPPINGS 					*neosnippet-key-mappings*
 
 <Plug>(neosnippet_jump_or_expand)
 				*<Plug>(neosnippet_jump_or_expand)*
+s_<Plug>(neosnippet_jump_or_expand)
+				*s_<Plug>(neosnippet_jump_or_expand)*
 		Jump to next placeholder. If there is no placeholder, expand a
 		multiline cursor snippet.
 
@@ -199,6 +203,8 @@ KEY MAPPINGS 					*neosnippet-key-mappings*
 
 <Plug>(neosnippet_expand)
 						*<Plug>(neosnippet_expand)*
+s_<Plug>(neosnippet_expand)
+						*s_<Plug>(neosnippet_expand)*
 		Expand a cursor snippet. Does nothing if there is no snippet.
 
 				*<Plug>(neocomplcache_snippets_force_expand)*
@@ -207,6 +213,8 @@ KEY MAPPINGS 					*neosnippet-key-mappings*
 
 <Plug>(neosnippet_jump)
 						*<Plug>(neosnippet_jump)*
+s_<Plug>(neosnippet_jump)
+						*s_<Plug>(neosnippet_jump)*
 		Jump to next place holder. Do not expand any snippet. When
 		you do not want to expand a snippet name, use this keymapping.
 
@@ -223,6 +231,10 @@ i_<Plug>(neosnippet_start_unite_snippet)
 				*<Plug>(neocomplcache_start_unite_snippet)*
 		Note: |<Plug>(neocomplcache_start_unite_snippet)| is obsolete
 		name.
+
+x_<Plug>(neosnippet_expand_target)
+					*x_<Plug>(neosnippet_expand_target)*
+		Expand inputted trigger by selected target text.
 
 neosnippet#expandable()
 						*neosnippet#expandable()*
@@ -276,6 +288,7 @@ EXAMPLES					*neosnippet-examples*
 	" Plugin key-mappings.
 	imap <C-k>     <Plug>(neosnippet_expand_or_jump)
 	smap <C-k>     <Plug>(neosnippet_expand_or_jump)
+	xmap <C-k>     <Plug>(neosnippet_expand_target)
 
 	" SuperTab like snippets behavior.
 	"imap <expr><TAB> neosnippet#expandable() ?
@@ -369,6 +382,17 @@ Commented placeholder feature is available. If the default value starts with
 	options     head
 	    if ${1:#:condition}
 	        ${2}
+	    endif
+<
+Targetted placeholder feature is available. If the default value starts with
+"TARGET:", neosnippet will insert selected text in
+|<Plug>(neosnippet_expand_target)|.
+>
+	snippet     if
+	abbr        if endif
+	options     head
+	    if ${1:#:condition}
+	        ${2:TARGET}
 	    endif
 <
 Note: To contain "}" character in default value, you must escape "}".
@@ -468,7 +492,8 @@ CHANGELOG			*neosnippet-changelog*
 - Implemented commented placeholder.
 - Improved python snippets.
 - Fixed for alias.
-- Implemented target placeholder.
+- Implemented targetted placeholder.
+- Improved documentation.
 
 2012-10-29
 - Improved parse of snippets file.
