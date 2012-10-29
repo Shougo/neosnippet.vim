@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: neosnippet.vim
 " AUTHOR:  Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 28 Oct 2012.
+" Last Modified: 29 Oct 2012.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -170,34 +170,28 @@ function! neosnippet#recaching()"{{{
   let s:snippets = {}
 endfunction"}}}
 
-function! s:set_snippet_dict(snippet_pattern, snippet_dict, dup_check, snippets_file)"{{{
-  if !has_key(a:snippet_pattern, 'name')
+function! s:set_snippet_dict(snippet_dict, snippets, dup_check, snippets_file)"{{{
+  if empty(a:snippet_dict)
     return
   endif
 
-  let pattern = s:set_snippet_pattern(a:snippet_pattern)
-  let action_pattern = '^snippet\s\+' . a:snippet_pattern.name . '$'
-  let a:snippet_dict[a:snippet_pattern.name] = pattern
-  let a:dup_check[a:snippet_pattern.name] = 1
+  let action_pattern = '^snippet\s\+' . a:snippet_dict.name . '$'
+  let snippet = s:initialize_snippet(
+        \ a:snippet_dict, a:snippets_file,
+        \ a:snippet_dict.linenr, action_pattern,
+        \ a:snippet_dict.name)
+  let a:snippets[a:snippet_dict.name] = snippet
+  let a:dup_check[a:snippet_dict.name] = snippet
 
-  for alias in get(a:snippet_pattern, 'alias', [])
-    let alias_pattern = copy(pattern)
-    let alias_pattern.word = alias
+  for alias in get(a:snippet_dict, 'alias', [])
+    let alias_snippet = copy(snippet)
+    let alias_snippet.word = alias
 
-    let alias_pattern.action__path = a:snippets_file
-    let alias_pattern.action__pattern = action_pattern
-    let alias_pattern.real_name = a:snippet_pattern.name
-
-    let a:snippet_dict[alias] = alias_pattern
-    let a:dup_check[alias] = 1
+    let a:snippet_dict[alias] = alias_snippet
+    let a:dup_check[alias] = alias_snippet
   endfor
-
-  let snippet = a:snippet_dict[a:snippet_pattern.name]
-  let snippet.action__path = a:snippets_file
-  let snippet.action__pattern = action_pattern
-  let snippet.real_name = a:snippet_pattern.name
 endfunction"}}}
-function! s:set_snippet_pattern(dict)"{{{
+function! s:initialize_snippet(dict, path, line, pattern, name)"{{{
   let a:dict.word = substitute(a:dict.word, '\n$', '', '')
   let menu_pattern = (a:dict.word =~
         \ s:get_placeholder_marker_substitute_pattern()
@@ -219,6 +213,8 @@ function! s:set_snippet_pattern(dict)"{{{
         \ 'description' : a:dict.word,
         \ 'menu' : menu_pattern.abbr,
         \ 'dup' : 1, 'options' : a:dict.options,
+        \ 'action__path' : a:path, 'action__line' : a:line,
+        \ 'action__pattern' : a:pattern, 'real_name' : a:name,
         \}
   return dict
 endfunction"}}}
@@ -304,16 +300,15 @@ function! neosnippet#make_cache(filetype)"{{{
         \ + split(globpath(join(snippets_dir, ','),
         \   filetype .  '/**/*.snip*'), '\n')
   for snippets_file in reverse(snippets_files)
-    call s:load_snippets(snippet, snippets_file)
+    call s:parse_snippets_file(snippet, snippets_file)
   endfor
 
   let s:snippets[filetype] = snippet
 endfunction"}}}
 
-function! s:load_snippets(snippet, snippets_file)"{{{
+function! s:parse_snippets_file(snippets, snippets_file)"{{{
   let dup_check = {}
-  let snippet_pattern = { 'word' : '',
-        \ 'options' : { 'head' : 0, 'word' : 0 } }
+  let snippet_dict = {}
 
   let linenr = 1
 
@@ -330,64 +325,68 @@ function! s:load_snippets(snippet, snippets_file)"{{{
       for snippets_file in split(globpath(join(
             \ neosnippet#get_snippets_directory(), ','),
             \ snippet_file), '\n')
-        call s:load_snippets(a:snippet, snippets_file)
+        call s:parse_snippets_file(a:snippets, snippets_file)
       endfor
     elseif line =~ '^delete\s'
       let name = matchstr(line, '^delete\s\+\zs.*$')
-      if name != '' && has_key(a:snippet, name)
-        call filter(a:snippet, 'v:val.real_name !=# name')
+      if name != '' && has_key(a:snippets, name)
+        call filter(a:snippets, 'v:val.real_name !=# name')
       endif
     elseif line =~ '^snippet\s'
-      if has_key(snippet_pattern, 'name')
+      if !empty(snippet_dict)
         " Set previous snippet.
-        call s:set_snippet_dict(snippet_pattern,
-              \ a:snippet, dup_check, a:snippets_file)
-        let snippet_pattern = { 'word' : '',
-              \ 'options' : { 'head' : 0, 'word' : 0 } }
+        call s:set_snippet_dict(snippet_dict,
+              \ a:snippets, dup_check, a:snippets_file)
       endif
 
+      " Initialize snippet dict.
+      let snippet_dict = { 'word' : '', 'linenr' : linenr,
+            \ 'options' : { 'head' : 0, 'word' : 0 } }
+
       " Try using the name without the description (abbr).
-      let snippet_pattern.name = matchstr(line, '^snippet\s\+\zs\S\+')
+      let snippet_dict.name = matchstr(line, '^snippet\s\+\zs\S\+')
 
       " Fall back to using the name and description (abbr) combined.
       " SnipMate snippets may have duplicate names, but different
       " descriptions (abbrs).
-      if has_key(dup_check, snippet_pattern.name)
+      if has_key(dup_check, snippet_dict.name)
         let description = matchstr(line, '^snippet\s\+\zs.*$')
-        if description !=# snippet_pattern.name
+        if description !=# snippet_dict.name
           " Convert description.
-          let snippet_pattern.name =
+          let snippet_dict.name =
                 \ substitute(description, '\W\+', '_', 'g')
         endif
       endif
 
       " Collect the description (abbr) of the snippet, if set on snippet line.
       " This is for compatibility with SnipMate-style snippets.
-      let snippet_pattern.abbr = matchstr(line, '^snippet\s\+\S\+\s\+\zs.*$')
+      let snippet_dict.abbr = matchstr(line, '^snippet\s\+\S\+\s\+\zs.*$')
 
       " Check for duplicated names.
-      if has_key(dup_check, snippet_pattern.name)
-        call neosnippet#util#print_error(
-              \ 'Warning: ' . a:snippets_file . ':'
-              \ . linenr . ': duplicated snippet name `'
-              \ . snippet_pattern.name . '`')
-        call neosnippet#util#print_error(
-              \ 'Please delete this snippet name before.')
+      if has_key(dup_check, snippet_dict.name)
+        let dup = dup_check[snippet_dict.name]
+        call neosnippet#util#print_error(printf(
+              \ 'Warning: %s:%d is overriding `%s` from %s:%d',
+              \ a:snippets_file, linenr, snippet_dict.name,
+              \ dup.action__path, dup.action__line))
+        call neosnippet#util#print_error(printf(
+              \ 'Please rename the snippet name or use `delete %s`.',
+              \ snippet_dict.name))
       endif
-    elseif has_key(snippet_pattern, 'name')
+    elseif !empty(snippet_dict)
       " Allow overriding/setting of the description (abbr) of the snippet.
       " This will override what was set via the snippet line.
       if line =~ '^abbr\s'
-        let snippet_pattern.abbr = matchstr(line, '^abbr\s\+\zs.*$')
+        let snippet_dict.abbr = matchstr(line, '^abbr\s\+\zs.*$')
       elseif line =~ '^alias\s'
-        let snippet_pattern.alias = split(matchstr(line,
+        let snippet_dict.alias = split(matchstr(line,
               \ '^alias\s\+\zs.*$'), '[,[:space:]]\+')
       elseif line =~ '^prev_word\s'
         let prev_word = matchstr(line,
               \ '^prev_word\s\+[''"]\zs.*\ze[''"]$')
         if prev_word == '^'
           " For backward compatibility.
-          let snippet_pattern.options.head = 1
+          let snippet_dict.options.head = 1
         else
           call neosnippet#util#print_error(
                 \ 'prev_word must be "^" character.')
@@ -395,43 +394,45 @@ function! s:load_snippets(snippet, snippets_file)"{{{
       elseif line =~ '^options\s\+'
         for option in split(matchstr(line,
               \ '^options\s\+\zs.*$'), '[,[:space:]]\+')
-          if !has_key(snippet_pattern.options, option)
+          if !has_key(snippet_dict.options, option)
             call neosnippet#util#print_error(
                   \ printf('invalid option name : %s is detected.', option))
           else
-            let snippet_pattern.options[option] = 1
+            let snippet_dict.options[option] = 1
           endif
         endfor
       elseif line =~ '^\s'
-        if snippet_pattern.word != ''
-          let snippet_pattern.word .= "\n"
+        if snippet_dict.word != ''
+          let snippet_dict.word .= "\n"
         else
           " Substitute Tab character.
           let line = substitute(line, '^\t', '', '')
         endif
 
-        let snippet_pattern.word .=
+        let snippet_dict.word .=
                 \ matchstr(line, '^ *\zs.*$')
       elseif line =~ '^$'
         " Blank line.
-        let snippet_pattern.word .= "\n"
+        let snippet_dict.word .= "\n"
       endif
     endif
 
     let linenr += 1
   endfor
 
-  if snippet_pattern.word !~
-        \ s:get_placeholder_marker_substitute_pattern()
-    " Add placeholder.
-    let snippet_pattern.word .= '${0}'
+  if !empty(snippet_dict)
+    if snippet_dict.word !~
+          \ s:get_placeholder_marker_substitute_pattern()
+      " Add placeholder.
+      let snippet_dict.word .= '${0}'
+    endif
+
+    " Set previous snippet.
+    call s:set_snippet_dict(snippet_dict,
+          \ a:snippets, dup_check, a:snippets_file)
   endif
 
-  " Set previous snippet.
-  call s:set_snippet_dict(snippet_pattern,
-        \ a:snippet, dup_check, a:snippets_file)
-
-  return a:snippet
+  return a:snippets
 endfunction"}}}
 
 function! s:is_beginning_of_line(cur_text)"{{{

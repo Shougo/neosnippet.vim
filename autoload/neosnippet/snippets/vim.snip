@@ -64,7 +64,8 @@ snippet     catch
 options     head
     catch ${1:/${2:pattern: empty, E484, Vim(cmdname):{errmsg\\}\}/}
 
-snippet     log
+snippet     echomsg
+alias       log
 options     head
     echomsg string(${1})
 
