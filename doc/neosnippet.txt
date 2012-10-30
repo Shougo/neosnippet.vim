@@ -511,6 +511,15 @@ Q: Doesn't indent in expanded line:
 A: You should use "options indent" in snippet definition. In default,
 neosnippet doesn't indent in expanded line.
 
+Q: Neosnippet conflicts with |LustyJuggler|.
+http://www.vim.org/scripts/script.php?script_id=2050
+
+A: Please try below settings:
+Note: But you must unmap in select mode mappings manually.
+>
+	let g:neosnippet#disable_select_mode_mappings = 0
+<
+
 ==============================================================================
 CHANGELOG			*neosnippet-changelog*
 
