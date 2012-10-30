@@ -40,9 +40,9 @@ Changelog		|neosnippet-changelog|
 ==============================================================================
 INTRODUCTION					*neosnippet-introduction*
 
-This plugin analyzes snippet files which you can use for completion. It offers 
+This plugin analyzes snippet files which you can use for completion. It offers
 functionality similar to snipMate.vim or snippetsEmu.vim. Since you can choose 
-snippets with the neocomplcache interface, you might have less trouble learning 
+snippets with the neocomplcache interface, you might have less trouble learning
 it because you do not have to remember each snippet name.
 
 ==============================================================================
@@ -63,7 +63,7 @@ COMMANDS 					*neosnippet-commands*
 :NeoSnippetMakeCache [filetype]
 						*:NeoSnippetMakeCache*
 
-	        Creates a cache for the given [filetype] snippets. It automatically 
+	        Creates a cache for the given [filetype] snippets. It automatically
 	        choses the current buffer's file type unless you specify one by
 		[filetype].
 
