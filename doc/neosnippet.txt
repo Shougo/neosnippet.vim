@@ -83,8 +83,8 @@ COMMANDS 					*neosnippet-commands*
 		when you save the file after edit.
 
 					*:NeoComplCacheEditSnippets*
-		These {options} modify the behavior of the command. You can use the following 
-		parameters as an option. Note: You must escape spaces with a backslash "\".
+		The following parameters can be used as {options} to modify the behavior of 
+		the command. Note: You must escape spaces with a backslash "\".
 
 					*neosnippet-edit-options-vertical*
 		-vertical
