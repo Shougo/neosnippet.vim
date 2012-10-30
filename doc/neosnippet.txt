@@ -62,7 +62,7 @@ COMMANDS 					*neosnippet-commands*
 :NeoSnippetMakeCache [filetype]
 						*:NeoSnippetMakeCache*
 
-	        Creates a cache of the [filetype] snippets. It automatically 
+	        Creates a cache for the [filetype] snippets. It automatically 
 	        choses the current buffer's file type unless you specify one by
 		[filetype].
 
@@ -94,7 +94,7 @@ COMMANDS 					*neosnippet-commands*
 		-horizontal
 		Split the window horizontally.
 		
-		The behavior is undefined when both options are set.
+		Note: The behavior is undefined when both options are set.
 
 					*neosnippet-edit-options-direction*
 		-direction={direction}
@@ -129,12 +129,12 @@ g:neosnippet#snippets_directory		*g:neosnippet#snippets_directory*
 		You can set multiple values in comma-separated form.
 		If the directory doesn't exist, it is ignored.
 
-		User defined snippets were read after normal snippet files,
-		so redundant snippets will be overwritten.
+		User defined snippets are read after built-in snippet files,
+		and redundant snippets get overwritten.
 		
-		Note: Neosnippet loads filetype snippet files.
-		If you are editing "vim" filetypes files, neosnippet wll load
-		"vim.snip*" and "vim_*.snip*" and "vim/**/*.snip" snippet files.
+		Note: Neosnippet loads the file type snippet files as follows. 
+		If you edit "vim" file types files, neosnippet loads
+		"vim.snip*", "vim_*.snip*" and "vim/**/*.snip" snippet files.
 
 						*g:neocomplcache_snippets_dir*
 		Note: |g:neocomplcache_snippets_dir| is an obsolete name.
@@ -143,24 +143,28 @@ g:neosnippet#snippets_directory		*g:neosnippet#snippets_directory*
 
 g:neosnippet#disable_select_mode_mappings
 				*g:neosnippet#disable_select_mode_mappings*
-		This variable controls whether to disable Key-mappings in
-		|Select-mode| when snippets_complete performs.  Usually you
-		had better enable it.
+		This variable disables key-mappings in |Select-mode| where 
+		snippets_complete performs the snippet completion. Usually it
+		it better to leave it as it is. But if you have troubles with 
+		the buffer switcher LustyJuggler it helps to disable them.
 		
 				*g:neocomplcache_disable_select_mode_mappings*
-		Note: |g:neocomplcache_disable_select_mode_mappings| is
+		Note: |g:neocomplcache_disable_select_mode_mappings| is an
 		obsolete name.
 
 		Default value is 1.
 
 g:neosnippet#disable_runtime_snippets
 				*g:neosnippet#disable_runtime_snippets*
-		This is dictionary variable. The key is filetype.  If the
-		value is 1, all runtime snippets won't be loaded in the
-		specified filetype.
-		If the key is "_", it will be used for default filetype.
-		This variable is useful to avoid snippets conflictions.
-		Note: It must be set in .vimrc.
+		This is a dictionary variable which uses the file type as key.
+		To set the value of a file type entry to 1 prevents loading all
+		built-in snippets for that file type. This is very useful to 
+		prevent snippet conflicts between self defined snippet files 
+		and the built-in snippet files of neosnippet. If you use "_" as 
+		key for an entry, this will be treated as default for all
+		file types.
+
+		Note: This dictionary must be set in your .vimrc.
 
 		For example:
 >
@@ -168,17 +172,17 @@ g:neosnippet#disable_runtime_snippets
 		\   'c' : 1, 'cpp' : 1,
 		\ }
 		
-		" Like g:neocomplcache_snippets_disable_runtime_snippets
-		" behavior(all runtime snippets are disabled).
+		" Works like g:neocomplcache_snippets_disable_runtime_snippets
+		" (Disable all runtime snippets).
 		let g:neosnippet#disable_runtime_snippets = {
 		\   '_' : 1,
 		\ }
 <
 			*g:neocomplcache_snippets_disable_runtime_snippets*
 		Note: |g:neocomplcache_snippets_disable_runtime_snippets| is
-		obsolete name.
+		an obsolete name.
 
-		Default value is {}.
+		The default value is {}.
 
 ------------------------------------------------------------------------------
 KEY MAPPINGS 					*neosnippet-key-mappings*
