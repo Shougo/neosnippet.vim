@@ -1,5 +1,5 @@
 *neosnippet.txt*
-		neo-snippet plugin contains neocomplcache snippets source
+		The neo-snippet plugin contains the neocomplcache snippet source
 
 Version: 3.0
 Author: Shougo <Shougo.Matsu@gmail.com>
@@ -40,10 +40,10 @@ Changelog		|neosnippet-changelog|
 ==============================================================================
 INTRODUCTION					*neosnippet-introduction*
 
-This plugin analyzes snippet files which you can use for completion. It offers 
-functionality similar to snipMate.vim or snippetsEmu.vim. Since you can choose 
-snippets with the neocomplcache interface, you might have less trouble learning 
-it because you do not have to remember each snippet name.
+This plugin analyzes snippet files which you can use for completion. It offers
+functionality similar to snipMate.vim or snippetsEmu.vim. Since you can choose
+snippets with the neocomplcache interface, you might have less trouble using
+them, because you do not have to remember each snippet name.
 
 ==============================================================================
 INSTALL						*neosnippet-install*
@@ -73,7 +73,7 @@ COMMANDS 					*neosnippet-commands*
 :NeoSnippetEdit [{options}] [filetype]
 					*:NeoSnippetEdit*
 		Opens the [filetype] snippets to edit. It automatically selects
-		the current buffer's filetype unless you specify another by [filetype].
+		the current buffer's filetype unless you specify another one by [filetype].
 		
 		If the path to [filetype] snippets is a directory, it automatically selects 
 		the "[filetype].snip" in the [filetype] subdirectory.
@@ -83,9 +83,8 @@ COMMANDS 					*neosnippet-commands*
 		when you save the file after edit.
 
 					*:NeoComplCacheEditSnippets*
-		{options} are options for the command.  You may give the
-		following parameters as an option. Note: You must escape spaces with a
-		backslash "\".
+		These {options} modify the behavior of the command. You can use the following 
+		parameters as an option. Note: You must escape spaces with a backslash "\".
 
 					*neosnippet-edit-options-vertical*
 		-vertical
@@ -114,7 +113,7 @@ COMMANDS 					*neosnippet-commands*
 
 :NeoComplCacheEdit -runtime [filetype]
 
-		Opens the [filetype] runtime snippets to edit. It automatically 
+		Opens the [filetype] standard snippets to edit. It automatically 
 		selects the current buffer's file type snippets unless you specify 
 		a file type by [filetype]. The snippets are re-cached automatically 
 		when you save the file after edit.
