@@ -34,6 +34,7 @@ Interface		|neosnippet-interface|
   Functions		  |neosnippet-functions|
 Examples		|neosnippet-examples|
 Snippet syntax		|neosnippet-snippet-syntax|
+FAQ			|neosnippet-faq|
 Changelog		|neosnippet-changelog|
 
 ==============================================================================
@@ -486,6 +487,19 @@ snippet					*neosnippet-unite-action-snippet*
 	preview		View snippet definition
 
 ==============================================================================
+FAQ						*neosnippet-faq*
+
+Q: Don't expanded snippet trigger after (, [, " etc...:
+
+A: You should use "options word" in snippet definition.  "options word" means
+this snippet is expanded by word boundary.
+>
+	snippet     date
+	options     word
+	    `strftime("%d %b %Y")`
+<
+
+==============================================================================
 CHANGELOG			*neosnippet-changelog*
 
 2012-10-30
@@ -494,6 +508,7 @@ CHANGELOG			*neosnippet-changelog*
 - Fixed for alias.
 - Implemented targetted placeholder.
 - Improved documentation.
+- Added FAQ section.
 
 2012-10-29
 - Improved parse of snippets file.
