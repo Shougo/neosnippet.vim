@@ -61,62 +61,65 @@ COMMANDS 					*neosnippet-commands*
 
 :NeoSnippetMakeCache [filetype]
 						*:NeoSnippetMakeCache*
-		Makes cache of [filetype] snippets.  It automatically selects
-		current buffer's filetype unless you specify [filetype].
+
+	        Creates a cache of the [filetype] snippets. It automatically 
+	        choses the current buffer's file type unless you specify one by
+		[filetype].
 
 					*:NeoComplCacheCachingSnippets*
-		Note: |:NeoComplCacheCachingSnippets| is obsolete name.
+		Note: |:NeoComplCacheCachingSnippets| is an obsolete name.
 
 :NeoSnippetEdit [{options}] [filetype]
 					*:NeoSnippetEdit*
-		Opens [filetype] snippets to edit.  It automatically selects
-		current buffer's filetype unless you specify [filetype].
+		Opens the [filetype] snippets to edit.  It automatically selects
+		the current buffer's filetype unless you specify it by [filetype].
 		
-		If [filetype] snippets has a directory, it automatically edit
-		"[filetype].snip" in [filetype] subdirectory.
+		If the path to [filetype] snippets is a directory, it automatically edits
+		the "[filetype].snip" in the [filetype] subdirectory.
 
 		It edits a snippet file in |g:neosnippet#snippets_directory|
-		with precedence.
-		Re-make cache will be done automatically when you save the
-		file.
+		with precedence. The snippets are re-cached automatically 
+		when you save the file after edit.
 
 					*:NeoComplCacheEditSnippets*
 		{options} are options for the command.  You may give the
-		following parameters for a option; you must escape with "\"
-		when it contains spaces.
+		following parameters as an option. Note: You must escape spaces with a
+		backslash "\".
 
 					*neosnippet-edit-options-vertical*
 		-vertical
-		Splits window vertically.
+		Split the window vertically.
 
 					*neosnippet-edit-options-horizontal*
 		-horizontal
-		Splits window horizontally.
+		Split the window horizontally.
 		
-		The behavior is undefined when both options are defined.
+		The behavior is undefined when both options are set.
 
 					*neosnippet-edit-options-direction*
 		-direction={direction}
-		Defines split position rule. The default value is "belowleft".
+		Define the split position rule. The default value is "belowleft".
 
 					*neosnippet-edit-options-split*
 		-split
-		Split buffer.
+		Split the buffer.
 
 					*neosnippet-edit-options-runtime*
 		-runtime
-		Edit runtime snippets instead of user snippets.
+		Edit the runtime (built-in standard) snippets instead of the user 
+		snippets defined by g:neosnippet#snippets_directory.
 
-		Note: |:NeoComplCacheEditSnippets| is obsolete name.
+		Note: |:NeoComplCacheEditSnippets| is an obsolete name.
 
 :NeoComplCacheEdit -runtime [filetype]
 
-		It edits a runtime snippet file with neosnippet.
-		Re-make cache will be done automatically when you save the
-		file.
+		Opens the [filetype] runtime snippets to edit.  It automatically 
+		selects the current buffer's file type snippets unless you specify 
+		a file type by [filetype]. The snippets are re-cached automatically 
+		when you save the file after edit.
 
 					*:NeoComplCacheEditRuntimeSnippets*
-		Note: |:NeoComplCacheEditRuntimeSnippets| is obsolete name.
+		Note: |:NeoComplCacheEditRuntimeSnippets| is an obsolete name.
 
 ------------------------------------------------------------------------------
 VARIABLES 					*neosnippet-variables*
@@ -134,7 +137,7 @@ g:neosnippet#snippets_directory		*g:neosnippet#snippets_directory*
 		"vim.snip*" and "vim_*.snip*" and "vim/**/*.snip" snippet files.
 
 						*g:neocomplcache_snippets_dir*
-		Note: |g:neocomplcache_snippets_dir| is obsolete name.
+		Note: |g:neocomplcache_snippets_dir| is an obsolete name.
 
 		This variable doesn't exist unless you declare it.
 
@@ -230,7 +233,7 @@ i_<Plug>(neosnippet_start_unite_snippet)
 		Note: |unite.vim| is required.
 
 				*<Plug>(neocomplcache_start_unite_snippet)*
-		Note: |<Plug>(neocomplcache_start_unite_snippet)| is obsolete
+		Note: |<Plug>(neocomplcache_start_unite_snippet)| is an obsolete
 		name.
 
 x_<Plug>(neosnippet_expand_target)
@@ -261,7 +264,7 @@ neosnippet#expandable()
 		|neocomplcache#sources#snippets_complete#expandable()|
 		and
 		|neocomplcache#sources#snippets_complete#force_expandable()|
-		is obsolete name.
+		are obsolete names.
 
 neosnippet#jumpable()
 						*neosnippet#jumpable()*
@@ -271,7 +274,7 @@ neosnippet#jumpable()
 
 		*neocomplcache#sources#snippets_complete#jumpable()*
 		Note: |neocomplcache#sources#snippets_complete#jumpable()| is
-		obsolete name.
+		an obsolete name.
 
 ------------------------------------------------------------------------------
 FUNCTIONS					*neosnippet-functions*
@@ -285,7 +288,7 @@ neosnippet#get_snippets_directory()
 		*neocomplcache#sources#snippets_complete#get_snippets_dir()*
 		Note:
 		|neocomplcache#sources#snippets_complete#get_snippets_dir()|
-		is obsolete name.
+		is an obsolete name.
 
 ==============================================================================
 EXAMPLES					*neosnippet-examples*
