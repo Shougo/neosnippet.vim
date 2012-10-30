@@ -1,9 +1,9 @@
 snippet allow
-    AllowOverride ${1:AuthConfig} ${2:FileInfo} ${3:Indexes} ${4:Limit} ${5:Options}
+    AllowOverride ${1:#:AuthConfig} ${2:#:FileInfo} ${3:#:Indexes} ${4:#:Limit} ${5:#:Options}
 
 
 snippet opt
-    Options ${1:All} ${2:ExecCGI} ${3:FollowSymLinks} ${4:Includes} ${5:IncludesNOEXEC} ${6:Indexes} ${7:MultiViews} ${8:SymLinksIfOwnerMatch}
+    Options ${1:#:All} ${2:#:ExecCGI} ${3:#:FollowSymLinks} ${4:#:Includes} ${5:#:IncludesNOEXEC} ${6:#:Indexes} ${7:#:MultiViews} ${8:#:SymLinksIfOwnerMatch}
 
 
 snippet vhost
@@ -14,10 +14,9 @@ snippet vhost
 		ErrorLog logs/${1}-error_log
 		CustomLog logs/${1}-access_log common
 	</VirtualHost>
-    
 
 snippet dir
 	<Directory ${1:/Library/WebServer/}>
 		${0}
 	</Directory>
-    
+
