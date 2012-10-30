@@ -1,19 +1,24 @@
 Neosnippet
 ==========
 
-# Description
+The Neosnippet plugin adds snippet support to vim. Snippets are
+small templates for commonly used code that you can fill in on the
+fly. To use snippets can increase your productivity in vim a lot.
+The functionality of this plugin is quite similar to plugins like
+snipMate.vim or snippetsEmu.vim. But since you can choose snippets with the
+[Neocomplecache](https://github.com/Shougo/neocomplcache) interface, you might
+have less trouble using them, because you do not have to remember each snippet
+name.
 
-Neosnippet add snippet support to vim, using the [Neocomplecache](https://github.com/Shougo/neocomplcache) framework.
-
-What is a snippet? It's a template for commonly used code that you can fill in on the fly.
-
-# Installation
+Installation
+------------
 
 1. Install [Neocomplecache](https://github.com/Shougo/neocomplcache) first.
 2. Put files in your Vim directory (usually `~/.vim/` or
    `%PROGRAMFILES%/Vim/vimfiles` on Windows).
 
-# Configuration
+Configuration
+-------------
 
 Here is an example `~/.vimrc` configuration for Neosnippet.  It is assumed
 you already have Neocomplecache configured.
