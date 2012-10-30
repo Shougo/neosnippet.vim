@@ -580,9 +580,11 @@ function! neosnippet#expand(cur_text, col, trigger_name)"{{{
       call append('.', snippet_lines[1:])
     endif
 
-    if begin_line != end_line
-      call s:indent_snippet(begin_line, end_line)
-    endif
+    let neosnippet = neosnippet#get_current_neosnippet()
+
+    call s:indent_snippet(
+          \ (neosnippet.target == '' ? begin_line : begin_line + 1),
+          \ end_line)
 
     let begin_patterns = (begin_line > 1) ?
           \ [getline(begin_line - 1)] : []
@@ -624,7 +626,13 @@ function! neosnippet#expand_target()"{{{
         \ neosnippet#get_selected_text(visualmode(), 1), '\n$', '', '')
   call neosnippet#delete_selected_text(visualmode(), 1)
 
-  call setline('.', matchstr(neosnippet.target, '^\s*') . trigger)
+  let base_indent = matchstr(neosnippet.target, '^\s*')
+
+  " Delete base_indent.
+  let neosnippet.target = substitute(neosnippet.target,
+        \'^' . base_indent, '', 'g')
+
+  call setline('.', base_indent . trigger)
   startinsert!
 
   call neosnippet#expand(getline('.'), col('$'), trigger)
@@ -837,16 +845,14 @@ function! s:expand_target_placeholder(line, col)"{{{
   endif
 
   try
+    let base_indent = matchstr(cur_text, '^\s\+')
     call setline(a:line, target_lines[0])
     if len(target_lines) > 1
-      call append(a:line, target_lines[1:])
+      call append(a:line, map(target_lines[1:],
+            \ 'base_indent . v:val'))
     endif
 
     call cursor(end_line, 0)
-
-    if begin_line != end_line
-      call s:indent_snippet(begin_line, end_line)
-    endif
 
     if next_line != ''
       startinsert
