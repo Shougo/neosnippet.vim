@@ -344,7 +344,7 @@ function! s:parse_snippets_file(snippets, snippets_file)"{{{
 
       " Initialize snippet dict.
       let snippet_dict = { 'word' : '', 'linenr' : linenr,
-            \ 'options' : { 'head' : 0, 'word' : 0 } }
+            \ 'options' : { 'head' : 0, 'word' : 0, 'indent' : 0 } }
 
       " Try using the name without the description (abbr).
       let snippet_dict.name = matchstr(line, '^snippet\s\+\zs\S\+')
@@ -583,8 +583,8 @@ function! neosnippet#expand(cur_text, col, trigger_name)"{{{
     let neosnippet = neosnippet#get_current_neosnippet()
 
     call s:indent_snippet(
-          \ (neosnippet.target == '' ? begin_line : begin_line + 1),
-          \ end_line)
+          \ ((neosnippet.target == '' && snippet.options.indent) ?
+          \  begin_line : begin_line + 1), end_line)
 
     let begin_patterns = (begin_line > 1) ?
           \ [getline(begin_line - 1)] : []

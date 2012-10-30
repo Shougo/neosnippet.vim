@@ -322,9 +322,6 @@ snippet {snippet_name} syntax is the snippet name.
 abbr {abbr_name} is the completion abbrevation (same to completion "abbr"
 key).
 
-"options head" means this snippet is enabled only in line head.
-Note: prev_word '^' is duplicated keyword.
-
 By the way, it is warned that the snippet name was already defined by other
 snippet file.  If you want to overwrite it explicitly, please use:
 >
@@ -456,6 +453,11 @@ languages' indent files can not work very well (e.g.: PHP, Python).
 			${2:// code...}
 		}
 <
+SNIPPET SYNTAX OPTIONS			*neosnippet-snippet-syntax-options*
+
+"options head" means this snippet is enabled only in line head.
+Note: prev_word '^' is duplicated keyword.
+
 "options word" means this snippet is expanded by word boundary.
 Note: To complete the trigger in snippets_complete, it must be word(digits or
 alphabet characters or "_") characters.
@@ -464,6 +466,7 @@ alphabet characters or "_") characters.
 	options     word
 	    `strftime("%d %b %Y")`
 <
+"options indent" means neosnippet indents in expanded line.
 
 ==============================================================================
 UNITE SOURCES					*neosnippet-unite-sources*
@@ -499,6 +502,11 @@ this snippet is expanded by word boundary.
 	    `strftime("%d %b %Y")`
 <
 
+Q: Doesn't indent in expanded line:
+
+A: You should use "options indent" in snippet definition. In default,
+neosnippet doesn't indent in expanded line.
+
 ==============================================================================
 CHANGELOG			*neosnippet-changelog*
 
@@ -509,6 +517,7 @@ CHANGELOG			*neosnippet-changelog*
 - Implemented targetted placeholder.
 - Improved documentation.
 - Added FAQ section.
+- Added indent option.
 
 2012-10-29
 - Improved parse of snippets file.
