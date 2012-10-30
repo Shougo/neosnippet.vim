@@ -18,27 +18,27 @@ snippet     def
 abbr        def function(...): ...
 options     head
 	def ${1:#:name}(${2}):
-		${0}
+		${0:TARGET}
 
 snippet     defd
 abbr        def function(...): """..."""
 options     head
 	def ${1:#:name}(${2}):
 		"""${3:#:function documentation}"""
-		${0}
+		${0:TARGET}
 
 snippet     defm
 abbr        def method(self, ...): ...
 options     head
 	def ${1:#:name}(self, ${2}):
-		${0}
+		${0:TARGET}
 
 snippet     defmd
 abbr        def method(self, ...): "..."
 options     head
-	def ${1:name}(self, ${2}):
+	def ${1:#:name}(self, ${2}):
 		"""${3:#:method documentation}"""
-		${0}
+		${0:TARGET}
 
 snippet     elif
 abbr        elif ...: ...
@@ -58,7 +58,7 @@ options     head
 	${1:f} = None
 	try:
 		$1 = open(${2})
-		${0}
+		${0:TARGET}
 	finally:
 	if $1:
 		$1.close()
@@ -67,25 +67,25 @@ snippet     for
 abbr        for ... in ...: ...
 options     head
 	for ${1:#:value} in ${2:#:list}:
-		${0}
+		${0:TARGET}
 
 snippet     if
 abbr        if ...: ...
 options     head
 	if ${1:#:condition}:
-		${0}
+		${0:TARGET}
 
 snippet     ifmain
 abbr        if __name__ == '__main__': ...
 options     head
 	if __name__ == '__main__':
-		${0}
+		${0:TARGET}
 
 snippet     tryexcept
 abbr        try: ... except ...: ...
 options     head
 	try:
-		${1}
+		${1:TARGET}
 	except ${2:#:ExceptionClass}:
 		${3}
 
@@ -93,7 +93,7 @@ snippet     tryfinally
 abbr        try: ... finally: ...
 options     head
 	try:
-		${1}
+		${1:TARGET}
 	finally:
 		${2}
 
@@ -101,5 +101,5 @@ snippet     while
 abbr        while ...: ...
 options     head
 	while ${1:#:condition}:
-		${0}
+		${0:TARGET}
 

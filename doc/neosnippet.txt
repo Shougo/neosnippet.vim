@@ -532,6 +532,7 @@ CHANGELOG			*neosnippet-changelog*
 - Added FAQ section.
 - Added indent option.
 - Added <Plug>(neosnippet_register_oneshot_snippet).
+- Refactored snippets files.
 
 2012-10-29
 - Improved parse of snippets file.

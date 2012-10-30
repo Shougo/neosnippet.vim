@@ -1,209 +1,209 @@
 snippet     mathexpression
 abbr        $ expression $
-	$${1:expression}$${2}
+	$${1:#:expression}$${2}
 
 # ========== ENVIRONMENT ==========
 
 snippet     begin
 alias       \begin
-	\begin{${1:type}}
-		${2}
+	\begin{${1:#:type}}
+		${2:TARGET}
 	\end{$1}
 	${0}
 
 snippet list
 alias   \begin{list}
 	\begin{list}
-		${1}
+		${1:TARGET}
 	\end{list}
 	${0}
 
 snippet quotation
 alias   \begin{quotation}
 	\begin{quotation}
-		${1}
+		${1:TARGET}
 	\end{quotation}
 	${0}
 
 snippet description
 alias   \begin{description}
 	\begin{description}
-		\item ${1}
+		\item ${1:TARGET}
 	\end{description}
 	${0}
 
 snippet sloppypar
 alias   \begin{sloppypar}
 	\begin{sloppypar}
-		${1}
+		${1:TARGET}
 	\end{sloppypar}
 	${0}
 
 snippet enumerate
 alias   \begin{enumerate}
 	\begin{enumerate}
-		\item ${1}
+		\item ${1:TARGET}
 	\end{enumerate}
 	${0}
 
 snippet theindex
 alias   \begin{theindex}
 	\begin{theindex}
-		${1}
+		${1:TARGET}
 	\end{theindex}
 	${0}
 
 snippet itemize
 alias   \begin{itemize}
 	\begin{itemize}
-		\item ${1}
+		\item ${1:TARGET}
 	\end{itemize}
 	${0}
 
 snippet titlepage
 alias   \begin{titlepage}
 	\begin{titlepage}
-		${1}
+		${1:TARGET}
 	\end{titlepage}
 	${0}
 
 snippet verbatim
 alias   \begin{verbatim}
 	\begin{verbatim}
-		${1}
+		${1:TARGET}
 	\end{verbatim}
 	${0}
 
 snippet verbatimtab
 alias   \begin{verbatimtab}
 	\begin{verbatimtab}[${1:8}]
-		${2}
+		${2:TARGET}
 	\end{verbatim}
 	${0}
 
 snippet trivlist
 alias   \begin{trivlist}
 	\begin{trivlist}
-		${1}
+		${1:TARGET}
 	\end{trivlist}
 	${0}
 
 snippet verse
 alias   \begin{verse}
 	\begin{verse}
-		${1}
+		${1:TARGET}
 	\end{verse}
 	${0}
 
 snippet table
 alias   \begin{table}
 	\begin{table}
-		${1}
+		${1:TARGET}
 	\end{table}
 	${0}
 
 snippet thebibliography
 alias   \begin{thebibliography}
 	\begin{thebibliography}
-		${1}
+		${1:TARGET}
 	\end{thebibliography}
 	${0}
 
 snippet tabbing
 alias   \begin{tabbing}
 	\begin{tabbing}
-		${1}
+		${1:TARGET}
 	\end{tabbing}
 	${0}
 
 snippet note
 alias   \begin{note}
 	\begin{note}
-		${1}
+		${1:TARGET}
 	\end{note}
 	${0}
 
 snippet tabular
 alias   \begin{tabular}
 	\begin{tabular}{${1}}
-		${2}
+		${2:TARGET}
 	\end{tabular}
 	${0}
 
 snippet overlay
 alias   \begin{overlay}
 	\begin{overlay}
-		${1}
+		${1:TARGET}
 	\end{overlay}
 	${0}
 
 snippet array
 alias   \begin{array}
 	\begin{array}
-		${1}
+		${1:TARGET}
 	\end{array}
 	${0}
 
 snippet slide
 alias   \begin{slide}
 	\begin{slide}
-		${1}
+		${1:TARGET}
 	\end{slide}
 	${0}
 
 snippet displaymath
 alias   \begin{displaymath}
 	\begin{displaymath}
-		${1}
+		${1:TARGET}
 	\end{displaymath}
 	${0}
 
 snippet abstract
 alias   \begin{abstract}
 	\begin{abstract}
-		${1}
+		${1:TARGET}
 	\end{abstract}
 	${0}
 
 snippet eqnarray
 alias   \begin{eqnarray}
 	\begin{eqnarray}
-		${1}
+		${1:TARGET}
 	\end{eqnarray}
 	${0}
 
 snippet eqnarray*
 alias   \begin{eqnarray*}
 	\begin{eqnarray*}
-		${1}
+		${1:TARGET}
 	\end{eqnarray}
 	${0}
 
 snippet appendix
 alias   \begin{appendix}
 	\begin{appendix}
-		${1}
+		${1:TARGET}
 	\end{appendix}
 	${0}
 
 snippet equation
 alias   \begin{equation}
 	\begin{equation}
-		${1}
+		${1:TARGET}
 	\end{equation}
 	${0}
 
 snippet center
 alias   \begin{center}
 	\begin{center}
-		${1}
+		${1:TARGET}
 	\end{center}
 	${0}
 
 snippet document
 alias   \begin{document}
 	\begin{document}
-		${1}
+		${1:TARGET}
 	\end{document}
 	${0}
 
@@ -221,56 +221,56 @@ alias   \begin{figure}
 snippet filecontents
 alias   \begin{filecontents}
 	\begin{filecontents}
-		${1}
+		${1:TARGET}
 	\end{filecontents}
 	${0}
 
 snippet lrbox
 alias   \begin{lrbox}
 	\begin{lrbox}
-		${1}
+		${1:TARGET}
 	\end{lrbox}
 	${0}
 
 snippet flushleft
 alias   \begin{flushleft}
 	\begin{flushleft}
-		${1}
+		${1:TARGET}
 	\end{flushleft}
 	${0}
 
 snippet minipage
 alias   \begin{minipage}
 	\begin{minipage}
-		${1}
+		${1:TARGET}
 	\end{minipage}
 	${0}
 
 snippet flushright
 alias   \begin{flushright}
 	\begin{flushright}
-		${1}
+		${1:TARGET}
 	\end{flushright}
 	${0}
 
 snippet picture
 alias   \begin{picture}
 	\begin{picture}
-		${1}
+		${1:TARGET}
 	\end{picture}
 	${0}
 
 snippet math
 alias   \begin{math}
 	\begin{math}
-		${1}
+		${1:TARGET}
 	\end{math}
 	${0}
 
 snippet quote
 alias   \begin{quote}
 	\begin{quote}
-		${1}
+		${1:TARGET}
 	\end{quote}
 	${0}
 
@@ -279,33 +279,33 @@ alias   \begin{quote}
 snippet part
 alias   \begin{part}
 	\begin{part}
-		${1}
+		${1:TARGET}
 	\end{part}
 	${0}
 
 snippet chapter
 alias   \begin{chapter}
 	\begin{chapter}
-		${1}
+		${1:TARGET}
 	\end{chapter}
 	${0}
 
 snippet \chapter
 alias   \chapter{
 	\chapter{${1}}
-	${0}
+	${0:TARGET}
 
 snippet section
 alias   \begin{section}
 	\begin{section}
-		${1}
+		${1:TARGET}
 	\end{section}
 	${0}
 
 snippet \section
 alias   \section{
 	\section{${1}}
-	${0}
+	${0:TARGET}
 
 snippet subsection
 alias   \begin{subsection}
@@ -317,98 +317,98 @@ alias   \begin{subsection}
 snippet \subsection
 alias   \subsection{
 	\subsection{${1}}
-	${0}
+	${0:TARGET}
 
 snippet subsubsection
 alias   \begin{subsubsection}
 	\begin{subsubsection}
-		${1}
+		${1:TARGET}
 	\end{subsubsection}
 	${0}
 
 snippet \subsubsection
 alias   \subsubsection{
 	\subsubsection{${1}}
-	${0}
+	${0:TARGET}
 
 snippet paragraph
 alias   \begin{paragraph}
 	\begin{paragraph}
-		${1}
+		${1:TARGET}
 	\end{paragraph}
 	${0}
 
 snippet \paragraph
 alias   \paragraph{
 	\paragraph{${1}}
-	${0}
+	${0:TARGET}
 
 snippet subparagraph
 alias   \begin{subparagraph}
 	\begin{subparagraph}
-		${1}
+		${1:TARGET}
 	\end{subparagraph}
 	${0}
 
 snippet \subparagraph
 alias   \subparagraph{
 	\subparagraph{${1}}
-	${0}
+	${0:TARGET}
 
 # ========== FONT ==========
 
 snippet bfseries
 alias   \begin{bfseries}
 	\begin{bfseries}
-		${1}
+		${1:TARGET}
 	\end{bfseries}
 
 snippet mdseries
 alias   \begin{mdseries}
 	\begin{mdseries}
-		${1}
+		${1:TARGET}
 	\end{mdseries}
 
 snippet ttfamily
 alias   \begin{ttfamily}
 	\begin{ttfamily}
-		${1}
+		${1:TARGET}
 	\end{ttfamily}
 
 snippet sffamily
 alias   \begin{sffamily}
 	\begin{sffamily}
-		${1}
+		${1:TARGET}
 	\end{sffamily}
 
 snippet rmfamily
 alias   \begin{rmfamily}
 	\begin{rmfamily}
-		${1}
+		${1:TARGET}
 	\end{rmfamily}
 
 snippet upshape
 alias   \begin{upshape}
 	\begin{upshape}
-		${1}
+		${1:TARGET}
 	\end{upshape}
 
 snippet slshape
 alias   \begin{slshape}
 	\begin{slshape}
-		${1}
+		${1:TARGET}
 	\end{slshape}
 
 snippet scshape
 alias   \begin{scshape}
 	\begin{scshape}
-		${1}
+		${1:TARGET}
 	\end{scshape}
 
 snippet itshape
 alias   \begin{itshape}
 	\begin{itshape}
-		${1}
+		${1:TARGET}
 	\end{itshape}
 
 # ========== OTHERS ==========

@@ -8,7 +8,7 @@ snippet     try
 abbr        try {} catch { case ... }
 options     head
 	try {
-		${1}
+		${1:TARGET}
 	} catch {
 		case e${2:: Exception} => ${0}
 	}
@@ -19,13 +19,13 @@ abbr        println()
 
 snippet     pn
 abbr        println('name, name)
-	println('${1:name}, $1)
+	println('${1:#:name}, $1)
 
 snippet     main
 abbr        def main(args: Array[String]) {
 options     head
 	def main(args: Array[String]) {
-		${0}
+		${0:TARGET}
 	}
 
 snippet     hello
@@ -39,3 +39,4 @@ options     head
 
 # scala's indent plugin doesn't work well. use hard-tab for this snippet.
 # vim: set noexpandtab :
+

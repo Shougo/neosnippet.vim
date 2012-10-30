@@ -17,26 +17,25 @@ snippet ab
     abstract
 
 snippet cl
-    class ${1} ${2:extends} ${3:Parent} ${4:implements} ${5:Interface} {
-        ${0}
+    class ${1} ${2:extends} ${3:#:Parent} ${4:implements} ${5:#:Interface} {
+        ${0:TARGET}
     }
 
 snippet in
-    interface ${1} ${2:extends} ${3:Parent} {
-        ${0}
+    interface ${1} ${2:extends} ${3:#:Parent} {
+        ${0:TARGET}
     }
 
 snippet m
-    ${1:void} ${2:method}(${3}) ${4:throws} {
-        ${0}
+    ${1:void} ${2:#:method}(${3}) ${4:throws} {
+        ${0:TARGET}
     }
-    
 
 snippet v
-    ${1:String} ${2:var}${3};
+    ${1:#:type} ${2:#:var}${3};
 
 snippet co
-    static public final ${1:String} ${2:var} = ${3};${4}
+    static public final ${1:#:type} ${2:#:var} = ${3};${4}
 
 snippet cos
     static public final String ${1:var} = "${2}";${4}
@@ -45,48 +44,43 @@ snippet re
     return
 
 snippet as
-    assert ${1:test} ${2:Failure message};${3}
+    assert ${1:#:test} ${2:#:Failure message};${3}
 
 snippet if
     if (${1}) {
-        ${2}
+        ${2:TARGET}
     }
 
 snippet elif
     else if (${1}) {
-        ${2}
+        ${2:TARGET}
     }
-    
 
 snippet wh
     while (${1}) {
-        ${2}
+        ${2:TARGET}
     }
-    
 
 snippet for
     for (${1}; ${2}; ${3}) {
-        ${4}
+        ${4:TARGET}
     }
-        
-        
+
 snippet fore
     for (${1} : ${2}) {
-    ${3}
+    ${3:TARGET}
 }
 
 snippet sw
     switch (${1}) {
-        ${2}
+        ${2:TARGET}
     }
-    
-    
+
 snippet case
 abbr ce
     case ${1}:
-        ${2}
+        ${2:TARGET}
     ${0}
-        
 
 snippet br
     break;
@@ -96,11 +90,10 @@ snippet de
         ${0}
 
 snippet ca
-    catch (${1:Exception} ${2:e}) {
+    catch (${1:#:Exception} ${2:e}) {
         ${0}
     }
-    
-    
+
 snippet th
     throw ${0}
 
@@ -115,20 +108,17 @@ snippet pa
 
 snippet tc
     public class ${1} extends ${2:TestCase} {
-        ${0}
+        ${0:TARGET}
     }
-    
 
 snippet test
-    public void test${1:Name}() throws Exception {
-        ${0}
+    public void test${1:#:Name}() throws Exception {
+        ${0:TARGET}
     }
-    
 
 snippet imt
     import junit.framework.TestCase;
     ${0}
-    
 
 snippet j.u
     java.util.
@@ -149,7 +139,6 @@ snippet main
     public static void main(String[] args) {
         ${0}
     }
-    
 
 snippet pl
     System.out.println(${1});${0}
@@ -160,9 +149,8 @@ snippet p
 #javadoc
 snippet c
     /**
-     * ${0}
+     * ${0:TARGET}
      */
-    
 
 snippet a
     @author ${0:$TM_FULLNAME}
@@ -172,7 +160,7 @@ abbr {
     {@code ${0}
 
 snippet d
-    @deprecated ${0:description}
+    @deprecated ${0:#:description}
 
 snippet {docRoot
 abbr {
@@ -184,46 +172,47 @@ abbr {
 
 snippet {link
 abbr {
-    {@link ${1:target} ${0:label}
+    {@link ${1:#:target} ${0:#:label}
 
 snippet {linkplain
 abbr {
-    {@linkplain ${1:target} ${0:label}
+    {@linkplain ${1:#:target} ${0:#:label}
 
 snippet {literal
 abbr {
     {@literal ${0}
 
 snippet param
-    @param ${1:var} ${0:description}
+    @param ${1:#:var} ${0:#:description}
 
 snippet r
-    @return ${0:description}
+    @return ${0:#:description}
 
 snippet s
-    @see ${0:reference}
+    @see ${0:#:reference}
 
 snippet se
-    @serial ${0:description}
+    @serial ${0:#:description}
 
 snippet sd
-    @serialField ${0:description}
+    @serialField ${0:#:description}
 
 snippet sf
-    @serialField ${1:name} ${2:type} ${0:description}
+    @serialField ${1:#:name} ${2:#:type} ${0:#:description}
 
 snippet si
-    @since ${0:version}
+    @since ${0:#:version}
 
 snippet t
-    @throws ${1:class} ${0:description}
+    @throws ${1:#:class} ${0:#:description}
 
 snippet {value
 abbr {
     {@value ${0}
 
 snippet ver
-    @version ${0:version}
+    @version ${0:#:version}
 
 snippet null
     {@code null}
+

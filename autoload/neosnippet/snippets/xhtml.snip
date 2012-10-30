@@ -1,22 +1,23 @@
 snippet doctypetransitional
     <!DOCTYPE html
-    PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" 
+    PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
 snippet doctypeframeset
     <!DOCTYPE html
-    PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" 
+    PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-frameset.dtd">
 
 snippet doctypestrict
     <!DOCTYPE html
-    PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" 
+    PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 
 snippet xhtml
     <html xmlns="http://www.w3.org/1999/xhtml">
-        ${1}
+        ${1:TARGET}
     </html>
+
 snippet head
     <head>
         <meta http-equiv="content-type" content="text/html; charset=${1:utf-8}">
@@ -40,16 +41,16 @@ snippet metadescription
 
 snippet scriptcharset
     <script type="text/javascript" charset="${1:UTF-8}">
-    ${2}
+    ${2:TARGET}
     </script>${3}
 snippet script
     <script type="text/javascript">
-    ${1}
+    ${1:TARGET}
     </script>${2}
 
 snippet body
     <body>
-       ${1} 
+       ${1:TARGET}
     </body>
 
 snippet h
@@ -65,29 +66,29 @@ snippet hr
     <hr />
 
 snippet comment
-    <!--${1}-->${2}
+    <!--${1:TARGET}-->${2}
 
 snippet b
-    <b>${1}</b>${2}
+    <b>${1:TARGET}</b>${2}
 snippet small
-    <small>${1}</small>${2}
+    <small>${1:TARGET}</small>${2}
 snippet strong
-    <strong>${1}</strong>${2}
+    <strong>${1:TARGET}</strong>${2}
 snippet sub
-    <sub>${1}</sub>${2}
+    <sub>${1:TARGET}</sub>${2}
 snippet sup
-    <sup>${1}</sup>${2}
+    <sup>${1:TARGET}</sup>${2}
 snippet ins
-    <ins>${1}</ins>${2}
+    <ins>${1:TARGET}</ins>${2}
 snippet del
-    <del>${1}</del>${2}
+    <del>${1:TARGET}</del>${2}
 snippet em
-    <em>${1}</em>${2}
+    <em>${1:TARGET}</em>${2}
 snippet bdo
-    <bdo dir="${1:rtl}">${2}</bdo>${3}
+    <bdo dir="${1:rtl}">${2:TARGET}</bdo>${3}
 snippet pre
     <pre>
-    ${1}
+    ${1:TARGET}
     </pre>${2}
 snippet blockquote
     <blockquote>
@@ -109,66 +110,66 @@ snippet bgcolor
     bgcolor="${1}"${2}
 
 snippet ahref
-    <a href="${1}">${2}</a>${3}
+    <a href="${1}">${2:TARGET}</a>${3}
 snippet ahref_blank
-    <a href="${1}" target="_blank">${2}</a>${3}
+    <a href="${1}" target="_blank">${2:TARGET}</a>${3}
 snippet ahref_parent
-    <a href="${1}" target="_parent">${2}</a>${3}
+    <a href="${1}" target="_parent">${2:TARGET}</a>${3}
 snippet ahref_top
-    <a href="${1}" target="_top">${2}</a>${3}
+    <a href="${1}" target="_top">${2:TARGET}</a>${3}
 snippet aname
-    <a name="${1}">${2}</a>${3}
+    <a name="${1}">${2:TARGET}</a>${3}
 
 snippet framesetcols
     <frameset cols="${1}">
-    ${2}
+    ${2:TARGET}
     </frameset>${3}
 snippet framesetrows
     <frameset rows="${1}"
-    ${2}
+    ${2:TARGET}
     </frameset>${3}
 
 snippet iframe
     <iframe src="${1}"></iframe>${2}
 snippet table
     <table border="${1}">
-    ${2}
+    ${2:TARGET}
     </table>${3}
 
 snippet th
-    <th>${1}</th>${2}
+    <th>${1:TARGET}</th>${2}
 
 snippet ulsquare
-    <ul type="square">${1}</ul>${2}
+    <ul type="square">${1:TARGET}</ul>${2}
 snippet ulcircle
-    <ul type="circle">${1}</ul>${2}
+    <ul type="circle">${1:TARGET}</ul>${2}
 snippet uldisc
-    <ul type="disc">${1}</ul>${2}
+    <ul type="disc">${1:TARGET}</ul>${2}
 
 snippet ol
-    <ol>${1}</ol>${2}
+    <ol>${1:TARGET}</ol>${2}
 snippet olA
-    <ol type="A">${1}</ol>${2}
+    <ol type="A">${1:TARGET}</ol>${2}
 snippet ola
-    <ol type="a">${1}</ol>${2}
+    <ol type="a">${1:TARGET}</ol>${2}
 snippet olI
-    <ol type="I">${1}</ol>${2}
+    <ol type="I">${1:TARGET}</ol>${2}
 snippet oli
-    <ol type="i">${1}</ol>${2}
+    <ol type="i">${1:TARGET}</ol>${2}
 
 snippet li
-    <li>${1}</li>${2}
+    <li>${1:TARGET}</li>${2}
 
 snippet dl
-    <dl>${1}</dl>${2}
+    <dl>${1:TARGET}</dl>${2}
 snippet dt
-    <dt>${1}</dt>${2}
+    <dt>${1:TARGET}</dt>${2}
 snippet dd
-    <dd>${1}</dd>${2}
+    <dd>${1:TARGET}</dd>${2}
 
 snippet form
     <form>
-    ${1}
+    ${1:TARGET}
     </form>${2}
 
 snippet inputtext
@@ -182,33 +183,33 @@ snippet inputcheckbox
 
 snippet textarea
     <textarea rows="${1}" cols="${2}">
-    ${3}
+    ${3:TARGET}
     </textarea>
     ${4}
 
 snippet button
-    <button>${1}</button>${2}
+    <button>${1:TARGET}</button>${2}
 
 snippet select
-    <select>${1}</select>${2}
+    <select>${1:TARGET}</select>${2}
 
 snippet optgroup
     <optgroup label="${1}">
-    ${2}
+    ${2:TARGET}
     <optgroup>${3}
 snippet option
-    <option value="${1}">${2}</option>${3}
+    <option value="${1}">${2:TARGET}</option>${3}
 
 snippet label
-    <label>${1}: <input type="${2}" /><label>${3}
+    <label>${1}: <input type="${2:TARGET}" /><label>${3}
 snippet labelfor
-    <label for="${1}:id">${2}</label>${3}
+    <label for="${1}:id">${2:TARGET}</label>${3}
 
 snippet fiedset
-    <fiedlset>${1}</fiedset>${2}
+    <fiedlset>${1:TARGET}</fiedset>${2}
 
 snippet legend
-    <legend>${1}</legend>${2}
+    <legend>${1:TARGET}</legend>${2}
 
 snippet id
     id="${1}"${2}
@@ -217,19 +218,20 @@ snippet class
     class="${1}"${2}
 
 snippet pclass
-    <p class="${1}">${2}</p>${3}
+    <p class="${1}">${2:TARGET}</p>${3}
 
 snippet pid
-    <p id="${1}">${2}</p>${3}
+    <p id="${1}">${2:TARGET}</p>${3}
 
 snippet divid
-    <div id="${1}">${2}</div>${3}
+    <div id="${1}">${2:TARGET}</div>${3}
 
 snippet divclass
-    <div class="${1}">${2}</div>${3}
+    <div class="${1}">${2:TARGET}</div>${3}
 
 snippet img
     <img src="${1}">${2}
 
 snippet div
-    <div ${1:id="${2:someid\}"}>${3}</div>${4}
+    <div ${1:id="${2:someid\}"}>${3:TARGET}</div>${4}
+

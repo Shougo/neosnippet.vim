@@ -6,34 +6,34 @@ abbr        template <T>
 
 snippet     class
 abbr        class {}
-    class ${1:name} {
+    class ${1:#:name} {
         ${2}
     };
 
 snippet     try
 abbr        try catch
     try {
-        ${1}
-    } catch (${2:exception}) {
+        ${1:TARGET}
+    } catch (${2:e:xception}) {
         ${3}
     }
 
 # range based for ( C++11 feature )
 snippet     for_CPP11
 abbr        for (:) {}
-    for (${1:var} : ${2:container}) {
-        ${0}
+    for (${1:#:var} : ${2:#:container}) {
+        ${0:TARGET}
     }
 
 # lambda expression ( C++11 feature )
 snippet     lambda
 abbr        [](){}
-    [${1}](${2})${3}{ ${4} }
+    [${1}](${2})${3}{ ${4:TARGET} }
 
 # scoped enumeration ( C++11 feature )
 snippet     enum_scoped
 abbr        enum struct {}
-    enum struct { ${1} }
+    enum struct { ${1:TARGET} }
 
 # static assert ( C++11 feature )
 snippet     static_assert
@@ -44,8 +44,8 @@ delete      namespace
 snippet     namespace
 abbr        namespace {}
 options     head
-    namespace ${1:name}
-        ${0}
+    namespace ${1:#:name}
+        ${0:TARGET}
     } // namespace $1
 
 snippet     static_cast
@@ -64,8 +64,8 @@ snippet     dynamic_cast
 abbr        dynamic_cast<>()
     dynamic_cast<${1}>(${2})${0}
 
-snippet helloworld
-abbr        #include<iostream>\nint main...
+snippet     helloworld
+abbr        #include<iostream> int main...
     #include <iostream>
     int main(int argc, char const* argv[])
     {
@@ -73,3 +73,4 @@ abbr        #include<iostream>\nint main...
         cout << "hello, world!" << endl;
         return 0;
     }
+

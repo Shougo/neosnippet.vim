@@ -7,7 +7,7 @@ options     head
 
 snippet     elseif
 options     head
-    elseif ${1:/* condition */}
+    elseif ${1:#:condition}
         ${0:TARGET}
 
 snippet     ifelse
@@ -84,7 +84,7 @@ options     head
 snippet     augroup
 abbr        augroup with autocmds
 options     head
-    augroup ${1}
+    augroup ${1:#:augroup_name}
         autocmd!
         autocmd ${2:#:event}
     augroup END

@@ -1,52 +1,52 @@
 snippet     if
 abbr        if ... end
-    if ${1:condition}
-        ${2}
+    if ${1:#:condition}
+        ${2:TARGET}
     end
 
 snippet     def
 abbr        def ... end
-    def ${1:method_name}
-        ${2}
+    def ${1:#:method_name}
+        ${2:TARGET}
     end
 
 snippet     defrescue
 alias       defr
 abbr        def ... rescue ... end
-    def ${1:method_name}
-        ${2}
-    rescue ${3:StandardError} => ${4:error}
+    def ${1:#:method_name}
+        ${2:TARGET}
+    rescue ${3:#:StandardError} => ${4:error}
         ${5}
     end
 
 snippet     do
 abbr        do ... end
     do
-        ${1}
+        ${1:TARGET}
     end
 
 snippet     dovar
 abbr        do |var| ... end
-    do |${1:var}|
-        ${2}
+    do |${1:#:var}|
+        ${2:TARGET}
     end
 
 snippet     block
 abbr        { ... }
     {
-        ${1}
+        ${1:TARGET}
     }
 
 snippet     blockvar
 abbr        {|var| ... }
-    {|${1:var}|
-        ${2}
+    {|${1:#:var}|
+        ${2:TARGET}
     }
 
 snippet     fileopen
 abbr        File.open(filename) do ... end
-    File.open(${1:filename}, '${2:w}') do |${3:io}|
-        ${0}
+    File.open(${1:#:filename}, '${2:#:mode}') do |${3:io}|
+        ${0:TARGET}
     end
 
 snippet     edn

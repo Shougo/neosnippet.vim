@@ -2,26 +2,26 @@
 snippet func
 alias   function name(args)...end
 options word
-	function ${1:function_name}(${2:argument})
-		${0:// body...}
+	function ${1:#:function_name}(${2:#:argument})
+		${0:TARGET}
 	end
 
 snippet if
 options head
-  if (${1:true}) then
-    ${0:$TM_SELECTED_TEXT}
+  if (${1:#:condition}) then
+    ${0:TARGET}
   end
 
 snippet for
 options head
-  for ${2:i} = 0, ${1:Things} do
-    ${0}
+  for ${2:i} = 0, ${1:#:Things} do
+    ${0:TARGET}
   end
 
 snippet forin
 options head
   for ${2:k}, ${3:v} in ${1:ipairs(xs)} do
-    ${0}
+    ${0:TARGET}
   end
 
 snippet print_table
@@ -30,3 +30,4 @@ abbr    for k, v in ipairs(table) do
   for k, v in ipairs(${1:table}) do
     print(k, v)
   end
+
