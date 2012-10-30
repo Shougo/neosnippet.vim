@@ -40,9 +40,10 @@ Changelog		|neosnippet-changelog|
 ==============================================================================
 INTRODUCTION					*neosnippet-introduction*
 
-This source analyzes snippet files for completion, offers functionality
-similar to snipMate.vim or snippetsEmu.vim.  Since you can choose snippet with
-neocomplcache interface, you might have less trouble learning it.
+This plugin analyzes snippet files which you can use for completion. It offers 
+functionality similar to snipMate.vim or snippetsEmu.vim. Since you can choose 
+snippets with the neocomplcache interface, you might have less trouble learning 
+it because you do not have to remember each snippet name.
 
 ==============================================================================
 INSTALL						*neosnippet-install*
