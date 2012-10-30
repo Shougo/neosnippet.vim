@@ -63,7 +63,7 @@ COMMANDS 					*neosnippet-commands*
 :NeoSnippetMakeCache [filetype]
 						*:NeoSnippetMakeCache*
 
-	        Creates a cache for the [filetype] snippets. It automatically 
+	        Creates a cache for the given [filetype] snippets. It automatically 
 	        choses the current buffer's file type unless you specify one by
 		[filetype].
 
@@ -193,28 +193,28 @@ KEY MAPPINGS 					*neosnippet-key-mappings*
 s_<Plug>(neosnippet_expand_or_jump)
 					*s_<Plug>(neosnippet_expand_or_jump)*
 		Expands a cursor snippet of plural lines. When there is no
-		snippet, jumps to the next placeholder.
+		snippet, it jumps to the next placeholder.
 
 				*<Plug>(neocomplcache_snippets_expand)*
-		Note: |<Plug>(neocomplcache_snippets_expand)| is obsolete
+		Note: |<Plug>(neocomplcache_snippets_expand)| is an obsolete
 		name.
 
 <Plug>(neosnippet_jump_or_expand)
 				*<Plug>(neosnippet_jump_or_expand)*
 s_<Plug>(neosnippet_jump_or_expand)
 				*s_<Plug>(neosnippet_jump_or_expand)*
-		Jump to the next placeholder. If there is no placeholder, expand a
-		multiline cursor snippet.
+		Jump to the next placeholder. If there is no placeholder, it expand a
+		multi line cursor snippet.
 
 				*<Plug>(neocomplcache_snippets_jump)*
-		Note: |<Plug>(neocomplcache_snippets_jump)| is obsolete
+		Note: |<Plug>(neocomplcache_snippets_jump)| is an obsolete
 		name.
 
 <Plug>(neosnippet_expand)
 						*<Plug>(neosnippet_expand)*
 s_<Plug>(neosnippet_expand)
 						*s_<Plug>(neosnippet_expand)*
-		Expand a cursor snippet. Does nothing if there is no snippet.
+		Expand a cursor snippet. It does nothing if there is no snippet.
 
 				*<Plug>(neocomplcache_snippets_force_expand)*
 		Note: |<Plug>(neocomplcache_snippets_force_expand)| is
@@ -225,7 +225,7 @@ s_<Plug>(neosnippet_expand)
 s_<Plug>(neosnippet_jump)
 						*s_<Plug>(neosnippet_jump)*
 		Jump to the next place holder. Do not expand any snippet. When
-		you do not want to expand a snippet name, use this keymapping.
+		you do not want to expand a snippet name, use this key mapping.
 
 				*<Plug>(neocomplcache_snippets_force_jump)*
 		Note: |<Plug>(neocomplcache_snippets_force_jump)| is
@@ -233,9 +233,8 @@ s_<Plug>(neosnippet_jump)
 
 i_<Plug>(neosnippet_start_unite_snippet)
 				*i_<Plug>(neosnippet_start_unite_snippet)*
-		Start unite snippet source. You can expand a snippet by unite
-		interface.
-		Note: |unite.vim| is required.
+		Starts the unite snippet source. You can expand a snippet by the 
+		unite interface. Note: |unite.vim| is required.
 
 				*<Plug>(neocomplcache_start_unite_snippet)*
 		Note: |<Plug>(neocomplcache_start_unite_snippet)| is an obsolete
@@ -243,7 +242,7 @@ i_<Plug>(neosnippet_start_unite_snippet)
 
 x_<Plug>(neosnippet_expand_target)
 					*x_<Plug>(neosnippet_expand_target)*
-		Expand inputted trigger by selected target text.
+		Expand the inputted trigger by selected target text.
 
 x_<Plug>(neosnippet_register_oneshot_snippet)
 				*x_<Plug>(neosnippet_register_oneshot_snippet)*
@@ -251,12 +250,12 @@ x_<Plug>(neosnippet_register_oneshot_snippet)
 
 neosnippet#expandable()
 						*neosnippet#expandable()*
-		Use this function with imap <expr>. It checks whether cursor
-		text is a snippet trigger or a placeholder exists in the
-		current buffer. It's useful for saving keymappings.
-		Return value is not just a boolean but either
-		0: not found
-		1: cursor text is a snippet trigger
+		You can use this function with imap <expr>. It checks whether the 
+		cursor text is a snippet trigger or a placeholder. This is is useful 
+		to save key mappings. The return values of the function are:
+	
+	        0: not found
+		1: the cursor text is a snippet trigger
 		2: a placeholder exists in the current buffer
 		3: both found
 >
@@ -273,9 +272,9 @@ neosnippet#expandable()
 
 neosnippet#jumpable()
 						*neosnippet#jumpable()*
-		Use this function with imap <expr>. It checks whether cursor
-		text is an existing placeholder in current buffer.
-		Useful for saving keymappings.
+		Use this function with imap <expr>. It checks if the cursor
+		text is an existing placeholder in current buffer. This is 
+		useful to save key mappings.
 
 		*neocomplcache#sources#snippets_complete#jumpable()*
 		Note: |neocomplcache#sources#snippets_complete#jumpable()| is
