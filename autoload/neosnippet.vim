@@ -582,10 +582,8 @@ function! neosnippet#expand(cur_text, col, trigger_name)"{{{
       call append('.', snippet_lines[1:])
     endif
 
-    let neosnippet = neosnippet#get_current_neosnippet()
-
     call s:indent_snippet(
-          \ ((neosnippet.target == '' && snippet.options.indent) ?
+          \ ((begin_line != end_line || snippet.options.indent) ?
           \  begin_line : begin_line + 1), end_line)
 
     let begin_patterns = (begin_line > 1) ?
@@ -651,11 +649,13 @@ function! s:indent_snippet(begin, end)"{{{
   let equalprg = &l:equalprg
   let pos = getpos('.')
 
+  let neosnippet = neosnippet#get_current_neosnippet()
+
   try
     setlocal equalprg=
 
     " Check use of indent plugin.
-    if getline(a:begin+1) !~ '^\t\+'
+    if neosnippet.target == '' && getline(a:begin+1) !~ '^\t\+'
       " Indent begin line.
       call cursor(a:begin, 0)
       silent normal! ==
