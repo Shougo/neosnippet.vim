@@ -71,10 +71,10 @@ COMMANDS 					*neosnippet-commands*
 
 :NeoSnippetEdit [{options}] [filetype]
 					*:NeoSnippetEdit*
-		Opens the [filetype] snippets to edit.  It automatically selects
-		the current buffer's filetype unless you specify it by [filetype].
+		Opens the [filetype] snippets to edit. It automatically selects
+		the current buffer's filetype unless you specify another by [filetype].
 		
-		If the path to [filetype] snippets is a directory, it automatically edits
+		If the path to [filetype] snippets is a directory, it automatically selects 
 		the "[filetype].snip" in the [filetype] subdirectory.
 
 		It edits a snippet file in |g:neosnippet#snippets_directory|
@@ -107,13 +107,13 @@ COMMANDS 					*neosnippet-commands*
 					*neosnippet-edit-options-runtime*
 		-runtime
 		Edit the runtime (built-in standard) snippets instead of the user 
-		snippets defined by g:neosnippet#snippets_directory.
+		snippets defined by 'g:neosnippet#snippets_directory'.
 
 		Note: |:NeoComplCacheEditSnippets| is an obsolete name.
 
 :NeoComplCacheEdit -runtime [filetype]
 
-		Opens the [filetype] runtime snippets to edit.  It automatically 
+		Opens the [filetype] runtime snippets to edit. It automatically 
 		selects the current buffer's file type snippets unless you specify 
 		a file type by [filetype]. The snippets are re-cached automatically 
 		when you save the file after edit.
