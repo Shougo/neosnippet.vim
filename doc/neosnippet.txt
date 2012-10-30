@@ -203,7 +203,7 @@ s_<Plug>(neosnippet_expand_or_jump)
 				*<Plug>(neosnippet_jump_or_expand)*
 s_<Plug>(neosnippet_jump_or_expand)
 				*s_<Plug>(neosnippet_jump_or_expand)*
-		Jump to the next placeholder. If there is no placeholder, it expand a
+		Jump to the next placeholder. If there is no placeholder, it expands a
 		multi line cursor snippet.
 
 				*<Plug>(neocomplcache_snippets_jump)*
@@ -234,7 +234,8 @@ s_<Plug>(neosnippet_jump)
 i_<Plug>(neosnippet_start_unite_snippet)
 				*i_<Plug>(neosnippet_start_unite_snippet)*
 		Starts the unite snippet source. You can expand a snippet by the 
-		unite interface. Note: |unite.vim| is required.
+		unite interface. Note: The plugin |unite.vim| is required for
+		that.
 
 				*<Plug>(neocomplcache_start_unite_snippet)*
 		Note: |<Plug>(neocomplcache_start_unite_snippet)| is an obsolete
@@ -242,11 +243,11 @@ i_<Plug>(neosnippet_start_unite_snippet)
 
 x_<Plug>(neosnippet_expand_target)
 					*x_<Plug>(neosnippet_expand_target)*
-		Expand the inputted trigger by selected target text.
+		Expand the input trigger by a selected target text.
 
 x_<Plug>(neosnippet_register_oneshot_snippet)
 				*x_<Plug>(neosnippet_register_oneshot_snippet)*
-		Register oneshot snippet in current buffer.
+		Register oneshot snippet in the current buffer.
 
 neosnippet#expandable()
 						*neosnippet#expandable()*
