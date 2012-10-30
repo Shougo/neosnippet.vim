@@ -237,6 +237,10 @@ x_<Plug>(neosnippet_expand_target)
 					*x_<Plug>(neosnippet_expand_target)*
 		Expand inputted trigger by selected target text.
 
+x_<Plug>(neosnippet_register_oneshot_snippet)
+				*x_<Plug>(neosnippet_register_oneshot_snippet)*
+		Register oneshot snippet in current buffer.
+
 neosnippet#expandable()
 						*neosnippet#expandable()*
 		Use this function with imap <expr>. It checks whether cursor
@@ -518,6 +522,7 @@ CHANGELOG			*neosnippet-changelog*
 - Improved documentation.
 - Added FAQ section.
 - Added indent option.
+- Added <Plug>(neosnippet_register_oneshot_snippet).
 
 2012-10-29
 - Improved parse of snippets file.

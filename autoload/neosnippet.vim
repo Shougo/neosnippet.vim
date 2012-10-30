@@ -170,14 +170,6 @@ function! s:set_snippet_dict(snippet_dict, snippets, dup_check, snippets_file)"{
     return
   endif
 
-  " Substitute word.
-  let a:snippet_dict.word = substitute(a:snippet_dict.word, '\n$', '', '')
-  if a:snippet_dict.word !~
-        \ s:get_placeholder_marker_substitute_pattern()
-    " Add placeholder.
-    let a:snippet_dict.word .= '${0}'
-  endif
-
   let action_pattern = '^snippet\s\+' . a:snippet_dict.name . '$'
   let snippet = s:initialize_snippet(
         \ a:snippet_dict, a:snippets_file,
@@ -196,6 +188,12 @@ function! s:set_snippet_dict(snippet_dict, snippets, dup_check, snippets_file)"{
 endfunction"}}}
 function! s:initialize_snippet(dict, path, line, pattern, name)"{{{
   let a:dict.word = substitute(a:dict.word, '\n$', '', '')
+  if a:dict.word !~
+        \ s:get_placeholder_marker_substitute_pattern()
+    " Add placeholder.
+    let a:dict.word .= '${0}'
+  endif
+
   let menu_pattern = (a:dict.word =~
         \ s:get_placeholder_marker_substitute_pattern()
         \ . '.*' . s:get_placeholder_marker_substitute_pattern()) ?
@@ -220,6 +218,9 @@ function! s:initialize_snippet(dict, path, line, pattern, name)"{{{
         \ 'action__pattern' : a:pattern, 'real_name' : a:name,
         \}
   return dict
+endfunction"}}}
+function! s:initialize_snippet_options()"{{{
+  return { 'head' : 0, 'word' : 0, 'indent' : 0 }
 endfunction"}}}
 
 function! neosnippet#edit_snippets(args)"{{{
@@ -344,7 +345,7 @@ function! s:parse_snippets_file(snippets, snippets_file)"{{{
 
       " Initialize snippet dict.
       let snippet_dict = { 'word' : '', 'linenr' : linenr,
-            \ 'options' : { 'head' : 0, 'word' : 0, 'indent' : 0 } }
+            \ 'options' : s:initialize_snippet_options() }
 
       " Try using the name without the description (abbr).
       let snippet_dict.name = matchstr(line, '^snippet\s\+\zs\S\+')
@@ -618,6 +619,10 @@ function! neosnippet#expand_target()"{{{
   if !has_key(neosnippet#get_snippets(), trigger) ||
         \ neosnippet#get_snippets()[trigger].snip !~#
         \   s:get_placeholder_target_marker_pattern()
+    if trigger != ''
+      echo 'The trigger is invalid.'
+    endif
+
     let neosnippet.target = ''
     return
   endif
@@ -638,6 +643,10 @@ function! neosnippet#expand_target()"{{{
   call neosnippet#expand(getline('.'), col('$'), trigger)
 endfunction"}}}
 function! s:indent_snippet(begin, end)"{{{
+  if a:begin > a:end
+    return
+  endif
+
   let equalprg = &l:equalprg
   let pos = getpos('.')
 
@@ -675,6 +684,33 @@ function! s:indent_snippet(begin, end)"{{{
     let &l:equalprg = equalprg
     call setpos('.', pos)
   endtry
+endfunction"}}}
+
+function! neosnippet#register_oneshot_snippet()"{{{
+  let trigger = input('Please input snippet trigger: ', 'oneshot')
+  if trigger == ''
+    return
+  endif
+
+  let selected_text = substitute(
+        \ neosnippet#get_selected_text(visualmode(), 1), '\n$', '', '')
+  call neosnippet#delete_selected_text(visualmode(), 1)
+
+  let base_indent = matchstr(selected_text, '^\s*')
+
+  " Delete base_indent.
+  let selected_text = substitute(selected_text,
+        \'^' . base_indent, '', 'g')
+
+  let neosnippet = neosnippet#get_current_neosnippet()
+  let options = s:initialize_snippet_options()
+  let options.word = 1
+
+  let neosnippet.snippets[trigger] = s:initialize_snippet(
+        \ { 'name' : trigger, 'word' : selected_text, 'options' : options },
+        \ '', 0, '', trigger)
+
+  echo 'Registered trigger : ' . trigger
 endfunction"}}}
 
 function! s:get_snippet_range(begin_line, begin_patterns, end_line, end_patterns)"{{{
@@ -952,6 +988,7 @@ endfunction"}}}
 function! neosnippet#get_current_neosnippet()"{{{
   if !exists('b:neosnippet')
     let b:neosnippet = {
+          \ 'snippets' : {},
           \ 'selected_text' : '',
           \ 'target' : '',
           \}
@@ -960,7 +997,8 @@ function! neosnippet#get_current_neosnippet()"{{{
   return b:neosnippet
 endfunction"}}}
 function! neosnippet#get_snippets()"{{{
-  let snippets = {}
+  let neosnippet = neosnippet#get_current_neosnippet()
+  let snippets = copy(neosnippet.snippets)
   for filetype in s:get_sources_filetypes(neosnippet#get_filetype())
     call neosnippet#make_cache(filetype)
     call extend(snippets, s:snippets[filetype], 'keep')

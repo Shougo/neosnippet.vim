@@ -77,6 +77,8 @@ smap <silent> <Plug>(neocomplcache_snippets_force_jump)
 
 xnoremap <silent> <Plug>(neosnippet_expand_target)
       \ :<C-u>call neosnippet#expand_target()<CR>
+xnoremap <silent> <Plug>(neosnippet_register_oneshot_snippet)
+      \ :<C-u>call neosnippet#register_oneshot_snippet()<CR>
 
 imap <silent> <Plug>(neocomplcache_start_unite_snippet)
       \ <Plug>(neosnippet_start_unite_snippet)
