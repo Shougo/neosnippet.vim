@@ -458,6 +458,7 @@ function! s:get_cursor_snippet(snippets, cur_text)"{{{
 
   return cur_word
 endfunction"}}}
+
 function! s:snippets_expand(cur_text, col)"{{{
   let cur_word = s:get_cursor_snippet(
         \ neosnippet#get_snippets(),
@@ -1195,7 +1196,7 @@ function! neosnippet#expand_impl()
   return s:trigger(s:SID_PREFIX().'snippets_expand')
 endfunction
 function! neosnippet#jump_impl()
-  return s:trigger(s:SID_PREFIX().'snippets_jump')
+  return s:trigger('neosnippet#jump')
 endfunction
 
 if !exists('s:snippets')
