@@ -152,7 +152,7 @@ g:neosnippet#disable_select_mode_mappings
 		Note: |g:neocomplcache_disable_select_mode_mappings| is an
 		obsolete name.
 
-		Default value is 1.
+		The default value is 1.
 
 g:neosnippet#disable_runtime_snippets
 				*g:neosnippet#disable_runtime_snippets*
@@ -173,7 +173,7 @@ g:neosnippet#disable_runtime_snippets
 		\ }
 		
 		" Works like g:neocomplcache_snippets_disable_runtime_snippets
-		" (Disable all runtime snippets).
+		" which disables all runtime snippets
 		let g:neosnippet#disable_runtime_snippets = {
 		\   '_' : 1,
 		\ }
@@ -202,7 +202,7 @@ s_<Plug>(neosnippet_expand_or_jump)
 				*<Plug>(neosnippet_jump_or_expand)*
 s_<Plug>(neosnippet_jump_or_expand)
 				*s_<Plug>(neosnippet_jump_or_expand)*
-		Jump to next placeholder. If there is no placeholder, expand a
+		Jump to the next placeholder. If there is no placeholder, expand a
 		multiline cursor snippet.
 
 				*<Plug>(neocomplcache_snippets_jump)*
@@ -217,18 +217,18 @@ s_<Plug>(neosnippet_expand)
 
 				*<Plug>(neocomplcache_snippets_force_expand)*
 		Note: |<Plug>(neocomplcache_snippets_force_expand)| is
-		obsolete name.
+		an obsolete name.
 
 <Plug>(neosnippet_jump)
 						*<Plug>(neosnippet_jump)*
 s_<Plug>(neosnippet_jump)
 						*s_<Plug>(neosnippet_jump)*
-		Jump to next place holder. Do not expand any snippet. When
+		Jump to the next place holder. Do not expand any snippet. When
 		you do not want to expand a snippet name, use this keymapping.
 
 				*<Plug>(neocomplcache_snippets_force_jump)*
 		Note: |<Plug>(neocomplcache_snippets_force_jump)| is
-		obsolete name.
+		an obsolete name.
 
 i_<Plug>(neosnippet_start_unite_snippet)
 				*i_<Plug>(neosnippet_start_unite_snippet)*
