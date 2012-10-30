@@ -170,6 +170,14 @@ function! s:set_snippet_dict(snippet_dict, snippets, dup_check, snippets_file)"{
     return
   endif
 
+  " Substitute word.
+  let a:snippet_dict.word = substitute(a:snippet_dict.word, '\n$', '', '')
+  if a:snippet_dict.word !~
+        \ s:get_placeholder_marker_substitute_pattern()
+    " Add placeholder.
+    let a:snippet_dict.word .= '${0}'
+  endif
+
   let action_pattern = '^snippet\s\+' . a:snippet_dict.name . '$'
   let snippet = s:initialize_snippet(
         \ a:snippet_dict, a:snippets_file,
@@ -416,12 +424,6 @@ function! s:parse_snippets_file(snippets, snippets_file)"{{{
   endfor
 
   if !empty(snippet_dict)
-    if snippet_dict.word !~
-          \ s:get_placeholder_marker_substitute_pattern()
-      " Add placeholder.
-      let snippet_dict.word .= '${0}'
-    endif
-
     " Set previous snippet.
     call s:set_snippet_dict(snippet_dict,
           \ a:snippets, dup_check, a:snippets_file)
@@ -593,12 +595,6 @@ function! neosnippet#expand(cur_text, col, trigger_name)"{{{
           \ 'end_patterns' : end_patterns,
           \ 'holder_cnt' : 1,
           \ })
-
-    if next_line != ''
-      startinsert
-    else
-      startinsert!
-    endif
 
     if snip_word =~ s:get_placeholder_marker_pattern()
       call neosnippet#jump(a:cur_text, a:col)
