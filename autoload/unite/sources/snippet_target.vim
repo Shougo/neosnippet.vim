@@ -1,5 +1,5 @@
 "=============================================================================
-" FILE: snippet.vim
+" FILE: snippet_target.vim
 " AUTHOR:  Shougo Matsushita <Shougo.Matsu@gmail.com>
 " Last Modified: 31 Oct 2012.
 " License: MIT license  {{{
@@ -27,53 +27,41 @@
 let s:save_cpo = &cpo
 set cpo&vim
 
-function! unite#sources#snippet#define() "{{{
+function! unite#sources#snippet_target#define() "{{{
   if !exists('*unite#version') || unite#version() < 150
     echoerr 'Your unite.vim is too old.'
     return []
   endif
 
-  let kind = {
-        \ 'name' : 'snippet',
-        \ 'default_action' : 'expand',
-        \ 'action_table': {},
-        \ 'parents': ['jump_list', 'completion'],
-        \ 'alias_table' : { 'edit' : 'open' },
-        \ }
-  call unite#define_kind(kind)
-
   return s:source
 endfunction "}}}
 
-" neosnippet source.
 let s:source = {
-      \ 'name': 'snippet',
+      \ 'name': 'snippet/target',
       \ 'hooks' : {},
+      \ 'default_action' : 'select',
       \ 'action_table' : {},
+      \ 'is_listed' : 0,
       \ }
 
 function! s:source.hooks.on_init(args, context) "{{{
-  let a:context.source__cur_keyword_pos =
-        \ s:get_keyword_pos(neosnippet#util#get_cur_text())
+  let a:context.source__bufnr = bufnr('%')
+  let a:context.source__linenr = line('.')
+
   let a:context.source__snippets =
-        \ sort(values(neosnippet#get_snippets()))
+        \ sort(filter(values(neosnippet#get_snippets()),
+        \    "v:val.snip =~# neosnippet#get_placeholder_target_marker_pattern()"))
 endfunction"}}}
 
 function! s:source.gather_candidates(args, context) "{{{
-  let keyword_pos = a:context.source__cur_keyword_pos
   let list = []
   for keyword in a:context.source__snippets
     let dict = {
         \   'word' : keyword.word,
         \   'abbr' : printf('%-50s %s', keyword.word, keyword.menu),
-        \   'kind': 'snippet',
-        \   'action__complete_word' : keyword.word,
-        \   'action__complete_pos' : keyword_pos,
-        \   'action__path' : keyword.action__path,
-        \   'action__pattern' : keyword.action__pattern,
         \   'source__menu' : keyword.menu,
         \   'source__snip' : keyword.snip,
-        \   'source__snip_ref' : keyword,
+        \   'source__context' : a:context,
         \ }
 
     call add(list, dict)
@@ -83,76 +71,38 @@ function! s:source.gather_candidates(args, context) "{{{
 endfunction "}}}
 
 " Actions"{{{
-let s:action_table = {}
-
-let s:action_table.expand = {
-      \ 'description' : 'expand snippet',
+let s:source.action_table.select = {
+      \ 'description' : 'select targetted snippet',
       \ }
-function! s:action_table.expand.func(candidate)"{{{
-  let cur_text = neosnippet#util#get_cur_text()
-  let cur_keyword_str = matchstr(cur_text, '\S\+$')
-  let context = unite#get_context()
-  call neosnippet#expand(
-        \ cur_text . a:candidate.action__complete_word[len(cur_keyword_str)],
-        \ context.col, a:candidate.action__complete_word)
-endfunction"}}}
-
-let s:action_table.preview = {
-      \ 'description' : 'preview snippet',
-      \ 'is_selectable' : 1,
-      \ 'is_quit' : 0,
-      \ }
-function! s:action_table.preview.func(candidates)"{{{
-  for snip in a:candidates
-    echohl String
-    echo snip.action__complete_word
-    echohl Special
-    echo snip.source__menu
-    echohl None
-    echo snip.source__snip
-    echo ' '
-  endfor
-endfunction"}}}
-
-let s:action_table.unite__new_candidate = {
-      \ 'description' : 'add new snippet',
-      \ 'is_quit' : 1,
-      \ }
-function! s:action_table.unite__new_candidate.func(candidate)"{{{
-  let trigger = unite#util#input('Please input snippet trigger: ')
-  if trigger == ''
-    echo 'Canceled.'
+function! s:source.action_table.select.func(candidate)"{{{
+  let context = a:candidate.source__context
+  if bufnr('%') != context.source__bufnr ||
+        \ line('.') != context.source__linenr
+    " Ignore.
     return
   endif
 
-  call unite#take_action('open', a:candidate)
-  if &filetype != 'snippet'
-    " Open failed.
-    return
-  endif
+  let neosnippet = neosnippet#get_current_neosnippet()
 
-  if getline('$') != ''
-    " Append line.
-    call append('$', '')
-  endif
+  let neosnippet.target = substitute(
+        \ neosnippet#get_selected_text(visualmode(), 1), '\n$', '', '')
+  let base_indent = matchstr(neosnippet.target, '^\s*')
 
-  call append('$', [
-        \ 'snippet     ' . trigger,
-        \ 'abbr        ' . trigger,
-        \ 'options     head',
-        \ '    '
-        \ ])
+  " Delete base_indent.
+  let neosnippet.target = substitute(neosnippet.target,
+        \'^' . base_indent, '', 'g')
 
-  call cursor(line('$'), 0)
-  call cursor(0, col('$'))
+  call neosnippet#substitute_selected_text(visualmode(),
+        \ base_indent)
+
+  call cursor(0, getpos("'<")[2])
+
+  call neosnippet#expand(neosnippet#util#get_cur_text(),
+        \ col('.'), a:candidate.word)
 endfunction"}}}
-
-
-let s:source.action_table = s:action_table
-unlet! s:action_table
 "}}}
 
-function! unite#sources#snippet#start_complete() "{{{
+function! unite#sources#snippet_target#start() "{{{
   if !exists(':Unite')
     call neosnippet#util#print_error(
           \ 'unite.vim is not installed.')
@@ -167,9 +117,8 @@ function! unite#sources#snippet#start_complete() "{{{
     return ''
   endif
 
-  return unite#start_complete(['snippet'],
-        \ { 'input': neosnippet#util#get_cur_text(),
-        \   'buffer_name' : 'snippet' })
+  return unite#start_complete(['snippet/target'],
+        \ { 'buffer_name' : 'snippet/target' })
 endfunction "}}}
 
 function! s:get_keyword_pos(cur_text)"{{{

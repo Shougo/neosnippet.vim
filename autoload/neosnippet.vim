@@ -617,7 +617,7 @@ function! neosnippet#expand_target()"{{{
   let neosnippet = neosnippet#get_current_neosnippet()
   if !has_key(neosnippet#get_snippets(), trigger) ||
         \ neosnippet#get_snippets()[trigger].snip !~#
-        \   s:get_placeholder_target_marker_pattern()
+        \   neosnippet#get_placeholder_target_marker_pattern()
     if trigger != ''
       echo 'The trigger is invalid.'
     endif
@@ -628,18 +628,21 @@ function! neosnippet#expand_target()"{{{
 
   let neosnippet.target = substitute(
         \ neosnippet#get_selected_text(visualmode(), 1), '\n$', '', '')
-  call neosnippet#delete_selected_text(visualmode(), 1)
-
   let base_indent = matchstr(neosnippet.target, '^\s*')
 
   " Delete base_indent.
   let neosnippet.target = substitute(neosnippet.target,
         \'^' . base_indent, '', 'g')
 
-  call setline('.', base_indent . trigger)
-  startinsert!
+  call neosnippet#substitute_selected_text(visualmode(),
+        \ base_indent)
 
-  call neosnippet#expand(getline('.'), col('$'), trigger)
+  " startinsert!
+  " let start = getpos("'<")
+  " call cursor(0, start[2]+len(base_indent . trigger)-1)
+
+  call neosnippet#expand(neosnippet#util#get_cur_text(),
+        \ col('.'), trigger)
 endfunction"}}}
 function! s:indent_snippet(begin, end)"{{{
   if a:begin > a:end
@@ -1005,7 +1008,8 @@ function! neosnippet#get_snippets()"{{{
     call extend(snippets, s:snippets[filetype], 'keep')
   endfor
 
-  if !s:is_beginning_of_line(neosnippet#util#get_cur_text())
+  if mode() ==# 'i' &&
+        \ !s:is_beginning_of_line(neosnippet#util#get_cur_text())
     call filter(snippets, '!v:val.options.head')
   endif
 
@@ -1054,10 +1058,10 @@ endfunction"}}}
 function! neosnippet#complete_target_snippets(arglead, cmdline, cursorpos)"{{{
   return map(filter(values(neosnippet#get_snippets()),
         \ "stridx(v:val.word, a:arglead) == 0
-        \ && v:val.snip =~# s:get_placeholder_target_marker_pattern()"), 'v:val.word')
+        \ && v:val.snip =~# neosnippet#get_placeholder_target_marker_pattern()"), 'v:val.word')
 endfunction"}}}
 
-function! s:get_placeholder_target_marker_pattern()"{{{
+function! neosnippet#get_placeholder_target_marker_pattern()"{{{
   return '\${\d\+:TARGET\%(:.\{-}\)\?\\\@<!}'
 endfunction"}}}
 function! s:get_placeholder_marker_pattern()"{{{
@@ -1150,6 +1154,21 @@ function! neosnippet#delete_selected_text(type, ...)"{{{
     else
       silent exe "normal! `[v`]d"
     endif
+  finally
+    let &selection = sel_save
+    let @@ = reg_save
+    call setpos('.', pos)
+  endtry
+endfunction"}}}
+function! neosnippet#substitute_selected_text(type, text)"{{{
+  let sel_save = &selection
+  let &selection = 'inclusive'
+  let reg_save = @@
+  let pos = getpos('.')
+
+  try
+    " Invoked from Visual mode, use '< and '> marks.
+    silent exe "normal! `<" . a:type . "`>s" . a:text
   finally
     let &selection = sel_save
     let @@ = reg_save

@@ -238,9 +238,9 @@ s_<Plug>(neosnippet_jump)
 
 i_<Plug>(neosnippet_start_unite_snippet)
 				*i_<Plug>(neosnippet_start_unite_snippet)*
-		Starts the unite snippet source. You can expand a snippet by the 
-		unite interface. Note: The plug-in |unite.vim| is required for
-		that feature.
+		Starts the unite snippet source. You can expand a snippet by the
+		unite interface.
+		Note: The plug-in |unite.vim| is required for that feature.
 
 				*<Plug>(neocomplcache_start_unite_snippet)*
 		Note: |<Plug>(neocomplcache_start_unite_snippet)| is an obsolete
@@ -249,6 +249,12 @@ i_<Plug>(neosnippet_start_unite_snippet)
 x_<Plug>(neosnippet_expand_target)
 					*x_<Plug>(neosnippet_expand_target)*
 		Expand the input trigger by a selected target text.
+
+x_<Plug>(neosnippet_start_unite_snippet_target)
+				*x_<Plug>(neosnippet_start_unite_snippet_target)*
+		Expand the input trigger by a selected target text by the
+		unite interface.
+		Note: The plug-in |unite.vim| is required for that feature.
 
 x_<Plug>(neosnippet_register_oneshot_snippet)
 				*x_<Plug>(neosnippet_register_oneshot_snippet)*
@@ -619,6 +625,7 @@ CHANGELOG			*neosnippet-changelog*
 
 2012-10-31
 - Improved indent_snippet().
+- Added <Plug>(neosnippet_start_unite_snippet_target).
 
 2012-10-30
 - Implemented commented placeholder.
