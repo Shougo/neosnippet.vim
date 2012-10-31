@@ -41,9 +41,9 @@ Changelog		|neosnippet-changelog|
 INTRODUCTION					*neosnippet-introduction*
 
 This plugin analyzes snippet files which you can use for completion. It offers
-functionality similar to |snipMate.vim| or |snippetsEmu.vim|. Since you can
-choose snippets with the neocomplcache interface, you might have less trouble
-using them, because you do not have to remember each snippet name.
+functionality similar to snipMate.vim or snippetsEmu.vim. Since you can choose
+snippets with the neocomplcache interface, you might have less trouble using
+them, because you do not have to remember each snippet name.
 
 ==============================================================================
 INSTALL						*neosnippet-install*
@@ -63,7 +63,7 @@ COMMANDS 					*neosnippet-commands*
 :NeoSnippetMakeCache [filetype]
 						*:NeoSnippetMakeCache*
 
-	        Creates a cache for the given [filetype] snippets. It automatically
+	        Creates a cache for the given [filetype] snippets. It automatically 
 	        choses the current buffer's file type unless you specify one by
 		[filetype].
 
@@ -126,15 +126,20 @@ VARIABLES 					*neosnippet-variables*
 
 g:neosnippet#snippets_directory		*g:neosnippet#snippets_directory*
 		This variable appoints a path to user-defined snippet files.
-		You can set multiple values in comma-separated form.
-		If the directory doesn't exist, it is ignored.
+		You can set multiple values in comma-separated form. Non existing 
+		directories are ignored.
 
-		User defined snippets are read after built-in snippet files,
-		and redundant snippets get overwritten.
+		User defined snippet files are read after the built-in snippet files.
+		If redundant snippets occur they get overwritten and only the last 
+		one remains.
 		
-		Note: Neosnippet loads the file type snippet files as follows. 
-		If you edit "vim" file types files, neosnippet loads
-		"vim.snip*", "vim_*.snip*" and "vim/**/*.snip" snippet files.
+		Note: The neosnippet plug-in loads file type snippets from several 
+		files if available. For example if you edit a "Vim" file then it loads the 
+		snippets from:
+
+		- "vim.snip*"
+		- "vim_*.snip*" 
+	        - "vim/**/*.snip" 
 
 						*g:neocomplcache_snippets_dir*
 		Note: |g:neocomplcache_snippets_dir| is an obsolete name.
@@ -143,10 +148,10 @@ g:neosnippet#snippets_directory		*g:neosnippet#snippets_directory*
 
 g:neosnippet#disable_select_mode_mappings
 				*g:neosnippet#disable_select_mode_mappings*
-		This variable disables key-mappings in |Select-mode| where 
+		This variable disables key-mappings in |Select-mode| where the 
 		snippets_complete performs the snippet completion. Usually it
 		it better to leave it as it is. But if you have troubles with 
-		the buffer switcher LustyJuggler it helps to disable them.
+		the buffer switcher LustyJuggler you can switch them of.
 		
 				*g:neocomplcache_disable_select_mode_mappings*
 		Note: |g:neocomplcache_disable_select_mode_mappings| is an
@@ -156,13 +161,13 @@ g:neosnippet#disable_select_mode_mappings
 
 g:neosnippet#disable_runtime_snippets
 				*g:neosnippet#disable_runtime_snippets*
-		This is a dictionary variable which uses the file type as key.
-		To set the value of a file type entry to 1 prevents loading all
-		built-in snippets for that file type. This is very useful to 
-		prevent snippet conflicts between self defined snippet files 
-		and the built-in snippet files of neosnippet. If you use "_" as 
-		key for an entry, this will be treated as default for all
-		file types.
+		This is a dictionary variable which uses file types as key.
+		If you set the value of a file type entry to 1, this prevents 
+		loading all the file type specific built-in snippets. This is 
+		very useful to to prevent snippet conflicts between self defined 
+		snippet files and the built-in snippet files of neosnippet. 
+		If you use a "_" as key for an entry this will treat the value of 
+		the entry as default value for all file types.
 
 		Note: This dictionary must be set in your .vimrc.
 
@@ -191,8 +196,8 @@ KEY MAPPINGS 					*neosnippet-key-mappings*
 					*<Plug>(neosnippet_expand_or_jump)*
 s_<Plug>(neosnippet_expand_or_jump)
 					*s_<Plug>(neosnippet_expand_or_jump)*
-		Expands a cursor snippet of plural lines. When there is no
-		snippet, it jumps to the next placeholder.
+		Expand a snippet in the current cursor position. If there is no snippet 
+		available it jumps to the next placeholder of the buffer.
 
 				*<Plug>(neocomplcache_snippets_expand)*
 		Note: |<Plug>(neocomplcache_snippets_expand)| is an obsolete
@@ -202,8 +207,8 @@ s_<Plug>(neosnippet_expand_or_jump)
 				*<Plug>(neosnippet_jump_or_expand)*
 s_<Plug>(neosnippet_jump_or_expand)
 				*s_<Plug>(neosnippet_jump_or_expand)*
-		Jump to the next placeholder. If there is no placeholder, it expands a
-		multi line cursor snippet.
+		Jump to the next available placeholder in the buffer. If there is no 
+		placeholder it expands a snippet in the current cursor position. 
 
 				*<Plug>(neocomplcache_snippets_jump)*
 		Note: |<Plug>(neocomplcache_snippets_jump)| is an obsolete
@@ -213,7 +218,9 @@ s_<Plug>(neosnippet_jump_or_expand)
 						*<Plug>(neosnippet_expand)*
 s_<Plug>(neosnippet_expand)
 						*s_<Plug>(neosnippet_expand)*
-		Expand a cursor snippet. It does nothing if there is no snippet.
+		Expand a snippet in current cursor position. It only takes effect 
+		if there is a snippet text to expand or if you have chosen one from
+	        the neocomplcache drop down menu.
 
 				*<Plug>(neocomplcache_snippets_force_expand)*
 		Note: |<Plug>(neocomplcache_snippets_force_expand)| is
@@ -223,8 +230,7 @@ s_<Plug>(neosnippet_expand)
 						*<Plug>(neosnippet_jump)*
 s_<Plug>(neosnippet_jump)
 						*s_<Plug>(neosnippet_jump)*
-		Jump to the next place holder. Do not expand any snippet. When
-		you do not want to expand a snippet name, use this key mapping.
+		Jump to the next placeholder key. It does not expand any snippets.
 
 				*<Plug>(neocomplcache_snippets_force_jump)*
 		Note: |<Plug>(neocomplcache_snippets_force_jump)| is
@@ -233,8 +239,8 @@ s_<Plug>(neosnippet_jump)
 i_<Plug>(neosnippet_start_unite_snippet)
 				*i_<Plug>(neosnippet_start_unite_snippet)*
 		Starts the unite snippet source. You can expand a snippet by the 
-		unite interface. Note: The plugin |unite.vim| is required for
-		that.
+		unite interface. Note: The plug-in |unite.vim| is required for
+		that feature.
 
 				*<Plug>(neocomplcache_start_unite_snippet)*
 		Note: |<Plug>(neocomplcache_start_unite_snippet)| is an obsolete
@@ -318,116 +324,215 @@ EXAMPLES					*neosnippet-examples*
 ==============================================================================
 SNIPPET SYNTAX					*neosnippet-snippet-syntax*
 
-The snippet syntax is similar to |snipMate|.
+It is quite easy to create your own snippets starting with the example below.
+The snippet syntax is close to the one of |snipMate|. 
 
 Example:
+
 >
-	snippet     if
-	abbr        if endif
-	options     head
-	    if ${1:condition}
-	        ${2}
-	    endif
+   snippet    [name]
+   abbr       [abbreviation]
+   alias      [aliases]
+   prev_word  '^'
+      if ${1:condition}
+	 ${2}
+      endif
 <
-snippet {snippet_name} syntax is the snippet name.
-abbr {abbr_name} is the completion abbrevation (same to completion "abbr"
-key).
 
-By the way, it is warned that the snippet name was already defined by other
-snippet file.  If you want to overwrite it explicitly, please use:
+Snippet Keywords:
+
+- snippet [name] (obligatory)
+
+   Each snippet starts with the keyword "snippet". This keyword is directly
+   followed by the snippet name. The snippet name is used for the expansion of
+   the snippet.
+
+- abbr [name] (optional)
+
+   Here you can define an abbreviation of the snippet which will be used in the
+   drop down menu of neocomplcache.
+
+- alias [aliases] (optional)
+
+   If you specify an alias it will be also used to expand a snippet. You can
+   define multiple aliases either using the separators ' ' or ','.   
+
+   Example
+
 >
-	delete snippets_name
+   alias hoge hogera hogehoge
 <
-and redefine the snippet.
 
-When including external files or other snippet file's snippets are overwrited,
-you will not be warned.
+- prev_word [definition] (optional)
 
-Snippet include feature is available.
+In the next line, here already starts the snippet which gets expanded. After
+snippet expansion you can jump to the placeholders and replace them with desired
+text.
+
+The structure of a placeholder can be:
+
+- ${number:placeholder text}
+   
+   Here the number of the placeholder and the placeholder text that are
+   seperated by a ":" are embraced by a pair of "{}". The text is displayed
+   after the snippet expansion and gets replaced by your text. If you jump over
+   the snippet and do not insert any text in that position the placeholder text
+   remains there. This can be used as a standard value for a certain position.
+
+   Example
+
+>
+   snippet     if
+      if ${1:condition}
+	 ${2}
+      endif
+<
+
+- ${number:#:placeholder text}
+
+   Here the number is followd by the "#" character. If you jump over this
+   placeholder and do not insert any text, the placeholder text will be removed.
+
+   Example
+
+>
+   snippet     if
+      if ${1:#:condition}
+	 ${2}
+      endif
+<
+
+- ${number:TARGET}
+
+   This is the target placeholder which will be replaced by the text which is
+   selected before snippet expansion. Note: You need to expand you snippet with
+   the key mapping below for this to work.
+
+   |<Plug>(neosnippet_expand_target)|.
+
+   This is very useful if you edit text and decide to put something in an
+   environment or some sort of brackets.
+
+   Example
+
+>
+   snippet 	if
+      if ${1:#:condition}
+	 ${2:TARGET}
+      endif
+<
+
+- ${number}
+
+   This is a placeholder which you can use as a simple jump position. This
+   can be useful if you edit a placeholder inside of some sort of brackets or
+   environment and after that want to go on behind that.
+
+   Example
+
+>
+   snippet     if
+      if ${1:#:condition}
+	 ${2:do}
+      endif
+      
+      ${3}
+<
+
+- $number
+
+   This is the synchronized placeholder. Sometimes it is required to repat a value in
+   several places inside a snippet. If you set the number of this placeholder
+   to the same number as one of the other placeholders in the snippet it will
+   repeat its content if you insert something. $1 is synchronized to ${1} and
+   so on. $0 will be the final jump placeholder.
+
+   Example
+
+>
+   snippet     if
+      if ${1:#:condition}
+	 ${2:do}
+      endif
+      
+      ${3}
+<
+
+Note: If you like to include characters in snippets that already have a special
+meaning to neosnippet you need to escape them with a backslash.
+
+>
+   snippet code
+      \`${1}\`${2}
+
+   snippet test
+      ${1:escape \} value}
+<
+
+A placeholder value can not contain new lines. The snippet below isn't valid.
+
+>
+	snippet invalid 
+	    ${1:constructor: (${2:args\}) ->
+	        ${3:# do smth}}
+<
+
+Vim has a built-in expression evaluation. You can also use this feature inside
+of snippets if you use back ticks like in the example below where "%:t" gets
+expanded to name of the current active file when the snippet gets expanded and
+the current time gets inserted by the expansion of the strftime command.
+
+>
+   snippet     header
+      File: ${1:`expand('%:t')`}
+      ${2:Created at: `strftime("%B %d, %Y")`}
+<
+
+You can also nest the placeholders if you escape the special characters.
+
+>
+   snippet div
+      <div ${1:id="${2:someid\}"}>${3}</div>${4}
+<
+
+In some cases you need to escape the "}" twice as the example below shows.
+
+>
+   snippet  catch
+   options  head
+       catch ${1:/${2:pattern: empty, E484, Vim(cmdname):{errmsg\\}\}/}
+<
+
+This is because ${1:} substitutes the pattern to "/${2:pattern: empty, E484,
+Vim(cmdname):{errmsg\}}" and ${2:} substitutes the pattern to "pattern: empty,
+E484, Vim(cmdname):{errmsg}"
+
+If you create a snippet file and prepend the filename with a "_" neosnippet
+treats the snippets inside the file as global. This means that they will be
+available for all file types (e.g _.snip). You can include snippet files with
+
 >
 	include c.snip
 <
-If you want to include a whole filetype directory snippets.
+
+or if you want to include a whole directory with file type snippets.
+
 >
 	include javascript/*
 <
 
-Eval snippet feature is available.
->
-	snippet     hoge
-	options     head
-	    `expand("%")`
-<
-Note: You want to use backticks in snippet, you must escape backticks.
->
-	snippet code
-	abbr code
-	    \`${1}\`${2}
-<
-If you use |:NeoSnippetEdit| command for easy snippet editing, the file will
-be loaded automatically when you save the file.
+If you include snippet files it can happen that the same snippet name is used
+multiple times in different snippet files. Neosnippet produces a warning if it
+detects this. If you want to overwrite a snippet explicitly, please use:
 
-Neosnippet doesn't map snippet-expand key by default. If you want to use
-snippet feature, you can define below mappings in your .vimrc:
 >
-	imap <C-l>    <Plug>(neosnippet_expand_or_jump)
-	smap <C-l>    <Plug>(neosnippet_expand_or_jump)
+	delete snippets_name
 <
 
-Placeholder feature is available. The string after ":" is default value.
->
-	snippet     if
-	abbr        if endif
-	options     head
-	    if ${1:condition}
-	        ${2}
-	    endif
-<
-Commented placeholder feature is available. If the default value starts with
-"#:", neosnippet will the delete default value when jump to next placeholder.
->
-	snippet     if
-	abbr        if endif
-	options     head
-	    if ${1:#:condition}
-	        ${2}
-	    endif
-<
-Targetted placeholder feature is available. If the default value starts with
-"TARGET:", neosnippet will insert selected text in
-|<Plug>(neosnippet_expand_target)|.
->
-	snippet     if
-	abbr        if endif
-	options     head
-	    if ${1:#:condition}
-	        ${2:TARGET}
-	    endif
-<
-Note: To contain "}" character in default value, you must escape "}".
->
-	snippet test
-	    ${1:escape \} value}
-<
-'_' (global) snippet feature is available. Neosnippet loads '_' snippet for
-all filetypes.
+After that you can redefine the snippet. But this does not work if you include
+external snippet files. There will be no warning when snippets get overwritten.
 
-Neosnippet can load snipMate snippets as well.
 
-Alias feature is available. The separator is either ' ' or ','.
->
-	alias hoge hogera hogehoge
-<
-Synchronized placeholder feature is supported.  $1 is synchronized to ${1}.
-When you jump next, it will be synchronized. $0 will be the final jump
-placeholder.
-
-The placeholder value can't contain new lines. The snippet below isn't valid:
->
-	snippet test
-	    ${1:constructor: (${2:args\}) ->
-	        ${3:# do smth}}
-<
 Multi snippet feature in snipMate is available.
 Neosnippet substitutes trigger and descriptions spaces to '_'.
 >
@@ -436,24 +541,6 @@ Neosnippet substitutes trigger and descriptions spaces to '_'.
 	snippet trigger description2
 	    piyo
 <
-Choose snippets using <C-n> or <C-p> and expand it with
-|<Plug>(neosnippet_expand_or_jump)| key-mappings.
-
-Nested placeholder feature is available, But you must escape inner "}". "\" is
-the eacape sequence.
->
-	snippet div
-	    <div ${1:id="${2:someid\}"}>${3}</div>${4}
-<
-You must escape "}" twice in following case.
->
-	snippet  catch
-	options  head
-	    catch ${1:/${2:pattern: empty, E484, Vim(cmdname):{errmsg\\}\}/}
-<
-Because ${1:} substitutes the pattern to "/${2:pattern: empty, E484,
-Vim(cmdname):{errmsg\}}" and ${2:} substitutes the pattern to "pattern:
-empty, E484, Vim(cmdname):{errmsg}"
 
 If you use hard-tab for indentation in snippet file, neosnippet will use
 'shiftwidth' instead of Vim indent plugin. This feature is useful while some
@@ -540,7 +627,6 @@ CHANGELOG			*neosnippet-changelog*
 - Added indent option.
 - Added <Plug>(neosnippet_register_oneshot_snippet).
 - Refactored snippets files.
-- Fixed indentation.
 
 2012-10-29
 - Improved parse of snippets file.
