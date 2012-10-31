@@ -617,6 +617,9 @@ Note: But you must unmap in select mode mappings manually.
 ==============================================================================
 CHANGELOG			*neosnippet-changelog*
 
+2012-10-31
+- Improved indent_snippet().
+
 2012-10-30
 - Implemented commented placeholder.
 - Improved python snippets.

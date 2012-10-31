@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: neosnippet.vim
 " AUTHOR:  Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 30 Oct 2012.
+" Last Modified: 31 Oct 2012.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -582,9 +582,9 @@ function! neosnippet#expand(cur_text, col, trigger_name)"{{{
       call append('.', snippet_lines[1:])
     endif
 
-    call s:indent_snippet(
-          \ ((begin_line != end_line || snippet.options.indent) ?
-          \  begin_line : begin_line + 1), end_line)
+    if begin_line != end_line || snippet.options.indent
+      call s:indent_snippet(begin_line, end_line)
+    endif
 
     let begin_patterns = (begin_line > 1) ?
           \ [getline(begin_line - 1)] : []
