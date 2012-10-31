@@ -340,7 +340,7 @@ Example:
    snippet    [name]
    abbr       [abbreviation]
    alias      [aliases]
-   prev_word  '^'
+   options    [options] 
       if ${1:condition}
 	 ${2}
       endif
@@ -362,7 +362,7 @@ Snippet Keywords:
 - alias [aliases] (optional)
 
    If you specify an alias it will be also used to expand a snippet. You can
-   define multiple aliases either using the separators ' ' or ','.   
+   define multiple aliases either using the separators ' ' or ','.
 
    Example
 
@@ -370,11 +370,36 @@ Snippet Keywords:
    alias hoge hogera hogehoge
 <
 
-- prev_word [definition] (optional)
+- options [options] (optional)
 
-In the next line, here already starts the snippet which gets expanded. After
-snippet expansion you can jump to the placeholders and replace them with desired
-text.
+   Options influece the snippet behavior. The possible options are:
+
+   + word	This snippet expands by a word boundary. Note: To complete 
+	        the trigger in snippets_complete, it must be word(digits or 
+		alphabet characters or "_") characters.
+
+>
+		snippet     date
+		options     word
+		    `strftime("%d %b %Y")`
+<
+
+   + head	This snippet expands on the beginnign of a line only. 
+	        Note: This is the same as "prev_word '^'" which is still 
+		there for backwards compatibility.
+
+>
+  	        snippet     if
+		  if ${1:condition}
+		     ${2}
+		  endif
+<
+
+   + indent	Neosnippet indents the snippet after expansion to the same 
+	        column as the line above. 
+
+Below the keywords starts the snippet which gets expanded. After the snippet
+expansion you can jump to the placeholders and replace them with desired text.
 
 The structure of a placeholder can be:
 
@@ -448,11 +473,11 @@ The structure of a placeholder can be:
 
 - $number
 
-   This is the synchronized placeholder. Sometimes it is required to repat a value in
-   several places inside a snippet. If you set the number of this placeholder
+   This is a synchronized placeholder. Sometimes it is required to repat a value
+   in several places inside a snippet. If you set the number of this placeholder
    to the same number as one of the other placeholders in the snippet it will
-   repeat its content if you insert something. $1 is synchronized to ${1} and
-   so on. $0 will be the final jump placeholder.
+   repeat its content. $1 is synchronized to ${1} and so on. $0 will be the
+   final jump placeholder.
 
    Example
 
@@ -558,20 +583,6 @@ languages' indent files can not work very well (e.g.: PHP, Python).
 			${2:// code...}
 		}
 <
-SNIPPET SYNTAX OPTIONS			*neosnippet-snippet-syntax-options*
-
-"options head" means this snippet is enabled only in line head.
-Note: prev_word '^' is duplicated keyword.
-
-"options word" means this snippet is expanded by word boundary.
-Note: To complete the trigger in snippets_complete, it must be word(digits or
-alphabet characters or "_") characters.
->
-	snippet     date
-	options     word
-	    `strftime("%d %b %Y")`
-<
-"options indent" means neosnippet indents in expanded line.
 
 ==============================================================================
 UNITE SOURCES					*neosnippet-unite-sources*
