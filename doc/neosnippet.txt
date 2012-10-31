@@ -541,13 +541,14 @@ E484, Vim(cmdname):{errmsg}"
 
 If you create a snippet file and prepend the filename with a "_" neosnippet
 treats the snippets inside the file as global. This means that they will be
-available for all file types (e.g _.snip). You can include snippet files with
+available for all file types (e.g _.snip). You can include other snippet files 
+from within a snippet file with.
 
 >
 	include c.snip
 <
 
-or if you want to include a whole directory with file type snippets.
+Or if you want to include a whole directory with file type snippets.
 
 >
 	include javascript/*
@@ -563,7 +564,6 @@ detects this. If you want to overwrite a snippet explicitly, please use:
 
 After that you can redefine the snippet. But this does not work if you include
 external snippet files. There will be no warning when snippets get overwritten.
-
 
 Multi snippet feature in snipMate is available.
 Neosnippet substitutes trigger and descriptions spaces to '_'.
@@ -589,12 +589,14 @@ UNITE SOURCES					*neosnippet-unite-sources*
 
 					*neosnippet-unite-source-snippet*
 snippet
-		The candidates are neosnippet snippets. The kinds are
-		"snippet".  Normally used in
-		|<Plug>(neosnippet_start_unite_snippet)| mappings.
-		But you can execute it by ":Unite snippet".
-		You can edit snippet file in "edit" action.
-		Examples:
+		The candidates of the snippet source are neosnippet snippets. 
+		and their kind is "snippet". You can use the snippet source 
+		with the mapping |<Plug>(neosnippet_start_unite_snippet)|.
+		But you can also execute it by ":Unite snippet". The snippet 
+		source offers an edit action you can use to edit the snippet 
+		files.
+		
+		Example:
 >
 		imap <C-s>  <Plug>(neosnippet_start_unite_snippet)
 <
@@ -608,26 +610,26 @@ snippet					*neosnippet-unite-action-snippet*
 ==============================================================================
 FAQ						*neosnippet-faq*
 
-Q: Don't expanded snippet trigger after (, [, " etc...:
+Q: What if I do not like to expand a snippet trigger after (, [, " etc...:
 
-A: You should use "options word" in snippet definition.  "options word" means
-this snippet is expanded by word boundary.
+A: You should use "options word" in the snippet definition. This changes the 
+expansion behavior to a word boundary. 
 >
 	snippet     date
 	options     word
 	    `strftime("%d %b %Y")`
 <
 
-Q: Doesn't indent in expanded line:
+Q: Why does neosnippet not indent the expanded snippet? 
 
-A: You should use "options indent" in snippet definition. In default,
-neosnippet doesn't indent in expanded line.
+A: You should use "options indent" in the snippet definition. In default,
+neosnippet doesn't indent the expanded line.
 
-Q: Neosnippet conflicts with |LustyJuggler|.
+Q: What if Neosnippet conflicts with |LustyJuggler|.
 http://www.vim.org/scripts/script.php?script_id=2050
 
 A: Please try below settings:
-Note: But you must unmap in select mode mappings manually.
+Note: But you must unmap the mappings in select mode manually.
 >
 	let g:neosnippet#disable_select_mode_mappings = 0
 <
