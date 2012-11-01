@@ -808,7 +808,7 @@ function! s:expand_placeholder(start, end, holder_cnt, line)"{{{
     let is_target = 0
   endif
 
-  let default = substitute(default, '^TARGET:\?\>', '', '')
+  let default = substitute(default, '^TARGET:\?', '', '')
 
   let neosnippet.selected_text = default
 
@@ -914,7 +914,7 @@ function! s:search_sync_placeholder(start, end, number)"{{{
           \ '\\d\\+', '\\zs\\d\\+\\ze', ''))
     return search(substitute(
           \ s:get_mirror_placeholder_marker_pattern(),
-          \ '\\d\\+', cnt, ''), 'nw') > 0 ? cnt : 0
+          \ '\\d\\+', cnt, ''), 'nw') > 0 ? cnt : -1
   endif
 
   let pattern = substitute(
@@ -925,7 +925,7 @@ function! s:search_sync_placeholder(start, end, number)"{{{
     return a:number
   endfor
 
-  return 0
+  return -1
 endfunction"}}}
 function! s:substitute_placeholder_marker(start, end, snippet_holder_cnt)"{{{
   if a:snippet_holder_cnt > 0
