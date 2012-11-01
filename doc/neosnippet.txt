@@ -640,6 +640,7 @@ CHANGELOG			*neosnippet-changelog*
 2012-11-01
 - Fixed snippet mirror behavior.
 - Fixed substitute of target.
+- Fixed convert description.
 
 2012-10-31
 - Improved indent_snippet().

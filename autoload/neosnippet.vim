@@ -353,13 +353,11 @@ function! s:parse_snippets_file(snippets, snippets_file)"{{{
       " Fall back to using the name and description (abbr) combined.
       " SnipMate snippets may have duplicate names, but different
       " descriptions (abbrs).
-      if has_key(dup_check, snippet_dict.name)
-        let description = matchstr(line, '^snippet\s\+\zs.*$')
-        if description !=# snippet_dict.name
-          " Convert description.
-          let snippet_dict.name =
-                \ substitute(description, '\W\+', '_', 'g')
-        endif
+      let description = matchstr(line, '^snippet\s\+\zs.*$')
+      if description !=# snippet_dict.name
+        " Convert description.
+        let snippet_dict.name =
+              \ substitute(description, '\W\+', '_', 'g')
       endif
 
       " Collect the description (abbr) of the snippet, if set on snippet line.
