@@ -16,22 +16,22 @@ snippet fi
 snippet ab
     abstract
 
-snippet cl
+snippet class
     class ${1} ${2:extends} ${3:#:Parent} ${4:implements} ${5:#:Interface} {
         ${0:TARGET}
     }
 
-snippet in
+snippet interface
     interface ${1} ${2:extends} ${3:#:Parent} {
         ${0:TARGET}
     }
 
-snippet m
+snippet method
     ${1:void} ${2:#:method}(${3}) ${4:throws} {
         ${0:TARGET}
     }
 
-snippet v
+snippet var
     ${1:#:type} ${2:#:var}${3};
 
 snippet co
@@ -56,7 +56,7 @@ snippet elif
         ${2:TARGET}
     }
 
-snippet wh
+snippet while
     while (${1}) {
         ${2:TARGET}
     }
@@ -66,12 +66,13 @@ snippet for
         ${4:TARGET}
     }
 
-snippet fore
+snippet foreach
+alias   fore
     for (${1} : ${2}) {
     ${3:TARGET}
 }
 
-snippet sw
+snippet switch
     switch (${1}) {
         ${2:TARGET}
     }
@@ -89,7 +90,7 @@ snippet de
     default:
         ${0}
 
-snippet ca
+snippet catch
     catch (${1:#:Exception} ${2:e}) {
         ${0}
     }
@@ -116,8 +117,9 @@ snippet test
         ${0:TARGET}
     }
 
-snippet imt
-    import junit.framework.TestCase;
+snippet import
+alias   imt
+    import ${1};
     ${0}
 
 snippet j.u
@@ -140,26 +142,26 @@ snippet main
         ${0}
     }
 
-snippet pl
+snippet println
     System.out.println(${1});${0}
 
-snippet p
+snippet print
     System.out.print(${1});${0}
 
 #javadoc
-snippet c
+snippet comment
     /**
      * ${0:TARGET}
      */
 
-snippet a
+snippet author
     @author ${0:$TM_FULLNAME}
 
 snippet {code
 abbr {
     {@code ${0}
 
-snippet d
+snippet deprecated
     @deprecated ${0:#:description}
 
 snippet {docRoot
@@ -185,13 +187,13 @@ abbr {
 snippet param
     @param ${1:#:var} ${0:#:description}
 
-snippet r
+snippet return
     @return ${0:#:description}
 
-snippet s
+snippet see
     @see ${0:#:reference}
 
-snippet se
+snippet serial
     @serial ${0:#:description}
 
 snippet sd
@@ -200,19 +202,17 @@ snippet sd
 snippet sf
     @serialField ${1:#:name} ${2:#:type} ${0:#:description}
 
-snippet si
+snippet since
     @since ${0:#:version}
 
-snippet t
+snippet throws
     @throws ${1:#:class} ${0:#:description}
 
 snippet {value
 abbr {
     {@value ${0}
 
-snippet ver
+snippet version
+alias ver
     @version ${0:#:version}
-
-snippet null
-    {@code null}
 
