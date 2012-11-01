@@ -624,6 +624,9 @@ Note: But you must unmap in select mode mappings manually.
 ==============================================================================
 CHANGELOG			*neosnippet-changelog*
 
+2012-11-01
+- Fixed snippet mirror behavior.
+
 2012-10-31
 - Improved indent_snippet().
 - Added <Plug>(neosnippet_start_unite_snippet_target).

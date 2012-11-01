@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: neosnippet.vim
 " AUTHOR:  Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 31 Oct 2012.
+" Last Modified: 01 Nov 2012.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -637,10 +637,6 @@ function! neosnippet#expand_target()"{{{
   call neosnippet#substitute_selected_text(visualmode(),
         \ base_indent)
 
-  " startinsert!
-  " let start = getpos("'<")
-  " call cursor(0, start[2]+len(base_indent . trigger)-1)
-
   call neosnippet#expand(neosnippet#util#get_cur_text(),
         \ col('.'), trigger)
 endfunction"}}}
@@ -754,10 +750,10 @@ endfunction"}}}
 function! s:search_snippet_range(start, end, cnt)"{{{
   call s:substitute_placeholder_marker(a:start, a:end, a:cnt)
 
-  let pattern = substitute(
-        \ s:get_placeholder_marker_pattern(), '\\d\\+', a:cnt, '')
+  " Search marker pattern.
+  let pattern = substitute(s:get_placeholder_marker_pattern(),
+        \ '\\d\\+', a:cnt, '')
 
-  let line = a:start
   for line in filter(range(a:start, a:end),
         \ 'getline(v:val) =~ pattern')
     call s:expand_placeholder(a:start, a:end, a:cnt, line)
@@ -780,7 +776,7 @@ function! s:search_outof_range(col)"{{{
     let pos[2] = 1
     call setpos('.', pos)
     startinsert
-  elseif a:col == col('$')
+  elseif a:col >= col('$')
     startinsert!
   else
     let pos[2] = a:col+1
@@ -831,7 +827,7 @@ function! s:expand_placeholder(start, end, holder_cnt, line)"{{{
   let pos[2] = match+1
 
   let cnt = s:search_sync_placeholder(a:start, a:end, a:holder_cnt)
-  if cnt > 0
+  if cnt >= 0
     let pattern = substitute(s:get_placeholder_marker_pattern(),
           \ '\\d\\+', cnt, '')
     call setline(a:line, substitute(current_line, pattern,
@@ -932,7 +928,7 @@ function! s:search_sync_placeholder(start, end, number)"{{{
   return 0
 endfunction"}}}
 function! s:substitute_placeholder_marker(start, end, snippet_holder_cnt)"{{{
-  if a:snippet_holder_cnt > 1
+  if a:snippet_holder_cnt > 0
     let cnt = a:snippet_holder_cnt-1
     let sync_marker = substitute(s:get_sync_placeholder_marker_pattern(),
         \ '\\d\\+', cnt, '')
