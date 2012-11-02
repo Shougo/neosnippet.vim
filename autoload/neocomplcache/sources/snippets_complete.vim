@@ -81,9 +81,17 @@ endfunction"}}}
 function! s:keyword_filter(snippets, cur_keyword_str)"{{{
   " Uniq by real_name.
   let dict = {}
-  let list = filter(values(a:snippets),
-        \        printf('v:val.abbr =~ %s',
-        \           string(neocomplcache#keyword_escape(a:cur_keyword_str))))
+
+  if len(a:cur_keyword_str) > 1
+    " Use partial match by abbr.
+    let list = filter(values(a:snippets),
+          \        printf('v:val.abbr =~ %s',
+          \           string(neocomplcache#keyword_escape(a:cur_keyword_str))))
+  else
+    " Use default filter.
+    let list = neocomplcache#keyword_filter(
+          \ values(a:snippets), a:cur_keyword_str)
+  endif
 
   " Add cur_keyword_str snippet.
   if has_key(a:snippets, a:cur_keyword_str)

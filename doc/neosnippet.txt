@@ -659,6 +659,7 @@ CHANGELOG			*neosnippet-changelog*
 - Added g:neosnippet#enable_snipmate_compatibility option.
 - Used partial match for neocomplcache completion.
 - Fixed for neocomplcache.
+- Improved partial match behavior.
 
 2012-11-01
 - Fixed snippet mirror behavior.
