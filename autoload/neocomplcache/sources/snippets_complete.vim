@@ -83,10 +83,10 @@ function! s:keyword_filter(snippets, cur_keyword_str)"{{{
   let dict = {}
 
   if len(a:cur_keyword_str) > 1
-    " Use partial match by abbr.
+    " Use partial match by filter_str.
     let list = filter(values(a:snippets),
-          \        printf('v:val.abbr =~ %s',
-          \           string(neocomplcache#keyword_escape(a:cur_keyword_str))))
+          \  printf('v:val.filter_str =~ %s',
+          \      string(neocomplcache#keyword_escape(a:cur_keyword_str))))
   else
     " Use default filter.
     let list = neocomplcache#keyword_filter(
