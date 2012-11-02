@@ -85,8 +85,8 @@ function! s:keyword_filter(snippets, cur_keyword_str)"{{{
   if len(a:cur_keyword_str) > 1
     " Use partial match by filter_str.
     let list = filter(values(a:snippets),
-          \  printf('v:val.filter_str =~ %s',
-          \      string(neocomplcache#keyword_escape(a:cur_keyword_str))))
+          \  printf('stridx(v:val.filter_str, %s) >= 0',
+          \      string(a:cur_keyword_str)))
   else
     " Use default filter.
     let list = neocomplcache#keyword_filter(
