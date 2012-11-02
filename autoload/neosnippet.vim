@@ -207,15 +207,16 @@ function! s:initialize_snippet(dict, path, line, pattern, name)"{{{
         \   s:get_placeholder_marker_pattern(). '\|'.
         \   s:get_mirror_placeholder_marker_pattern().
         \   '\|\s\+\|\n', ' ', 'g')
+    let a:dict.abbr = a:dict.name
   else
     let abbr = a:dict.abbr
   endif
 
   let dict = {
         \ 'word' : a:dict.name, 'snip' : a:dict.word,
-        \ 'abbr' : abbr,
+        \ 'abbr' : a:dict.abbr,
         \ 'description' : a:dict.word,
-        \ 'menu' : menu_pattern.abbr,
+        \ 'menu' : menu_pattern . abbr,
         \ 'options' : a:dict.options,
         \ 'action__path' : a:path, 'action__line' : a:line,
         \ 'action__pattern' : a:pattern, 'real_name' : a:name,
