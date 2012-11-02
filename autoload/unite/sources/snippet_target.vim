@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: snippet_target.vim
 " AUTHOR:  Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 31 Oct 2012.
+" Last Modified: 02 Nov 2012.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -57,8 +57,8 @@ function! s:source.gather_candidates(args, context) "{{{
   let list = []
   for keyword in a:context.source__snippets
     let dict = {
-        \   'word' : keyword.word,
-        \   'abbr' : printf('%-50s %s', keyword.word, keyword.menu),
+        \   'word' : printf('%-50s %s', keyword.word, keyword.menu),
+        \   'source__trigger' : keyword.word,
         \   'source__menu' : keyword.menu,
         \   'source__snip' : keyword.snip,
         \   'source__context' : a:context,
@@ -98,7 +98,7 @@ function! s:source.action_table.select.func(candidate)"{{{
   call cursor(0, getpos("'<")[2])
 
   call neosnippet#expand(neosnippet#util#get_cur_text(),
-        \ col('.'), a:candidate.word)
+        \ col('.'), a:candidate.source__trigger)
 endfunction"}}}
 "}}}
 

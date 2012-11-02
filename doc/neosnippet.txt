@@ -337,6 +337,9 @@ EXAMPLES					*neosnippet-examples*
 	
 	" Enable snipMate compatibility feature.
 	" let g:neosnippet#enable_snipmate_compatibility = 1
+	
+	" For neocomplcache partial match.
+	" let g:neocomplcache_enable_refresh_always = 1
 <
 ==============================================================================
 SNIPPET SYNTAX					*neosnippet-snippet-syntax*
@@ -657,6 +660,7 @@ CHANGELOG			*neosnippet-changelog*
 
 2012-11-02
 - Added g:neosnippet#enable_snipmate_compatibility option.
+- Used partial match for neocomplcache completion.
 
 2012-11-01
 - Fixed snippet mirror behavior.

@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: snippets_complete.vim
 " AUTHOR:  Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 28 Oct 2012.
+" Last Modified: 02 Nov 2012.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -79,8 +79,9 @@ endfunction"}}}
 function! s:keyword_filter(snippets, cur_keyword_str)"{{{
   " Uniq by real_name.
   let dict = {}
-  let list = neocomplcache#keyword_filter(
-        \ values(a:snippets), a:cur_keyword_str)
+  let list = filter(values(a:snippets),
+        \        printf('v:val.abbr =~ %s',
+        \           string(neocomplcache#keyword_escape(a:cur_keyword_str))))
 
   " Add cur_keyword_str snippet.
   if has_key(a:snippets, a:cur_keyword_str)
