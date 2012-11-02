@@ -660,6 +660,7 @@ CHANGELOG			*neosnippet-changelog*
 - Used partial match for neocomplcache completion.
 - Fixed for neocomplcache.
 - Improved partial match behavior.
+- Added python snippets.
 
 2012-11-01
 - Fixed snippet mirror behavior.

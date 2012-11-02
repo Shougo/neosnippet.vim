@@ -103,3 +103,13 @@ options     head
 	while ${1:#:condition}:
 		${0:TARGET}
 
+snippet     with
+abbr        with open({file}) as :
+options     head
+	with open(${1:#:filename, mode}) as f
+		${0:TARGET}
+
+snippet     filter
+abbr        [x for x in {list} if {condition}]
+	[$1 for ${1:x} in ${2:#:list} if ${3:#:condition}]
+
