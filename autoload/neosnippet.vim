@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: neosnippet.vim
 " AUTHOR:  Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 01 Nov 2012.
+" Last Modified: 02 Nov 2012.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -36,6 +36,8 @@ call neosnippet#util#set_default(
 call neosnippet#util#set_default(
       \ 'g:neosnippet#disable_select_mode_mappings',
       \ 1, 'g:neocomplcache_disable_select_mode_mappings')
+call neosnippet#util#set_default(
+      \ 'g:neosnippet#enable_snipmate_compatibility', 0)
 "}}}
 
 " Variables  "{{{
@@ -1197,6 +1199,20 @@ function! neosnippet#clear_select_mode_mappings()"{{{
   snoremap <right> <ESC>a
   snoremap <left>  <ESC>bi
 endfunction"}}}
+
+if g:neosnippet#enable_snipmate_compatibility
+  " For snipMate function.
+  function! Filename(...)
+    let filename = expand('%:t:r')
+    if filename == ''
+      return a:0 == 2 ? a:2 : ''
+    elseif a:0 == 0 || a:1 == ''
+      return filename
+    else
+      return substitute(a:1, '$1', filename, 'g')
+    endif
+  endfunction
+endif
 
 " Plugin key-mappings.
 function! neosnippet#expand_or_jump_impl()

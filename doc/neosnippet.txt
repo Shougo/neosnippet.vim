@@ -189,6 +189,13 @@ g:neosnippet#disable_runtime_snippets
 
 		The default value is {}.
 
+g:neosnippet#enable_snipmate_compatibility
+				*g:neosnippet#enable_snipmate_compatibility*
+		If it is non 0, neosnippet will enable snipMate compatibility
+		feature(For example: Filename() function).
+
+		The default value is 0.
+
 ------------------------------------------------------------------------------
 KEY MAPPINGS 					*neosnippet-key-mappings*
 
@@ -327,6 +334,9 @@ EXAMPLES					*neosnippet-examples*
 	if has('conceal')
 	  set conceallevel=2 concealcursor=i
 	endif
+	
+	" Enable snipMate compatibility feature.
+	" let g:neosnippet#enable_snipmate_compatibility = 1
 <
 ==============================================================================
 SNIPPET SYNTAX					*neosnippet-snippet-syntax*
@@ -634,8 +644,19 @@ Note: But you must unmap the mappings in select mode manually.
 	let g:neosnippet#disable_select_mode_mappings = 0
 <
 
+Q: Error using snipmate-snippets
+https://github.com/Shougo/neosnippet/issues/86
+
+A: Please try below settings. It defines snipMate function.
+>
+	let g:neosnippet#enable_snipmate_compatibility = 1
+<
+
 ==============================================================================
 CHANGELOG			*neosnippet-changelog*
+
+2012-11-02
+- Added g:neosnippet#enable_snipmate_compatibility option.
 
 2012-11-01
 - Fixed snippet mirror behavior.
