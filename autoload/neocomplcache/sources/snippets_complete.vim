@@ -70,7 +70,9 @@ function! s:source.get_complete_words(cur_keyword_pos, cur_keyword_str)"{{{
       let snippet.menu = '`Snip` ' . snippet.menu
     endif
 
+    let snippet.dup = 1
     let snippet.neocomplcache__convertable = 0
+    let snippet.neocomplcache__refresh = 1
   endfor
 
   return list

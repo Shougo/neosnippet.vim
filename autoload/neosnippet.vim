@@ -216,7 +216,7 @@ function! s:initialize_snippet(dict, path, line, pattern, name)"{{{
         \ 'abbr' : a:dict.abbr,
         \ 'description' : a:dict.word,
         \ 'menu' : menu_pattern.abbr,
-        \ 'dup' : 1, 'options' : a:dict.options,
+        \ 'options' : a:dict.options,
         \ 'action__path' : a:path, 'action__line' : a:line,
         \ 'action__pattern' : a:pattern, 'real_name' : a:name,
         \}
