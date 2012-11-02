@@ -34,9 +34,10 @@ endif
 setlocal expandtab
 let &l:shiftwidth=&tabstop
 let &l:softtabstop=&tabstop
+let &l:commentstring="#%s"
 
 let b:undo_ftplugin .= '
-    \ | setlocal expandtab< shiftwidth< softtabstop< tabstop<
+    \ | setlocal expandtab< shiftwidth< softtabstop< tabstop< commentstring<
     \'
 
 let &cpo = s:save_cpo
