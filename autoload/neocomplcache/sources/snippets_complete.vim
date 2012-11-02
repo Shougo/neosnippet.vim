@@ -82,7 +82,7 @@ function! s:keyword_filter(snippets, cur_keyword_str)"{{{
   " Uniq by real_name.
   let dict = {}
 
-  if len(a:cur_keyword_str) > 1
+  if len(a:cur_keyword_str) > 1 && a:cur_keyword_str =~ '^\h\w*$'
     " Use partial match by filter_str.
     let list = filter(values(a:snippets),
           \  printf('stridx(v:val.filter_str, %s) >= 0',
