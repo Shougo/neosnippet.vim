@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: neosnippet.vim
 " AUTHOR:  Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 31 Oct 2012.
+" Last Modified: 03 Nov 2012.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -117,6 +117,10 @@ command! -nargs=? -complete=customlist,neosnippet#filetype_complete
 command! -nargs=? -complete=customlist,neosnippet#filetype_complete
       \ NeoComplCacheEditRuntimeSnippets
       \ NeoSnippetEdit -runtime <args>
+
+command! -nargs=1 -complete=file
+      \ NeoSnippetSource
+      \ call neosnippet#source_file(<q-args>)
 "}}}
 
 let g:loaded_neosnippet = 1

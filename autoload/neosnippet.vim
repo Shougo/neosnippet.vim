@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: neosnippet.vim
 " AUTHOR:  Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 02 Nov 2012.
+" Last Modified: 03 Nov 2012.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -314,11 +314,22 @@ function! neosnippet#make_cache(filetype)"{{{
   let s:snippets[filetype] = snippet
 endfunction"}}}
 
+function! neosnippet#source_file(filename)"{{{
+  let neosnippet = neosnippet#get_current_neosnippet()
+  call s:parse_snippets_file(neosnippet.snippets, a:filename)
+endfunction"}}}
+
 function! s:parse_snippets_file(snippets, snippets_file)"{{{
   let dup_check = {}
   let snippet_dict = {}
 
   let linenr = 1
+
+  if !filereadable(a:snippets_file)
+    call neosnippet#util#print_error(
+          \ printf('snippet file "%s" is not found.', a:filename))
+    return a:snippets
+  endif
 
   for line in readfile(a:snippets_file)
     if line =~ '^\h\w*.*\s$'
