@@ -33,8 +33,8 @@ elseif exists("b:current_syntax")
   finish
 endif
 
-syn region  neosnippetPrevWord             start=+'+ end=+'+ contained
-syn region  neosnippetPrevWord             start=+"+ end=+"+ contained
+syn region  neosnippetString               start=+'+ end=+'+ contained
+syn region  neosnippetString               start=+"+ end=+"+ contained
 syn region  neosnippetEval                 start=+\\\@<!`+ end=+\\\@<!`+ contained
 syn match   neosnippetWord                 '^\s\+.*$' contains=
       \neosnippetEval,neosnippetPlaceHolder,neosnippetEscape,neosnippetVariable
@@ -45,9 +45,10 @@ syn match   neosnippetComment              '^#.*$'
 syn match   neosnippetEscape               '\\[`]' contained
 
 syn match   neosnippetKeyword
-      \ '^\%(include\|snippet\|abbr\|prev_word\|delete\|alias\|options\|TARGET\)' contained
+      \ '^\%(include\|snippet\|abbr\|prev_word\|delete\|alias\|options\|regexpr\|TARGET\)' contained
 syn keyword   neosnippetOption             head word contained
-syn match   neosnippetPrevWords            '^prev_word\s\+.*$' contains=neosnippetPrevWord,neosnippetKeyword
+syn match   neosnippetPrevWords            '^prev_word\s\+.*$' contains=neosnippetString,neosnippetKeyword
+syn match   neosnippetRegexpr              '^regexpr\s\+.*$' contains=neosnippetString,neosnippetKeyword
 syn match   neosnippetStatementName        '^snippet\s.*$' contains=neosnippetName,neosnippetKeyword
 syn match   neosnippetName                 '\s\+.*$' contained
 syn match   neosnippetStatementAbbr        '^abbr\s.*$' contains=neosnippetAbbr,neosnippetKeyword
@@ -64,7 +65,7 @@ syn match   neosnippetStatementOptions     '^options\s.*$' contains=neosnippetOp
 syn match   neosnippetPlaceHolderComment   '{\d\+:\zs#:.\{-}\ze\\\@<!}' contained
 
 hi def link neosnippetKeyword Statement
-hi def link neosnippetPrevWord String
+hi def link neosnippetString String
 hi def link neosnippetName Identifier
 hi def link neosnippetAbbr Normal
 hi def link neosnippetEval Type
