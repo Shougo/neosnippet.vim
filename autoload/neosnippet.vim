@@ -214,7 +214,7 @@ function! s:initialize_snippet(dict, path, line, pattern, name)"{{{
 
   let snippet = {
         \ 'word' : a:dict.name, 'snip' : a:dict.word,
-        \ 'filter_str' : a:dict.abbr,
+        \ 'filter_str' : a:dict.name . ' ' . a:dict.abbr,
         \ 'description' : a:dict.word,
         \ 'menu' : menu_pattern . abbr,
         \ 'options' : a:dict.options,
