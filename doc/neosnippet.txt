@@ -395,6 +395,16 @@ Snippet Keywords:
    alias hoge hogera hogehoge
 <
 
+- regexp [pattern] (optional)
+
+   This snippet expands when it matched  by the regexp pattern only.
+
+   Example
+
+>
+   regexp '^% '
+<
+
 - options [options] (optional)
 
    Options influece the snippet behavior. The possible options are:
@@ -677,6 +687,7 @@ CHANGELOG			*neosnippet-changelog*
 - Refactored documentation.
 - Added :NeoSnippetSource.
 - Refactored parse routine.
+- Added regexp syntax.
 
 2012-11-02
 - Added g:neosnippet#enable_snipmate_compatibility option.

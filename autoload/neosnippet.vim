@@ -222,8 +222,8 @@ function! s:initialize_snippet(dict, path, line, pattern, name)"{{{
         \ 'action__pattern' : a:pattern, 'real_name' : a:name,
         \}
 
-  if has_key(a:dict, 'regex')
-    let snippet.regex = a:dict.regex
+  if has_key(a:dict, 'regexp')
+    let snippet.regexp = a:dict.regexp
   endif
 
   return snippet
@@ -453,9 +453,9 @@ function! s:add_snippet_attribute(line, linenr, snippet_dict)"{{{
       call neosnippet#util#print_error(
             \ 'prev_word must be "^" character.')
     endif
-  elseif a:line =~ '^regex\s'
-    let a:snippet_dict.regex = matchstr(a:line,
-          \ '^regex\s\+[''"]\zs.*\ze[''"]$')
+  elseif a:line =~ '^regexp\s'
+    let a:snippet_dict.regexp = matchstr(a:line,
+          \ '^regexp\s\+[''"]\zs.*\ze[''"]$')
   elseif a:line =~ '^options\s\+'
     for option in split(matchstr(a:line,
           \ '^options\s\+\zs.*$'), '[,[:space:]]\+')
@@ -1043,9 +1043,14 @@ function! neosnippet#get_snippets()"{{{
     call extend(snippets, s:snippets[filetype], 'keep')
   endfor
 
-  if mode() ==# 'i' &&
-        \ !s:is_beginning_of_line(neosnippet#util#get_cur_text())
-    call filter(snippets, '!v:val.options.head')
+  if mode() ==# 'i'
+    " Special filters.
+    let cur_text = neosnippet#util#get_cur_text()
+    if !s:is_beginning_of_line(cur_text)
+      call filter(snippets, '!v:val.options.head')
+    endif
+
+    call filter(snippets, "cur_text =~ get(v:val, 'regexp', '')")
   endif
 
   return snippets
