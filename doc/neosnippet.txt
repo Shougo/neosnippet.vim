@@ -676,6 +676,7 @@ CHANGELOG			*neosnippet-changelog*
 2012-11-03
 - Refactored documentation.
 - Added :NeoSnippetSource.
+- Refactored parse routine.
 
 2012-11-02
 - Added g:neosnippet#enable_snipmate_compatibility option.

@@ -212,7 +212,7 @@ function! s:initialize_snippet(dict, path, line, pattern, name)"{{{
     let abbr = a:dict.abbr
   endif
 
-  let dict = {
+  let snippet = {
         \ 'word' : a:dict.name, 'snip' : a:dict.word,
         \ 'filter_str' : a:dict.abbr,
         \ 'description' : a:dict.word,
@@ -221,7 +221,12 @@ function! s:initialize_snippet(dict, path, line, pattern, name)"{{{
         \ 'action__path' : a:path, 'action__line' : a:line,
         \ 'action__pattern' : a:pattern, 'real_name' : a:name,
         \}
-  return dict
+
+  if has_key(a:dict, 'regex')
+    let snippet.regex = a:dict.regex
+  endif
+
+  return snippet
 endfunction"}}}
 function! s:initialize_snippet_options()"{{{
   return { 'head' : 0, 'word' : 0, 'indent' : 0 }
@@ -337,13 +342,15 @@ function! s:parse_snippets_file(snippets, snippets_file)"{{{
       let line = substitute(line, '\s\+$', '', '')
     endif
 
-    if line =~ '^include'
+    if line =~ '^\s*#'
+      " Comment.
+    elseif line =~ '^include'
       " Include snippets.
-      let snippet_file = matchstr(line, '^include\s\+\zs.*$')
+      let filename = matchstr(line, '^include\s\+\zs.*$')
 
       for snippets_file in split(globpath(join(
             \ neosnippet#get_snippets_directory(), ','),
-            \ snippet_file), '\n')
+            \ filename), '\n')
         call s:parse_snippets_file(a:snippets, snippets_file)
       endfor
     elseif line =~ '^delete\s'
@@ -358,67 +365,10 @@ function! s:parse_snippets_file(snippets, snippets_file)"{{{
               \ a:snippets, dup_check, a:snippets_file)
       endif
 
-      " Initialize snippet dict.
-      let snippet_dict = { 'word' : '', 'linenr' : linenr,
-            \ 'options' : s:initialize_snippet_options() }
-
-      " Try using the name without the description (abbr).
-      let snippet_dict.name = matchstr(line, '^snippet\s\+\zs\S\+')
-
-      " Fall back to using the name and description (abbr) combined.
-      " SnipMate snippets may have duplicate names, but different
-      " descriptions (abbrs).
-      let description = matchstr(line, '^snippet\s\+\zs.*$')
-      if description !=# snippet_dict.name
-        " Convert description.
-        let snippet_dict.name =
-              \ substitute(description, '\W\+', '_', 'g')
-      endif
-
-      " Collect the description (abbr) of the snippet, if set on snippet line.
-      " This is for compatibility with SnipMate-style snippets.
-      let snippet_dict.abbr = matchstr(line, '^snippet\s\+\S\+\s\+\zs.*$')
-
-      " Check for duplicated names.
-      if has_key(dup_check, snippet_dict.name)
-        let dup = dup_check[snippet_dict.name]
-        call neosnippet#util#print_error(printf(
-              \ 'Warning: %s:%d is overriding `%s` from %s:%d',
-              \ a:snippets_file, linenr, snippet_dict.name,
-              \ dup.action__path, dup.action__line))
-        call neosnippet#util#print_error(printf(
-              \ 'Please rename the snippet name or use `delete %s`.',
-              \ snippet_dict.name))
-      endif
+      let snippet_dict = s:parse_snippet_name(
+            \ line, linenr, dup_check)
     elseif !empty(snippet_dict)
-      " Allow overriding/setting of the description (abbr) of the snippet.
-      " This will override what was set via the snippet line.
-      if line =~ '^abbr\s'
-        let snippet_dict.abbr = matchstr(line, '^abbr\s\+\zs.*$')
-      elseif line =~ '^alias\s'
-        let snippet_dict.alias = split(matchstr(line,
-              \ '^alias\s\+\zs.*$'), '[,[:space:]]\+')
-      elseif line =~ '^prev_word\s'
-        let prev_word = matchstr(line,
-              \ '^prev_word\s\+[''"]\zs.*\ze[''"]$')
-        if prev_word == '^'
-          " For backward compatibility.
-          let snippet_dict.options.head = 1
-        else
-          call neosnippet#util#print_error(
-                \ 'prev_word must be "^" character.')
-        endif
-      elseif line =~ '^options\s\+'
-        for option in split(matchstr(line,
-              \ '^options\s\+\zs.*$'), '[,[:space:]]\+')
-          if !has_key(snippet_dict.options, option)
-            call neosnippet#util#print_error(
-                  \ printf('invalid option name : %s is detected.', option))
-          else
-            let snippet_dict.options[option] = 1
-          endif
-        endfor
-      elseif line =~ '^\s'
+      if line =~ '^\s'
         if snippet_dict.word != ''
           let snippet_dict.word .= "\n"
         else
@@ -431,6 +381,8 @@ function! s:parse_snippets_file(snippets, snippets_file)"{{{
       elseif line =~ '^$'
         " Blank line.
         let snippet_dict.word .= "\n"
+      else
+        call s:add_snippet_attribute(line, linenr, snippet_dict)
       endif
     endif
 
@@ -444,6 +396,80 @@ function! s:parse_snippets_file(snippets, snippets_file)"{{{
   endif
 
   return a:snippets
+endfunction"}}}
+
+function! s:parse_snippet_name(line, linenr, dup_check)"{{{
+  " Initialize snippet dict.
+  let snippet_dict = { 'word' : '', 'linenr' : a:linenr,
+        \ 'options' : s:initialize_snippet_options() }
+
+  " Try using the name without the description (abbr).
+  let snippet_dict.name = matchstr(a:line, '^snippet\s\+\zs\S\+')
+
+  " Fall back to using the name and description (abbr) combined.
+  " SnipMate snippets may have duplicate names, but different
+  " descriptions (abbrs).
+  let description = matchstr(a:line, '^snippet\s\+\zs.*$')
+  if description !=# snippet_dict.name
+    " Convert description.
+    let snippet_dict.name =
+          \ substitute(description, '\W\+', '_', 'g')
+  endif
+
+  " Collect the description (abbr) of the snippet, if set on snippet line.
+  " This is for compatibility with SnipMate-style snippets.
+  let snippet_dict.abbr = matchstr(a:line,
+        \ '^snippet\s\+\S\+\s\+\zs.*$')
+
+  " Check for duplicated names.
+  if has_key(a:dup_check, snippet_dict.name)
+    let dup = a:dup_check[snippet_dict.name]
+    call neosnippet#util#print_error(printf(
+          \ 'Warning: %s:%d is overriding `%s` from %s:%d',
+          \ a:snippets_file, linenr, snippet_dict.name,
+          \ dup.action__path, dup.action__line))
+    call neosnippet#util#print_error(printf(
+          \ 'Please rename the snippet name or use `delete %s`.',
+          \ snippet_dict.name))
+  endif
+
+  return snippet_dict
+endfunction"}}}
+function! s:add_snippet_attribute(line, linenr, snippet_dict)"{{{
+  " Allow overriding/setting of the description (abbr) of the snippet.
+  " This will override what was set via the snippet line.
+  if a:line =~ '^abbr\s'
+    let a:snippet_dict.abbr = matchstr(a:line, '^abbr\s\+\zs.*$')
+  elseif a:line =~ '^alias\s'
+    let a:snippet_dict.alias = split(matchstr(a:line,
+          \ '^alias\s\+\zs.*$'), '[,[:space:]]\+')
+  elseif a:line =~ '^prev_word\s'
+    let prev_word = matchstr(a:line,
+          \ '^prev_word\s\+[''"]\zs.*\ze[''"]$')
+    if prev_word == '^'
+      " For backward compatibility.
+      let a:snippet_dict.options.head = 1
+    else
+      call neosnippet#util#print_error(
+            \ 'prev_word must be "^" character.')
+    endif
+  elseif a:line =~ '^regex\s'
+    let a:snippet_dict.regex = matchstr(a:line,
+          \ '^regex\s\+[''"]\zs.*\ze[''"]$')
+  elseif a:line =~ '^options\s\+'
+    for option in split(matchstr(a:line,
+          \ '^options\s\+\zs.*$'), '[,[:space:]]\+')
+      if !has_key(a:snippet_dict.options, option)
+        call neosnippet#util#print_error(
+              \ printf('Invalid option name : %s is detected.', option))
+      else
+        let a:snippet_dict.options[option] = 1
+      endif
+    endfor
+  else
+    call neosnippet#util#print_error(
+          \ printf('Invalid syntax : "%s" is detected.', a:line))
+  endif
 endfunction"}}}
 
 function! s:is_beginning_of_line(cur_text)"{{{
