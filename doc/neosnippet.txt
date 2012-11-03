@@ -125,6 +125,12 @@ COMMANDS 					*neosnippet-commands*
 					*:NeoComplCacheEditRuntimeSnippets*
 		Note: |:NeoComplCacheEditRuntimeSnippets| is an obsolete name.
 
+:NeoSnippetSource [filename]
+							*:NeoSnippetSource*
+
+		Load [filetype] snippets.
+		Note: The loaded snippets are enabled in current buffer only.
+
 ------------------------------------------------------------------------------
 VARIABLES 					*neosnippet-variables*
 
@@ -669,6 +675,7 @@ CHANGELOG			*neosnippet-changelog*
 
 2012-11-03
 - Refactored documentation.
+- Added :NeoSnippetSource.
 
 2012-11-02
 - Added g:neosnippet#enable_snipmate_compatibility option.
