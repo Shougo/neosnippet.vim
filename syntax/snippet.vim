@@ -45,10 +45,10 @@ syn match   neosnippetComment              '^#.*$'
 syn match   neosnippetEscape               '\\[`]' contained
 
 syn match   neosnippetKeyword
-      \ '^\%(include\|snippet\|abbr\|prev_word\|delete\|alias\|options\|regexpr\|TARGET\)' contained
+      \ '^\%(include\|snippet\|abbr\|prev_word\|delete\|alias\|options\|regexp\|TARGET\)' contained
 syn keyword   neosnippetOption             head word contained
 syn match   neosnippetPrevWords            '^prev_word\s\+.*$' contains=neosnippetString,neosnippetKeyword
-syn match   neosnippetRegexpr              '^regexpr\s\+.*$' contains=neosnippetString,neosnippetKeyword
+syn match   neosnippetRegexpr              '^regexp\s\+.*$' contains=neosnippetString,neosnippetKeyword
 syn match   neosnippetStatementName        '^snippet\s.*$' contains=neosnippetName,neosnippetKeyword
 syn match   neosnippetName                 '\s\+.*$' contained
 syn match   neosnippetStatementAbbr        '^abbr\s.*$' contains=neosnippetAbbr,neosnippetKeyword
