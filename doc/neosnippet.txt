@@ -683,6 +683,9 @@ A: Please try below settings. It defines snipMate function.
 ==============================================================================
 CHANGELOG			*neosnippet-changelog*
 
+2012-11-04
+- Improved completion behavior.
+
 2012-11-03
 - Refactored documentation.
 - Added :NeoSnippetSource.

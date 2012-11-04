@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: neosnippet.vim
 " AUTHOR:  Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 03 Nov 2012.
+" Last Modified: 04 Nov 2012.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -196,10 +196,15 @@ function! s:initialize_snippet(dict, path, line, pattern, name)"{{{
     let a:dict.word .= '${0}'
   endif
 
-  let menu_pattern = (a:dict.word =~
+  if a:dict.word =~ '\\\@<!`.*\\\@<!`'
+    let menu_prefix = '`Snip` '
+  elseif a:dict.word =~
         \ s:get_placeholder_marker_substitute_pattern()
-        \ . '.*' . s:get_placeholder_marker_substitute_pattern()) ?
-        \ '<Snip> ' : '[Snip] '
+        \ . '.*' . s:get_placeholder_marker_substitute_pattern()
+    let menu_prefix = '<Snip> '
+  else
+    let menu_prefix = '[Snip] '
+  endif
 
   if !has_key(a:dict, 'abbr') || a:dict.abbr == ''
     " Set default abbr.
@@ -216,7 +221,7 @@ function! s:initialize_snippet(dict, path, line, pattern, name)"{{{
         \ 'word' : a:dict.name, 'snip' : a:dict.word,
         \ 'filter_str' : a:dict.name . ' ' . a:dict.abbr,
         \ 'description' : a:dict.word,
-        \ 'menu' : menu_pattern . abbr,
+        \ 'menu' : menu_prefix . abbr,
         \ 'options' : a:dict.options,
         \ 'action__path' : a:path, 'action__line' : a:line,
         \ 'action__pattern' : a:pattern, 'real_name' : a:name,

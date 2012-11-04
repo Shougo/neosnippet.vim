@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: snippets_complete.vim
 " AUTHOR:  Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 02 Nov 2012.
+" Last Modified: 04 Nov 2012.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -59,20 +59,11 @@ function! s:source.get_complete_words(cur_keyword_pos, cur_keyword_str)"{{{
   let abbr_pattern = printf('%%.%ds..%%s',
         \ g:neocomplcache_max_keyword_width-10)
   for snippet in list
-    if snippet.snip =~ '\\\@<!`=.*\\\@<!`'
-      let snippet.menu = s:eval_snippet(snippet.snip)
-
-      if g:neocomplcache_max_keyword_width >= 0 &&
-            \ len(snippet.menu) > g:neocomplcache_max_keyword_width
-        let snippet.menu = printf(abbr_pattern,
-              \ snippet.menu, snippet.menu[-8:])
-      endif
-      let snippet.menu = '`Snip` ' . snippet.menu
-    endif
-
     let snippet.dup = 1
     let snippet.neocomplcache__convertable = 0
-    let snippet.neocomplcache__refresh = 1
+
+    let snippet.kind = get(snippet,
+          \ 'neocomplcache__refresh', 0) ? '~' : ''
   endfor
 
   return list
@@ -82,15 +73,25 @@ function! s:keyword_filter(snippets, cur_keyword_str)"{{{
   " Uniq by real_name.
   let dict = {}
 
+  " Use default filter.
+  let list = neocomplcache#keyword_filter(
+        \ values(a:snippets), a:cur_keyword_str)
+  for snippet in list
+    " reset refresh flag.
+    let snippet.neocomplcache__refresh = 0
+  endfor
+
   if len(a:cur_keyword_str) > 1 && a:cur_keyword_str =~ '^\h\w*$'
     " Use partial match by filter_str.
-    let list = filter(values(a:snippets),
-          \  printf('stridx(v:val.filter_str, %s) >= 0',
+    let partial_list = filter(values(a:snippets),
+          \  printf('stridx(v:val.filter_str, %s) > 0',
           \      string(a:cur_keyword_str)))
-  else
-    " Use default filter.
-    let list = neocomplcache#keyword_filter(
-          \ values(a:snippets), a:cur_keyword_str)
+    for snippet in partial_list
+      " Set refresh flag.
+      let snippet.neocomplcache__refresh = 1
+    endfor
+
+    let list += partial_list
   endif
 
   " Add cur_keyword_str snippet.
