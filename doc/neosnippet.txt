@@ -690,6 +690,7 @@ CHANGELOG			*neosnippet-changelog*
 
 2012-11-05
 - Fixed for comment string.
+- Fixed snippet parser.
 
 2012-11-04
 - Improved completion behavior.

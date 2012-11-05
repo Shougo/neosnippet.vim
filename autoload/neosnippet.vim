@@ -347,8 +347,8 @@ function! s:parse_snippets_file(snippets, snippets_file)"{{{
       let line = substitute(line, '\s\+$', '', '')
     endif
 
-    if line =~ '^#'
-      " Comment.
+    if line =~ '^#' || line == ''
+      " Ignore.
     elseif line =~ '^include'
       " Include snippets.
       let filename = matchstr(line, '^include\s\+\zs.*$')
@@ -373,13 +373,13 @@ function! s:parse_snippets_file(snippets, snippets_file)"{{{
       let snippet_dict = s:parse_snippet_name(
             \ line, linenr, dup_check)
     elseif !empty(snippet_dict)
-      if line =~ '^\s' || line == ''
+      if line =~ '^\s'
         " Substitute one tab character or spaces.
-        if snippet_dict.word != ''
-          let snippet_dict.word .= "\n"
-        endif
+        " if snippet_dict.word != ''
+        "   let snippet_dict.word .= "\n"
+        " endif
         let snippet_dict.word .=
-                \ substitute(line, '^\%(\t\| *\)', '', '')
+                \ substitute(line, '^\%(\t\| *\)', '', '') . "\n"
       else
         call s:add_snippet_attribute(line, linenr, snippet_dict)
       endif
