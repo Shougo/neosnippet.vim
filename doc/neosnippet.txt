@@ -622,6 +622,11 @@ languages' indent files can not work very well (e.g.: PHP, Python).
 	  }
 <
 
+Note: "#{string}" is comment string. But it must be in head.
+>
+	# It is comment string
+	  # It is not comment string!
+<
 ==============================================================================
 UNITE SOURCES					*neosnippet-unite-sources*
 
@@ -682,6 +687,9 @@ A: Please try below settings. It defines snipMate function.
 
 ==============================================================================
 CHANGELOG			*neosnippet-changelog*
+
+2012-11-05
+- Fixed for comment string.
 
 2012-11-04
 - Improved completion behavior.

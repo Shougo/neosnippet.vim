@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: neosnippet.vim
 " AUTHOR:  Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 04 Nov 2012.
+" Last Modified: 05 Nov 2012.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -347,7 +347,7 @@ function! s:parse_snippets_file(snippets, snippets_file)"{{{
       let line = substitute(line, '\s\+$', '', '')
     endif
 
-    if line =~ '^\s*#'
+    if line =~ '^#'
       " Comment.
     elseif line =~ '^include'
       " Include snippets.
@@ -373,19 +373,13 @@ function! s:parse_snippets_file(snippets, snippets_file)"{{{
       let snippet_dict = s:parse_snippet_name(
             \ line, linenr, dup_check)
     elseif !empty(snippet_dict)
-      if line =~ '^\s'
+      if line =~ '^\s' || line == ''
+        " Substitute one tab character or spaces.
         if snippet_dict.word != ''
           let snippet_dict.word .= "\n"
-        else
-          " Substitute Tab character.
-          let line = substitute(line, '^\t', '', '')
         endif
-
         let snippet_dict.word .=
-                \ matchstr(line, '^ *\zs.*$')
-      elseif line =~ '^$'
-        " Blank line.
-        let snippet_dict.word .= "\n"
+                \ substitute(line, '^\%(\t\| *\)', '', '')
       else
         call s:add_snippet_attribute(line, linenr, snippet_dict)
       endif
