@@ -373,18 +373,18 @@ Example:
 
 Snippet Keywords:
 
-- snippet [name] (obligatory)
+- snippet [name] (Required)
 
    Each snippet starts with the keyword "snippet". This keyword is directly
    followed by the snippet name. The snippet name is used for the expansion of
    the snippet.
 
-- abbr [name] (optional)
+- abbr [name] (Optional)
 
    Here you can define an abbreviation of the snippet which will be used in
    the drop down menu of neocomplcache.
 
-- alias [aliases] (optional)
+- alias [aliases] (Optional)
 
    If you specify an alias it will be also used to expand a snippet. You can
    define multiple aliases either using the separators ' ' or ','.
@@ -395,7 +395,7 @@ Snippet Keywords:
    alias hoge hogera hogehoge
 <
 
-- regexp [pattern] (optional)
+- regexp [pattern] (Optional)
 
    This snippet expands when it matched  by the regexp pattern only.
 
@@ -405,7 +405,7 @@ Snippet Keywords:
    regexp '^% '
 <
 
-- options [options] (optional)
+- options [options] (Optional)
 
    Options influece the snippet behavior. The possible options are:
 
@@ -627,6 +627,29 @@ Note: "#{string}" is comment string. But it must be in head.
 	# It is comment string
 	  # It is not comment string!
 <
+
+Note: Neosnippet ignores empty line in snippet.  If you want to insert empty
+line in the snippet, you must insert speces or tabs.
+>
+	# This is valid.
+	snippet     #!
+	abbr        #!/usr/bin/env ruby
+	alias       shebang
+	options     head
+	  #!/usr/bin/env ruby
+	  
+	  ${0}
+
+	# This is invalid(no spaces!).
+	snippet     #!
+	abbr        #!/usr/bin/env ruby
+	alias       shebang
+	options     head
+	  #!/usr/bin/env ruby
+	
+	  ${0}
+<
+
 ==============================================================================
 UNITE SOURCES					*neosnippet-unite-sources*
 
@@ -691,6 +714,7 @@ CHANGELOG			*neosnippet-changelog*
 2012-11-05
 - Fixed for comment string.
 - Fixed snippet parser.
+- Improved syntax description.
 
 2012-11-04
 - Improved completion behavior.
