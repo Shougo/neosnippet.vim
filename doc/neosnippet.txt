@@ -628,8 +628,8 @@ Note: "#{string}" is comment string. But it must be in head.
 	  # It is not comment string!
 <
 
-Note: Neosnippet ignores empty line in snippet.  If you want to insert empty
-line in the snippet, you must insert speces or tabs.
+Note: Neosnippet ignores empty or spaces lines in snippet end.  If you want to insert empty
+line in snippet end, you must insert placeholder.
 >
 	# This is valid.
 	snippet     #!
@@ -640,14 +640,14 @@ line in the snippet, you must insert speces or tabs.
 	  
 	  ${0}
 
-	# This is invalid(no spaces!).
+	# This is invalid(ignores spaces lines!).
 	snippet     #!
 	abbr        #!/usr/bin/env ruby
 	alias       shebang
 	options     head
 	  #!/usr/bin/env ruby
-	
-	  ${0}
+	  
+	  
 <
 
 ==============================================================================
@@ -715,6 +715,7 @@ CHANGELOG			*neosnippet-changelog*
 - Fixed for comment string.
 - Fixed snippet parser.
 - Improved syntax description.
+- Changed spaces behavior.
 
 2012-11-04
 - Improved completion behavior.

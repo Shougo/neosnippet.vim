@@ -189,7 +189,7 @@ function! s:set_snippet_dict(snippet_dict, snippets, dup_check, snippets_file)"{
   endfor
 endfunction"}}}
 function! s:initialize_snippet(dict, path, line, pattern, name)"{{{
-  let a:dict.word = substitute(a:dict.word, '\n$', '', '')
+  let a:dict.word = substitute(a:dict.word, '\n\+$', '', '')
   if a:dict.word !~
         \ s:get_placeholder_marker_substitute_pattern()
     " Add placeholder.
@@ -347,7 +347,7 @@ function! s:parse_snippets_file(snippets, snippets_file)"{{{
       let line = substitute(line, '\s\+$', '', '')
     endif
 
-    if line =~ '^#' || line == ''
+    if line =~ '^#'
       " Ignore.
     elseif line =~ '^include'
       " Include snippets.
@@ -373,11 +373,7 @@ function! s:parse_snippets_file(snippets, snippets_file)"{{{
       let snippet_dict = s:parse_snippet_name(
             \ line, linenr, dup_check)
     elseif !empty(snippet_dict)
-      if line =~ '^\s'
-        " Substitute one tab character or spaces.
-        " if snippet_dict.word != ''
-        "   let snippet_dict.word .= "\n"
-        " endif
+      if line =~ '^\s' || line == ''
         let snippet_dict.word .=
                 \ substitute(line, '^\%(\t\| *\)', '', '') . "\n"
       else
