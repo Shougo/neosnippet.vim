@@ -711,6 +711,9 @@ A: Please try below settings. It defines snipMate function.
 ==============================================================================
 CHANGELOG			*neosnippet-changelog*
 
+2012-11-06
+- Improved default tex snippets.
+
 2012-11-05
 - Fixed for comment string.
 - Fixed snippet parser.
