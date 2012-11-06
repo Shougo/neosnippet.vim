@@ -419,7 +419,7 @@ Snippet Keywords:
 	    `strftime("%d %b %Y")`
 <
 
-   + head	This snippet expands on the beginnign of a line only.
+   + head	This snippet expands on the beginning of a line only.
 		Note: This is the same as "prev_word '^'" which is still
 		there for backwards compatibility.
 
