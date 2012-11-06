@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: neosnippet.vim
 " AUTHOR:  Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 05 Nov 2012.
+" Last Modified: 06 Nov 2012.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -671,8 +671,8 @@ function! neosnippet#expand_target()"{{{
   call neosnippet#substitute_selected_text(visualmode(),
         \ base_indent)
 
-  call neosnippet#expand(neosnippet#util#get_cur_text(),
-        \ col('.'), trigger)
+  let col = col('.') < len(base_indent)+1 ? len(base_indent)+1 : col('.')
+  call neosnippet#expand(neosnippet#util#get_cur_text(), col, trigger)
 endfunction"}}}
 function! s:indent_snippet(begin, end)"{{{
   if a:begin > a:end
@@ -914,6 +914,7 @@ function! s:expand_target_placeholder(line, col)"{{{
     let &l:foldmethod = 'manual'
   endif
 
+  let col = col('.')
   try
     let base_indent = matchstr(cur_text, '^\s\+')
     call setline(a:line, target_lines[0])
@@ -926,8 +927,10 @@ function! s:expand_target_placeholder(line, col)"{{{
 
     if next_line != ''
       startinsert
+      let col = col('.')
     else
       startinsert!
+      let col = col('$')
     endif
   finally
     if has('folding')
@@ -938,7 +941,7 @@ function! s:expand_target_placeholder(line, col)"{{{
 
   let neosnippet.target = ''
 
-  call neosnippet#jump(neosnippet#util#get_cur_text(), col('.'))
+  call neosnippet#jump(neosnippet#util#get_cur_text(), col)
 endfunction"}}}
 function! s:search_sync_placeholder(start, end, number)"{{{
   if a:end == 0

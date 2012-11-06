@@ -713,6 +713,7 @@ CHANGELOG			*neosnippet-changelog*
 
 2012-11-06
 - Improved default tex snippets.
+- Fixed expand target.
 
 2012-11-05
 - Fixed for comment string.
