@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: neosnippet.vim
 " AUTHOR:  Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 08 Nov 2012.
+" Last Modified: 09 Nov 2012.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -371,7 +371,7 @@ function! s:parse_snippets_file(snippets, snippets_file)"{{{
       endif
 
       let snippet_dict = s:parse_snippet_name(
-            \ line, linenr, dup_check)
+            \ a:snippets_file, line, linenr, dup_check)
     elseif !empty(snippet_dict)
       if line =~ '^\s' || line == ''
         if snippet_dict.word == ''
@@ -382,7 +382,8 @@ function! s:parse_snippets_file(snippets, snippets_file)"{{{
         let snippet_dict.word .=
                 \ substitute(line, '^ *', '', '') . "\n"
       else
-        call s:add_snippet_attribute(line, linenr, snippet_dict)
+        call s:add_snippet_attribute(
+              \ a:snippets_file, line, linenr, snippet_dict)
       endif
     endif
 
@@ -398,7 +399,7 @@ function! s:parse_snippets_file(snippets, snippets_file)"{{{
   return a:snippets
 endfunction"}}}
 
-function! s:parse_snippet_name(line, linenr, dup_check)"{{{
+function! s:parse_snippet_name(snippets_file, line, linenr, dup_check)"{{{
   " Initialize snippet dict.
   let snippet_dict = { 'word' : '', 'linenr' : a:linenr,
         \ 'options' : s:initialize_snippet_options() }
@@ -435,7 +436,7 @@ function! s:parse_snippet_name(line, linenr, dup_check)"{{{
 
   return snippet_dict
 endfunction"}}}
-function! s:add_snippet_attribute(line, linenr, snippet_dict)"{{{
+function! s:add_snippet_attribute(snippets_file, line, linenr, snippet_dict)"{{{
   " Allow overriding/setting of the description (abbr) of the snippet.
   " This will override what was set via the snippet line.
   if a:line =~ '^abbr\s'
@@ -461,14 +462,18 @@ function! s:add_snippet_attribute(line, linenr, snippet_dict)"{{{
           \ '^options\s\+\zs.*$'), '[,[:space:]]\+')
       if !has_key(a:snippet_dict.options, option)
         call neosnippet#util#print_error(
-              \ printf('Invalid option name : %s is detected.', option))
+              \ printf('[neosnippet] %s:%d', a:snippets_file, a:linenr))
+        call neosnippet#util#print_error(
+              \ printf('[neosnippet] Invalid option name : "%s"', option))
       else
         let a:snippet_dict.options[option] = 1
       endif
     endfor
   else
     call neosnippet#util#print_error(
-          \ printf('Invalid syntax : "%s" is detected.', a:line))
+          \ printf('[neosnippet] %s:%d', a:snippets_file, a:linenr))
+    call neosnippet#util#print_error(
+          \ printf('[neosnippet] Invalid syntax : "%s"', a:line))
   endif
 endfunction"}}}
 

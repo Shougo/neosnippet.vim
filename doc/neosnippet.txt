@@ -712,6 +712,9 @@ A: Please try below settings. It defines snipMate function.
 ==============================================================================
 CHANGELOG			*neosnippet-changelog*
 
+2012-11-09
+- Improved syntax error.
+
 2012-11-07
 - Fixed s:indent_snippet().
 
