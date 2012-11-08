@@ -715,6 +715,7 @@ CHANGELOG			*neosnippet-changelog*
 2012-11-09
 - Improved syntax error.
 - Fixed error in java snippet.
+- Improved snippet rank.
 
 2012-11-07
 - Fixed s:indent_snippet().

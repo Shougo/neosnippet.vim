@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: snippets_complete.vim
 " AUTHOR:  Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 04 Nov 2012.
+" Last Modified: 09 Nov 2012.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -79,6 +79,7 @@ function! s:keyword_filter(snippets, cur_keyword_str)"{{{
   for snippet in list
     " reset refresh flag.
     let snippet.neocomplcache__refresh = 0
+    let snippet.rank = 5
   endfor
 
   if len(a:cur_keyword_str) > 1 && a:cur_keyword_str =~ '^\h\w*$'
@@ -89,6 +90,7 @@ function! s:keyword_filter(snippets, cur_keyword_str)"{{{
     for snippet in partial_list
       " Set refresh flag.
       let snippet.neocomplcache__refresh = 1
+      let snippet.rank = 0
     endfor
 
     let list += partial_list
