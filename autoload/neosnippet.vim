@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: neosnippet.vim
 " AUTHOR:  Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 06 Nov 2012.
+" Last Modified: 08 Nov 2012.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -374,8 +374,13 @@ function! s:parse_snippets_file(snippets, snippets_file)"{{{
             \ line, linenr, dup_check)
     elseif !empty(snippet_dict)
       if line =~ '^\s' || line == ''
+        if snippet_dict.word == ''
+          " Substitute head tab character.
+          let line = substitute(line, '^\t', '', '')
+        endif
+
         let snippet_dict.word .=
-                \ substitute(line, '^\%(\t\| *\)', '', '') . "\n"
+                \ substitute(line, '^ *', '', '') . "\n"
       else
         call s:add_snippet_attribute(line, linenr, snippet_dict)
       endif
@@ -679,23 +684,19 @@ function! s:indent_snippet(begin, end)"{{{
     return
   endif
 
-  let equalprg = &l:equalprg
   let pos = getpos('.')
 
   let neosnippet = neosnippet#get_current_neosnippet()
 
+  let equalprg = &l:equalprg
   try
     setlocal equalprg=
 
-    " Check use of indent plugin.
-    if neosnippet.target == '' && getline(a:begin+1) !~ '^\t\+'
-      " Indent begin line.
-      call cursor(a:begin, 0)
-      silent normal! ==
-    endif
+    " Indent begin line?
+    let begin = (neosnippet.target == '') ? a:begin : a:begin + 1
 
     let base_indent = matchstr(getline(a:begin), '^\s\+')
-    for line_nr in range(a:begin+1, a:end)
+    for line_nr in range(begin, a:end)
       call cursor(line_nr, 0)
 
       if getline('.') =~ '^\t\+'
