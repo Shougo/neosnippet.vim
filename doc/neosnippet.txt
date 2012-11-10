@@ -717,6 +717,7 @@ CHANGELOG			*neosnippet-changelog*
 - Fixed error in java snippet.
 - Improved snippet rank.
 - Improved keyword filter behavior.
+- Fixed convert description.
 
 2012-11-07
 - Fixed s:indent_snippet().
