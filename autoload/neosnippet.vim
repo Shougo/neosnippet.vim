@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: neosnippet.vim
 " AUTHOR:  Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 09 Nov 2012.
+" Last Modified: 10 Nov 2012.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -183,6 +183,7 @@ function! s:set_snippet_dict(snippet_dict, snippets, dup_check, snippets_file)"{
   for alias in get(a:snippet_dict, 'alias', [])
     let alias_snippet = copy(snippet)
     let alias_snippet.word = alias
+    let alias_snippet.filter_str = alias
 
     let a:snippets[alias] = alias_snippet
     let a:dup_check[alias] = alias_snippet
