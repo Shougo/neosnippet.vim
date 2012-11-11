@@ -521,12 +521,10 @@ The structure of a placeholder can be:
    Example
 
 >
-	snippet     if
-	   if ${1:#:condition}
-	     ${2:do}
-	   endif
-	
-	   ${3}
+	snippet namespace
+	   namespace ${1:name} {
+		 $[0]
+	   } // namespace $1
 <
 
 Note: If you like to include characters in snippets that already have a
