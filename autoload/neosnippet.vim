@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: neosnippet.vim
 " AUTHOR:  Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 10 Nov 2012.
+" Last Modified: 15 Nov 2012.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -429,7 +429,7 @@ function! s:parse_snippet_name(snippets_file, line, linenr, dup_check)"{{{
     let dup = a:dup_check[snippet_dict.name]
     call neosnippet#util#print_error(printf(
           \ 'Warning: %s:%d is overriding `%s` from %s:%d',
-          \ a:snippets_file, linenr, snippet_dict.name,
+          \ a:snippets_file, a:linenr, snippet_dict.name,
           \ dup.action__path, dup.action__line))
     call neosnippet#util#print_error(printf(
           \ 'Please rename the snippet name or use `delete %s`.',
