@@ -675,10 +675,10 @@ snippet					*neosnippet-unite-action-snippet*
 ==============================================================================
 FAQ						*neosnippet-faq*
 
-Q: What if I do not like to expand a snippet trigger after (, [, " etc...:
+Q: What if I want to expand a snippet trigger after (, [, " etc...:
 
 A: You should use "options word" in the snippet definition. This changes the
-expansion behavior to a word boundary. 
+expansion behavior to a word boundary.
 >
 	snippet     date
 	options     word
