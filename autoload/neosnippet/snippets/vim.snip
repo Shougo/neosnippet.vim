@@ -96,3 +96,7 @@ options     head
 		${2::TARGET}
 	redir END
 
+snippet NeoBundle
+abbr NeoBundle ''
+    NeoBundle '`getreg('+')=='' ? '<\`0\`>' : getreg('+')`'${0}
+
