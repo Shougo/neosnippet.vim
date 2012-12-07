@@ -512,7 +512,7 @@ The structure of a placeholder can be:
 
 - $number
 
-   This is a synchronized placeholder. Sometimes it is required to repat a
+   This is a synchronized placeholder. Sometimes it is required to repeat a
    value in several places inside a snippet. If you set the number of this
    placeholder to the same number as one of the other placeholders in the
    snippet it will repeat its content. $1 is synchronized to ${1} and so on.
