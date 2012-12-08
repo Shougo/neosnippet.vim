@@ -64,7 +64,7 @@ COMMANDS 					*neosnippet-commands*
 						*:NeoSnippetMakeCache*
 
 		Creates a cache for the given [filetype] snippets. It
-		automatically choses the current buffer's file type unless you
+		automatically chooses the current buffer's file type unless you
 		specify one by [filetype].
 
 					*:NeoComplCacheCachingSnippets*
@@ -140,7 +140,7 @@ g:neosnippet#snippets_directory		*g:neosnippet#snippets_directory*
 		existing directories are ignored.
 
 		User defined snippet files are read after the built-in snippet
-		files.  If redundant snippets occur they get overwritten and
+		files. If redundant snippets occur they get overwritten and
 		only the last one remains.
 		
 		Note: The neosnippet plug-in loads file type snippets from
@@ -176,7 +176,7 @@ g:neosnippet#disable_runtime_snippets
 		loading all the file type specific built-in snippets. This is
 		very useful to to prevent snippet conflicts between self
 		defined snippet files and the built-in snippet files of
-		neosnippet.  If you use a "_" as key for an entry this will
+		neosnippet. If you use a "_" as key for an entry this will
 		treat the value of the entry as default value for all file
 		types.
 
@@ -365,6 +365,7 @@ Example:
 	snippet    [name]
 	abbr       [abbreviation]
 	alias      [aliases]
+	regexp     [pattern]
 	options    [options]
 	   if ${1:condition}
 	     ${2}
@@ -397,7 +398,7 @@ Snippet Keywords:
 
 - regexp [pattern] (Optional)
 
-   This snippet expands when it matched  by the regexp pattern only.
+   This snippet expands when it matched by the regexp pattern only.
 
    Example
 
@@ -407,7 +408,7 @@ Snippet Keywords:
 
 - options [options] (Optional)
 
-   Options influece the snippet behavior. The possible options are:
+   Options influence the snippet behavior. The possible options are:
 
    + word	This snippet expands by a word boundary. Note: To complete
 		the trigger in snippets_complete, it must be word(digits or
@@ -442,7 +443,7 @@ The structure of a placeholder can be:
 - ${number:placeholder text}
 
    Here the number of the placeholder and the placeholder text that are
-   seperated by a ":" are embraced by a pair of "{}". The text is displayed
+   separated by a ":" are embraced by a pair of "{}". The text is displayed
    after the snippet expansion and gets replaced by your text. If you jump
    over the snippet and do not insert any text in that position the
    placeholder text remains there. This can be used as a standard value for a
@@ -459,7 +460,7 @@ The structure of a placeholder can be:
 
 - ${number:#:placeholder text}
 
-   Here the number is followd by the "#" character. If you jump over this
+   Here the number is followed by the "#" character. If you jump over this
    placeholder and do not insert any text, the placeholder text will be
    removed.
 
@@ -627,7 +628,7 @@ Note: "#{string}" is comment string. But it must be in head.
 	  # It is not comment string!
 <
 
-Note: Neosnippet ignores empty or spaces lines in snippet end.  If you want to insert empty
+Note: Neosnippet ignores empty or spaces lines in snippet end. If you want to insert empty
 line in snippet end, you must insert placeholder.
 >
 	# This is valid.
