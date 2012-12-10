@@ -245,11 +245,10 @@ alias   \begin{quote}
 
 # ========== SECTION ==========
 
-snippet part
-alias   \begin{part}
-	\begin{part}
-		${1:TARGET}
-	\end{part}
+snippet \part
+alias   part \part{
+	\part{${1}}
+	${0:TARGET}
 
 snippet \chapter
 alias   chapter \chapter{
@@ -271,25 +270,13 @@ alias   subsubsection \subsubsection{
 	\subsubsection{${1}}
 	${0:TARGET}
 
-snippet paragraph
-alias   \begin{paragraph}
-	\begin{paragraph}
-		${1:TARGET}
-	\end{paragraph}
-
 snippet \paragraph
-alias   \paragraph{
+alias   paragraph \paragraph{
 	\paragraph{${1}}
 	${0:TARGET}
 
-snippet subparagraph
-alias   \begin{subparagraph}
-	\begin{subparagraph}
-		${1:TARGET}
-	\end{subparagraph}
-
 snippet \subparagraph
-alias   \subparagraph{
+alias   subparagraph \subparagraph{
 	\subparagraph{${1}}
 	${0:TARGET}
 
