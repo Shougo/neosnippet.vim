@@ -676,20 +676,21 @@ function! neosnippet#expand_target()"{{{
     return
   endif
 
+  call neosnippet#expand_target_trigger(trigger)
+endfunction"}}}
+function! neosnippet#expand_target_trigger(trigger)"{{{
+  let neosnippet = neosnippet#get_current_neosnippet()
   let neosnippet.target = substitute(
         \ neosnippet#get_selected_text(visualmode(), 1), '\n$', '', '')
-  let base_indent = matchstr(neosnippet.target, '^\s*')
 
-  " Delete base_indent.
-  let neosnippet.target = substitute(neosnippet.target,
-        \'^' . base_indent, '', 'g')
+  let line = getpos("'<")[1]
+  let col = getpos("'<")[2]
 
-  call neosnippet#substitute_selected_text(visualmode(),
-        \ base_indent)
+  call neosnippet#delete_selected_text(visualmode())
 
-  let col = (col('.') < len(base_indent)+1) ?
-        \ len(base_indent)+1 : col('.')
-  call neosnippet#expand(neosnippet#util#get_cur_text(), col, trigger)
+  call cursor(line, col)
+
+  call neosnippet#expand(neosnippet#util#get_cur_text(), col, a:trigger)
 endfunction"}}}
 function! s:indent_snippet(begin, end)"{{{
   if a:begin > a:end
@@ -1176,7 +1177,7 @@ function! neosnippet#get_selected_text(type, ...)"{{{
     elseif a:type == 'line'
       silent exe "normal! '[V']y"
     elseif a:type == 'block'
-      silent exe "normal! `[\<C-V>`]y"
+      silent exe "normal! `[\<C-v>`]y"
     else
       silent exe "normal! `[v`]y"
     endif
@@ -1198,10 +1199,10 @@ function! neosnippet#delete_selected_text(type, ...)"{{{
     " Invoked from Visual mode, use '< and '> marks.
     if a:0
       silent exe "normal! `<" . a:type . "`>d"
-    elseif a:type == 'line'
-      silent exe "normal! '[V']d"
-    elseif a:type == 'block'
-      silent exe "normal! `[\<C-V>`]d"
+    elseif a:type ==# 'V'
+      silent exe "normal! `[V`]s"
+    elseif a:type ==# "\<C-v>"
+      silent exe "normal! `[\<C-v>`]d"
     else
       silent exe "normal! `[v`]d"
     endif
@@ -1219,7 +1220,15 @@ function! neosnippet#substitute_selected_text(type, text)"{{{
 
   try
     " Invoked from Visual mode, use '< and '> marks.
-    silent exe "normal! `<" . a:type . "`>s" . a:text
+    if a:0
+      silent exe "normal! `<" . a:type . "`>s" . a:text
+    elseif a:type ==# 'V'
+      silent exe "normal! '[V']hs" . a:text
+    elseif a:type ==# "\<C-v>"
+      silent exe "normal! `[\<C-v>`]s" . a:text
+    else
+      silent exe "normal! `[v`]s" . a:text
+    endif
   finally
     let &selection = sel_save
     let @@ = reg_save

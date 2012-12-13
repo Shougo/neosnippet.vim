@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: snippet_target.vim
 " AUTHOR:  Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 06 Nov 2012.
+" Last Modified: 13 Dec 2012.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -82,24 +82,7 @@ function! s:source.action_table.select.func(candidate)"{{{
     return
   endif
 
-  let neosnippet = neosnippet#get_current_neosnippet()
-
-  let neosnippet.target = substitute(
-        \ neosnippet#get_selected_text(visualmode(), 1), '\n$', '', '')
-  let base_indent = matchstr(neosnippet.target, '^\s*')
-
-  " Delete base_indent.
-  let neosnippet.target = substitute(neosnippet.target,
-        \'^' . base_indent, '', 'g')
-
-  call neosnippet#substitute_selected_text(visualmode(),
-        \ base_indent)
-
-  call cursor(0, getpos("'<")[2])
-
-  let col = col('.') < len(base_indent)+1 ? len(base_indent)+1 : col('.')
-  call neosnippet#expand(neosnippet#util#get_cur_text(),
-        \ col, a:candidate.source__trigger)
+  call neosnippet#expand_target_trigger(a:candidate.source__trigger)
 endfunction"}}}
 "}}}
 

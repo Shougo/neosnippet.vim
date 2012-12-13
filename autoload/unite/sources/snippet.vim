@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: snippet.vim
 " AUTHOR:  Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 02 Nov 2012.
+" Last Modified: 13 Dec 2012.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -64,7 +64,8 @@ function! s:source.gather_candidates(args, context) "{{{
   let list = []
   for keyword in a:context.source__snippets
     let dict = {
-        \   'word' : printf('%-50s %s', keyword.word, keyword.menu),
+        \   'word' : keyword.word,
+        \   'abbr' : printf('%-50s %s', keyword.word, keyword.menu),
         \   'kind': 'snippet',
         \   'action__complete_word' : keyword.word,
         \   'action__complete_pos' : keyword_pos,
@@ -167,8 +168,7 @@ function! unite#sources#snippet#start_complete() "{{{
   endif
 
   return unite#start_complete(['snippet'],
-        \ { 'input': neosnippet#util#get_cur_text(),
-        \   'buffer_name' : 'snippet' })
+        \ { 'input': neosnippet#util#get_cur_text(), 'buffer_name' : '' })
 endfunction "}}}
 
 function! s:get_keyword_pos(cur_text)"{{{
