@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: neosnippet.vim
 " AUTHOR:  Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 15 Nov 2012.
+" Last Modified: 13 Dec 2012.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -514,6 +514,8 @@ function! s:snippets_expand(cur_text, col)"{{{
         \ a:cur_text, a:col, cur_word)
 endfunction"}}}
 function! neosnippet#jump(cur_text, col)"{{{
+  call s:skip_next_auto_completion()
+
   " Get patterns and count.
   if empty(s:snippets_expand_stack)
     return s:search_outof_range(a:col)
@@ -568,6 +570,8 @@ function! s:snippets_jump_or_expand(cur_text, col)"{{{
 endfunction"}}}
 
 function! neosnippet#expand(cur_text, col, trigger_name)"{{{
+  call s:skip_next_auto_completion()
+
   let snippets = neosnippet#get_snippets()
 
   if a:trigger_name == '' || !has_key(snippets, a:trigger_name)
@@ -683,7 +687,8 @@ function! neosnippet#expand_target()"{{{
   call neosnippet#substitute_selected_text(visualmode(),
         \ base_indent)
 
-  let col = col('.') < len(base_indent)+1 ? len(base_indent)+1 : col('.')
+  let col = (col('.') < len(base_indent)+1) ?
+        \ len(base_indent)+1 : col('.')
   call neosnippet#expand(neosnippet#util#get_cur_text(), col, trigger)
 endfunction"}}}
 function! s:indent_snippet(begin, end)"{{{
@@ -1248,6 +1253,13 @@ function! neosnippet#clear_select_mode_mappings()"{{{
   snoremap <C-h>    a<BS>
   snoremap <right> <ESC>a
   snoremap <left>  <ESC>bi
+endfunction"}}}
+
+function! s:skip_next_auto_completion() "{{{
+  " Skip next auto completion.
+  if exists('*neocomplcache#skip_next_complete')
+    call neocomplcache#skip_next_complete()
+  endif
 endfunction"}}}
 
 if g:neosnippet#enable_snipmate_compatibility
