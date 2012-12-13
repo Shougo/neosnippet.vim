@@ -70,11 +70,11 @@ function! s:source.gather_candidates(args, context) "{{{
   return list
 endfunction "}}}
 
-" Actions"{{{
+" Actions "{{{
 let s:source.action_table.select = {
       \ 'description' : 'select targetted snippet',
       \ }
-function! s:source.action_table.select.func(candidate)"{{{
+function! s:source.action_table.select.func(candidate) "{{{
   let context = a:candidate.source__context
   if bufnr('%') != context.source__bufnr ||
         \ line('.') != context.source__linenr
@@ -105,7 +105,7 @@ function! unite#sources#snippet_target#start() "{{{
         \ { 'buffer_name' : 'snippet/target' })
 endfunction "}}}
 
-function! s:get_keyword_pos(cur_text)"{{{
+function! s:get_keyword_pos(cur_text) "{{{
   let cur_keyword_pos = match(a:cur_text, '\S\+$')
   if cur_keyword_pos < 0
     " Empty string.

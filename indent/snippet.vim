@@ -39,7 +39,7 @@ endif
 
 setlocal indentexpr=SnippetsIndent()
 
-function! SnippetsIndent()"{{{
+function! SnippetsIndent() "{{{
     let line = getline('.')
     let prev_line = (line('.') == 1)? '' : getline(line('.')-1)
 

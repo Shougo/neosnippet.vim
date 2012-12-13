@@ -27,7 +27,7 @@
 let s:save_cpo = &cpo
 set cpo&vim
 
-" Global options definition."{{{
+" Global options definition. "{{{
 call neosnippet#util#set_default(
       \ 'g:neosnippet#disable_runtime_snippets', {})
 call neosnippet#util#set_default(
@@ -47,7 +47,7 @@ let s:neosnippet_options = [
       \]
 "}}}
 
-function! s:initialize()"{{{
+function! s:initialize() "{{{
   " Initialize.
   let s:snippets_expand_stack = []
 
@@ -107,13 +107,13 @@ function! s:initialize()"{{{
   endif
 endfunction"}}}
 
-" For echodoc."{{{
+" For echodoc. "{{{
 let s:doc_dict = {
       \ 'name' : 'neosnippet',
       \ 'rank' : 100,
       \ 'filetypes' : {},
       \ }
-function! s:doc_dict.search(cur_text)"{{{
+function! s:doc_dict.search(cur_text) "{{{
   if mode() !=# 'i'
     return []
   endif
@@ -135,7 +135,7 @@ function! s:doc_dict.search(cur_text)"{{{
 endfunction"}}}
 "}}}
 
-function! neosnippet#expandable()"{{{
+function! neosnippet#expandable() "{{{
   let ret = 0
 
   let snippets = neosnippet#get_snippets()
@@ -153,21 +153,21 @@ function! neosnippet#expandable()"{{{
 
   return ret
 endfunction"}}}
-function! neosnippet#jumpable()"{{{
+function! neosnippet#jumpable() "{{{
   " Found snippet placeholder.
   return search(s:get_placeholder_marker_pattern(). '\|'
             \ .s:get_sync_placeholder_marker_pattern(), 'nw') > 0
 endfunction"}}}
 
-function! neosnippet#caching()"{{{
+function! neosnippet#caching() "{{{
   call neosnippet#make_cache(&filetype)
 endfunction"}}}
 
-function! neosnippet#recaching()"{{{
+function! neosnippet#recaching() "{{{
   let s:snippets = {}
 endfunction"}}}
 
-function! s:set_snippet_dict(snippet_dict, snippets, dup_check, snippets_file)"{{{
+function! s:set_snippet_dict(snippet_dict, snippets, dup_check, snippets_file) "{{{
   if empty(a:snippet_dict)
     return
   endif
@@ -189,7 +189,7 @@ function! s:set_snippet_dict(snippet_dict, snippets, dup_check, snippets_file)"{
     let a:dup_check[alias] = alias_snippet
   endfor
 endfunction"}}}
-function! s:initialize_snippet(dict, path, line, pattern, name)"{{{
+function! s:initialize_snippet(dict, path, line, pattern, name) "{{{
   let a:dict.word = substitute(a:dict.word, '\n\+$', '', '')
   if a:dict.word !~
         \ s:get_placeholder_marker_substitute_pattern()
@@ -234,11 +234,11 @@ function! s:initialize_snippet(dict, path, line, pattern, name)"{{{
 
   return snippet
 endfunction"}}}
-function! s:initialize_snippet_options()"{{{
+function! s:initialize_snippet_options() "{{{
   return { 'head' : 0, 'word' : 0, 'indent' : 0 }
 endfunction"}}}
 
-function! neosnippet#edit_snippets(args)"{{{
+function! neosnippet#edit_snippets(args) "{{{
   let [args, options] = neosnippet#util#parse_options(
         \ a:args, s:neosnippet_options)
 
@@ -279,7 +279,7 @@ function! neosnippet#edit_snippets(args)"{{{
   endtry
 endfunction"}}}
 
-function! s:initialize_options(options)"{{{
+function! s:initialize_options(options) "{{{
   let default_options = {
         \ 'runtime' : 0,
         \ 'vertical' : 0,
@@ -298,7 +298,7 @@ function! s:initialize_options(options)"{{{
   return options
 endfunction"}}}
 
-function! neosnippet#make_cache(filetype)"{{{
+function! neosnippet#make_cache(filetype) "{{{
   let filetype = a:filetype == '' ?
         \ &filetype : a:filetype
   if filetype ==# ''
@@ -325,12 +325,12 @@ function! neosnippet#make_cache(filetype)"{{{
   let s:snippets[filetype] = snippet
 endfunction"}}}
 
-function! neosnippet#source_file(filename)"{{{
+function! neosnippet#source_file(filename) "{{{
   let neosnippet = neosnippet#get_current_neosnippet()
   call s:parse_snippets_file(neosnippet.snippets, a:filename)
 endfunction"}}}
 
-function! s:parse_snippets_file(snippets, snippets_file)"{{{
+function! s:parse_snippets_file(snippets, snippets_file) "{{{
   let dup_check = {}
   let snippet_dict = {}
 
@@ -400,7 +400,7 @@ function! s:parse_snippets_file(snippets, snippets_file)"{{{
   return a:snippets
 endfunction"}}}
 
-function! s:parse_snippet_name(snippets_file, line, linenr, dup_check)"{{{
+function! s:parse_snippet_name(snippets_file, line, linenr, dup_check) "{{{
   " Initialize snippet dict.
   let snippet_dict = { 'word' : '', 'linenr' : a:linenr,
         \ 'options' : s:initialize_snippet_options() }
@@ -438,7 +438,7 @@ function! s:parse_snippet_name(snippets_file, line, linenr, dup_check)"{{{
 
   return snippet_dict
 endfunction"}}}
-function! s:add_snippet_attribute(snippets_file, line, linenr, snippet_dict)"{{{
+function! s:add_snippet_attribute(snippets_file, line, linenr, snippet_dict) "{{{
   " Allow overriding/setting of the description (abbr) of the snippet.
   " This will override what was set via the snippet line.
   if a:line =~ '^abbr\s'
@@ -479,7 +479,7 @@ function! s:add_snippet_attribute(snippets_file, line, linenr, snippet_dict)"{{{
   endif
 endfunction"}}}
 
-function! s:is_beginning_of_line(cur_text)"{{{
+function! s:is_beginning_of_line(cur_text) "{{{
   let keyword_pattern = '\S\+'
   let cur_keyword_str = matchstr(a:cur_text, keyword_pattern.'$')
   let line_part = a:cur_text[: -1-len(cur_keyword_str)]
@@ -487,7 +487,7 @@ function! s:is_beginning_of_line(cur_text)"{{{
 
   return prev_word_end <= 0
 endfunction"}}}
-function! s:get_cursor_snippet(snippets, cur_text)"{{{
+function! s:get_cursor_snippet(snippets, cur_text) "{{{
   let cur_word = matchstr(a:cur_text, '\S\+$')
   if cur_word != '' && has_key(a:snippets, cur_word)
       return cur_word
@@ -505,7 +505,7 @@ function! s:get_cursor_snippet(snippets, cur_text)"{{{
   return cur_word
 endfunction"}}}
 
-function! s:snippets_expand(cur_text, col)"{{{
+function! s:snippets_expand(cur_text, col) "{{{
   let cur_word = s:get_cursor_snippet(
         \ neosnippet#get_snippets(),
         \ a:cur_text)
@@ -513,7 +513,7 @@ function! s:snippets_expand(cur_text, col)"{{{
   call neosnippet#expand(
         \ a:cur_text, a:col, cur_word)
 endfunction"}}}
-function! neosnippet#jump(cur_text, col)"{{{
+function! neosnippet#jump(cur_text, col) "{{{
   call s:skip_next_auto_completion()
 
   " Get patterns and count.
@@ -544,7 +544,7 @@ function! neosnippet#jump(cur_text, col)"{{{
 
   return s:search_outof_range(a:col)
 endfunction"}}}
-function! s:snippets_expand_or_jump(cur_text, col)"{{{
+function! s:snippets_expand_or_jump(cur_text, col) "{{{
   let cur_word = s:get_cursor_snippet(
         \ neosnippet#get_snippets(), a:cur_text)
 
@@ -556,7 +556,7 @@ function! s:snippets_expand_or_jump(cur_text, col)"{{{
     call neosnippet#jump(a:cur_text, a:col)
   endif
 endfunction"}}}
-function! s:snippets_jump_or_expand(cur_text, col)"{{{
+function! s:snippets_jump_or_expand(cur_text, col) "{{{
   let cur_word = s:get_cursor_snippet(
         \ neosnippet#get_snippets(), a:cur_text)
   if search(s:get_placeholder_marker_pattern(). '\|'
@@ -569,7 +569,7 @@ function! s:snippets_jump_or_expand(cur_text, col)"{{{
   endif
 endfunction"}}}
 
-function! neosnippet#expand(cur_text, col, trigger_name)"{{{
+function! neosnippet#expand(cur_text, col, trigger_name) "{{{
   call s:skip_next_auto_completion()
 
   let snippets = neosnippet#get_snippets()
@@ -661,7 +661,7 @@ function! neosnippet#expand(cur_text, col, trigger_name)"{{{
   let &l:iminsert = 0
   let &l:imsearch = 0
 endfunction"}}}
-function! neosnippet#expand_target()"{{{
+function! neosnippet#expand_target() "{{{
   let trigger = input('Please input snippet trigger: ',
         \ '', 'customlist,neosnippet#complete_target_snippets')
   let neosnippet = neosnippet#get_current_neosnippet()
@@ -678,7 +678,7 @@ function! neosnippet#expand_target()"{{{
 
   call neosnippet#expand_target_trigger(trigger)
 endfunction"}}}
-function! neosnippet#expand_target_trigger(trigger)"{{{
+function! neosnippet#expand_target_trigger(trigger) "{{{
   let neosnippet = neosnippet#get_current_neosnippet()
   let neosnippet.target = substitute(
         \ neosnippet#get_selected_text(visualmode(), 1), '\n$', '', '')
@@ -692,7 +692,7 @@ function! neosnippet#expand_target_trigger(trigger)"{{{
 
   call neosnippet#expand(neosnippet#util#get_cur_text(), col, a:trigger)
 endfunction"}}}
-function! s:indent_snippet(begin, end)"{{{
+function! s:indent_snippet(begin, end) "{{{
   if a:begin > a:end
     return
   endif
@@ -734,7 +734,7 @@ function! s:indent_snippet(begin, end)"{{{
   endtry
 endfunction"}}}
 
-function! neosnippet#register_oneshot_snippet()"{{{
+function! neosnippet#register_oneshot_snippet() "{{{
   let trigger = input('Please input snippet trigger: ', 'oneshot')
   if trigger == ''
     return
@@ -761,7 +761,7 @@ function! neosnippet#register_oneshot_snippet()"{{{
   echo 'Registered trigger : ' . trigger
 endfunction"}}}
 
-function! s:get_snippet_range(begin_line, begin_patterns, end_line, end_patterns)"{{{
+function! s:get_snippet_range(begin_line, begin_patterns, end_line, end_patterns) "{{{
   let pos = getpos('.')
 
   call cursor(a:begin_line, 0)
@@ -795,7 +795,7 @@ function! s:get_snippet_range(begin_line, begin_patterns, end_line, end_patterns
   call setpos('.', pos)
   return [begin, end]
 endfunction"}}}
-function! s:search_snippet_range(start, end, cnt)"{{{
+function! s:search_snippet_range(start, end, cnt) "{{{
   call s:substitute_placeholder_marker(a:start, a:end, a:cnt)
 
   " Search marker pattern.
@@ -810,7 +810,7 @@ function! s:search_snippet_range(start, end, cnt)"{{{
 
   return 0
 endfunction"}}}
-function! s:search_outof_range(col)"{{{
+function! s:search_outof_range(col) "{{{
   call s:substitute_placeholder_marker(1, 0, 0)
 
   let pattern = s:get_placeholder_marker_pattern()
@@ -835,7 +835,7 @@ function! s:search_outof_range(col)"{{{
   " Not found.
   return 0
 endfunction"}}}
-function! s:expand_placeholder(start, end, holder_cnt, line)"{{{
+function! s:expand_placeholder(start, end, holder_cnt, line) "{{{
   let pattern = substitute(s:get_placeholder_marker_pattern(),
         \ '\\d\\+', a:holder_cnt, '')
   let current_line = getline(a:line)
@@ -909,7 +909,7 @@ function! s:expand_placeholder(start, end, holder_cnt, line)"{{{
     startinsert!
   endif
 endfunction"}}}
-function! s:expand_target_placeholder(line, col)"{{{
+function! s:expand_target_placeholder(line, col) "{{{
   " Expand target
   let neosnippet = neosnippet#get_current_neosnippet()
   let next_line = getline(a:line)[a:col-1 :]
@@ -957,7 +957,7 @@ function! s:expand_target_placeholder(line, col)"{{{
 
   call neosnippet#jump(neosnippet#util#get_cur_text(), col)
 endfunction"}}}
-function! s:search_sync_placeholder(start, end, number)"{{{
+function! s:search_sync_placeholder(start, end, number) "{{{
   if a:end == 0
     " Search in current buffer.
     let cnt = matchstr(getline('.'),
@@ -978,7 +978,7 @@ function! s:search_sync_placeholder(start, end, number)"{{{
 
   return -1
 endfunction"}}}
-function! s:substitute_placeholder_marker(start, end, snippet_holder_cnt)"{{{
+function! s:substitute_placeholder_marker(start, end, snippet_holder_cnt) "{{{
   if a:snippet_holder_cnt > 0
     let cnt = a:snippet_holder_cnt-1
     let sync_marker = substitute(s:get_sync_placeholder_marker_pattern(),
@@ -1014,7 +1014,7 @@ function! s:substitute_placeholder_marker(start, end, snippet_holder_cnt)"{{{
     call setline('.', substitute(getline('.'), sync_marker, sub, ''))
   endif
 endfunction"}}}
-function! s:eval_snippet(snippet_text)"{{{
+function! s:eval_snippet(snippet_text) "{{{
   let snip_word = ''
   let prev_match = 0
   let match = match(a:snippet_text, '\\\@<!`.\{-}\\\@<!`')
@@ -1036,7 +1036,7 @@ function! s:eval_snippet(snippet_text)"{{{
 
   return snip_word
 endfunction"}}}
-function! neosnippet#get_current_neosnippet()"{{{
+function! neosnippet#get_current_neosnippet() "{{{
   if !exists('b:neosnippet')
     let b:neosnippet = {
           \ 'snippets' : {},
@@ -1047,7 +1047,7 @@ function! neosnippet#get_current_neosnippet()"{{{
 
   return b:neosnippet
 endfunction"}}}
-function! neosnippet#get_snippets()"{{{
+function! neosnippet#get_snippets() "{{{
   let neosnippet = neosnippet#get_current_neosnippet()
   let snippets = copy(neosnippet.snippets)
   for filetype in s:get_sources_filetypes(neosnippet#get_filetype())
@@ -1067,7 +1067,7 @@ function! neosnippet#get_snippets()"{{{
 
   return snippets
 endfunction"}}}
-function! neosnippet#get_snippets_directory()"{{{
+function! neosnippet#get_snippets_directory() "{{{
   let snippets_dir = copy(s:snippets_dir)
   if !get(g:neosnippet#disable_runtime_snippets,
         \ neosnippet#get_filetype(),
@@ -1077,22 +1077,22 @@ function! neosnippet#get_snippets_directory()"{{{
 
   return snippets_dir
 endfunction"}}}
-function! neosnippet#get_filetype()"{{{
+function! neosnippet#get_filetype() "{{{
   return exists('*neocomplcache#get_context_filetype') ?
         \ neocomplcache#get_context_filetype(1) : &filetype
 endfunction"}}}
-function! s:get_sources_filetypes(filetype)"{{{
+function! s:get_sources_filetypes(filetype) "{{{
   return (exists('*neocomplcache#get_source_filetypes') ?
         \ neocomplcache#get_source_filetypes(a:filetype) :
         \ [a:filetype]) + ['_']
 endfunction"}}}
 
-function! neosnippet#edit_complete(arglead, cmdline, cursorpos)"{{{
+function! neosnippet#edit_complete(arglead, cmdline, cursorpos) "{{{
   return filter(s:neosnippet_options + neosnippet#filetype_complete(
         \ a:arglead, a:cmdline, a:cursorpos), 'stridx(v:val, a:arglead) == 0')
 endfunction"}}}
 " Complete filetype helper.
-function! neosnippet#filetype_complete(arglead, cmdline, cursorpos)"{{{
+function! neosnippet#filetype_complete(arglead, cmdline, cursorpos) "{{{
   " Dup check.
   let ret = {}
   for item in map(
@@ -1107,42 +1107,42 @@ function! neosnippet#filetype_complete(arglead, cmdline, cursorpos)"{{{
 
   return sort(keys(ret))
 endfunction"}}}
-function! neosnippet#complete_target_snippets(arglead, cmdline, cursorpos)"{{{
+function! neosnippet#complete_target_snippets(arglead, cmdline, cursorpos) "{{{
   return map(filter(values(neosnippet#get_snippets()),
         \ "stridx(v:val.word, a:arglead) == 0
         \ && v:val.snip =~# neosnippet#get_placeholder_target_marker_pattern()"), 'v:val.word')
 endfunction"}}}
 
-function! neosnippet#get_placeholder_target_marker_pattern()"{{{
+function! neosnippet#get_placeholder_target_marker_pattern() "{{{
   return '\${\d\+:TARGET\%(:.\{-}\)\?\\\@<!}'
 endfunction"}}}
-function! s:get_placeholder_marker_pattern()"{{{
+function! s:get_placeholder_marker_pattern() "{{{
   return '<`\d\+\%(:.\{-}\)\?\\\@<!`>'
 endfunction"}}}
-function! s:get_placeholder_marker_substitute_pattern()"{{{
+function! s:get_placeholder_marker_substitute_pattern() "{{{
   return '\${\(\d\+\%(:.\{-}\)\?\\\@<!\)}'
 endfunction"}}}
-function! s:get_placeholder_marker_default_pattern()"{{{
+function! s:get_placeholder_marker_default_pattern() "{{{
   return '<`\d\+:\zs.\{-}\ze\\\@<!`>'
 endfunction"}}}
-function! s:get_sync_placeholder_marker_pattern()"{{{
+function! s:get_sync_placeholder_marker_pattern() "{{{
   return '<{\d\+\%(:.\{-}\)\?\\\@<!}>'
 endfunction"}}}
-function! s:get_sync_placeholder_marker_default_pattern()"{{{
+function! s:get_sync_placeholder_marker_default_pattern() "{{{
   return '<{\d\+:\zs.\{-}\ze\\\@<!}>'
 endfunction"}}}
-function! s:get_mirror_placeholder_marker_pattern()"{{{
+function! s:get_mirror_placeholder_marker_pattern() "{{{
   return '<|\d\+|>'
 endfunction"}}}
-function! s:get_mirror_placeholder_marker_substitute_pattern()"{{{
+function! s:get_mirror_placeholder_marker_substitute_pattern() "{{{
   return '\$\(\d\+\)'
 endfunction"}}}
 
-function! s:SID_PREFIX()"{{{
+function! s:SID_PREFIX() "{{{
   return matchstr(expand('<sfile>'), '<SNR>\d\+_')
 endfunction"}}}
 
-function! s:trigger(function)"{{{
+function! s:trigger(function) "{{{
   let cur_text = neosnippet#util#get_cur_text()
 
   let col = col('.')
@@ -1164,7 +1164,7 @@ function! s:trigger(function)"{{{
   return expr
 endfunction"}}}
 
-function! neosnippet#get_selected_text(type, ...)"{{{
+function! neosnippet#get_selected_text(type, ...) "{{{
   let sel_save = &selection
   let &selection = 'inclusive'
   let reg_save = @@
@@ -1189,7 +1189,7 @@ function! neosnippet#get_selected_text(type, ...)"{{{
     call setpos('.', pos)
   endtry
 endfunction"}}}
-function! neosnippet#delete_selected_text(type, ...)"{{{
+function! neosnippet#delete_selected_text(type, ...) "{{{
   let sel_save = &selection
   let &selection = 'inclusive'
   let reg_save = @@
@@ -1212,7 +1212,7 @@ function! neosnippet#delete_selected_text(type, ...)"{{{
     call setpos('.', pos)
   endtry
 endfunction"}}}
-function! neosnippet#substitute_selected_text(type, text)"{{{
+function! neosnippet#substitute_selected_text(type, text) "{{{
   let sel_save = &selection
   let &selection = 'inclusive'
   let reg_save = @@
@@ -1236,7 +1236,7 @@ function! neosnippet#substitute_selected_text(type, text)"{{{
   endtry
 endfunction"}}}
 
-function! neosnippet#clear_select_mode_mappings()"{{{
+function! neosnippet#clear_select_mode_mappings() "{{{
   if !g:neosnippet#disable_select_mode_mappings
     return
   endif

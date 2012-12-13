@@ -29,32 +29,32 @@ set cpo&vim
 
 let s:V = vital#of('neosnippet')
 
-function! neosnippet#util#substitute_path_separator(...)"{{{
+function! neosnippet#util#substitute_path_separator(...) "{{{
   return call(s:V.substitute_path_separator, a:000)
 endfunction"}}}
-function! neosnippet#util#system(...)"{{{
+function! neosnippet#util#system(...) "{{{
   return call(s:V.system, a:000)
 endfunction"}}}
-function! neosnippet#util#has_vimproc(...)"{{{
+function! neosnippet#util#has_vimproc(...) "{{{
   return call(s:V.has_vimproc, a:000)
 endfunction"}}}
-function! neosnippet#util#is_windows(...)"{{{
+function! neosnippet#util#is_windows(...) "{{{
   return call(s:V.is_windows, a:000)
 endfunction"}}}
-function! neosnippet#util#is_mac(...)"{{{
+function! neosnippet#util#is_mac(...) "{{{
   return call(s:V.is_mac, a:000)
 endfunction"}}}
-function! neosnippet#util#get_last_status(...)"{{{
+function! neosnippet#util#get_last_status(...) "{{{
   return call(s:V.get_last_status, a:000)
 endfunction"}}}
-function! neosnippet#util#escape_pattern(...)"{{{
+function! neosnippet#util#escape_pattern(...) "{{{
   return call(s:V.escape_pattern, a:000)
 endfunction"}}}
-function! neosnippet#util#iconv(...)"{{{
+function! neosnippet#util#iconv(...) "{{{
   return call(s:V.iconv, a:000)
 endfunction"}}}
 
-function! neosnippet#util#expand(path)"{{{
+function! neosnippet#util#expand(path) "{{{
   return neosnippet#util#substitute_path_separator(
         \ expand(escape(a:path, '*?[]"={}'), 1))
 endfunction"}}}
@@ -66,22 +66,22 @@ function! neosnippet#util#set_default(var, val, ...)  "{{{
           \ {alternate_var} : a:val
   endif
 endfunction"}}}
-function! neosnippet#util#set_dictionary_helper(...)"{{{
+function! neosnippet#util#set_dictionary_helper(...) "{{{
   return call(s:V.set_dictionary_helper, a:000)
 endfunction"}}}
 
-function! neosnippet#util#get_cur_text()"{{{
+function! neosnippet#util#get_cur_text() "{{{
   return
         \ (mode() ==# 'i' ? (col('.')-1) : col('.')) >= len(getline('.')) ?
         \      getline('.') :
         \      matchstr(getline('.'),
         \         '^.*\%' . col('.') . 'c' . (mode() ==# 'i' ? '' : '.'))
 endfunction"}}}
-function! neosnippet#util#print_error(string)"{{{
+function! neosnippet#util#print_error(string) "{{{
   echohl Error | echomsg a:string | echohl None
 endfunction"}}}
 
-function! neosnippet#util#parse_options(args, options_list)"{{{
+function! neosnippet#util#parse_options(args, options_list) "{{{
   let args = []
   let options = {}
   for arg in split(a:args, '\%(\\\@<!\s\)\+')
