@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: neosnippet.vim
 " AUTHOR:  Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 13 Dec 2012.
+" Last Modified: 17 Dec 2012.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -338,7 +338,7 @@ function! s:parse_snippets_file(snippets, snippets_file) "{{{
 
   if !filereadable(a:snippets_file)
     call neosnippet#util#print_error(
-          \ printf('snippet file "%s" is not found.', a:filename))
+          \ printf('snippet file "%s" is not found.', a:snippets_file))
     return a:snippets
   endif
 
