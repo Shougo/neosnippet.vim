@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: neosnippet.vim
 " AUTHOR:  Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 03 Nov 2012.
+" Last Modified: 02 Jan 2013.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -89,14 +89,7 @@ inoremap <expr><silent> <Plug>(neosnippet_start_unite_snippet)
 "}}}
 
 augroup neosnippet "{{{
-  autocmd!
-  " Set caching event.
-  autocmd FileType * call neosnippet#caching()
-  " Recaching events
-  autocmd BufWritePost *.snip,*.snippets
-        \ call neosnippet#recaching()
-  autocmd BufEnter *
-        \ call neosnippet#clear_select_mode_mappings()
+  autocmd InsertEnter * call neosnippet#initialize()
 augroup END"}}}
 
 " Commands. "{{{

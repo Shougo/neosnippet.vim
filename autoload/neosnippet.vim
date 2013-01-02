@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: neosnippet.vim
 " AUTHOR:  Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 17 Dec 2012.
+" Last Modified: 02 Jan 2013.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -47,64 +47,8 @@ let s:neosnippet_options = [
       \]
 "}}}
 
-function! s:initialize() "{{{
-  " Initialize.
-  let s:snippets_expand_stack = []
-
-  if get(g:, 'neocomplcache_snippets_disable_runtime_snippets', 0)
-    " Set for backward compatibility.
-    let g:neosnippet#disable_runtime_snippets._ = 1
-  endif
-
-  " Set runtime dir.
-  let s:runtime_dir = split(globpath(&runtimepath,
-        \ 'autoload/neosnippet/snippets'), '\n')
-  let s:runtime_dir += (exists('g:snippets_dir') ?
-        \ split(g:snippets_dir, '\s*,\s*')
-        \ : split(globpath(&runtimepath, 'snippets'), '\n'))
-  call map(s:runtime_dir, 'substitute(v:val, "[\\\\/]$", "", "")')
-
-  " Set snippets_dir.
-  let s:snippets_dir = []
-  for dir in split(g:neosnippet#snippets_directory, '\s*,\s*')
-    let dir = neosnippet#util#expand(dir)
-    if !isdirectory(dir)
-      call mkdir(dir, 'p')
-    endif
-    call add(s:snippets_dir, dir)
-  endfor
-  call map(s:snippets_dir, 'substitute(v:val, "[\\\\/]$", "", "")')
-
-  augroup neosnippet
-    autocmd BufNewFile,BufRead,Syntax *
-          \ execute 'syntax match neosnippetExpandSnippets'
-          \  "'".s:get_placeholder_marker_pattern(). '\|'
-          \ .s:get_sync_placeholder_marker_pattern().'\|'
-          \ .s:get_mirror_placeholder_marker_pattern()."'"
-          \ 'containedin=ALL oneline'
-    if has('conceal')
-      autocmd BufNewFile,BufRead,Syntax *
-            \ syntax region neosnippetConcealExpandSnippets
-            \ matchgroup=neosnippetExpandSnippets
-            \ start='<`\d\+:\=\|<{\d\+:\=\|<|'
-            \ end='`>\|}>\||>'
-            \ containedin=ALL
-            \ concealends oneline
-    endif
-  augroup END
-  doautocmd neosnippet BufRead
-
-  hi def link neosnippetExpandSnippets Special
-
-  " Caching _ snippets.
-  call neosnippet#make_cache('_')
-
-  " Initialize check.
-  call neosnippet#caching()
-
-  if get(g:, 'loaded_echodoc', 0)
-    call echodoc#register('snippets_complete', s:doc_dict)
-  endif
+function! neosnippet#initialize() "{{{
+  " Dummy.
 endfunction"}}}
 
 " For echodoc. "{{{
@@ -1298,6 +1242,77 @@ endfunction
 function! neosnippet#jump_impl()
   return s:trigger('neosnippet#jump')
 endfunction
+
+function! s:initialize() "{{{
+  augroup neosnippet "{{{
+    autocmd!
+    " Set caching event.
+    autocmd FileType * call neosnippet#caching()
+    " Recaching events
+    autocmd BufWritePost *.snip,*.snippets
+          \ call neosnippet#recaching()
+    autocmd BufEnter *
+          \ call neosnippet#clear_select_mode_mappings()
+  augroup END"}}}
+
+  " Initialize.
+  let s:snippets_expand_stack = []
+
+  if get(g:, 'neocomplcache_snippets_disable_runtime_snippets', 0)
+    " Set for backward compatibility.
+    let g:neosnippet#disable_runtime_snippets._ = 1
+  endif
+
+  " Set runtime dir.
+  let s:runtime_dir = split(globpath(&runtimepath,
+        \ 'autoload/neosnippet/snippets'), '\n')
+  let s:runtime_dir += (exists('g:snippets_dir') ?
+        \ split(g:snippets_dir, '\s*,\s*')
+        \ : split(globpath(&runtimepath, 'snippets'), '\n'))
+  call map(s:runtime_dir, 'substitute(v:val, "[\\\\/]$", "", "")')
+
+  " Set snippets_dir.
+  let s:snippets_dir = []
+  for dir in split(g:neosnippet#snippets_directory, '\s*,\s*')
+    let dir = neosnippet#util#expand(dir)
+    if !isdirectory(dir)
+      call mkdir(dir, 'p')
+    endif
+    call add(s:snippets_dir, dir)
+  endfor
+  call map(s:snippets_dir, 'substitute(v:val, "[\\\\/]$", "", "")')
+
+  augroup neosnippet
+    autocmd BufNewFile,BufRead,Syntax *
+          \ execute 'syntax match neosnippetExpandSnippets'
+          \  "'".s:get_placeholder_marker_pattern(). '\|'
+          \ .s:get_sync_placeholder_marker_pattern().'\|'
+          \ .s:get_mirror_placeholder_marker_pattern()."'"
+          \ 'containedin=ALL oneline'
+    if has('conceal')
+      autocmd BufNewFile,BufRead,Syntax *
+            \ syntax region neosnippetConcealExpandSnippets
+            \ matchgroup=neosnippetExpandSnippets
+            \ start='<`\d\+:\=\|<{\d\+:\=\|<|'
+            \ end='`>\|}>\||>'
+            \ containedin=ALL
+            \ concealends oneline
+    endif
+  augroup END
+  doautocmd neosnippet BufRead
+
+  hi def link neosnippetExpandSnippets Special
+
+  " Caching _ snippets.
+  call neosnippet#make_cache('_')
+
+  " Initialize check.
+  call neosnippet#caching()
+
+  if get(g:, 'loaded_echodoc', 0)
+    call echodoc#register('snippets_complete', s:doc_dict)
+  endif
+endfunction"}}}
 
 if !exists('s:snippets')
   let s:snippets = {}
