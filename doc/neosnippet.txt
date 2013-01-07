@@ -286,6 +286,10 @@ neosnippet#expandable()
 		You can use this function with imap <expr>. It checks whether
 		the cursor text is a snippet trigger or a placeholder. This is
 		is useful to save key mappings.
+		Note: If you used to
+		|neocomplcache#sources#snippets_complete#expandable()|, you
+		must use both |neosnippet#expandable()| and
+		|neosnippet#jumpable()|.
 >
 		imap <expr><C-l>
 		\ neosnippet#expandable() || neosnippet#jumpable() ?
