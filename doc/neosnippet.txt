@@ -285,15 +285,10 @@ neosnippet#expandable()
 						*neosnippet#expandable()*
 		You can use this function with imap <expr>. It checks whether
 		the cursor text is a snippet trigger or a placeholder. This is
-		is useful to save key mappings. The return values of the
-		function are:
-	
-	        0: not found
-		1: the cursor text is a snippet trigger
-		2: a placeholder exists in the current buffer
-		3: both found
+		is useful to save key mappings.
 >
-		imap <expr><C-l> neosnippet#expandable() ?
+		imap <expr><C-l>
+		\ neosnippet#expandable() || neosnippet#jumpable() ?
 		\ "\<Plug>(neosnippet_expand_or_jump)" : "\<C-n>"
 <
 		*neocomplcache#sources#snippets_complete#expandable()*
@@ -338,10 +333,10 @@ EXAMPLES					*neosnippet-examples*
 	xmap <C-l>     <Plug>(neosnippet_start_unite_snippet_target)
 
 	" SuperTab like snippets behavior.
-	"imap <expr><TAB> neosnippet#expandable() ?
+	"imap <expr><TAB> neosnippet#expandable() || neosnippet#jumpable() ?
 	" \ "\<Plug>(neosnippet_expand_or_jump)"
 	" \: pumvisible() ? "\<C-n>" : "\<TAB>"
-	"smap <expr><TAB> neosnippet#expandable() ?
+	"smap <expr><TAB> neosnippet#expandable() || neosnippet#jumpable() ?
 	" \ "\<Plug>(neosnippet_expand_or_jump)"
 	" \: "\<TAB>"
 
@@ -710,6 +705,9 @@ A: Please try below settings. It defines snipMate function.
 
 ==============================================================================
 CHANGELOG			*neosnippet-changelog*
+
+2013-01-07
+- Changed neosnippet#expandable() behavior.
 
 2013-01-02
 - Improved initialization timing.
