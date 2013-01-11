@@ -292,7 +292,7 @@ neosnippet#expandable()
 		|neosnippet#jumpable()|.
 >
 		imap <expr><C-l>
-		\ neosnippet#expandable() || neosnippet#jumpable() ?
+		\ neosnippet#expandable() <Bar><bar> neosnippet#jumpable() ?
 		\ "\<Plug>(neosnippet_expand_or_jump)" : "\<C-n>"
 <
 		*neocomplcache#sources#snippets_complete#expandable()*
@@ -337,10 +337,10 @@ EXAMPLES					*neosnippet-examples*
 	xmap <C-l>     <Plug>(neosnippet_start_unite_snippet_target)
 
 	" SuperTab like snippets behavior.
-	"imap <expr><TAB> neosnippet#expandable() || neosnippet#jumpable() ?
+	"imap <expr><TAB> neosnippet#expandable() <Bar><bar> neosnippet#jumpable() ?
 	" \ "\<Plug>(neosnippet_expand_or_jump)"
 	" \: pumvisible() ? "\<C-n>" : "\<TAB>"
-	"smap <expr><TAB> neosnippet#expandable() || neosnippet#jumpable() ?
+	"smap <expr><TAB> neosnippet#expandable() <Bar><bar> neosnippet#jumpable() ?
 	" \ "\<Plug>(neosnippet_expand_or_jump)"
 	" \: "\<TAB>"
 
