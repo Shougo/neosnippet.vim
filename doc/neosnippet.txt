@@ -284,17 +284,12 @@ x_<Plug>(neosnippet_register_oneshot_snippet)
 neosnippet#expandable()
 						*neosnippet#expandable()*
 		You can use this function with imap <expr>. It checks whether
-		the cursor text is a snippet trigger or a placeholder. This is
-		is useful to save key mappings.
+		the cursor text is a snippet trigger. This is is useful to
+		save key mappings.
 		Note: If you used to
 		|neocomplcache#sources#snippets_complete#expandable()|, you
-		must use both |neosnippet#expandable()| and
-		|neosnippet#jumpable()|.
->
-		imap <expr><C-l>
-		\ neosnippet#expandable() <Bar><bar> neosnippet#jumpable() ?
-		\ "\<Plug>(neosnippet_expand_or_jump)" : "\<C-n>"
-<
+		must use |neosnippet#expandable_or_jumpable()|.
+
 		*neocomplcache#sources#snippets_complete#expandable()*
 		*neocomplcache#sources#snippets_complete#force_expandable()*
 		Note:
@@ -305,14 +300,24 @@ neosnippet#expandable()
 
 neosnippet#jumpable()
 						*neosnippet#jumpable()*
-		Use this function with imap <expr>. It checks if the cursor
-		text is an existing placeholder in current buffer. This is
-		useful to save key mappings.
+		You can use this function with imap <expr>. It checks if the
+		cursor text is an existing placeholder in current buffer. This
+		is useful to save key mappings.
 
 		*neocomplcache#sources#snippets_complete#jumpable()*
 		Note: |neocomplcache#sources#snippets_complete#jumpable()| is
 		an obsolete name.
 
+neosnippet#expandable_or_jumpable()
+					*neosnippet#expandable_or_jumpable()*
+		You can use this function with imap <expr>. It checks whether
+		the cursor text is a snippet trigger or a placeholder. This is
+		is useful to save key mappings.
+>
+		imap <expr><C-l>
+		\ neosnippet#expandable_or_jumpable() ?
+		\ "\<Plug>(neosnippet_expand_or_jump)" : "\<C-n>"
+<
 ------------------------------------------------------------------------------
 FUNCTIONS					*neosnippet-functions*
 
@@ -337,10 +342,10 @@ EXAMPLES					*neosnippet-examples*
 	xmap <C-l>     <Plug>(neosnippet_start_unite_snippet_target)
 
 	" SuperTab like snippets behavior.
-	"imap <expr><TAB> neosnippet#expandable() <Bar><bar> neosnippet#jumpable() ?
+	"imap <expr><TAB> neosnippet#expandable_or_jumpable() ?
 	" \ "\<Plug>(neosnippet_expand_or_jump)"
 	" \: pumvisible() ? "\<C-n>" : "\<TAB>"
-	"smap <expr><TAB> neosnippet#expandable() <Bar><bar> neosnippet#jumpable() ?
+	"smap <expr><TAB> neosnippet#expandable_or_jumpable() ?
 	" \ "\<Plug>(neosnippet_expand_or_jump)"
 	" \: "\<TAB>"
 
@@ -709,6 +714,9 @@ A: Please try below settings. It defines snipMate function.
 
 ==============================================================================
 CHANGELOG			*neosnippet-changelog*
+
+2013-01-13
+- Added neosnippet#expandable_or_jumpable().
 
 2013-01-07
 - Changed neosnippet#expandable() behavior.
