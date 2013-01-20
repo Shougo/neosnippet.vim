@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: neosnippet.vim
 " AUTHOR:  Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 02 Jan 2013.
+" Last Modified: 20 Jan 2013.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -89,7 +89,8 @@ inoremap <expr><silent> <Plug>(neosnippet_start_unite_snippet)
 "}}}
 
 augroup neosnippet "{{{
-  autocmd InsertEnter * call neosnippet#initialize()
+    autocmd CursorHold,CursorMovedI
+          \ * call neosnippet#_lazy_initialize()
 augroup END"}}}
 
 " Commands. "{{{

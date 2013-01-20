@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: neosnippet.vim
 " AUTHOR:  Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 13 Jan 2013.
+" Last Modified: 20 Jan 2013.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -47,8 +47,31 @@ let s:neosnippet_options = [
       \]
 "}}}
 
-function! neosnippet#initialize() "{{{
-  " Dummy.
+function! neosnippet#_lazy_initialize() "{{{
+  if !exists('s:lazy_progress')
+    let s:lazy_progress = 0
+  endif
+
+  if s:lazy_progress == 0
+  elseif s:lazy_progress == 1
+    call s:initialize_script_variables()
+  elseif s:lazy_progress == 2
+    call s:initialize_others()
+  else
+    call s:initialize_cache()
+  endif
+
+  let s:lazy_progress += 1
+endfunction"}}}
+
+function! s:check_initialize() "{{{
+  if !exists('s:is_initialized')
+    let s:is_initialized = 1
+
+    call s:initialize_script_variables()
+    call s:initialize_others()
+    call s:initialize_cache()
+  endif
 endfunction"}}}
 
 " For echodoc. "{{{
@@ -173,6 +196,8 @@ function! s:initialize_snippet_options() "{{{
 endfunction"}}}
 
 function! neosnippet#edit_snippets(args) "{{{
+  call s:check_initialize()
+
   let [args, options] = neosnippet#util#parse_options(
         \ a:args, s:neosnippet_options)
 
@@ -233,6 +258,8 @@ function! s:initialize_options(options) "{{{
 endfunction"}}}
 
 function! neosnippet#make_cache(filetype) "{{{
+  call s:check_initialize()
+
   let filetype = a:filetype == '' ?
         \ &filetype : a:filetype
   if filetype ==# ''
@@ -260,6 +287,8 @@ function! neosnippet#make_cache(filetype) "{{{
 endfunction"}}}
 
 function! neosnippet#source_file(filename) "{{{
+  call s:check_initialize()
+
   let neosnippet = neosnippet#get_current_neosnippet()
   call s:parse_snippets_file(neosnippet.snippets, a:filename)
 endfunction"}}}
@@ -982,6 +1011,8 @@ function! neosnippet#get_current_neosnippet() "{{{
   return b:neosnippet
 endfunction"}}}
 function! neosnippet#get_snippets() "{{{
+  call s:check_initialize()
+
   let neosnippet = neosnippet#get_current_neosnippet()
   let snippets = copy(neosnippet.snippets)
   for filetype in s:get_sources_filetypes(neosnippet#get_filetype())
@@ -1077,6 +1108,8 @@ function! s:SID_PREFIX() "{{{
 endfunction"}}}
 
 function! s:trigger(function) "{{{
+  call s:check_initialize()
+
   let cur_text = neosnippet#util#get_cur_text()
 
   let col = col('.')
@@ -1233,20 +1266,10 @@ function! neosnippet#jump_impl()
   return s:trigger('neosnippet#jump')
 endfunction
 
-function! s:initialize() "{{{
-  augroup neosnippet "{{{
-    autocmd!
-    " Set caching event.
-    autocmd FileType * call neosnippet#caching()
-    " Recaching events
-    autocmd BufWritePost *.snip,*.snippets
-          \ call neosnippet#recaching()
-    autocmd BufEnter *
-          \ call neosnippet#clear_select_mode_mappings()
-  augroup END"}}}
-
+function! s:initialize_script_variables() "{{{
   " Initialize.
   let s:snippets_expand_stack = []
+  let s:snippets = {}
 
   if get(g:, 'neocomplcache_snippets_disable_runtime_snippets', 0)
     " Set for backward compatibility.
@@ -1271,6 +1294,25 @@ function! s:initialize() "{{{
     call add(s:snippets_dir, dir)
   endfor
   call map(s:snippets_dir, 'substitute(v:val, "[\\\\/]$", "", "")')
+endfunction"}}}
+function! s:initialize_cache() "{{{
+  " Caching _ snippets.
+  call neosnippet#make_cache('_')
+
+  " Initialize check.
+  call neosnippet#caching()
+endfunction"}}}
+function! s:initialize_others() "{{{
+  augroup neosnippet "{{{
+    autocmd!
+    " Set caching event.
+    autocmd FileType * call neosnippet#caching()
+    " Recaching events
+    autocmd BufWritePost *.snip,*.snippets
+          \ call neosnippet#recaching()
+    autocmd BufEnter *
+          \ call neosnippet#clear_select_mode_mappings()
+  augroup END"}}}
 
   augroup neosnippet
     autocmd BufNewFile,BufRead,Syntax *
@@ -1293,22 +1335,10 @@ function! s:initialize() "{{{
 
   hi def link neosnippetExpandSnippets Special
 
-  " Caching _ snippets.
-  call neosnippet#make_cache('_')
-
-  " Initialize check.
-  call neosnippet#caching()
-
   if get(g:, 'loaded_echodoc', 0)
     call echodoc#register('snippets_complete', s:doc_dict)
   endif
 endfunction"}}}
-
-if !exists('s:snippets')
-  let s:snippets = {}
-
-  call s:initialize()
-endif
 
 let &cpo = s:save_cpo
 unlet s:save_cpo
