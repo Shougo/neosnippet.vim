@@ -97,10 +97,12 @@ options     head
 	redir END
 
 snippet NeoBundle
+alias   neobundle
 abbr NeoBundle ''
     NeoBundle '`getreg('+')=='' ? '<\`0\`>' : getreg('+')`'${0}
 
 snippet NeoBundleLazy
+alias   neobundlelazy
 abbr NeoBundleLazy ''
     NeoBundleLazy '`getreg('+')=='' ? '<\`0\`>' : getreg('+')`', { 'autoload' : {
       \ ${0}
