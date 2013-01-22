@@ -715,6 +715,9 @@ A: Please try below settings. It defines snipMate function.
 ==============================================================================
 CHANGELOG			*neosnippet-changelog*
 
+2013-01-22
+- Added NeoBundleLazy snippet.
+
 2013-01-20
 - Lazy initialization.
 
