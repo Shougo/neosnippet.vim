@@ -126,6 +126,10 @@ snippet fprintf
 abbr    fprintf(..., "...\n", ...);
     fprintf(${1:stderr}, "${2}\n"${3});
 
+snippet scanf
+abbr    scanf("...", ...);
+    scanf("${1}", &${2});
+
 snippet comment
 alias /*
     /* ${1:#:comment} */
