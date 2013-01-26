@@ -313,6 +313,9 @@ neosnippet#expandable_or_jumpable()
 		You can use this function with imap <expr>. It checks whether
 		the cursor text is a snippet trigger or a placeholder. This is
 		is useful to save key mappings.
+		Note: You don't like to jump to next placeholder, you must use
+		|neosnippet#expandable()| instead of
+		|neosnippet#expandable_or_jumpable()|.
 >
 		imap <expr><C-l>
 		\ neosnippet#expandable_or_jumpable() ?
