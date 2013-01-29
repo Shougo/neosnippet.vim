@@ -108,3 +108,11 @@ abbr NeoBundleLazy ''
       \ ${0}
       \ }}
 
+snippet     autoload
+abbr        autoload func endfunc
+alias       afunction afunc
+prev_word   '^'
+    function! `substitute(matchstr(neosnippet#util#expand('%:p:r'), '/autoload/\zs.*$'), '/', '#', 'g')`#${1:#:func_name}(${2:#:args})
+        ${0}
+    endfunction
+
