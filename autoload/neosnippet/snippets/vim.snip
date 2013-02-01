@@ -2,7 +2,7 @@ snippet     if
 abbr        if endif
 options     head
     if ${1:#:condition}
-        ${0:TARGET}
+      ${0:TARGET}
     endif
 
 snippet     elseif
@@ -14,23 +14,23 @@ snippet     ifelse
 abbr        if else endif
 options     head
     if ${1:#:condition}
-        ${2:TARGET}
+      ${2:TARGET}
     else
-        ${3}
+      ${3}
     endif
 
 snippet     for
 abbr        for in endfor
 options     head
     for ${1:#:var} in ${2:#:list}
-        ${0:TARGET}
+      ${0:TARGET}
     endfor
 
 snippet     while
 abbr        while endwhile
 options     head
     while ${1:#:condition}
-        ${0:TARGET}
+      ${0:TARGET}
     endwhile
 
 snippet     function
@@ -38,16 +38,16 @@ abbr        func endfunc
 alias       func
 options     head
     function! ${1:#:func_name}(${2})
-        ${0:TARGET}
+      ${0:TARGET}
     endfunction
 
 snippet     try
 abbr        try endtry
 options     head
     try
-        ${1:TARGET}
+      ${1:TARGET}
     catch /${2:#:pattern}/
-        ${3}
+      ${3}
     endtry
 
 snippet     tryfinally
@@ -55,9 +55,9 @@ abbr        try ... finally ... endtry
 alias       tryf
 options     head
     try
-        ${1:TARGET}
+      ${1:TARGET}
     finally
-        ${2}
+      ${2}
     endtry
 
 snippet     catch
@@ -78,15 +78,15 @@ snippet     customlist
 abbr        customlist complete function
 options     head
     function! ${1:#:func_name}(arglead, cmdline, cursorpos)
-        return filter(${2:#:list}, 'stridx(v:val, a:arglead) == 0')
+      return filter(${2:#:list}, 'stridx(v:val, a:arglead) == 0')
     endfunction
 
 snippet     augroup
 abbr        augroup with autocmds
 options     head
     augroup ${1:#:augroup_name}
-        autocmd!
-        autocmd ${2:#:event}
+      autocmd!
+      autocmd ${2:#:event}
     augroup END
 
 snippet     redir
@@ -111,8 +111,49 @@ abbr NeoBundleLazy ''
 snippet     autoload
 abbr        autoload func endfunc
 alias       afunction afunc
-prev_word   '^'
+options     head
     function! `substitute(matchstr(neosnippet#util#expand('%:p:r'), '/autoload/\zs.*$'), '/', '#', 'g')`#${1:#:func_name}(${2:#:args})
-        ${0}
+      ${0}
     endfunction
+
+snippet  save_cpoptions
+abbr     let s:save_cpo = &cpo | set cpo&vim
+alias    s:save_cpo cpoptions
+options     head
+    let s:save_cpo = &cpo
+    set cpo&vim
+
+    ${0}
+
+    let &cpo = s:save_cpo
+    unlet s:save_cpo
+
+snippet g:loaded
+abbr    if exists('g:loaded_{plugin-name}')
+alias   loaded
+options     head
+    if exists('g:loaded_${1}')
+      finish
+    endif
+
+    ${0}
+
+    let g:loaded_$1 = 1
+
+snippet modeline
+abbr    " vim: {modeline}
+    " vim: ${0:foldmethod=marker}
+
+snippet undo_ftplugin
+abbr    if !exists('b:undo_ftplugin')
+alias   b:undo_ftplugin
+    if !exists('b:undo_ftplugin')
+      let b:undo_ftplugin = ''
+    endif
+
+    ${1}
+
+    let b:undo_ftplugin .= '
+    \ | setlocal ${2:#:option_name1< option_name2<...}
+    \'
 
