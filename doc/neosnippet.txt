@@ -718,6 +718,9 @@ A: Please try below settings. It defines snipMate function.
 ==============================================================================
 CHANGELOG			*neosnippet-changelog*
 
+2013-02-03
+- Improved php snippets.
+
 2013-02-01
 - Added vim snippets.
 
