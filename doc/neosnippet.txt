@@ -721,6 +721,9 @@ CHANGELOG			*neosnippet-changelog*
 2013-02-16
 - Added sh snippet.
 
+2013-02-03
+- Improved php snippets.
+
 2013-02-01
 - Added vim snippets.
 

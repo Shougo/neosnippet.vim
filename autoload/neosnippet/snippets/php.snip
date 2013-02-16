@@ -1,14 +1,20 @@
 snippet function
-abbr function () {}
+abbr public function () {}
 	${1:public }function ${2:#:FunctionName}(${3})
 	{
 		${4:TARGET}
 	}
 
+snippet function_literal
+options word
+abbr function () {}
+	function (${1})${2: use } {
+		${3:TARGET}
+	}
+
 snippet php
 	<?php
 	${1:TARGET}
-	?>
 
 snippet pecho
 	<?php echo ${1} ?>${0}
@@ -109,17 +115,22 @@ snippet c
 	 * $0
 	 */
 
-snippet class
+snippet class_with_constructor
 	/**
 	 * ${1}
 	 */
-	class ${2:#:ClassName}${3:#:extends}}
+	class ${2:#:ClassName}${3:#:extends}
 	{
 		$5
 		function ${4:__construct}(${5:#:argument})
 		{
 			${0:# code...}
 		}
+	}
+
+snippet class
+	class ${2:#:ClassName} {
+		${0:TARGET}
 	}
 
 snippet def
@@ -146,6 +157,10 @@ snippet if
 	if (${1:#:condition}) {
 		${0:TARGET}
 	}
+
+snippet var_dump
+options head
+  var_dump(${0:TARGET});
 
 snippet echo
 	echo "${1:#:string}"${0};
