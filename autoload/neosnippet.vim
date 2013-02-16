@@ -1050,7 +1050,7 @@ endfunction"}}}
 function! s:get_sources_filetypes(filetype) "{{{
   return (exists('*neocomplcache#get_source_filetypes') ?
         \ neocomplcache#get_source_filetypes(a:filetype) :
-        \ [a:filetype]) + ['_']
+        \ [(a:filetype == '') ? 'nothing' : a:filetype]) + ['_']
 endfunction"}}}
 
 function! neosnippet#edit_complete(arglead, cmdline, cursorpos) "{{{

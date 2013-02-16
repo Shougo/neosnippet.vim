@@ -724,6 +724,7 @@ CHANGELOG			*neosnippet-changelog*
 - Added sh snippet.
 - Added html snippet.
 - Delete simple markers when InsertLeave.
+- Fixed s:get_sources_filetypes() error.
 
 2013-02-03
 - Improved php snippets.
