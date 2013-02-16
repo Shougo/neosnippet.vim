@@ -1252,15 +1252,16 @@ function! s:on_insert_leave() "{{{
 
   let expand_info = s:snippets_expand_stack[-1]
 
+  if expand_info.begin_line != expand_info.end_line
+    return
+  endif
+
   " Search patterns.
   let [begin, end] = s:get_snippet_range(
         \ expand_info.begin_line,
         \ expand_info.begin_patterns,
         \ expand_info.end_line,
         \ expand_info.end_patterns)
-  if begin != end
-    return
-  endif
 
   let pos = getpos('.')
   try
