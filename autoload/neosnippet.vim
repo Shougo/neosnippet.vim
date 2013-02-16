@@ -1005,6 +1005,7 @@ function! neosnippet#get_current_neosnippet() "{{{
           \ 'snippets' : {},
           \ 'selected_text' : '',
           \ 'target' : '',
+          \ 'trigger' : 0,
           \}
   endif
 
@@ -1121,6 +1122,7 @@ function! s:trigger(function) "{{{
 
   " Get selected text.
   let neosnippet = neosnippet#get_current_neosnippet()
+  let neosnippet.trigger = 1
   if mode() ==# 's' && neosnippet.selected_text =~ '^#:'
     let expr .= "a\<BS>"
   endif
@@ -1236,11 +1238,15 @@ function! s:skip_next_auto_completion() "{{{
   if exists('*neocomplcache#skip_next_complete')
     call neocomplcache#skip_next_complete()
   endif
+
+  let neosnippet = neosnippet#get_current_neosnippet()
+  let neosnippet.trigger = 0
 endfunction"}}}
 
 function! s:on_insert_leave() "{{{
   " Get patterns and count.
   if empty(s:snippets_expand_stack)
+        \ || neosnippet#get_current_neosnippet().trigger
     return
   endif
 
