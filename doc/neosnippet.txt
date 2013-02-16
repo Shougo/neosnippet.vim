@@ -531,7 +531,7 @@ The structure of a placeholder can be:
 >
 	snippet namespace
 	   namespace ${1:name} {
-		 $[0]
+		 ${0}
 	   } // namespace $1
 <
 
