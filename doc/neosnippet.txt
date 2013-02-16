@@ -720,6 +720,7 @@ CHANGELOG			*neosnippet-changelog*
 
 2013-02-16
 - Added sh snippet.
+- Added html snippet.
 
 2013-02-03
 - Improved php snippets.
