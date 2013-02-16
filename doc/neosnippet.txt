@@ -656,6 +656,8 @@ line in snippet end, you must insert placeholder.
 	  
 	  
 <
+Note: If you expand oneline snippet, the markers will be deleted in
+|InsertLeave|.
 
 ==============================================================================
 UNITE SOURCES					*neosnippet-unite-sources*
@@ -721,6 +723,7 @@ CHANGELOG			*neosnippet-changelog*
 2013-02-16
 - Added sh snippet.
 - Added html snippet.
+- Delete simple markers when InsertLeave.
 
 2013-02-03
 - Improved php snippets.

@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: neosnippet.vim
 " AUTHOR:  Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 20 Jan 2013.
+" Last Modified: 16 Feb 2013.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -1238,6 +1238,40 @@ function! s:skip_next_auto_completion() "{{{
   endif
 endfunction"}}}
 
+function! s:on_insert_leave() "{{{
+  " Get patterns and count.
+  if empty(s:snippets_expand_stack)
+    return
+  endif
+
+  let expand_info = s:snippets_expand_stack[-1]
+
+  " Search patterns.
+  let [begin, end] = s:get_snippet_range(
+        \ expand_info.begin_line,
+        \ expand_info.begin_patterns,
+        \ expand_info.end_line,
+        \ expand_info.end_patterns)
+  if begin != end
+    return
+  endif
+
+  let pos = getpos('.')
+  try
+    while s:search_snippet_range(begin, end, expand_info.holder_cnt)
+      " Next count.
+      let expand_info.holder_cnt += 1
+    endwhile
+
+    " Search placeholder 0.
+    call s:search_snippet_range(begin, end, 0)
+
+  finally
+    stopinsert
+    call setpos('.', pos)
+  endtry
+endfunction"}}}
+
 if g:neosnippet#enable_snipmate_compatibility
   " For snipMate function.
   function! Filename(...)
@@ -1312,6 +1346,7 @@ function! s:initialize_others() "{{{
           \ call neosnippet#recaching()
     autocmd BufEnter *
           \ call neosnippet#clear_select_mode_mappings()
+    autocmd InsertLeave * call s:on_insert_leave()
   augroup END"}}}
 
   augroup neosnippet
