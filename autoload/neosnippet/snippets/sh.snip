@@ -19,8 +19,8 @@ snippet for
 		${0:TARGET}
 	done
 
-snippet wh
-abbr while
+snippet while
+alias wh
 	while ${1:#:condition} ; do
 		${0:TARGET}
 	done
@@ -54,4 +54,12 @@ snippet tmp
 	trap "rm -f '$${1}'; exit 1" 2       # INT
 	trap "rm -f '$${1}'; exit 1" 1 15    # HUP TERM
 	${0}
+
+snippet function
+alias func
+	${1:#:name}()
+	{
+		${0:TARGET}
+	}
+
 
