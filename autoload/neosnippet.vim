@@ -1035,6 +1035,8 @@ function! neosnippet#get_snippets() "{{{
   return snippets
 endfunction"}}}
 function! neosnippet#get_snippets_directory() "{{{
+  call s:check_initialize()
+
   let snippets_dir = copy(s:snippets_dir)
   if !get(g:neosnippet#disable_runtime_snippets,
         \ neosnippet#get_filetype(),
@@ -1045,9 +1047,13 @@ function! neosnippet#get_snippets_directory() "{{{
   return snippets_dir
 endfunction"}}}
 function! neosnippet#get_user_snippets_directory() "{{{
+  call s:check_initialize()
+
   return copy(s:snippets_dir)
 endfunction"}}}
 function! neosnippet#get_runtime_snippets_directory() "{{{
+  call s:check_initialize()
+
   return copy(s:runtime_dir)
 endfunction"}}}
 function! neosnippet#get_filetype() "{{{

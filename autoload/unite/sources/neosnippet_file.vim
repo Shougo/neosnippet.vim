@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: neosnippet_file.vim
 " AUTHOR:  Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 13 Dec 2012.
+" Last Modified: 17 Feb 2013.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -39,12 +39,8 @@ let s:source_user = {
       \ }
 
 function! s:source_user.gather_candidates(args, context) "{{{
-  let files = s:snip_files(neosnippet#get_user_snippets_directory())
-  return map(files, '{
-\    "word" : v:val,
-\    "action__path" : v:val,
-\    "kind" : "file",
-\  }')
+  return s:get_snippet_candidates(
+        \ neosnippet#get_user_snippets_directory())
 endfunction "}}}
 
 
@@ -55,17 +51,23 @@ let s:source_runtime = {
       \ }
 
 function! s:source_runtime.gather_candidates(args, context) "{{{
-  let files = s:snip_files(neosnippet#get_runtime_snippets_directory())
-  return map(files, '{
-\    "word" : v:val,
-\    "action__path" : v:val,
-\    "kind" : "file",
-\  }')
+  return s:get_snippet_candidates(
+        \ neosnippet#get_runtime_snippets_directory())
 endfunction "}}}
 
 
-function! s:snip_files(dirs) "{{{
-  return eval(join(map(a:dirs, "split(globpath(v:val, '*.snip'), '\n')"),"+"))
+function! s:get_snippet_candidates(dirs) "{{{
+  let _ = []
+  for directory in a:dirs
+    let _ += map(split(unite#util#substitute_path_separator(
+          \ globpath(directory, '**/*.snip*')), '\n'), "{
+          \    'word' : v:val[len(directory)+1 :],
+          \    'action__path' : v:val,
+          \    'kind' : 'file',
+          \ }")
+  endfor
+
+  return _
 endfunction "}}}
 
 

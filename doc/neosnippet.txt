@@ -675,6 +675,14 @@ snippet
 >
 		imap <C-s>  <Plug>(neosnippet_start_unite_snippet)
 <
+				*neosnippet-unite-source-neosnippet/user*
+neosnippet/user
+		The candidates of the user snippet files.
+
+				*neosnippet-unite-source-neosnippet/runtime*
+neosnippet/runtime
+		The candidates of the runtime snippet files.
+
 source actions
 
 snippet					*neosnippet-unite-action-snippet*
@@ -722,6 +730,7 @@ CHANGELOG			*neosnippet-changelog*
 
 2013-02-17
 - Improved :NeoSnippetEdit.
+- Added neosnippet/runtime and neosnippet/user sources.
 
 2013-02-16
 - Added sh snippet.
