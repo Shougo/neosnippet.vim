@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: neosnippet.vim
 " AUTHOR:  Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 16 Feb 2013.
+" Last Modified: 17 Feb 2013.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -207,14 +207,15 @@ function! neosnippet#edit_snippets(args) "{{{
   endif
 
   let options = s:initialize_options(options)
+  let snippet_dir = (options.runtime ?
+        \ get(neosnippet#get_runtime_snippets_directory(), 0, '') :
+        \ get(neosnippet#get_user_snippets_directory(), -1, ''))
 
-  if options.runtime && empty(s:runtime_dir)
-        \ || !options.runtime && empty(s:snippets_dir)
+  if snippet_dir == ''
     return
   endif
 
   " Edit snippet file.
-  let snippet_dir = (options.runtime ? s:runtime_dir[0] : s:snippets_dir[-1])
   let filename = snippet_dir .'/'.filetype
 
   if isdirectory(filename)
@@ -1042,6 +1043,12 @@ function! neosnippet#get_snippets_directory() "{{{
   endif
 
   return snippets_dir
+endfunction"}}}
+function! neosnippet#get_user_snippets_directory() "{{{
+  return copy(s:snippets_dir)
+endfunction"}}}
+function! neosnippet#get_runtime_snippets_directory() "{{{
+  return copy(s:runtime_dir)
 endfunction"}}}
 function! neosnippet#get_filetype() "{{{
   return exists('*neocomplcache#get_context_filetype') ?
