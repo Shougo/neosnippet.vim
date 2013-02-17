@@ -212,6 +212,7 @@ function! neosnippet#edit_snippets(args) "{{{
         \ get(neosnippet#get_user_snippets_directory(), -1, ''))
 
   if snippet_dir == ''
+    call neosnippet#util#print_error('Snippet directory is not found.')
     return
   endif
 
@@ -1058,7 +1059,8 @@ function! neosnippet#get_runtime_snippets_directory() "{{{
 endfunction"}}}
 function! neosnippet#get_filetype() "{{{
   return exists('*neocomplcache#get_context_filetype') ?
-        \ neocomplcache#get_context_filetype(1) : &filetype
+        \ neocomplcache#get_context_filetype(1) :
+        \ (&filetype == '' ? 'nothing' : &filetype)
 endfunction"}}}
 function! s:get_sources_filetypes(filetype) "{{{
   return (exists('*neocomplcache#get_source_filetypes') ?

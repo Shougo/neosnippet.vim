@@ -731,6 +731,7 @@ CHANGELOG			*neosnippet-changelog*
 2013-02-17
 - Improved :NeoSnippetEdit.
 - Added neosnippet/runtime and neosnippet/user sources.
+- Added unite__new_candidate action.
 
 2013-02-16
 - Added sh snippet.

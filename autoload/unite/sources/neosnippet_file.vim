@@ -36,6 +36,7 @@ endfunction "}}}
 let s:source_user = {
       \ 'name': 'neosnippet/user',
       \ 'description' : 'neosnippet user file',
+      \ 'action_table' : {},
       \ }
 
 function! s:source_user.gather_candidates(args, context) "{{{
@@ -43,17 +44,44 @@ function! s:source_user.gather_candidates(args, context) "{{{
         \ neosnippet#get_user_snippets_directory())
 endfunction "}}}
 
+let s:source_user.action_table.unite__new_candidate = {
+      \ 'description' : 'create new user snippet',
+      \ 'is_invalidate_cache' : 1,
+      \ 'is_quit' : 1,
+      \ }
+function! s:source_user.action_table.unite__new_candidate.func(candidate) "{{{
+  let filename = input(
+        \ 'New snippet file name: ', neosnippet#get_filetype())
+  if filename != ''
+    call neosnippet#edit_snippets(filename)
+  endif
+endfunction"}}}
+
 
 " neosnippet source.
 let s:source_runtime = {
       \ 'name': 'neosnippet/runtime',
       \ 'description' : 'neosnippet runtime file',
+      \ 'action_table' : {},
       \ }
 
 function! s:source_runtime.gather_candidates(args, context) "{{{
   return s:get_snippet_candidates(
         \ neosnippet#get_runtime_snippets_directory())
 endfunction "}}}
+
+let s:source_runtime.action_table.unite__new_candidate = {
+      \ 'description' : 'create new runtime snippet',
+      \ 'is_invalidate_cache' : 1,
+      \ 'is_quit' : 1,
+      \ }
+function! s:source_runtime.action_table.unite__new_candidate.func(candidate) "{{{
+  let filename = input(
+        \ 'New snippet file name: ', neosnippet#get_filetype())
+  if filename != ''
+    call neosnippet#edit_snippets('-runtime ' . filename)
+  endif
+endfunction"}}}
 
 
 function! s:get_snippet_candidates(dirs) "{{{
