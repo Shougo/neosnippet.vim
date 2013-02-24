@@ -54,6 +54,8 @@ INSTALL						*neosnippet-install*
 Note: If you want to complete snippets, you must install neocomplcache
 (https://github.com/Shougo/neocomplcache).
 
+Note: neocomplecache is NOT required! But recommended.
+
 ==============================================================================
 INTERFACE					*neosnippet-interface*
 
