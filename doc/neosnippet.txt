@@ -726,6 +726,17 @@ A: Please try below settings. It defines snipMate function.
 >
 	let g:neosnippet#enable_snipmate_compatibility = 1
 <
+Q: Cannot jump over placeholder
+https://github.com/Shougo/neosnippet/issues/120
+
+A: You must use smap in .vimrc.
+>
+	imap <expr><TAB> neosnippet#expandable_or_jumpable() ?
+	\ "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
+	smap <expr><TAB> neosnippet#expandable_or_jumpable() ?
+	\ "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
+<
+Because neosnippet uses select-mode to jump over placeholder.
 
 ==============================================================================
 CHANGELOG			*neosnippet-changelog*
