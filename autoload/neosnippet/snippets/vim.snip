@@ -104,8 +104,9 @@ abbr NeoBundle ''
 snippet NeoBundleLazy
 alias   neobundlelazy
 abbr NeoBundleLazy ''
-    NeoBundleLazy '`getreg('+')=='' ? '<\`0\`>' : getreg('+')`', { 'autoload' : {
-      \ ${0}
+    NeoBundleLazy '`getreg('+')=='' ? '<\`0\`>' : getreg('+')`', {
+      \ 'autoload' : {
+      \   ${0}
       \ }}
 
 snippet     autoload
