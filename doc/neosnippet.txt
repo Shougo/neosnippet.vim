@@ -1,7 +1,7 @@
 *neosnippet.txt*
 		The neo-snippet plugin contains the neocomplcache snippet source
 
-Version: 3.0
+Version: 3.1
 Author: Shougo <Shougo.Matsu@gmail.com>
 License: MIT license  {{{
     Permission is hereby granted, free of charge, to any person obtaining
@@ -741,6 +741,12 @@ Because neosnippet uses select-mode to jump over placeholder.
 ==============================================================================
 CHANGELOG			*neosnippet-changelog*
 
+2013-03-02
+- Ver.3.1 development is started.
+
+------------------------------------------------------------------------------
+ChangeLog 3.0:
+
 2013-02-17
 - Improved :NeoSnippetEdit.
 - Added neosnippet/runtime and neosnippet/user sources.
@@ -932,111 +938,6 @@ CHANGELOG			*neosnippet-changelog*
 - Ver.3 development is started.
 - Renamed documentation.
 - Renamed keymappings.
-
-------------------------------------------------------------------------------
-ChangeLog 2.0:
-
-2012-09-27
-- Improved add placeholder behavior.
-- Fixed wrong indentation when 'expandtab'.
-
-2012-09-23
-- Fixed substitute tab character.
-- Improved cursor position.
-- Fixed column in select mode.
-- Added lua snip.
-- Improved javascript snip.
-- Improved ruby snip.
-
-2012-09-06
-- Added neocomplcache__convertable attribute.
-
-2012-08-30
-- Changed <Plug>(neocomplcache_snippets_expand) behavior.
-
-2012-08-27
-- Fixed neocomplcache#sources#snippets_complete#force_expandable().
-
-2012-08-02
-- Improved caching snippet files.
-
-2012-06-06
-- Added neocomplcache#sources#snippets_complete#get_snippets_dir().
-
-2012-06-02
-- Fixed exapnd indentation.
-
-2012-05-16
-- Added ftdetect file.
-
-2012-05-12
-- Improved c snip.
-
-2012-05-03
-- Released ver.2.0.
-
-2012-04-05
-- Fixed nested placeholder problem.
-
-2012-03-23
-- Fixed substitute pattern bug.
-
-2012-03-19
-- Fixed substitute marker.
-
-2012-03-18
-- Fixed for expandtab.
-
-2012-03-17
-- Fixed for echodoc.
-
-2012-03-16
-- Fixed snippets indentation.
-
-2012-03-15
-- Improved search snippet markers behavior.
-- Don't conceal default codes.
-
-2012-03-14
-- Refactored expand snippet behavior.
-- Fixed expand bug.
-- Refactored substitute patterns.
-- Changed marker patterns.
-
-2012-03-08
-- Use shiftwidth instead of softabstop.
-- Fixed plugin indentation problem.
-
-2012-03-07
-- Added snippet source.
-- Fixed snippet source behavior.
-- Improved snippet source.
-
-2012-03-06
-- Improved ftplugin.
-
-2012-03-03
-- Added neocomplcache#sources#snippets_complete#force_expandable() and
-  neocomplcache#sources#snippets_complete#jumpable().
-
-2012-02-25
-- Improved split().
-
-2012-02-24
-- Improved a bit.
-
-2012-02-22
-- Fixed prev_word behavior.
-
-2012-02-21
-- Improved documentation.
-
-2012-02-05
-- Fixed variable name.
-
-2012-02-02
-- Initial version.
-- Improved documentation.
 
 ==============================================================================
 vim:tw=78:ts=8:ft=help:norl:noet:fen:noet:
