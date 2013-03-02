@@ -56,6 +56,9 @@ endfunction"}}}
 function! neosnippet#util#truncate(...) "{{{
   return call(s:V.truncate, a:000)
 endfunction"}}}
+function! neosnippet#util#strwidthpart(...) "{{{
+  return call(s:V.strwidthpart, a:000)
+endfunction"}}}
 
 function! neosnippet#util#expand(path) "{{{
   return neosnippet#util#substitute_path_separator(

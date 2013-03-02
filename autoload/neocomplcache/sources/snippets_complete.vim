@@ -61,7 +61,7 @@ function! s:source.get_complete_words(cur_keyword_pos, cur_keyword_str) "{{{
 
     let snippet.kind = get(snippet,
           \ 'neocomplcache__refresh', 0) ? '~' : ''
-    let snippet.menu = neosnippet#util#truncate(
+    let snippet.menu = neosnippet#util#strwidthpart(
           \ snippet.menu_template, winwidth(0)/3)
   endfor
 
