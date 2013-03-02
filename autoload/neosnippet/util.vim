@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: util.vim
 " AUTHOR: Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 17 Nov 2012.
+" Last Modified: 02 Mar 2013.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -52,6 +52,9 @@ function! neosnippet#util#escape_pattern(...) "{{{
 endfunction"}}}
 function! neosnippet#util#iconv(...) "{{{
   return call(s:V.iconv, a:000)
+endfunction"}}}
+function! neosnippet#util#truncate(...) "{{{
+  return call(s:V.truncate, a:000)
 endfunction"}}}
 
 function! neosnippet#util#expand(path) "{{{

@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: snippets_complete.vim
 " AUTHOR:  Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 10 Nov 2012.
+" Last Modified: 02 Mar 2013.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -55,15 +55,14 @@ endfunction"}}}
 function! s:source.get_complete_words(cur_keyword_pos, cur_keyword_str) "{{{
   let list = s:keyword_filter(neosnippet#get_snippets(), a:cur_keyword_str)
 
-  " Substitute abbr.
-  let abbr_pattern = printf('%%.%ds..%%s',
-        \ g:neocomplcache_max_keyword_width-10)
   for snippet in list
     let snippet.dup = 1
     let snippet.neocomplcache__convertable = 0
 
     let snippet.kind = get(snippet,
           \ 'neocomplcache__refresh', 0) ? '~' : ''
+    let snippet.menu = neosnippet#util#truncate(
+          \ snippet.menu_template, winwidth(0)/3)
   endfor
 
   return list
@@ -110,7 +109,6 @@ function! s:keyword_filter(snippets, cur_keyword_str) "{{{
 
   return values(dict)
 endfunction"}}}
-
 
 function! neocomplcache#sources#snippets_complete#define() "{{{
   return s:source
