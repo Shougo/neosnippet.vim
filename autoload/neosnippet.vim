@@ -753,7 +753,8 @@ function! s:get_snippet_range(begin_line, begin_patterns, end_line, end_patterns
   call setpos('.', pos)
   return [begin, end]
 endfunction"}}}
-function! s:search_snippet_range(start, end, cnt) "{{{
+function! s:search_snippet_range(start, end, cnt, ...) "{{{
+  let is_select = get(a:000, 0, 1)
   call s:substitute_placeholder_marker(a:start, a:end, a:cnt)
 
   " Search marker pattern.
@@ -762,7 +763,7 @@ function! s:search_snippet_range(start, end, cnt) "{{{
 
   for line in filter(range(a:start, a:end),
         \ 'getline(v:val) =~ pattern')
-    call s:expand_placeholder(a:start, a:end, a:cnt, line)
+    call s:expand_placeholder(a:start, a:end, a:cnt, line, is_select)
     return 1
   endfor
 
@@ -793,7 +794,9 @@ function! s:search_outof_range(col) "{{{
   " Not found.
   return 0
 endfunction"}}}
-function! s:expand_placeholder(start, end, holder_cnt, line) "{{{
+function! s:expand_placeholder(start, end, holder_cnt, line, ...) "{{{
+  let is_select = get(a:000, 0, 1)
+
   let pattern = substitute(s:get_placeholder_marker_pattern(),
         \ '\\d\\+', a:holder_cnt, '')
   let current_line = getline(a:line)
@@ -852,7 +855,7 @@ function! s:expand_placeholder(start, end, holder_cnt, line) "{{{
     return s:expand_target_placeholder(a:line, match+1)
   endif
 
-  if default_len > 0
+  if default_len > 0 && is_select
     " Select default value.
     let len = default_len-1
     if &l:selection == 'exclusive'
@@ -1273,7 +1276,7 @@ function! s:on_insert_leave() "{{{
 
   let pos = getpos('.')
   try
-    while s:search_snippet_range(begin, end, expand_info.holder_cnt)
+    while s:search_snippet_range(begin, end, expand_info.holder_cnt, 0)
       " Next count.
       let expand_info.holder_cnt += 1
     endwhile
