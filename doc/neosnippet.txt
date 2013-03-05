@@ -741,6 +741,9 @@ Because neosnippet uses select-mode to jump over placeholder.
 ==============================================================================
 CHANGELOG			*neosnippet-changelog*
 
+2013-03-05
+- Fixed error in snippet source.
+
 2013-03-02
 - Ver.3.1 development is started.
 - Improved truncate menu behavior.

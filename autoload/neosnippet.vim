@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: neosnippet.vim
 " AUTHOR:  Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 02 Mar 2013.
+" Last Modified: 05 Mar 2013.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -172,6 +172,7 @@ function! s:initialize_snippet(dict, path, line, pattern, name) "{{{
         \ 'filter_str' : a:dict.name . ' ' . a:dict.abbr,
         \ 'description' : a:dict.word,
         \ 'menu_template' : menu_prefix . abbr,
+        \ 'menu_abbr' : abbr,
         \ 'options' : a:dict.options,
         \ 'action__path' : a:path, 'action__line' : a:line,
         \ 'action__pattern' : a:pattern, 'real_name' : a:name,
