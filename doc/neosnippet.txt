@@ -741,6 +741,9 @@ Because neosnippet uses select-mode to jump over placeholder.
 ==============================================================================
 CHANGELOG			*neosnippet-changelog*
 
+2013-03-06
+- Changed filtering behavior.
+
 2013-03-05
 - Fixed error in snippet source.
 

@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: snippets_complete.vim
 " AUTHOR:  Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 02 Mar 2013.
+" Last Modified: 06 Mar 2013.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -82,9 +82,9 @@ function! s:keyword_filter(snippets, cur_keyword_str) "{{{
   endfor
 
   if len(a:cur_keyword_str) > 1 && a:cur_keyword_str =~ '^\h\w*$'
-    " Use partial match by filter_str.
+    " Use partial match by word.
     let partial_list = filter(values(a:snippets),
-          \  printf('stridx(v:val.filter_str, %s) > 0',
+          \  printf('stridx(v:val.word, %s) > 0',
           \      string(a:cur_keyword_str)))
     for snippet in partial_list
       " Set refresh flag.
