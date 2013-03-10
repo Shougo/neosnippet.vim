@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: neosnippet.vim
 " AUTHOR:  Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 06 Mar 2013.
+" Last Modified: 10 Mar 2013.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -96,7 +96,7 @@ function! s:doc_dict.search(cur_text) "{{{
   let ret = []
   call add(ret, { 'text' : snip.word, 'highlight' : 'String' })
   call add(ret, { 'text' : ' ' })
-  call add(ret, { 'text' : snip.menu, 'highlight' : 'Special' })
+  call add(ret, { 'text' : snip.menu_abbr, 'highlight' : 'Special' })
 
   return ret
 endfunction"}}}
