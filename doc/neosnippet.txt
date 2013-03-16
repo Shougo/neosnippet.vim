@@ -738,8 +738,17 @@ A: You must use smap in .vimrc.
 <
 Because neosnippet uses select-mode to jump over placeholder.
 
+Q: I want to disable preview window in neosnippet candiates.
+
+A:
+>
+	set completeopt-=preview
+<
 ==============================================================================
 CHANGELOG			*neosnippet-changelog*
+
+2013-03-16
+- Supported preview window.
 
 2013-03-10
 - Fixed menu error.
