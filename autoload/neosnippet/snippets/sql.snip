@@ -1,0 +1,18 @@
+snippet     CREATE TABLE
+abbr        CREATE TABLE { ... }
+options     head
+  CREATE TABLE ${1:cities} (
+    ${0:name varchar(80), country_name text}
+  );
+  DROP TABLE $1;
+
+snippet     INSERT
+abbr        INSERT INTO ... VALUES ( ... )
+options     head
+  INSERT INTO ${1:cities}
+  VALUES (${0:'Vancouver', 'Canada'});
+
+snippet     SELECT
+abbr        SELECT * from ...
+options     head
+  SELECT ${1:*} FROM ${2:cities} ${0:WHERE name = 'Vancouver'};

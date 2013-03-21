@@ -747,6 +747,9 @@ A:
 ==============================================================================
 CHANGELOG			*neosnippet-changelog*
 
+2013-03-21
+- Added sql snippet.
+
 2013-03-16
 - Supported preview window.
 
