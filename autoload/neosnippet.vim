@@ -963,13 +963,13 @@ function! s:substitute_placeholder_marker(start, end, snippet_holder_cnt) "{{{
     let cnt = matchstr(getline('.'),
           \ substitute(s:get_sync_placeholder_marker_pattern(),
           \ '\\d\\+', '\\zs\\d\\+\\ze', ''))
+    let mirror_marker = substitute(
+          \ s:get_mirror_placeholder_marker_pattern(),
+          \ '\\d\\+', cnt, '')
     silent execute printf('%%s/' . mirror_marker . '/%s/'
           \ . (&gdefault ? 'g' : ''), sub)
     let sync_marker = substitute(s:get_sync_placeholder_marker_pattern(),
         \ '\\d\\+', cnt, '')
-    let mirror_marker = substitute(
-          \ s:get_mirror_placeholder_marker_pattern(),
-          \ '\\d\\+', cnt, '')
     call setline('.', substitute(getline('.'), sync_marker, sub, ''))
   endif
 endfunction"}}}
