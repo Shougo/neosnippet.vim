@@ -158,3 +158,28 @@ alias   b:undo_ftplugin
     \ | setlocal ${2:#:option_name1< option_name2<...}
     \'
 
+snippet python
+alias   py
+options head
+abbr    python <<EOF | EOF
+    python << EOF
+    ${0}
+    EOF
+
+snippet python3
+alias   py3
+options head
+abbr    python3 <<EOF | EOF
+    python3 << EOF
+    ${0}
+    EOF
+
+
+snippet lua
+options head
+abbr    lua <<EOF | EOF
+    lua << EOF
+    ${0}
+    EOF
+
+
