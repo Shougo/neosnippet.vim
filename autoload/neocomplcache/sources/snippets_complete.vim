@@ -83,6 +83,7 @@ function! s:keyword_filter(snippets, cur_keyword_str) "{{{
           \ 'snippets_complete', 8)
   endfor
 
+  " Note: Disabled partial match for perfomance issues.
   " if len(a:cur_keyword_str) > 1 && a:cur_keyword_str =~ '^\h\w*$'
   "   " Use partial match by word.
   "   let partial_list = filter(values(a:snippets),
