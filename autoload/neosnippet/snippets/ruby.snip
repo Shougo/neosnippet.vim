@@ -58,3 +58,58 @@ snippet     urlencode
     require 'erb'
     puts ERB::Util.url_encode '${1}'
 
+snippet encoding
+alias   enc
+    # coding: utf-8
+    ${0}
+
+snippet each
+options word
+    each { |${1:#:variable}| ${2} }
+
+snippet each_do
+options word
+    each do |${1:#:variable}|
+      ${2}
+    end
+
+snippet each_byte
+options word
+    each_byte { |${1:#:variable}| ${2} }
+
+snippet each_char
+options word
+    each_char { |${1:#:variable}| ${2} }
+
+snippet each_index
+options word
+    each_index { |${1:#:variable}| ${2} }
+
+snippet each_key
+options word
+    each_key { |${1:#:variable}| ${2} }
+
+snippet each_line
+options word
+    each_line { |${1:#:variable}| ${2} }
+
+snippet each_with_index
+options word
+    each_with_index { |${1:#:variable}| ${2} }
+
+snippet map
+options word
+    map { |${1:#:variable}| ${2} }
+
+snippet sort
+options word
+    sort { |${1:#:variable}| ${2} }
+
+snippet sort_by
+options word
+    sort_by { |${1:#:variable}| ${2} }
+
+snippet lamda
+options word
+    lambda { |${1:#:args}| ${2} }
+

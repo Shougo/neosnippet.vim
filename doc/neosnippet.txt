@@ -752,6 +752,7 @@ CHANGELOG			*neosnippet-changelog*
 
 2013-03-24
 - Improved documentation.
+- Added ruby snippets.
 
 2013-03-21
 - Added sql snippet.
