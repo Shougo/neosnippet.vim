@@ -12,6 +12,9 @@ name.
 
 Note: neocomplecache is NOT required! But recommended.
 
+Extra snippets files are available in:
+[snipmate-snippets](https://github.com/honza/snipmate-snippets)
+
 Installation
 ------------
 
