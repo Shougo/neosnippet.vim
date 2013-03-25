@@ -31,7 +31,7 @@ required files into your `.vim` folder.
 ### Vundle 
 
 1. Setup the [vundle](https://github.com/gmarik/vundle) package manager 
-2. Set the bundles for [Neocomplecache](https://github.com/Shougo/neocomplcache) and [Neobundle](https://github.com/Shougo/neosnippet) 
+2. Set the bundles for [Neocomplecache](https://github.com/Shougo/neocomplcache) and [Neosnippet](https://github.com/Shougo/neosnippet) 
 
     ```
     Bundle 'Shougo/neocomplcache.git'
@@ -43,7 +43,7 @@ required files into your `.vim` folder.
 ### Neobundle 
 
 1. Setup the [neobundle](https://github.com/Shougo/neobundle.vim) package manager 
-2. Set the bundles for [Neocomplecache](https://github.com/Shougo/neocomplcache) and [Neobundle](https://github.com/Shougo/neosnippet) 
+2. Set the bundles for [Neocomplecache](https://github.com/Shougo/neocomplcache) and [Neosnippet](https://github.com/Shougo/neosnippet) 
 
     ```
     NeoBundle 'Shougo/neocomplcache.git'
