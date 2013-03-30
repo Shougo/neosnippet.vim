@@ -212,6 +212,12 @@ g:neosnippet#enable_snipmate_compatibility
 
 		The default value is 0.
 
+g:neosnippet#enable_preview			 *g:neosnippet#enable_preview*
+		If it is non 0, neosnippet will enable preview window
+		feature.
+
+		The default value is 0.
+
 ------------------------------------------------------------------------------
 KEY MAPPINGS 					*neosnippet-key-mappings*
 
@@ -752,6 +758,7 @@ CHANGELOG			*neosnippet-changelog*
 
 2013-03-30
 - Added rst snippets.
+- Added g:neosnippet#enable_preview option.
 
 2013-03-24
 - Improved documentation.

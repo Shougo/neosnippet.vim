@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: snippets_complete.vim
 " AUTHOR:  Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 24 Mar 2013.
+" Last Modified: 30 Mar 2013.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -38,6 +38,8 @@ function! s:source.initialize() "{{{
         \ g:neocomplcache_source_rank, 'snippets_complete', 8)
   call neocomplcache#set_completion_length('snippets_complete',
         \ g:neocomplcache_auto_completion_start_length)
+  call neosnippet#util#set_default(
+        \ 'g:neosnippet#enable_preview', 0)
 endfunction"}}}
 
 function! s:source.get_keyword_pos(cur_text) "{{{
@@ -63,7 +65,9 @@ function! s:source.get_complete_words(cur_keyword_pos, cur_keyword_str) "{{{
           \ 'neocomplcache__refresh', 0) ? '~' : ''
     let snippet.menu = neosnippet#util#strwidthpart(
           \ snippet.menu_template, winwidth(0)/3)
-    let snippet.info = snippet.snip
+    if g:neosnippet#enable_preview
+      let snippet.info = snippet.snip
+    endif
   endfor
 
   return list
