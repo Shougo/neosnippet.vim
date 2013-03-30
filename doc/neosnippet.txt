@@ -750,6 +750,9 @@ A:
 ==============================================================================
 CHANGELOG			*neosnippet-changelog*
 
+2013-03-30
+- Added rst snippets.
+
 2013-03-24
 - Improved documentation.
 - Added ruby snippets.
