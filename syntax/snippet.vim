@@ -38,9 +38,9 @@ syn region  neosnippetString               start=+"+ end=+"+ contained
 syn region  neosnippetEval                 start=+\\\@<!`+ end=+\\\@<!`+ contained
 syn match   neosnippetWord                 '^\s\+.*$' contains=
       \neosnippetEval,neosnippetPlaceHolder,neosnippetEscape,neosnippetVariable
-syn match   neosnippetPlaceHolder          '\${\d\+\%(:.\{-}\)\?\\\@<!}'
+syn match   neosnippetPlaceHolder          '\\\@<!\${\d\+\%(:.\{-}\)\?\\\@<!}'
       \ contained contains=neosnippetPlaceHolderComment
-syn match   neosnippetVariable             '\$\d\+' contained
+syn match   neosnippetVariable             '\\\@<!\$\d\+' contained
 syn match   neosnippetComment              '^#.*$'
 syn match   neosnippetEscape               '\\[`]' contained
 

@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: neosnippet.vim
 " AUTHOR:  Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 10 Mar 2013.
+" Last Modified: 02 Apr 2013.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -557,11 +557,15 @@ function! neosnippet#expand(cur_text, col, trigger_name) "{{{
 
   " Substitute markers.
   let snip_word = substitute(snip_word,
-        \ s:get_placeholder_marker_substitute_pattern(),
+        \ '\\\@<!'.s:get_placeholder_marker_substitute_pattern(),
         \ '<`\1`>', 'g')
   let snip_word = substitute(snip_word,
-        \ s:get_mirror_placeholder_marker_substitute_pattern(),
+        \ '\\\@<!'.s:get_mirror_placeholder_marker_substitute_pattern(),
         \ '<|\1|>', 'g')
+  let snip_word = substitute(snip_word,
+        \ '\\'.s:get_mirror_placeholder_marker_substitute_pattern().'\|'.
+        \ '\\'.s:get_placeholder_marker_substitute_pattern(),
+        \ '\=submatch(0)[1:]', 'g')
 
   " Insert snippets.
   let next_line = getline('.')[a:col-1 :]

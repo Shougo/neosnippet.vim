@@ -542,7 +542,7 @@ The structure of a placeholder can be:
 >
 	snippet namespace
 	   namespace ${1:name} {
-		 ${0}
+		${0}
 	   } // namespace $1
 <
 
@@ -555,6 +555,13 @@ special meaning to neosnippet you need to escape them with a backslash.
 
 	snippet test
 	   ${1:escape \} value}
+
+	# Substitute "\$0" to "$0"
+	snippet     main
+	options     head
+	    if __FILE__ == \$0
+	        ${1:TARGET}
+	    end
 <
 
 A placeholder value can not contain new lines. The snippet below isn't valid.
@@ -755,6 +762,9 @@ A:
 <
 ==============================================================================
 CHANGELOG			*neosnippet-changelog*
+
+2013-04-02
+- Improved escape placeholder behavior.
 
 2013-03-30
 - Added rst snippets.
