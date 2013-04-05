@@ -13,7 +13,7 @@ name.
 Note: neocomplcache is NOT required! But recommended.
 
 Extra snippets files are available in:
-[snipmate-snippets](https://github.com/honza/snipmate-snippets)
+[vim-snippets](https://github.com/honza/vim-snippets)
 
 Installation
 ------------
@@ -95,10 +95,10 @@ endif
 If you want to use a different collection of snippets than the
 built-in ones, then you can set a path to the snippets with
 the `g:neosnippet#snippets_directory` variable (e.g [Honza's
-Snippets](https://github.com/honza/snipmate-snippets))
+Snippets](https://github.com/honza/vim-snippets))
 
 ```vim
 " Tell Neosnippet about the other snippets
-let g:neosnippet#snippets_directory='~/.vim/bundle/snipmate-snippets/snippets'
+let g:neosnippet#snippets_directory='~/.vim/bundle/vim-snippets/snippets'
 ```
 
