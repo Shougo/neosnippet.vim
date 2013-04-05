@@ -54,10 +54,10 @@ INSTALL						*neosnippet-install*
 Note: If you want to complete snippets, you must install neocomplcache
 (https://github.com/Shougo/neocomplcache).
 
-Note: neocomplecache is NOT required! But recommended.
+Note: neocomplcache is NOT required! But recommended.
 
 Extra snippets files are available in:
-https://github.com/honza/snipmate-snippets
+https://github.com/honza/vim-snippets
 
 ==============================================================================
 INTERFACE					*neosnippet-interface*
@@ -736,6 +736,7 @@ Note: But you must unmap the mappings in select mode manually.
 <
 
 Q: Error using snipmate-snippets
+Note: snipmate-snippets is currently vim-snippets.
 https://github.com/Shougo/neosnippet/issues/86
 
 A: Please try below settings. It defines snipMate function.
