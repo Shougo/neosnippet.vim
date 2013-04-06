@@ -6,14 +6,14 @@ small templates for commonly used code that you can fill in on the
 fly. To use snippets can increase your productivity in Vim a lot.
 The functionality of this plug-in is quite similar to plug-ins like
 snipMate.vim or snippetsEmu.vim. But since you can choose snippets with the
-[Neocomplecache](https://github.com/Shougo/neocomplcache) interface, you might
+[Neocomplcache](https://github.com/Shougo/neocomplcache) interface, you might
 have less trouble using them, because you do not have to remember each snippet
 name.
 
-Note: neocomplecache is NOT required! But recommended.
+Note: neocomplcache is NOT required! But recommended.
 
 Extra snippets files are available in:
-[snipmate-snippets](https://github.com/honza/snipmate-snippets)
+[vim-snippets](https://github.com/honza/vim-snippets)
 
 Installation
 ------------
@@ -24,14 +24,14 @@ required files into your `.vim` folder.
 
 ### Manual (not recommended)
 
-1. Install the [Neocomplecache](https://github.com/Shougo/neocomplcache) plugin first.
+1. Install the [Neocomplcache](https://github.com/Shougo/neocomplcache) plugin first.
 2. Put files in your Vim directory (usually `~/.vim/` or
    `%PROGRAMFILES%/Vim/vimfiles` on Windows).
 
 ### Vundle 
 
 1. Setup the [vundle](https://github.com/gmarik/vundle) package manager 
-2. Set the bundles for [Neocomplecache](https://github.com/Shougo/neocomplcache) and [Neosnippet](https://github.com/Shougo/neosnippet) 
+2. Set the bundles for [Neocomplcache](https://github.com/Shougo/neocomplcache) and [Neosnippet](https://github.com/Shougo/neosnippet) 
 
     ```
     Bundle 'Shougo/neocomplcache.git'
@@ -43,7 +43,7 @@ required files into your `.vim` folder.
 ### Neobundle 
 
 1. Setup the [neobundle](https://github.com/Shougo/neobundle.vim) package manager 
-2. Set the bundles for [Neocomplecache](https://github.com/Shougo/neocomplcache) and [Neosnippet](https://github.com/Shougo/neosnippet) 
+2. Set the bundles for [Neocomplcache](https://github.com/Shougo/neocomplcache) and [Neosnippet](https://github.com/Shougo/neosnippet) 
 
     ```
     NeoBundle 'Shougo/neocomplcache.git'
@@ -68,10 +68,10 @@ Configuration
 -------------
 
 This is an example `~/.vimrc` configuration for Neosnippet. It is assumes you
-already have Neocomplecache configured. With the settings of the example, you
+already have Neocomplcache configured. With the settings of the example, you
 can use the following keys:
 
-* `C-k` to select-and-expand a snippet from the Neocomplecache popup (Use `C-n`
+* `C-k` to select-and-expand a snippet from the Neocomplcache popup (Use `C-n`
   and `C-p` to select it). `C-k` can also be used to jump to the next field in
   the snippet.
 * `Tab` to select the next field to fill in the snippet.
@@ -95,10 +95,10 @@ endif
 If you want to use a different collection of snippets than the
 built-in ones, then you can set a path to the snippets with
 the `g:neosnippet#snippets_directory` variable (e.g [Honza's
-Snippets](https://github.com/honza/snipmate-snippets))
+Snippets](https://github.com/honza/vim-snippets))
 
 ```vim
 " Tell Neosnippet about the other snippets
-let g:neosnippet#snippets_directory='~/.vim/bundle/snipmate-snippets/snippets'
+let g:neosnippet#snippets_directory='~/.vim/bundle/vim-snippets/snippets'
 ```
 
