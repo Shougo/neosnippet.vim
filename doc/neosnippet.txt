@@ -374,8 +374,8 @@ EXAMPLES					*neosnippet-examples*
 ==============================================================================
 SNIPPET SYNTAX					*neosnippet-snippet-syntax*
 
-It is quite easy to create your own snippets starting with the example below.
-The snippet syntax is close to the one of |snipMate|. 
+It is quite easy to create your own snippets. Your can use the example below to
+get started. 
 
 Example:
 
@@ -388,24 +388,27 @@ Example:
 	   if ${1:condition}
 	     ${2}
 	   endif
-<
+< 
+
+The snippet syntax is close to the one of |snipMate|. Each snippet starts with
+some keywords that define the name and modify the expansion and treatment of the
+snippet.
 
 Snippet Keywords:
 
 - snippet [name] (Required)
 
 	Each snippet starts with the keyword "snippet". This keyword is directly
-	followed by the snippet name. The snippet name is used for the expansion of
-	the snippet.
+	followed by the snippet name. The snippet name is used to expand the snippet.
 
 - abbr [name] (Optional)
 
-	You can define an abbreviation for the snippet. It will be displayed in
-	the drop down selection menu of neocomplcache.
+	You can define an abbreviation for the snippet name. It will be displayed in
+	the drop down selection menu of the neocomplcache plugin.
 
 - alias [aliases] (Optional)
 
-	Alias names can be use as additional keywords to expand a snippet. You can
+	Alias names can be use as additional keywords to expand the snippet. You can
 	define multiple aliases using  either spaces ' ' or commas ',' as separator.
 
 	Example
@@ -430,8 +433,8 @@ Snippet Keywords:
 	Options influence the snippet behavior. The possible values are:
 
 	+ word	This snippet expands by a word boundary. Note: To complete
-		the trigger in snippets_complete, it must be a word character 
-		(digits, an alphabetical characters or "_"). 
+		the trigger with snippets_complete, it must be a word character 
+		(digits, alphabetical characters or "_"). 
 
 >
 		snippet     date
@@ -439,7 +442,7 @@ Snippet Keywords:
 		    `strftime("%d %b %Y")`
 <
 
-	+ head	This snippet expands on the beginning of a line only.
+	+ head	This snippet expands at the beginning of a line only.
 		Note: This is the same as "prev_word '^'" which is still
 		there for backwards compatibility.
 
@@ -455,21 +458,21 @@ Snippet Keywords:
 		to the indent of the line above the snippet after expansion.
 
 The snippet itself starts below the part that contains the options, snippet
-aliases and kekywords, described above. It contains the snippet which gets
-expanded and can contain several place holders. The placeholders are used as
-jump points inside the snippet. There are several placeholder available and they
-provide diffrent functionality.
+aliases and keywords, described above. It contains the snippet which gets
+expanded which can contain several placeholders. The placeholders are used as
+jump points while expanding the snippet. There are several placeholders available
+providing different functionality.
 
 The structure of a placeholder can be:
 
 - ${number:placeholder text}
 
-	The number of a placeholder and the placeholder text are separated 
-	by a ":". They are embraced by a pair of curly braces "{}". The
-	placeholder text is displayed after the snippet expansion and will be 
-	replaced by your text. If you jump over the snippet and do not insert
-	any text in that position the placeholder text remains there. This can 
-	be used as a default value for a certain position.
+	The placeholder starts with a dollar sign "$". The number of a placeholder 
+	and the placeholder text are separated by a colon ":". They are surrounded 
+	by a pair of curly braces "{}". The placeholder text is displayed after 
+	the snippet expansion and will be replaced by your text. If you jump over 
+	the snippet and do not insert any text in that placeholder position the text 
+	remains there. This can be used as a default value for a certain position.
 
 	Example
 
@@ -482,7 +485,7 @@ The structure of a placeholder can be:
 
 - ${number:#:placeholder text}
 
-	In this type of placeholder the number is followed by the "#" character. 
+	In this kind of placeholder the number is followed by the hash character "#". 
 	If you jump over this placeholder and do not insert any text, the placeholder 
 	text will be removed.
 
@@ -498,8 +501,8 @@ The structure of a placeholder can be:
 - ${number:TARGET}
 
 	This is the target placeholder which is replaced by text from a visual 
-	selection. Note: You need to expand your snippet with the key mapping below 
-	for this to work.
+	selection. Note: You need to make a visual selection and expand your 
+	snippet with the key mapping below for this to work.
 
 	|<Plug>(neosnippet_expand_target)|.
 
@@ -519,7 +522,7 @@ The structure of a placeholder can be:
 
 	This is a placeholder which you can use as a simple jump position. This can be
 	useful if you edit a placeholder inside of some sort of brackets or environment
-	and after that want to go on behind that.
+	and want to go on behind it after that.
 
 	Example
 
@@ -535,7 +538,7 @@ The structure of a placeholder can be:
 - $number
 
 	This is a synchronized placeholder. Sometimes it is required to repeat a value
-	in several places inside a snippet. If you set the number of this placeholder
+	in several positions inside a snippet. If you set the number of this placeholder
 	to the same number as one of the other placeholders in the snippet, it will
 	repeat its content. $1 is synchronized to ${1} and so on. $0 will be the final
 	jump placeholder.
@@ -567,7 +570,7 @@ The structure of a placeholder can be:
 	    end
 <
 
-	A placeholder value can not contain new lines. The snippet below isn't valid.
+	A placeholder value can not contain new lines. The snippet below is not valid.
 
 >
 	snippet invalid
@@ -576,9 +579,9 @@ The structure of a placeholder can be:
 <
 
 Vim has a built-in expression evaluation. You can also use this feature inside
-of snippets if you use back ticks like in the example below where "%:t" gets
-expanded to the name of the current active file and the current time gets
-inserted by the expansion of the strftime command.
+of snippets if you use back ticks like in the example below. Here the "%:t"
+gets expanded to the name of the current active file and the current time gets
+inserted by expanding the output of the strftime command.
 
 >
 	snippet     header
@@ -586,14 +589,15 @@ inserted by the expansion of the strftime command.
 	   ${2:Created at: `strftime("%B %d, %Y")`}
 <
 
-You can also nest the placeholders if you escape the special characters.
+You can also nest placeholders if you escape the special characters.
 
 >
 	snippet div
 	   <div ${1:id="${2:someid\}"}>${3}</div>${4}
 <
 
-In some cases you need to escape the "}" twice as the example below shows.
+In some cases you need to escape the curly brace "}" twice as shown in the 
+example below.
 
 >
 	snippet  catch
