@@ -452,8 +452,7 @@ Snippet Keywords:
 <
 
 	+ indent 	The horizontal position of the snippet will be adjusted 
-		to the indent of the line above the the snippet after
-		expansion.
+		to the indent of the line above the snippet after expansion.
 
 The snippet itself starts below the part that contains the options, snippet
 aliases and kekywords, described above. It contains the snippet which gets
