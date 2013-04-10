@@ -451,9 +451,9 @@ Snippet Keywords:
 		  endif
 <
 
-	+ indentation 	The horizontal position of the snippet will be adjusted 
-		to the indent the snippet after expansion to the same
-		column as the line above.
+	+ indent 	The horizontal position of the snippet will be adjusted 
+		to the indent of the line above the the snippet after
+		expansion.
 
 The snippet itself starts below the part that contains the options, snippet
 aliases and kekywords, described above. It contains the snippet which gets
