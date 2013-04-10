@@ -374,7 +374,7 @@ EXAMPLES					*neosnippet-examples*
 ==============================================================================
 SNIPPET SYNTAX					*neosnippet-snippet-syntax*
 
-It is quite easy to create your own snippets. Your can use the example below to
+It is quite easy to create your own snippets. You can use the example below to
 get started. 
 
 Example:
