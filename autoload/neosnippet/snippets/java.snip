@@ -216,3 +216,10 @@ snippet version
 alias ver
     @version ${0:#:version}
 
+snippet     helloworld
+options     head
+  public class ${1:Hello} {
+    static public void main(String args[]) {
+      System.out.println("Hello, world!");
+    }
+  }
