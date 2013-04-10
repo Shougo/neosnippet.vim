@@ -394,80 +394,85 @@ Snippet Keywords:
 
 - snippet [name] (Required)
 
-   Each snippet starts with the keyword "snippet". This keyword is directly
-   followed by the snippet name. The snippet name is used for the expansion of
-   the snippet.
+	Each snippet starts with the keyword "snippet". This keyword is directly
+	followed by the snippet name. The snippet name is used for the expansion of
+	the snippet.
 
 - abbr [name] (Optional)
 
-   Here you can define an abbreviation of the snippet which will be used in
-   the drop down menu of neocomplcache.
+	You can define an abbreviation for the snippet. It will be displayed in
+	the drop down selection menu of neocomplcache.
 
 - alias [aliases] (Optional)
 
-   If you specify an alias it will be also used to expand a snippet. You can
-   define multiple aliases either using the separators ' ' or ','.
+	Alias names can be use as additional keywords to expand a snippet. You can
+	define multiple aliases using  either spaces ' ' or commas ',' as separator.
 
-   Example
+	Example
 
 >
-   alias hoge hogera hogehoge
+	alias hoge hogera hogehoge
 <
 
 - regexp [pattern] (Optional)
 
-   This snippet expands when it matched by the regexp pattern only.
+	A pattern can be defined via a regular expression. The snippet expands only 
+	when the expression pattern is matched.
 
-   Example
+	Example
 
 >
-   regexp '^% '
+	regexp '^% '
 <
 
 - options [options] (Optional)
 
-   Options influence the snippet behavior. The possible options are:
+	Options influence the snippet behavior. The possible values are:
 
-   + word	This snippet expands by a word boundary. Note: To complete
-		the trigger in snippets_complete, it must be word(digits or
-		alphabet characters or "_") characters.
+	+ word	This snippet expands by a word boundary. Note: To complete
+		the trigger in snippets_complete, it must be a word character 
+		(digits, an alphabetical characters or "_"). 
 
 >
-	snippet     date
-	options     word
-	    `strftime("%d %b %Y")`
+		snippet     date
+		options     word
+		    `strftime("%d %b %Y")`
 <
 
-   + head	This snippet expands on the beginning of a line only.
+	+ head	This snippet expands on the beginning of a line only.
 		Note: This is the same as "prev_word '^'" which is still
 		there for backwards compatibility.
 
 >
-	snippet     if
-	options     head
-	  if ${1:condition}
-	     ${2}
-	  endif
+		snippet     if
+		options     head
+		  if ${1:condition}
+		     ${2}
+		  endif
 <
 
-   + indent	Neosnippet indents the snippet after expansion to the same
+	+ indentation 	The horizontal position of the snippet will be adjusted 
+		to the indent the snippet after expansion to the same
 		column as the line above.
 
-Below the keywords starts the snippet which gets expanded. After the snippet
-expansion you can jump to the placeholders and replace them with desired text.
+The snippet itself starts below the part that contains the options, snippet
+aliases and kekywords, described above. It contains the snippet which gets
+expanded and can contain several place holders. The placeholders are used as
+jump points inside the snippet. There are several placeholder available and they
+provide diffrent functionality.
 
 The structure of a placeholder can be:
 
 - ${number:placeholder text}
 
-   Here the number of the placeholder and the placeholder text that are
-   separated by a ":" are embraced by a pair of "{}". The text is displayed
-   after the snippet expansion and gets replaced by your text. If you jump
-   over the snippet and do not insert any text in that position the
-   placeholder text remains there. This can be used as a standard value for a
-   certain position.
+	The number of a placeholder and the placeholder text are separated 
+	by a ":". They are embraced by a pair of curly braces "{}". The
+	placeholder text is displayed after the snippet expansion and will be 
+	replaced by your text. If you jump over the snippet and do not insert
+	any text in that position the placeholder text remains there. This can 
+	be used as a default value for a certain position.
 
-   Example
+	Example
 
 >
 	snippet     if
@@ -478,11 +483,11 @@ The structure of a placeholder can be:
 
 - ${number:#:placeholder text}
 
-   Here the number is followed by the "#" character. If you jump over this
-   placeholder and do not insert any text, the placeholder text will be
-   removed.
+	In this type of placeholder the number is followed by the "#" character. 
+	If you jump over this placeholder and do not insert any text, the placeholder 
+	text will be removed.
 
-   Example
+	Example
 
 >
 	snippet if
@@ -493,17 +498,16 @@ The structure of a placeholder can be:
 
 - ${number:TARGET}
 
-   This is the target placeholder which will be replaced by the text which is
-   selected before snippet expansion.
-   Note: You need to expand you snippet with the key mapping below for this to
-   work.
+	This is the target placeholder which is replaced by text from a visual 
+	selection. Note: You need to expand your snippet with the key mapping below 
+	for this to work.
 
-   |<Plug>(neosnippet_expand_target)|.
+	|<Plug>(neosnippet_expand_target)|.
 
-   This is very useful if you edit text and decide to put something in an
-   environment or some sort of brackets.
+	This is very useful if you edit text and decide to put something in an
+	environment or some sort of brackets for folding.
 
-   Example
+	Example
 
 >
 	snippet if
@@ -514,40 +518,40 @@ The structure of a placeholder can be:
 
 - ${number}
 
-   This is a placeholder which you can use as a simple jump position. This
-   can be useful if you edit a placeholder inside of some sort of brackets or
-   environment and after that want to go on behind that.
+	This is a placeholder which you can use as a simple jump position. This can be
+	useful if you edit a placeholder inside of some sort of brackets or environment
+	and after that want to go on behind that.
 
-   Example
+	Example
 
 >
 	snippet     if
 	   if ${1:#:condition}
 	     ${2:do}
 	   endif
-	
+
 	   ${3}
 <
 
 - $number
 
-   This is a synchronized placeholder. Sometimes it is required to repeat a
-   value in several places inside a snippet. If you set the number of this
-   placeholder to the same number as one of the other placeholders in the
-   snippet it will repeat its content. $1 is synchronized to ${1} and so on.
-   $0 will be the final jump placeholder.
+	This is a synchronized placeholder. Sometimes it is required to repeat a value
+	in several places inside a snippet. If you set the number of this placeholder
+	to the same number as one of the other placeholders in the snippet, it will
+	repeat its content. $1 is synchronized to ${1} and so on. $0 will be the final
+	jump placeholder.
 
-   Example
+	Example
 
 >
 	snippet namespace
-	   namespace ${1:name} {
+	namespace ${1:name} {
 		${0}
 	   } // namespace $1
 <
 
-Note: If you like to include characters in snippets that already have a
-special meaning to neosnippet you need to escape them with a backslash.
+	Note: If you like to include characters in snippets that already have a
+	special meaning to neosnippet you need to escape them with a backslash.
 
 >
 	snippet code
@@ -560,11 +564,11 @@ special meaning to neosnippet you need to escape them with a backslash.
 	snippet     main
 	options     head
 	    if __FILE__ == \$0
-	        ${1:TARGET}
+		${1:TARGET}
 	    end
 <
 
-A placeholder value can not contain new lines. The snippet below isn't valid.
+	A placeholder value can not contain new lines. The snippet below isn't valid.
 
 >
 	snippet invalid
@@ -574,8 +578,8 @@ A placeholder value can not contain new lines. The snippet below isn't valid.
 
 Vim has a built-in expression evaluation. You can also use this feature inside
 of snippets if you use back ticks like in the example below where "%:t" gets
-expanded to name of the current active file when the snippet gets expanded and
-the current time gets inserted by the expansion of the strftime command.
+expanded to the name of the current active file and the current time gets
+inserted by the expansion of the strftime command.
 
 >
 	snippet     header
@@ -628,8 +632,9 @@ detects this. If you want to overwrite a snippet explicitly, please use:
 After that you can redefine the snippet. But this does not work if you include
 external snippet files. There will be no warning when snippets get overwritten.
 
-Multi snippet feature in snipMate is available.
-Neosnippet substitutes trigger and descriptions spaces to '_'.
+Multi snippet feature in snipMate is available. Neosnippet substitutes trigger 
+and descriptions spaces to '_'.
+
 >
 	snippet trigger description1
 	    hoge
@@ -637,9 +642,9 @@ Neosnippet substitutes trigger and descriptions spaces to '_'.
 	    piyo
 <
 
-If you use hard-tab for indentation in snippet file, neosnippet will use
+If you use hard-tab for indentation inside a snippet file, neosnippet will use
 'shiftwidth' instead of Vim indent plugin. This feature is useful while some
-languages' indent files can not work very well (e.g.: PHP, Python).
+languages' indent files do not work very well (e.g.: PHP, Python).
 >
 	snippet if
 	  if (${1:/* condition */}) {
