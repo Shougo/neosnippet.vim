@@ -772,6 +772,9 @@ A:
 ==============================================================================
 CHANGELOG			*neosnippet-changelog*
 
+2013-04-11
+- Improved syntax file.
+
 2013-04-02
 - Improved escape placeholder behavior.
 
