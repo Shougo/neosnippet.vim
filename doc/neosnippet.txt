@@ -68,21 +68,21 @@ COMMANDS 					*neosnippet-commands*
 :NeoSnippetMakeCache [filetype]
 						*:NeoSnippetMakeCache*
 
-		Creates a cache for the given [filetype] snippets. It
+		Creates a cache for the snippets of the given [filetype]. It
 		automatically chooses the current buffer's file type unless you
-		specify one by [filetype].
+		specify another one by [filetype].
 
 					*:NeoComplCacheCachingSnippets*
 		Note: |:NeoComplCacheCachingSnippets| is an obsolete name.
 
 :NeoSnippetEdit [{options}] [filetype]
 					*:NeoSnippetEdit*
-		Opens the [filetype] snippets to edit. It automatically
+		Opens the snippets for a given [filetype] to edit. It automatically
 		selects the current buffer's filetype unless you specify
 		another one by [filetype].
 		
 		If the path to [filetype] snippets is a directory, it
-		automatically selects the "[filetype].snip" in the [filetype]
+		automatically selects "[filetype].snip" in the [filetype]
 		subdirectory.
 
 		It edits a snippet file in |g:neosnippet#snippets_directory|
@@ -115,15 +115,15 @@ COMMANDS 					*neosnippet-commands*
 
 					*neosnippet-edit-options-runtime*
 		-runtime
-		Edit the runtime (built-in standard) snippets instead of the
+		Edit the runtime snippets (built-in defaults) instead of the
 		user snippets defined by 'g:neosnippet#snippets_directory'.
 
 		Note: |:NeoComplCacheEditSnippets| is an obsolete name.
 
 :NeoComplCacheEdit -runtime [filetype]
 
-		Opens the [filetype] standard snippets to edit. It
-		automatically selects the current buffer's file type snippets
+		Opens the built in snippet file for the [filetype] to edit. It
+		automatically selects the current buffer's file type 
 		unless you specify a file type by [filetype]. The snippets are
 		re-cached automatically when you save the file after edit.
 
@@ -133,7 +133,7 @@ COMMANDS 					*neosnippet-commands*
 :NeoSnippetSource [filename]
 							*:NeoSnippetSource*
 
-		Load [filetype] snippets.
+		Load the snippets of a [filetype].
 		Note: The loaded snippets are enabled in current buffer only.
 
 ------------------------------------------------------------------------------
@@ -150,7 +150,7 @@ g:neosnippet#snippets_directory		*g:neosnippet#snippets_directory*
 		
 		Note: The neosnippet plug-in loads file type snippets from
 		several files if available. For example if you edit a "Vim"
-		file then it loads the snippets from:
+		file it loads the snippets from:
 
 		- "vim.snip*"
 		- "vim_*.snip*" 
@@ -165,8 +165,8 @@ g:neosnippet#disable_select_mode_mappings
 				*g:neosnippet#disable_select_mode_mappings*
 		This variable disables key-mappings in |Select-mode| where the
 		snippets_complete performs the snippet completion. Usually it
-		it better to leave it as it is. But if you have troubles with
-		the buffer switcher LustyJuggler you can switch them of.
+		is better to leave it as it is. But if you have troubles with
+		the buffer switcher LustyJuggler you can switch them off.
 		
 				*g:neocomplcache_disable_select_mode_mappings*
 		Note: |g:neocomplcache_disable_select_mode_mappings| is an
@@ -179,7 +179,7 @@ g:neosnippet#disable_runtime_snippets
 		This is a dictionary variable which uses file types as key.
 		If you set the value of a file type entry to 1, this prevents
 		loading all the file type specific built-in snippets. This is
-		very useful to to prevent snippet conflicts between self
+		very useful to prevent snippet conflicts between self
 		defined snippet files and the built-in snippet files of
 		neosnippet. If you use a "_" as key for an entry this will
 		treat the value of the entry as default value for all file
@@ -207,13 +207,13 @@ g:neosnippet#disable_runtime_snippets
 
 g:neosnippet#enable_snipmate_compatibility
 				*g:neosnippet#enable_snipmate_compatibility*
-		If it is non 0, neosnippet will enable snipMate compatibility
-		feature(For example: Filename() function).
+		If this variable is not 0, neosnippet will enable the snipMate 
+		compatibility feature (For example: Filename() function).
 
 		The default value is 0.
 
 g:neosnippet#enable_preview			 *g:neosnippet#enable_preview*
-		If it is non 0, neosnippet will enable preview window
+		If this variable is not 0, neosnippet will enable the preview window
 		feature.
 
 		The default value is 0.
@@ -251,7 +251,7 @@ s_<Plug>(neosnippet_expand)
 						*s_<Plug>(neosnippet_expand)*
 		Expand a snippet in current cursor position. It only takes
 		effect if there is a snippet text to expand or if you have
-		chosen one from the neocomplcache drop down menu.
+		chosen a snippet from the neocomplcache drop down menu.
 
 				*<Plug>(neocomplcache_snippets_force_expand)*
 		Note: |<Plug>(neocomplcache_snippets_force_expand)| is
@@ -284,7 +284,7 @@ x_<Plug>(neosnippet_expand_target)
 
 x_<Plug>(neosnippet_start_unite_snippet_target)
 			*x_<Plug>(neosnippet_start_unite_snippet_target)*
-		Expand the input trigger by a selected target text by the
+		Expand the input trigger by a selected target text with the
 		unite interface.
 		Note: The plug-in |unite.vim| is required for that feature.
 
@@ -294,10 +294,10 @@ x_<Plug>(neosnippet_register_oneshot_snippet)
 
 neosnippet#expandable()
 						*neosnippet#expandable()*
-		You can use this function with imap <expr>. It checks whether
+		You can use this function with imap <expr>. It checks if
 		the cursor text is a snippet trigger. This is is useful to
 		save key mappings.
-		Note: If you used to
+		Note: If you are used to
 		|neocomplcache#sources#snippets_complete#expandable()|, you
 		must use |neosnippet#expandable_or_jumpable()|.
 
@@ -321,10 +321,10 @@ neosnippet#jumpable()
 
 neosnippet#expandable_or_jumpable()
 					*neosnippet#expandable_or_jumpable()*
-		You can use this function with imap <expr>. It checks whether
+		You can use this function with imap <expr>. It checks if
 		the cursor text is a snippet trigger or a placeholder. This is
 		is useful to save key mappings.
-		Note: You don't like to jump to next placeholder, you must use
+		Note: If you don't like to jump to the next placeholder, you must use
 		|neosnippet#expandable()| instead of
 		|neosnippet#expandable_or_jumpable()|.
 >
@@ -747,7 +747,7 @@ Q: Error using snipmate-snippets
 Note: snipmate-snippets is currently vim-snippets.
 https://github.com/Shougo/neosnippet/issues/86
 
-A: Please try below settings. It defines snipMate function.
+A: Please try the setting below. It defines the snipMate function.
 >
 	let g:neosnippet#enable_snipmate_compatibility = 1
 <
