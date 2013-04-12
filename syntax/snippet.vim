@@ -40,54 +40,54 @@ syntax region  neosnippetString
 syntax region  neosnippetEval
       \ start=+\\\@<!`+ end=+\\\@<!`+ contained
 syntax match   neosnippetWord
-      \'^\s\+.*$' contains=
+      \ '^\s\+.*$' contains=
       \neosnippetEval,neosnippetPlaceHolder,neosnippetEscape,neosnippetVariable
 syntax match   neosnippetPlaceHolder
-      \'\\\@<!\${\d\+\%(:.\{-}\)\?\\\@<!}'
+      \ '\\\@<!\${\d\+\%(:.\{-}\)\?\\\@<!}'
       \ contained contains=neosnippetPlaceHolderComment
 syntax match   neosnippetVariable
-      \'\\\@<!\$\d\+' contained
+      \ '\\\@<!\$\d\+' contained
 syntax match   neosnippetComment
-      \'^#.*$'
+      \ '^#.*$'
 syntax match   neosnippetEscape
-      \'\\[`]' contained
+      \ '\\[`]' contained
 
 syntax match   neosnippetKeyword
-      \'^\%(include\|snippet\|abbr\|prev_word\|delete\|alias\|options\|regexp\|TARGET\)' contained
+      \ '^\%(include\|snippet\|abbr\|prev_word\|delete\|alias\|options\|regexp\|TARGET\)' contained
 syntax keyword   neosnippetOption
       \ head word indent contained
 syntax match   neosnippetPrevWords
-      \'^prev_word\s\+.*$' contains=neosnippetString,neosnippetKeyword
+      \ '^prev_word\s\+.*$' contains=neosnippetString,neosnippetKeyword
 syntax match   neosnippetRegexpr
-      \'^regexp\s\+.*$' contains=neosnippetString,neosnippetKeyword
+      \ '^regexp\s\+.*$' contains=neosnippetString,neosnippetKeyword
 syntax match   neosnippetStatementName
-      \'^snippet\s.*$' contains=neosnippetName,neosnippetKeyword
+      \ '^snippet\s.*$' contains=neosnippetName,neosnippetKeyword
 syntax match   neosnippetName
-      \'\s\+.*$' contained
+      \ '\s\+.*$' contained
 syntax match   neosnippetStatementAbbr
-      \'^abbr\s.*$' contains=neosnippetAbbr,neosnippetKeyword
+      \ '^abbr\s.*$' contains=neosnippetAbbr,neosnippetKeyword
 syntax match   neosnippetAbbr
-      \'\s\+.*$' contained
+      \ '\s\+.*$' contained
 syntax match   neosnippetStatementRank
-      \'^rank\s.*$' contains=neosnippetRank,neosnippetKeyword
+      \ '^rank\s.*$' contains=neosnippetRank,neosnippetKeyword
 syntax match   neosnippetRank
-      \'\s\+\d\+$' contained
+      \ '\s\+\d\+$' contained
 syntax match   neosnippetStatementInclude
-      \'^include\s.*$' contains=neosnippetInclude,neosnippetKeyword
+      \ '^include\s.*$' contains=neosnippetInclude,neosnippetKeyword
 syntax match   neosnippetInclude
-      \'\s\+.*$' contained
+      \ '\s\+.*$' contained
 syntax match   neosnippetStatementDelete
-      \'^delete\s.*$' contains=neosnippetDelete,neosnippetKeyword
+      \ '^delete\s.*$' contains=neosnippetDelete,neosnippetKeyword
 syntax match   neosnippetDelete
-      \'\s\+.*$' contained
+      \ '\s\+.*$' contained
 syntax match   neosnippetStatementAlias
-      \'^alias\s.*$' contains=neosnippetAlias,neosnippetKeyword
+      \ '^alias\s.*$' contains=neosnippetAlias,neosnippetKeyword
 syntax match   neosnippetAlias
-      \'\s\+.*$' contained
+      \ '\s\+.*$' contained
 syntax match   neosnippetStatementOptions
-      \'^options\s.*$' contains=neosnippetOption,neosnippetKeyword
+      \ '^options\s.*$' contains=neosnippetOption,neosnippetKeyword
 syntax match   neosnippetPlaceHolderComment
-      \'{\d\+:\zs#:.\{-}\ze\\\@<!}' contained
+      \ '{\d\+:\zs#:.\{-}\ze\\\@<!}' contained
 
 highlight def link neosnippetKeyword Statement
 highlight def link neosnippetString String
