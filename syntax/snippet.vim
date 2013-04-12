@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: syntaxtax/snippet.vim
 " AUTHOR: Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 15 Sep 2010
+" Last Modified: 12 Apr 2013
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -29,7 +29,7 @@ set cpo&vim
 
 if version < 700
   syntax clear
-elseif exists("b:current_syntaxtax")
+elseif exists("b:current_syntax")
   finish
 endif
 
@@ -105,7 +105,7 @@ highlight def link neosnippetOption PreProc
 highlight def link neosnippetAlias Identifier
 highlight def link neosnippetEscape Special
 
-let b:current_syntaxtax = "snippet"
+let b:current_syntax = "snippet"
 
 let &cpo = s:save_cpo
 unlet s:save_cpo
