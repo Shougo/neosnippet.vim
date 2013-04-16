@@ -772,8 +772,10 @@ A:
 ==============================================================================
 CHANGELOG			*neosnippet-changelog*
 
+2013-04-16
+- Improved changing foldmethod feature.
+
 2013-04-12
-- Removed changing foldmethod feature.
 - Fixed syntax file.
 
 2013-04-11

@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: neosnippet.vim
 " AUTHOR:  Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 12 Apr 2013.
+" Last Modified: 16 Apr 2013.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -581,6 +581,13 @@ function! neosnippet#expand(cur_text, col, trigger_name) "{{{
   let next_col = len(snippet_lines[-1]) + 1
   let snippet_lines[-1] = snippet_lines[-1] . next_line
 
+  if has('folding')
+    " Note: Change foldmethod to "manual". Because, if you use foldmethod is
+    " expr, whole snippet is visually selected.
+    let foldmethod_save = &l:foldmethod
+    let &l:foldmethod = 'manual'
+  endif
+
   try
     call setline('.', snippet_lines[0])
     if len(snippet_lines) > 1
@@ -608,6 +615,10 @@ function! neosnippet#expand(cur_text, col, trigger_name) "{{{
     endif
   finally
     if has('folding')
+      if foldmethod_save !=# &l:foldmethod
+        let &l:foldmethod = foldmethod_save
+      endif
+
       silent! execute begin_line . ',' . end_line . 'foldopen!'
     endif
   endtry
