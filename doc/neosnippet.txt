@@ -749,7 +749,7 @@ https://github.com/Shougo/neosnippet/issues/86
 
 A: Please try the setting below. It defines the snipMate function.
 >
-	let g:neosnippet#enable_snipmate_compatibility = 1
+	let g:neosnippet#enable_snipmate_compatibility = 2
 <
 Q: Cannot jump over placeholder
 https://github.com/Shougo/neosnippet/issues/120
@@ -769,6 +769,10 @@ A:
 >
 	set completeopt-=preview
 <
+Q: I want to add snippets dynamically.
+
+A: You can use |:NeoSnippetSource| for it.
+
 ==============================================================================
 CHANGELOG			*neosnippet-changelog*
 
