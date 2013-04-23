@@ -31,7 +31,7 @@ abbr        unless endunless
 snippet     case
 abbr        case when endcase
     {% case ${1:#:condition} %}
-    {% when ${2:TARGET} %}
+    {% when ${2:#:TARGET} %}
       ${3}
     {% endcase%}
 
@@ -62,7 +62,7 @@ snippet     assign
     {% assign ${1:#:var} = ${2:#:value} %}
 
 snippet     capture
-    {% capture ${1:#:var} %}${2:TARGET}{% endcapture %}
+    {% capture ${1:#:var} %}${2:#:TARGET}{% endcapture %}
 
 snippet     include
     {% include ${1:#:TARGET} %}
