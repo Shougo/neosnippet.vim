@@ -375,7 +375,7 @@ EXAMPLES					*neosnippet-examples*
 SNIPPET SYNTAX					*neosnippet-snippet-syntax*
 
 It is quite easy to create your own snippets. You can use the example below to
-get started. 
+get started.
 
 Example:
 
@@ -391,25 +391,27 @@ Example:
 < 
 
 The snippet syntax is close to the one of |snipMate|. Each snippet starts with
-some keywords that define the name and modify the expansion and treatment of the
-snippet.
+some keywords that define the name and modify the expansion and treatment of
+the snippet.
 
 Snippet Keywords:
 
 - snippet [name] (Required)
 
-	Each snippet starts with the keyword "snippet". This keyword is directly
-	followed by the snippet name. The snippet name is used to expand the snippet.
+	Each snippet starts with the keyword "snippet". This keyword is
+	directly followed by the snippet name. The snippet name is used to
+	expand the snippet.
 
 - abbr [name] (Optional)
 
-	You can define an abbreviation for the snippet name. It will be displayed in
-	the drop down selection menu of the neocomplcache plugin.
+	You can define an abbreviation for the snippet name. It will be
+	displayed in the drop down selection menu of the neocomplcache plugin.
 
 - alias [aliases] (Optional)
 
-	Alias names can be use as additional keywords to expand the snippet. You can
-	define multiple aliases using  either spaces ' ' or commas ',' as separator.
+	Alias names can be use as additional keywords to expand the snippet.
+	You can define multiple aliases using  either spaces ' ' or commas ','
+	as separator.
 
 	Example
 
@@ -419,8 +421,8 @@ Snippet Keywords:
 
 - regexp [pattern] (Optional)
 
-	A pattern can be defined via a regular expression. The snippet expands only 
-	when the expression pattern is matched.
+	A pattern can be defined via a regular expression. The snippet expands
+	only when the expression pattern is matched.
 
 	Example
 
@@ -432,9 +434,9 @@ Snippet Keywords:
 
 	Options influence the snippet behavior. The possible values are:
 
-	+ word	This snippet expands by a word boundary. Note: To complete
-		the trigger with snippets_complete, it must be a word character 
-		(digits, alphabetical characters or "_"). 
+	+ word	This snippet expands by a word boundary.
+		Note: To complete the trigger with snippets_complete, it must
+		be a word character (digits, alphabetical characters or "_").
 
 >
 		snippet     date
@@ -454,25 +456,26 @@ Snippet Keywords:
 		  endif
 <
 
-	+ indent 	The horizontal position of the snippet will be adjusted 
+	+ indent The horizontal position of the snippet will be adjusted
 		to the indent of the line above the snippet after expansion.
 
 The snippet itself starts below the part that contains the options, snippet
 aliases and keywords, described above. It contains the snippet which gets
 expanded which can contain several placeholders. The placeholders are used as
-jump points while expanding the snippet. There are several placeholders available
-providing different functionality.
+jump points while expanding the snippet. There are several placeholders
+available providing different functionality.
 
 The structure of a placeholder can be:
 
 - ${number:placeholder text}
 
-	The placeholder starts with a dollar sign "$". The number of a placeholder 
-	and the placeholder text are separated by a colon ":". They are surrounded 
-	by a pair of curly braces "{}". The placeholder text is displayed after 
-	the snippet expansion and will be replaced by your text. If you jump over 
-	the snippet and do not insert any text in that placeholder position the text 
-	remains there. This can be used as a default value for a certain position.
+	The placeholder starts with a dollar sign "$". The number of a
+	placeholder and the placeholder text are separated by a colon ":".
+	They are surrounded by a pair of curly braces "{}". The placeholder
+	text is displayed after the snippet expansion and will be replaced by
+	your text. If you jump over the snippet and do not insert any text in
+	that placeholder position the text remains there. This can be used as
+	a default value for a certain position.
 
 	Example
 
@@ -485,9 +488,9 @@ The structure of a placeholder can be:
 
 - ${number:#:placeholder text}
 
-	In this kind of placeholder the number is followed by the hash character "#". 
-	If you jump over this placeholder and do not insert any text, the placeholder 
-	text will be removed.
+	In this kind of placeholder the number is followed by the hash
+	character "#".  If you jump over this placeholder and do not insert
+	any text, the placeholder text will be removed.
 
 	Example
 
@@ -500,8 +503,9 @@ The structure of a placeholder can be:
 
 - ${number:TARGET}
 
-	This is the target placeholder which is replaced by text from a visual 
-	selection. Note: You need to make a visual selection and expand your 
+	This is the target placeholder which is replaced by text from a visual
+	selection.
+	Note: You need to make a visual selection and expand your
 	snippet with the key mapping below for this to work.
 
 	|<Plug>(neosnippet_expand_target)|.
@@ -520,9 +524,9 @@ The structure of a placeholder can be:
 
 - ${number}
 
-	This is a placeholder which you can use as a simple jump position. This can be
-	useful if you edit a placeholder inside of some sort of brackets or environment
-	and want to go on behind it after that.
+	This is a placeholder which you can use as a simple jump position.
+	This can be useful if you edit a placeholder inside of some sort of
+	brackets or environment and want to go on behind it after that.
 
 	Example
 
@@ -536,12 +540,14 @@ The structure of a placeholder can be:
 <
 
 - $number
+- ${0}
 
-	This is a synchronized placeholder. Sometimes it is required to repeat a value
-	in several positions inside a snippet. If you set the number of this placeholder
-	to the same number as one of the other placeholders in the snippet, it will
-	repeat its content. $1 is synchronized to ${1} and so on. $0 will be the final
-	jump placeholder.
+	This is a synchronized placeholder. Sometimes it is required to repeat
+	a value in several positions inside a snippet. If you set the number
+	of this placeholder to the same number as one of the other
+	placeholders in the snippet, it will repeat its content. $1 is
+	synchronized to ${1} and so on. ${0} will be the final jump
+	placeholder.
 
 	Example
 
@@ -552,8 +558,9 @@ The structure of a placeholder can be:
 	   } // namespace $1
 <
 
-	Note: If you like to include characters in snippets that already have a
-	special meaning to neosnippet you need to escape them with a backslash.
+	Note: If you like to include characters in snippets that already have
+	a special meaning to neosnippet you need to escape them with a
+	backslash.
 
 >
 	snippet code
@@ -570,7 +577,8 @@ The structure of a placeholder can be:
 	    end
 <
 
-	A placeholder value can not contain new lines. The snippet below is not valid.
+	A placeholder value can not contain new lines. The snippet below is
+	not valid.
 
 >
 	snippet invalid
@@ -596,7 +604,7 @@ You can also nest placeholders if you escape the special characters.
 	   <div ${1:id="${2:someid\}"}>${3}</div>${4}
 <
 
-In some cases you need to escape the curly brace "}" twice as shown in the 
+In some cases you need to escape the curly brace "}" twice as shown in the
 example below.
 
 >
@@ -635,7 +643,7 @@ detects this. If you want to overwrite a snippet explicitly, please use:
 After that you can redefine the snippet. But this does not work if you include
 external snippet files. There will be no warning when snippets get overwritten.
 
-Multi snippet feature in snipMate is available. Neosnippet substitutes trigger 
+Multi snippet feature in snipMate is available. Neosnippet substitutes trigger
 and descriptions spaces to '_'.
 
 >
@@ -661,8 +669,8 @@ Note: "#{string}" is comment string. But it must be in head.
 	  # It is not comment string!
 <
 
-Note: Neosnippet ignores empty or spaces lines in snippet end. If you want to insert empty
-line in snippet end, you must insert placeholder.
+Note: Neosnippet ignores empty or spaces lines in snippet end. If you want to
+insert empty line in snippet end, you must insert placeholder.
 >
 	# This is valid.
 	snippet     #!
