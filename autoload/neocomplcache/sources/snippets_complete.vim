@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: snippets_complete.vim
 " AUTHOR:  Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 30 Mar 2013.
+" Last Modified: 12 May 2013.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -30,6 +30,8 @@ set cpo&vim
 let s:source = {
       \ 'name' : 'snippets_complete',
       \ 'kind' : 'complfunc',
+      \ 'min_pattern_length' :
+      \     g:neocomplcache_auto_completion_start_length,
       \}
 
 function! s:source.initialize() "{{{
