@@ -1,11 +1,14 @@
 snippet     comment
+options     word
     {% comment %}${1:#:comment}{% endcomment %}
 
 snippet     raw
+options     word
     {% raw %}${1:#:TARGET}{% endraw %}
 
 snippet     if
 abbr        if endif
+options     word
     {% if ${1:#:condition} %}
       ${0:TARGET}
     {% endif %}
@@ -24,6 +27,7 @@ abbr        if else endif
 
 snippet     unless
 abbr        unless endunless
+options     word
     {% unless ${1:#:TARGET} %}
       ${0:TARGET}
     {% endunless %}
@@ -44,32 +48,39 @@ snippet     when
       ${0}
 
 snippet     cycle
+options     word
     {% cycle ${1:#:TARGET} %}
 
 snippet     for
 abbr        for in endfor
+options     word
     {% for ${1:#:var} in ${2:#:list} %}
       ${0:TARGET}
     {% endfor%}
 
 snippet     tablerow
 abbr        tablerow in endtablerow
+options     word
     {% tablerow ${1:#:var} in ${2:#:list} %}
       ${0:TARGET}
     {% endtablerow %}
 
 snippet     assign
+options     word
     {% assign ${1:#:var} = ${2:#:value} %}
 
 snippet     capture
+options     word
     {% capture ${1:#:var} %}${2:#:TARGET}{% endcapture %}
 
 snippet     include
+options     word
     {% include ${1:#:TARGET} %}
 
 snippet     block
 abbr        {{ }}
 alias       {{
+options     word
     {{ ${1:#:TARGET} }}
 
 
@@ -77,6 +88,7 @@ alias       {{
 
 snippet     highlight
 alias       hl
+options     word
     {% highlight ${1:#:TARGET} %}
       ${2:code}
     {% endhighlight %}
@@ -84,10 +96,12 @@ alias       hl
 snippet     highlight_line
 abbr        Line number
 alias       hl_l
+options     word
     {% highlight ${1:#:TARGET} linenos %}
       ${2:code}
     {% endhighlight %}
 
 snippet     post_url
+options     word
     {% post_url ${1:#:TARGET} %}
 
