@@ -57,9 +57,7 @@ function! s:check_initialize() "{{{
   if !exists('s:is_initialized')
     let s:is_initialized = 1
 
-    call s:initialize_script_variables()
-    call s:initialize_others()
-    call s:initialize_cache()
+    call neosnippet#initialize()
   endif
 endfunction"}}}
 
