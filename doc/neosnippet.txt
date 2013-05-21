@@ -784,6 +784,9 @@ A: You can use |:NeoSnippetSource| for it.
 ==============================================================================
 CHANGELOG			*neosnippet-changelog*
 
+2013-05-21
+- Improved neosnippet initialization.
+
 2013-05-18
 - Added go snippets.
 

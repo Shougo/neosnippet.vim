@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: neosnippet.vim
 " AUTHOR:  Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 16 Apr 2013.
+" Last Modified: 21 May 2013.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -47,21 +47,10 @@ let s:neosnippet_options = [
       \]
 "}}}
 
-function! neosnippet#_lazy_initialize() "{{{
-  if !exists('s:lazy_progress')
-    let s:lazy_progress = 0
-  endif
-
-  if s:lazy_progress == 0
-  elseif s:lazy_progress == 1
-    call s:initialize_script_variables()
-  elseif s:lazy_progress == 2
-    call s:initialize_others()
-  else
-    call s:initialize_cache()
-  endif
-
-  let s:lazy_progress += 1
+function! neosnippet#initialize() "{{{
+  call s:initialize_script_variables()
+  call s:initialize_others()
+  call s:initialize_cache()
 endfunction"}}}
 
 function! s:check_initialize() "{{{
