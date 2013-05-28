@@ -61,7 +61,7 @@ function! s:source.gather_candidates(context) "{{{
   return candidates
 endfunction"}}}
 
-function! neocomplcache#sources#neosnippet#define() "{{{
+function! neocomplete#sources#neosnippet#define() "{{{
   return s:source
 endfunction"}}}
 
