@@ -1051,9 +1051,14 @@ function! neosnippet#get_runtime_snippets_directory() "{{{
   return copy(s:runtime_dir)
 endfunction"}}}
 function! neosnippet#get_filetype() "{{{
-  return s:exists_context_filetype ?
-        \ context_filetype#get_filetype() :
-        \ (&filetype == '' ? 'nothing' : &filetype)
+  let context_filetype =
+        \ s:exists_context_filetype ?
+        \ context_filetype#get_filetype() : &filetype
+  if context_filetype == ''
+    let context_filetype = 'nothing'
+  endif
+
+  return context_filetype
 endfunction"}}}
 function! s:get_sources_filetypes(filetype) "{{{
   return (exists('*neocomplcache#get_source_filetypes') ?
