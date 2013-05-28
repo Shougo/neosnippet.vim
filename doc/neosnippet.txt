@@ -59,6 +59,10 @@ Note: neocomplcache is NOT required! But recommended.
 Extra snippets files are available in:
 https://github.com/honza/vim-snippets
 
+Note: To enable context filetype feature, you must install
+context_filetype.vim.
+https://github.com/Shougo/context_filetype.vim
+
 ==============================================================================
 INTERFACE					*neosnippet-interface*
 
@@ -783,6 +787,9 @@ A: You can use |:NeoSnippetSource| for it.
 
 ==============================================================================
 CHANGELOG			*neosnippet-changelog*
+
+2013-05-28
+- Supported context_filetype.
 
 2013-05-27
 - Added clojure snippets.
