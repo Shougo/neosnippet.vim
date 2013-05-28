@@ -1,0 +1,28 @@
+snippet     defn-doc
+abbr        defn function "..." [...] ...
+options     head
+	(defn ${1:name}
+		"${2:doc}"
+		[${3}]
+		${0})
+
+snippet     try
+abbr        (try ... (catch ...
+	(try
+		${1}
+		(catch ${2:Exception} e ${3:nil}))
+
+snippet     ref-set
+abbr        (dosync (ref-set ...
+options     head
+	(dosync
+		(ref-set ${1:ref} ${2:value}))
+
+# http://tnoda-clojure.tumblr.com/post/24969285880/clojure-scripting
+snippet     shebang
+options     head
+	#^:shebang '[
+	exec java -cp \`locate clojure- | grep -P "clojure-[\\d\\.]+\\.jar$" | tail -1\` clojure.main "\$0"
+	]
+	
+
