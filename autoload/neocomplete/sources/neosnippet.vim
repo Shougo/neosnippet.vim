@@ -28,7 +28,7 @@ let s:save_cpo = &cpo
 set cpo&vim
 
 let s:source = {
-      \ 'name' : 'snippets_complete',
+      \ 'name' : 'neosnippet',
       \ 'kind' : 'manual',
       \ 'min_pattern_length' :
       \     g:neocomplcache_auto_completion_start_length,
@@ -47,7 +47,7 @@ function! s:source.get_complete_position(context) "{{{
 endfunction"}}}
 
 function! s:source.gather_candidates(context) "{{{
-  let candidates = neosnippet#get_snippets()
+  let candidates = values(neosnippet#get_snippets())
 
   for snippet in candidates
     let snippet.dup = 1
