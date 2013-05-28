@@ -1,0 +1,71 @@
+"=============================================================================
+" FILE: neosnippet.vim
+" AUTHOR:  Shougo Matsushita <Shougo.Matsu@gmail.com>
+" Last Modified: 28 May 2013.
+" License: MIT license  {{{
+"     Permission is hereby granted, free of charge, to any person obtaining
+"     a copy of this software and associated documentation files (the
+"     "Software"), to deal in the Software without restriction, including
+"     without limitation the rights to use, copy, modify, merge, publish,
+"     distribute, sublicense, and/or sell copies of the Software, and to
+"     permit persons to whom the Software is furnished to do so, subject to
+"     the following conditions:
+"
+"     The above copyright notice and this permission notice shall be included
+"     in all copies or substantial portions of the Software.
+"
+"     THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
+"     OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+"     MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+"     IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY
+"     CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
+"     TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
+"     SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+" }}}
+"=============================================================================
+
+let s:save_cpo = &cpo
+set cpo&vim
+
+let s:source = {
+      \ 'name' : 'snippets_complete',
+      \ 'kind' : 'manual',
+      \ 'min_pattern_length' :
+      \     g:neocomplcache_auto_completion_start_length,
+      \ 'rank' : 8,
+      \ 'hooks' : {},
+      \}
+
+function! s:source.hooks.on_init(context) "{{{
+  " Initialize.
+  call neosnippet#util#set_default(
+        \ 'g:neosnippet#enable_preview', 0)
+endfunction"}}}
+
+function! s:source.get_complete_position(context) "{{{
+  return match(a:context.input, '\w\+$')
+endfunction"}}}
+
+function! s:source.gather_candidates(context) "{{{
+  let candidates = neosnippet#get_snippets()
+
+  for snippet in candidates
+    let snippet.dup = 1
+    let snippet.menu = neosnippet#util#strwidthpart(
+          \ snippet.menu_template, winwidth(0)/3)
+    if g:neosnippet#enable_preview
+      let snippet.info = snippet.snip
+    endif
+  endfor
+
+  return candidates
+endfunction"}}}
+
+function! neocomplcache#sources#neosnippet#define() "{{{
+  return s:source
+endfunction"}}}
+
+let &cpo = s:save_cpo
+unlet s:save_cpo
+
+" vim: foldmethod=marker
