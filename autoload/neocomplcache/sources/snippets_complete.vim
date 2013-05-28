@@ -62,8 +62,6 @@ function! s:source.get_complete_words(cur_keyword_pos, cur_keyword_str) "{{{
   for snippet in list
     let snippet.dup = 1
 
-    let snippet.kind = get(snippet,
-          \ 'neocomplcache__refresh', 0) ? '~' : ''
     let snippet.menu = neosnippet#util#strwidthpart(
           \ snippet.menu_template, winwidth(0)/3)
     if g:neosnippet#enable_preview
@@ -81,12 +79,6 @@ function! s:keyword_filter(snippets, cur_keyword_str) "{{{
   " Use default filter.
   let list = neocomplcache#keyword_filter(
         \ values(a:snippets), a:cur_keyword_str)
-  for snippet in list
-    " reset refresh flag.
-    let snippet.neocomplcache__refresh = 0
-    let snippet.rank = get(g:neocomplcache_source_rank,
-          \ 'snippets_complete', 8)
-  endfor
 
   " Add cur_keyword_str snippet.
   if has_key(a:snippets, a:cur_keyword_str)
@@ -106,10 +98,6 @@ endfunction"}}}
 function! neocomplcache#sources#snippets_complete#define() "{{{
   return s:source
 endfunction"}}}
-
-function! s:compare_words(i1, i2)
-  return a:i1.menu - a:i2.menu
-endfunction
 
 function! neocomplcache#sources#snippets_complete#expandable() "{{{
   return neosnippet#expandable()
