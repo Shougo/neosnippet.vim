@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: neosnippet.vim
 " AUTHOR:  Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 28 May 2013.
+" Last Modified: 29 May 2013.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -29,9 +29,7 @@ set cpo&vim
 
 let s:source = {
       \ 'name' : 'neosnippet',
-      \ 'kind' : 'manual',
-      \ 'min_pattern_length' :
-      \     g:neocomplcache_auto_completion_start_length,
+      \ 'kind' : 'keyword',
       \ 'rank' : 8,
       \ 'hooks' : {},
       \}
@@ -40,10 +38,6 @@ function! s:source.hooks.on_init(context) "{{{
   " Initialize.
   call neosnippet#util#set_default(
         \ 'g:neosnippet#enable_preview', 0)
-endfunction"}}}
-
-function! s:source.get_complete_position(context) "{{{
-  return match(a:context.input, '\w\+$')
 endfunction"}}}
 
 function! s:source.gather_candidates(context) "{{{
