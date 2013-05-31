@@ -5,9 +5,16 @@ options head
   }
 
 snippet function
-alias   func
+abbr    func
 options word
   function ${1:#:function_name}(${2:#:argument}) {
+    ${0:TARGET}
+  }
+
+snippet function2
+abbr    func2
+options head
+  function ${1:function_name}(${2:argument}) {
     ${0:TARGET}
   }
 
@@ -28,7 +35,8 @@ options head
     ${0:TARGET}
   }
 
-snippet ife
+snippet if-else
+abbr ife
 options head
   if (${1:#:condition}) {
     ${0:TARGET}
@@ -37,25 +45,25 @@ options head
 
 snippet for
 options head
-  for (var ${2:i}=0; $2 < ${1:#:Things}.length; $2++) {
+  for (var ${1:i}=0; $1 < ${2:#:Things}.length; ++$1) {
     ${0:TARGET}
   }
 
 snippet forin
 options head
-  for (var ${2:i} in ${1:#:Things}) {
+  for (var ${1:i} in ${2:#:Things}) {
     ${0:TARGET}
   };
 
-snippet ;,
+snippet key-value
+abbr :,
 options word
-  ${1:#:value_name}:${0:#:value},
+  ${1:#:value_name}: ${0:#:value},
 
-snippet key
-options word
-  ${1:#:key}: "${2:#:value}"}${3:, }
+#snippet key
+#options word
+#  ${1:#:key}: "${2:#:value}"}${3:, }
 
-snippet timeout
+snippet setTimeout-function
 options head
-  setTimeout(function() {${0}}${2:}, ${1:10});
-
+  setTimeout(function() {${0}}, ${1:10});
