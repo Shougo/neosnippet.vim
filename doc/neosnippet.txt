@@ -788,6 +788,9 @@ A: You can use |:NeoSnippetSource| for it.
 ==============================================================================
 CHANGELOG			*neosnippet-changelog*
 
+2013-05-30
+- Added scheme snippets.
+
 2013-05-28
 - Supported context_filetype.
 
