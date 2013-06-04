@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: snippets_complete.vim
 " AUTHOR:  Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 28 May 2013.
+" Last Modified: 04 Jun 2013.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -97,23 +97,6 @@ endfunction"}}}
 
 function! neocomplcache#sources#snippets_complete#define() "{{{
   return s:source
-endfunction"}}}
-
-function! neocomplcache#sources#snippets_complete#expandable() "{{{
-  return neosnippet#expandable()
-endfunction"}}}
-function! neocomplcache#sources#snippets_complete#force_expandable() "{{{
-  return neosnippet#expandable()
-endfunction"}}}
-function! neocomplcache#sources#snippets_complete#jumpable() "{{{
-  return neosnippet#jumpable()
-endfunction"}}}
-
-function! neocomplcache#sources#snippets_complete#get_snippets() "{{{
-  return neosnippet#get_snippets()
-endfunction"}}}
-function! neocomplcache#sources#snippets_complete#get_snippets_dir() "{{{
-  return neosnippet#get_snippets_directory()
 endfunction"}}}
 
 let &cpo = s:save_cpo

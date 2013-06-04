@@ -10,7 +10,7 @@ snipMate.vim or snippetsEmu.vim. But since you can choose snippets with the
 have less trouble using them, because you do not have to remember each snippet
 name.
 
-Note: neocomplcache is NOT required! But recommended.
+Note: neocomplcache/neocomplete is NOT required! But recommended.
 
 Extra snippets files are available in:
 [vim-snippets](https://github.com/honza/vim-snippets)

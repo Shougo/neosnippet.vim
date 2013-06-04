@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: neosnippet.vim
 " AUTHOR:  Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 28 May 2013.
+" Last Modified: 04 Jun 2013.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -31,11 +31,9 @@ set cpo&vim
 call neosnippet#util#set_default(
       \ 'g:neosnippet#disable_runtime_snippets', {})
 call neosnippet#util#set_default(
-      \ 'g:neosnippet#snippets_directory',
-      \ '', 'g:neocomplcache_snippets_dir')
+      \ 'g:neosnippet#snippets_directory', '')
 call neosnippet#util#set_default(
-      \ 'g:neosnippet#disable_select_mode_mappings',
-      \ 1, 'g:neocomplcache_disable_select_mode_mappings')
+      \ 'g:neosnippet#disable_select_mode_mappings', 1)
 call neosnippet#util#set_default(
       \ 'g:neosnippet#enable_snipmate_compatibility', 0)
 "}}}
@@ -1251,6 +1249,9 @@ function! s:skip_next_auto_completion() "{{{
   if exists('*neocomplcache#skip_next_complete')
     call neocomplcache#skip_next_complete()
   endif
+  if exists('*neocomplete#skip_next_complete')
+    call neocomplete#skip_next_complete()
+  endif
 
   let neosnippet = neosnippet#get_current_neosnippet()
   let neosnippet.trigger = 0
@@ -1324,11 +1325,6 @@ function! s:initialize_script_variables() "{{{
   " Initialize.
   let s:snippets_expand_stack = []
   let s:snippets = {}
-
-  if get(g:, 'neocomplcache_snippets_disable_runtime_snippets', 0)
-    " Set for backward compatibility.
-    let g:neosnippet#disable_runtime_snippets._ = 1
-  endif
 
   " Set runtime dir.
   let s:runtime_dir = split(globpath(&runtimepath,
