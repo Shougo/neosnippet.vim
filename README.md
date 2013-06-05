@@ -6,7 +6,8 @@ small templates for commonly used code that you can fill in on the
 fly. To use snippets can increase your productivity in Vim a lot.
 The functionality of this plug-in is quite similar to plug-ins like
 snipMate.vim or snippetsEmu.vim. But since you can choose snippets with the
-[Neocomplcache](https://github.com/Shougo/neocomplcache) interface, you might
+[neocomplcache](https://github.com/Shougo/neocomplcache.vim) /
+[neocomplete](https://github.com/Shougo/neocomplete.vim) interface, you might
 have less trouble using them, because you do not have to remember each snippet
 name.
 
@@ -24,17 +25,24 @@ required files into your `.vim` folder.
 
 ### Manual (not recommended)
 
-1. Install the [Neocomplcache](https://github.com/Shougo/neocomplcache) plugin first.
+1. Install the
+   [neocomplcache](https://github.com/Shougo/neocomplcache.vim)/
+   [neocomplete](https://github.com/Shougo/neocomplete.vim) plugin first.
 2. Put files in your Vim directory (usually `~/.vim/` or
    `%PROGRAMFILES%/Vim/vimfiles` on Windows).
 
 ### Vundle 
 
-1. Setup the [vundle](https://github.com/gmarik/vundle) package manager 
-2. Set the bundles for [Neocomplcache](https://github.com/Shougo/neocomplcache) and [Neosnippet](https://github.com/Shougo/neosnippet) 
+1. Setup the [vundle](https://github.com/gmarik/vundle) package manager
+2. Set the bundles for [Neocomplcache](https://github.com/Shougo/neocomplcache)
+   or [neocomplete](https://github.com/Shougo/neocomplete.vim)
+   And [Neosnippet](https://github.com/Shougo/neosnippet)
 
     ```vim
     Bundle 'Shougo/neocomplcache'
+    or
+    Bundle 'Shougo/neocomplete'
+
     Bundle 'Shougo/neosnippet'
     ```
 
@@ -43,10 +51,15 @@ required files into your `.vim` folder.
 ### Neobundle 
 
 1. Setup the [neobundle](https://github.com/Shougo/neobundle.vim) package manager 
-2. Set the bundles for [Neocomplcache](https://github.com/Shougo/neocomplcache) and [Neosnippet](https://github.com/Shougo/neosnippet) 
+2. Set the bundles for [Neocomplcache](https://github.com/Shougo/neocomplcache)
+   or [neocomplete](https://github.com/Shougo/neocomplete.vim)
+   And [Neosnippet](https://github.com/Shougo/neosnippet)
 
     ```vim
     NeoBundle 'Shougo/neocomplcache'
+    or
+    NeoBundle 'Shougo/neocomplete'
+
     NeoBundle 'Shougo/neosnippet'
     ```
 
@@ -54,7 +67,7 @@ required files into your `.vim` folder.
 
 ### VAM (vim-addon-manager)
 
-1. Setup the [vim-addon-manager](https://github.com/MarcWeber/vim-addon-manager) 
+1. Setup the [vim-addon-manager](https://github.com/MarcWeber/vim-addon-manager)
    package manager.
 2. Add `neosnippet` to the list of addons in your vimrc:
 
