@@ -54,7 +54,7 @@ function! s:source.hooks.on_post_filter(context) "{{{
     endif
   endfor
 
-  return candidates
+  return a:context.candidates
 endfunction"}}}
 
 function! neocomplete#sources#neosnippet#define() "{{{
