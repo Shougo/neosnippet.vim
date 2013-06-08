@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: neosnippet.vim
 " AUTHOR:  Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 04 Jun 2013.
+" Last Modified: 08 Jun 2013.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -43,15 +43,6 @@ let s:neosnippet_options = [
       \ '-runtime',
       \ '-vertical', '-horizontal', '-direction=', '-split',
       \]
-" context_filetype.vim installation check.
-if !exists('s:exists_context_filetype')
-  try
-    call context_filetype#version()
-    let s:exists_context_filetype = 1
-  catch
-    let s:exists_context_filetype = 0
-  endtry
-endif
 "}}}
 
 function! neosnippet#initialize() "{{{
@@ -1049,6 +1040,16 @@ function! neosnippet#get_runtime_snippets_directory() "{{{
   return copy(s:runtime_dir)
 endfunction"}}}
 function! neosnippet#get_filetype() "{{{
+  if !exists('s:exists_context_filetype')
+    " context_filetype.vim installation check.
+    try
+      call context_filetype#version()
+      let s:exists_context_filetype = 1
+    catch
+      let s:exists_context_filetype = 0
+    endtry
+  endif
+
   let context_filetype =
         \ s:exists_context_filetype ?
         \ context_filetype#get_filetype() : &filetype
