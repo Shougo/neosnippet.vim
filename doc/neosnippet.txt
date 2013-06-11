@@ -724,6 +724,7 @@ CHANGELOG			*neosnippet-changelog*
 
 2013-06-10
 - Added sshconfig snip.
+- Added Makefile snip.
 
 2013-06-08
 - Improved context filetype check.
