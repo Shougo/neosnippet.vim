@@ -722,6 +722,9 @@ A: You can use |:NeoSnippetSource| for it.
 ==============================================================================
 CHANGELOG			*neosnippet-changelog*
 
+2013-06-16
+- Added groovy snip.
+
 2013-06-10
 - Added sshconfig snip.
 - Added Makefile snip.
