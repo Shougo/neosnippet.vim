@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: neosnippet.vim
 " AUTHOR:  Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 08 Jun 2013.
+" Last Modified: 25 Jun 2013.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -940,7 +940,7 @@ function! s:substitute_placeholder_marker(start, end, snippet_holder_cnt) "{{{
         let sub = escape(matchstr(getline(line),
               \ substitute(s:get_sync_placeholder_marker_default_pattern(),
               \ '\\d\\+', cnt, '')), '/\')
-        silent execute printf('%d,%ds/' . mirror_marker . '/%s/'
+        silent execute printf('%d,%ds/\m' . mirror_marker . '/\m%s/'
           \ . (&gdefault ? '' : 'g'), a:start, a:end, sub)
         call setline(line, substitute(getline(line), sync_marker, sub, ''))
       endif
@@ -954,7 +954,7 @@ function! s:substitute_placeholder_marker(start, end, snippet_holder_cnt) "{{{
     let mirror_marker = substitute(
           \ s:get_mirror_placeholder_marker_pattern(),
           \ '\\d\\+', cnt, '')
-    silent execute printf('%%s/' . mirror_marker . '/%s/'
+    silent execute printf('%%s/\m' . mirror_marker . '/\m%s/'
           \ . (&gdefault ? 'g' : ''), sub)
     let sync_marker = substitute(s:get_sync_placeholder_marker_pattern(),
         \ '\\d\\+', cnt, '')
