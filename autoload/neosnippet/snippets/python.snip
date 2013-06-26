@@ -77,6 +77,7 @@ options     head
 
 snippet     ifmain
 abbr        if __name__ == '__main__': ...
+alias       main
 options     head
 	if __name__ == '__main__':
 		${0:TARGET}
@@ -113,3 +114,6 @@ snippet     filter
 abbr        [x for x in {list} if {condition}]
 	[$1 for ${1:x} in ${2:#:list} if ${3:#:condition}]
 
+snippet     print
+options     word
+  print(${0:TARGET})

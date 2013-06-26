@@ -722,6 +722,9 @@ A: You can use |:NeoSnippetSource| for it.
 ==============================================================================
 CHANGELOG			*neosnippet-changelog*
 
+2013-06-25
+- Improved sh, python, and clojure snip.
+
 2013-06-18
 - Improved ruby snip.
 
