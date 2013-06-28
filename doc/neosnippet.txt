@@ -326,7 +326,6 @@ Example:
 	   if ${1:condition}
 	     ${2}
 	   endif
-< 
 
 The snippet syntax is close to the one of |snipMate|. Each snippet starts with
 some keywords that define the name and modify the expansion and treatment of
@@ -367,7 +366,14 @@ Snippet Keywords:
 >
 	regexp '^% '
 <
-
+	This snippet works same as "options head".
+>
+	snippet     if
+	regexp     '^\S*'
+	  if ${1:condition}
+	     ${2}
+	  endif
+<
 - options [options] (Optional)
 
 	Options influence the snippet behavior. The possible values are:
@@ -377,9 +383,9 @@ Snippet Keywords:
 		be a word character (digits, alphabetical characters or "_").
 
 >
-		snippet     date
-		options     word
-		    `strftime("%d %b %Y")`
+	snippet     date
+	options     word
+	    `strftime("%d %b %Y")`
 <
 
 	+ head	This snippet expands at the beginning of a line only.
@@ -387,11 +393,11 @@ Snippet Keywords:
 		there for backwards compatibility.
 
 >
-		snippet     if
-		options     head
-		  if ${1:condition}
-		     ${2}
-		  endif
+	snippet     if
+	options     head
+	  if ${1:condition}
+	     ${2}
+	  endif
 <
 
 	+ indent The horizontal position of the snippet will be adjusted
@@ -492,8 +498,8 @@ The structure of a placeholder can be:
 >
 	snippet namespace
 	namespace ${1:name} {
-		${0}
-	   } // namespace $1
+	    ${0}
+	} // namespace $1
 <
 
 	Note: If you like to include characters in snippets that already have
