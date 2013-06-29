@@ -369,7 +369,7 @@ Snippet Keywords:
 	This snippet works same as "options head".
 >
 	snippet     if
-	regexp     '^\S*'
+	regexp     '^\s*'
 	  if ${1:condition}
 	     ${2}
 	  endif
