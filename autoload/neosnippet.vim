@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: neosnippet.vim
 " AUTHOR:  Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 27 Jun 2013.
+" Last Modified: 03 Jul 2013.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -1227,7 +1227,7 @@ function! neosnippet#clear_select_mode_mappings() "{{{
   redir END
 
   for line in map(filter(split(mappings, '\n'),
-        \ "v:val !~# 'neosnippet\\|neocomplcache_snippets'"),
+        \ "v:val !~# '^s'"),
         \ "substitute(v:val, '<NL>', '<C-J>', 'g')")
     let map = matchstr(line, '^\a*\s*\zs\S\+')
     let map = substitute(map, '<NL>', '<C-j>', 'g')
