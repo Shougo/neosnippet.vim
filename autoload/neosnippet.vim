@@ -1390,6 +1390,8 @@ function! s:initialize_others() "{{{
   if get(g:, 'loaded_echodoc', 0)
     call echodoc#register('snippets_complete', s:doc_dict)
   endif
+
+  call neosnippet#clear_select_mode_mappings()
 endfunction"}}}
 
 let &cpo = s:save_cpo
