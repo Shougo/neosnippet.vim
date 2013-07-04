@@ -35,7 +35,6 @@ Interface		|neosnippet-interface|
 Examples		|neosnippet-examples|
 Snippet syntax		|neosnippet-snippet-syntax|
 FAQ			|neosnippet-faq|
-Changelog		|neosnippet-changelog|
 
 ==============================================================================
 INTRODUCTION					*neosnippet-introduction*
