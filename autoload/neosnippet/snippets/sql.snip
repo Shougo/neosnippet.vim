@@ -6,6 +6,11 @@ options     head
   );
   DROP TABLE $1;
 
+snippet     CREATE INDEX
+abbr        CREATE INDEX ... ON ... ( ... )
+options     head
+  CREATE INDEX ${1:_name} ON ${2:cities} (${3:name});
+
 snippet     INSERT
 abbr        INSERT INTO ... VALUES ( ... )
 options     head
@@ -16,3 +21,10 @@ snippet     SELECT
 abbr        SELECT * from ...
 options     head
   SELECT ${1:*} FROM ${2:cities} ${0:WHERE name = 'Vancouver'};
+
+snippet     TRANSACTION
+alias       BEGIN TRANSACTION
+options     head
+  BEGIN TRANSACTION;
+  ${0:TARGET}
+  COMMIT;
