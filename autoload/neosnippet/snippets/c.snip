@@ -144,10 +144,10 @@ snippet helloworld
 
 snippet fopen
 abbr fopen("...", "...");
-  fopen("${1:PATH}", "${2:MODE}");
-  ${0:TARGET}
-  fclose(${3:FD});
+    fopen("${1:PATH}", "${2:MODE}");
+    ${0:TARGET}
+    fclose(${3:FD});
 
 snippet fgets
 abbr fgets(row, length, file);
-  fgets(${0:ROW}, ${1:LENGTH}, ${2:FILE});
+    fgets(${0:ROW}, ${1:LENGTH}, ${2:FILE});
