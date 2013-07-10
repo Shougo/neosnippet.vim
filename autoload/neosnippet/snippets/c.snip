@@ -114,7 +114,6 @@ abbr include-guard
 snippet conditional
     (${1:#:condition}) ? ${2:#:a} : ${3:#:b}
 
-# Typedef
 snippet typedef
     typedef ${1:#:base_type} ${2:#:custom_type};
 
@@ -143,14 +142,12 @@ snippet helloworld
         return 0;
     }
 
-# fopen
 snippet fopen
 abbr fopen("...", "...");
   fopen("${1:PATH}", "${2:MODE}");
   ${0:TARGET}
   fclose(${3:FD});
 
-# fgets
 snippet fgets
 abbr fgets(row, length, file);
   fgets(${0:ROW}, ${1:LENGTH}, ${2:FILE});
