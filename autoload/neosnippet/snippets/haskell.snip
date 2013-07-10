@@ -21,3 +21,12 @@ abbr         main = do
   main = do
     ${0}
 
+snippet     class
+options     head
+  class ${1:Class} ${2:a} where
+    ${3:function} :: ${4:Type}
+
+snippet     instance
+options     head
+  instance ${1:Class} ${2:Type} where
+    ${3:function} ${4:self} = ${0:TARGET}
