@@ -146,7 +146,9 @@ snippet helloworld
 # fopen
 snippet fopen
 abbr fopen("...", "...");
-  fopen("${0:TARGET}", "${1:MODE}");
+  fopen("${1:PATH}", "${2:MODE}");
+  ${0:TARGET}
+  fclose(${3:FD});
 
 # fgets
 snippet fgets
