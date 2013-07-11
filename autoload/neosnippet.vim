@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: neosnippet.vim
 " AUTHOR:  Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 03 Jul 2013.
+" Last Modified: 11 Jul 2013.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -1060,9 +1060,13 @@ function! neosnippet#get_filetype() "{{{
   return context_filetype
 endfunction"}}}
 function! s:get_sources_filetypes(filetype) "{{{
-  return (exists('*neocomplcache#get_source_filetypes') ?
-        \ neocomplcache#get_source_filetypes(a:filetype) :
-        \ [(a:filetype == '') ? 'nothing' : a:filetype]) + ['_']
+  let filetypes =
+        \ exists('*neocomplete#get_source_filetypes') ?
+        \   neocomplete#get_source_filetypes(a:filetype) :
+        \ exists('*neocomplcache#get_source_filetypes') ?
+        \   neocomplcache#get_source_filetypes(a:filetype) :
+        \   [(a:filetype == '') ? 'nothing' : a:filetype]
+  return filetypes + ['_']
 endfunction"}}}
 
 function! neosnippet#edit_complete(arglead, cmdline, cursorpos) "{{{
