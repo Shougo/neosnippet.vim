@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: neosnippet.vim
 " AUTHOR:  Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 11 Jul 2013.
+" Last Modified: 12 Jul 2013.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -1283,17 +1283,25 @@ function! s:on_insert_leave() "{{{
         \ expand_info.end_patterns)
 
   let pos = getpos('.')
+
+  " Found snippet.
+  let found = 0
   try
     while s:search_snippet_range(begin, end, expand_info.holder_cnt, 0)
       " Next count.
       let expand_info.holder_cnt += 1
+      let found = 1
     endwhile
 
     " Search placeholder 0.
-    call s:search_snippet_range(begin, end, 0)
-
+    if s:search_snippet_range(begin, end, 0)
+      let found = 1
+    endif
   finally
-    stopinsert
+    if found
+      stopinsert
+    endif
+
     call setpos('.', pos)
   endtry
 endfunction"}}}
