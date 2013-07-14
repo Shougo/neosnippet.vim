@@ -31,3 +31,11 @@ abbr    for k, v in ipairs(table) do
     print(k, v)
   end
 
+snippet     print
+alias       p
+options     head
+  print(${0:TARGET})
+
+snippet     comment
+options     head
+  [[${0:TARGET}]]
