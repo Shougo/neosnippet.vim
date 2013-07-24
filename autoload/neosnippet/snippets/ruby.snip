@@ -111,6 +111,10 @@ options word
 
 snippet lambda
 options word
+    -> (${1:#:args}) { ${2} }
+
+snippet lambda-keyword
+options word
     lambda {|${1:#:args}| ${2} }
 
 snippet     main
