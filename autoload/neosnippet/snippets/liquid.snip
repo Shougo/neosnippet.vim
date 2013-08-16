@@ -77,11 +77,17 @@ snippet     include
 options     word
     {% include ${1:#:TARGET} %}
 
-snippet     block
+snippet     output
 abbr        {{ }}
 alias       {{
 options     word
     {{ ${1:#:TARGET} }}
+
+snippet     filter
+abbr        {{ | }}
+alias       {{
+options     word
+    {{ ${1:#:TARGET} | ${2:#:filter} }}
 
 
 # Jekyll enhancements
@@ -104,4 +110,8 @@ options     word
 snippet     post_url
 options     word
     {% post_url ${1:#:TARGET} %}
+
+snippet     gist
+options     word
+    {% gist ${1:#:TARGET} %}
 
