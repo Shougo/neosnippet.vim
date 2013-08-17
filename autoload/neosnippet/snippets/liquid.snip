@@ -113,5 +113,16 @@ options     word
 
 snippet     gist
 options     word
-    {% gist ${1:#:TARGET} %}
+    {% gist `getreg('+')=='' ? '<\`0\`>' : getreg('+')` %}
+
+snippet     template
+abbr        layout title category
+alias       ---  
+options     head
+    ---
+    layout: ${1}
+    title: ${2}
+    category: ${3}
+    ---
+    ${0}
 
