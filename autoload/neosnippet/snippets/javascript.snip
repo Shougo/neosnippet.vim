@@ -68,6 +68,7 @@ snippet setTimeout-function
 options head
   setTimeout(function() { ${0} }, ${1:10});
 
-snippet cl
+snippet console-log
+alias cl
 options head
-  console.log(${0:#:output});
+  console.log(${0:TARGET});
