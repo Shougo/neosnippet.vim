@@ -23,3 +23,9 @@ snippet     lastmod
 abbr        Last modified time
 alias       lmod
     Last Modified: `strftime("%Y-%m-%dT%H:%M:%S")`
+
+snippet     git_signature
+abbr        signature from git configuration
+alias       git_sign
+options     word
+    `executable('git') ? substitute(system('git config user.name'), '\n', '', 'g') : "${1}"` <`executable('git') ? substitute(system('git config user.email'), '\n', '', 'g') : "${2}"`>${0}
