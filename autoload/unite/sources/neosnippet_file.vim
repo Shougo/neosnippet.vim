@@ -27,18 +27,32 @@
 let s:save_cpo = &cpo
 set cpo&vim
 
-
 function! unite#sources#neosnippet_file#define() "{{{
   return [s:source_user, s:source_runtime]
 endfunction "}}}
+
+" common action table
+let s:action_table = {}
+let s:action_table.neosnippet_source = {
+      \ 'description' : 'neosnippet_source file',
+      \ 'is_selectable' : 1,
+      \ 'is_quit' : 1,
+      \ }
+function! s:action_table.neosnippet_source.func(candidates) "{{{
+  for candidate in a:candidates
+    let snippet_name = candidate.action__path
+    if snippet_name != ''
+      call neosnippet#source_file(snippet_name)
+    endif
+  endfor
+endfunction"}}}
 
 " neosnippet source.
 let s:source_user = {
       \ 'name': 'neosnippet/user',
       \ 'description' : 'neosnippet user file',
-      \ 'action_table' : {},
+      \ 'action_table' : copy(s:action_table),
       \ }
-
 function! s:source_user.gather_candidates(args, context) "{{{
   return s:get_snippet_candidates(
         \ neosnippet#get_user_snippets_directory())
@@ -62,9 +76,8 @@ endfunction"}}}
 let s:source_runtime = {
       \ 'name': 'neosnippet/runtime',
       \ 'description' : 'neosnippet runtime file',
-      \ 'action_table' : {},
+      \ 'action_table' : copy(s:action_table),
       \ }
-
 function! s:source_runtime.gather_candidates(args, context) "{{{
   return s:get_snippet_candidates(
         \ neosnippet#get_runtime_snippets_directory())
@@ -97,7 +110,6 @@ function! s:get_snippet_candidates(dirs) "{{{
 
   return _
 endfunction "}}}
-
 
 let &cpo = s:save_cpo
 unlet s:save_cpo
