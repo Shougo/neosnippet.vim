@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: neosnippet.vim
 " AUTHOR:  Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 12 Jul 2013.
+" Last Modified: 08 Sep 2013.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -1245,8 +1245,6 @@ function! neosnippet#clear_select_mode_mappings() "{{{
   snoremap <BS>     a<BS>
   snoremap <Del>    a<BS>
   snoremap <C-h>    a<BS>
-  snoremap <right> <ESC>a
-  snoremap <left>  <ESC>bi
 endfunction"}}}
 
 function! s:skip_next_auto_completion() "{{{
