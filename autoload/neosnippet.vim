@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: neosnippet.vim
 " AUTHOR:  Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 08 Sep 2013.
+" Last Modified: 23 Sep 2013.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -821,7 +821,8 @@ function! s:expand_placeholder(start, end, holder_cnt, line, ...) "{{{
         \ s:get_mirror_placeholder_marker_substitute_pattern(),
         \ '<|\1|>', 'g')
 
-  let default_len = len(default)
+  " len() cannot use for multibyte.
+  let default_len = len(substitute(default, '.', 'x', 'g'))
 
   let pos = getpos('.')
   let pos[1] = a:line
