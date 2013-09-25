@@ -35,6 +35,8 @@ set cpo&vim
 
 if !exists('b:undo_indent')
     let b:undo_indent = ''
+else
+    let b:undo_indent = '|'
 endif
 
 setlocal indentexpr=SnippetsIndent()
@@ -54,7 +56,7 @@ function! SnippetsIndent() "{{{
 endfunction"}}}
 
 let b:undo_indent .= '
-    \ | setlocal indentexpr<
+    \ setlocal indentexpr<
     \'
 
 let &cpo = s:save_cpo
