@@ -175,7 +175,6 @@ abbr    python3 <<EOF | EOF
     ${0}
     EOF
 
-
 snippet lua
 options head
 abbr    lua <<EOF | EOF
@@ -187,21 +186,31 @@ snippet save_pos
 options head
 abbr    use pos save
     let pos_save = getpos('.')
-    ${0}
-    call setpos('.', pos_save)
+    try
+      ${0}
+    finally
+      call setpos('.', pos_save)
+    endtry
 
 snippet save_register
 options head
 abbr    use register save
     let save_reg_$1 = getreg('${1}')
     let save_regtype_$1 = getregtype('$1')
-    ${0}
-    call setreg('$1', save_reg_$1, save_regtype_$1)
+    try
+      ${0}
+    finally
+      call setreg('$1', save_reg_$1, save_regtype_$1)
+    endtry
 
 snippet save_option
 options head
 abbr    use option save
     let $1_save = &${1}
     let &$1 = ${2}
-    ${0}
-    let &$1 = $1_save
+    try
+      ${0}
+    finally
+      let &$1 = $1_save
+    endtry
+
