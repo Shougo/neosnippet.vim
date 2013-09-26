@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: util.vim
 " AUTHOR: Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 02 Mar 2013.
+" Last Modified: 26 Sep 2013.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -108,6 +108,13 @@ function! neosnippet#util#parse_options(args, options_list) "{{{
   endfor
 
   return [args, options]
+endfunction"}}}
+
+" Sudo check.
+function! neosnippet#util#is_sudo() "{{{
+  return $SUDO_USER != '' && $USER !=# $SUDO_USER
+      \ && $HOME !=# expand('~'.$USER)
+      \ && $HOME ==# expand('~'.$SUDO_USER)
 endfunction"}}}
 
 

@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: neosnippet.vim
 " AUTHOR:  Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 23 Sep 2013.
+" Last Modified: 26 Sep 2013.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -172,6 +172,12 @@ function! s:initialize_snippet_options() "{{{
 endfunction"}}}
 
 function! neosnippet#edit_snippets(args) "{{{
+  if neosnippet#util#is_sudo()
+    call neosnippet#util#print_error(
+          \ '"sudo vim" is detected. This feature is disabled.')
+    return
+  endif
+
   call s:check_initialize()
 
   let [args, options] = neosnippet#util#parse_options(
@@ -1350,7 +1356,7 @@ function! s:initialize_script_variables() "{{{
   let s:snippets_dir = []
   for dir in split(g:neosnippet#snippets_directory, '\s*,\s*')
     let dir = neosnippet#util#expand(dir)
-    if !isdirectory(dir)
+    if !isdirectory(dir) && !neosnippet#util#is_sudo()
       call mkdir(dir, 'p')
     endif
     call add(s:snippets_dir, dir)
