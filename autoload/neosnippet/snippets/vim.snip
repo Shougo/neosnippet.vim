@@ -110,6 +110,14 @@ abbr NeoBundleLazy ''
       \   ${0}
       \ }}
 
+snippet bundle_hooks
+abbr neobundle hooks
+    let s:hooks = neobundle#get_hooks('${1}')
+    function! s:hooks.on_source(bundle)
+      ${0}
+    endfunction
+    unlet s:bundle
+
 snippet     autoload
 abbr        autoload func endfunc
 alias       afunction afunc
