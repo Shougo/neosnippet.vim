@@ -129,8 +129,8 @@ VARIABLES 					*neosnippet-variables*
 
 g:neosnippet#snippets_directory		*g:neosnippet#snippets_directory*
 		This variable appoints a path to user-defined snippet files.
-		You can set multiple values in comma-separated form. Non
-		existing directories are ignored.
+		You can set multiple values in comma-separated string or list.
+		Non existing directories are ignored.
 
 		User defined snippet files are read after the built-in snippet
 		files. If redundant snippets occur they get overwritten and
@@ -141,10 +141,10 @@ g:neosnippet#snippets_directory		*g:neosnippet#snippets_directory*
 		file it loads the snippets from:
 
 		- "vim.snip*"
-		- "vim_*.snip*" 
-	        - "vim/**/*.snip" 
+		- "vim_*.snip*"
+	        - "vim/**/*.snip"
 
-		This variable doesn't exist unless you declare it.
+		The default value is [].
 
 				*g:neosnippet#disable_select_mode_mappings*
 g:neosnippet#disable_select_mode_mappings

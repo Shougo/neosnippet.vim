@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: util.vim
 " AUTHOR: Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 26 Sep 2013.
+" Last Modified: 12 Nov 2013.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -117,6 +117,9 @@ function! neosnippet#util#is_sudo() "{{{
       \ && $HOME ==# expand('~'.$SUDO_USER)
 endfunction"}}}
 
+function! neosnippet#util#option2list(str) "{{{
+  return type(a:str) == type('') ? split(a:str, '\s*,\s*') : a:str
+endfunction"}}}
 
 let &cpo = s:save_cpo
 unlet s:save_cpo

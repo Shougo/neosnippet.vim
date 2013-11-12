@@ -31,7 +31,7 @@ set cpo&vim
 call neosnippet#util#set_default(
       \ 'g:neosnippet#disable_runtime_snippets', {})
 call neosnippet#util#set_default(
-      \ 'g:neosnippet#snippets_directory', '')
+      \ 'g:neosnippet#snippets_directory', [])
 call neosnippet#util#set_default(
       \ 'g:neosnippet#disable_select_mode_mappings', 1)
 call neosnippet#util#set_default(
@@ -1360,7 +1360,7 @@ function! s:initialize_script_variables() "{{{
 
   " Set snippets_dir.
   let s:snippets_dir = []
-  for dir in split(g:neosnippet#snippets_directory, '\s*,\s*')
+  for dir in neosnippet#util#option2list(g:neosnippet#snippets_directory)
     let dir = neosnippet#util#expand(dir)
     if !isdirectory(dir) && !neosnippet#util#is_sudo()
       call mkdir(dir, 'p')
