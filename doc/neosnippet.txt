@@ -69,15 +69,15 @@ INTERFACE					*neosnippet-interface*
 ------------------------------------------------------------------------------
 COMMANDS 					*neosnippet-commands*
 
-:NeoSnippetMakeCache [filetype]
 						*:NeoSnippetMakeCache*
+:NeoSnippetMakeCache [filetype]
 
 		Creates a cache for the snippets of the given [filetype]. It
 		automatically chooses the current buffer's file type unless you
 		specify another one by [filetype].
 
-:NeoSnippetEdit [{options}] [filetype]
 					*:NeoSnippetEdit*
+:NeoSnippetEdit [{options}] [filetype]
 		Opens the snippets for a given [filetype] to edit. It automatically
 		selects the current buffer's filetype unless you specify
 		another one by [filetype].
@@ -118,8 +118,8 @@ COMMANDS 					*neosnippet-commands*
 		Edit the runtime snippets (built-in defaults) instead of the
 		user snippets defined by 'g:neosnippet#snippets_directory'.
 
-:NeoSnippetSource [filename]
 							*:NeoSnippetSource*
+:NeoSnippetSource [filename]
 
 		Load the snippets of a [filetype].
 		Note: The loaded snippets are enabled in current buffer only.
@@ -146,8 +146,8 @@ g:neosnippet#snippets_directory		*g:neosnippet#snippets_directory*
 
 		This variable doesn't exist unless you declare it.
 
-g:neosnippet#disable_select_mode_mappings
 				*g:neosnippet#disable_select_mode_mappings*
+g:neosnippet#disable_select_mode_mappings
 		This variable disables key-mappings in |Select-mode| where the
 		snippets_complete performs the snippet completion. Usually it
 		is better to leave it as it is. But if you have troubles with
@@ -155,8 +155,8 @@ g:neosnippet#disable_select_mode_mappings
 		
 		The default value is 1.
 
-g:neosnippet#disable_runtime_snippets
 				*g:neosnippet#disable_runtime_snippets*
+g:neosnippet#disable_runtime_snippets
 		This is a dictionary variable which uses file types as key.
 		If you set the value of a file type entry to 1, this prevents
 		loading all the file type specific built-in snippets. This is
@@ -181,10 +181,11 @@ g:neosnippet#disable_runtime_snippets
 <
 		The default value is {}.
 
-g:neosnippet#enable_snipmate_compatibility
 				*g:neosnippet#enable_snipmate_compatibility*
-		If this variable is not 0, neosnippet will enable the snipMate 
-		compatibility feature (For example: Filename() function).
+g:neosnippet#enable_snipmate_compatibility
+		If this variable is not 0, neosnippet will enable the snipMate
+		compatibility feature (For example: Filename() function) and
+		load snipMate snippets automatically from 'runtimepath'.
 
 		The default value is 0.
 
@@ -197,71 +198,71 @@ g:neosnippet#enable_preview			 *g:neosnippet#enable_preview*
 ------------------------------------------------------------------------------
 KEY MAPPINGS 					*neosnippet-key-mappings*
 
-<Plug>(neosnippet_expand_or_jump)
 					*<Plug>(neosnippet_expand_or_jump)*
-s_<Plug>(neosnippet_expand_or_jump)
+<Plug>(neosnippet_expand_or_jump)
 					*s_<Plug>(neosnippet_expand_or_jump)*
+s_<Plug>(neosnippet_expand_or_jump)
 		Expand a snippet in the current cursor position. If there is
 		no snippet available it jumps to the next placeholder of the
 		buffer.
 
-<Plug>(neosnippet_jump_or_expand)
 				*<Plug>(neosnippet_jump_or_expand)*
-s_<Plug>(neosnippet_jump_or_expand)
+<Plug>(neosnippet_jump_or_expand)
 				*s_<Plug>(neosnippet_jump_or_expand)*
+s_<Plug>(neosnippet_jump_or_expand)
 		Jump to the next available placeholder in the buffer. If there
 		is no placeholder it expands a snippet in the current cursor
 		position.
 
-<Plug>(neosnippet_expand)
 						*<Plug>(neosnippet_expand)*
-s_<Plug>(neosnippet_expand)
+<Plug>(neosnippet_expand)
 						*s_<Plug>(neosnippet_expand)*
+s_<Plug>(neosnippet_expand)
 		Expand a snippet in current cursor position. It only takes
 		effect if there is a snippet text to expand or if you have
 		chosen a snippet from popup menu.
 
-<Plug>(neosnippet_jump)
 						*<Plug>(neosnippet_jump)*
-s_<Plug>(neosnippet_jump)
+<Plug>(neosnippet_jump)
 						*s_<Plug>(neosnippet_jump)*
+s_<Plug>(neosnippet_jump)
 		Jump to the next placeholder key. It does not expand any
 		snippets.
 
-i_<Plug>(neosnippet_start_unite_snippet)
 				*i_<Plug>(neosnippet_start_unite_snippet)*
+i_<Plug>(neosnippet_start_unite_snippet)
 		Starts the unite snippet source. You can expand a snippet by
 		the unite interface.
 		Note: The plug-in |unite.vim| is required for that feature.
 
-x_<Plug>(neosnippet_expand_target)
 					*x_<Plug>(neosnippet_expand_target)*
+x_<Plug>(neosnippet_expand_target)
 		Expand the input trigger by a selected target text.
 
-x_<Plug>(neosnippet_start_unite_snippet_target)
 			*x_<Plug>(neosnippet_start_unite_snippet_target)*
+x_<Plug>(neosnippet_start_unite_snippet_target)
 		Expand the input trigger by a selected target text with the
 		unite interface.
 		Note: The plug-in |unite.vim| is required for that feature.
 
-x_<Plug>(neosnippet_register_oneshot_snippet)
 			*x_<Plug>(neosnippet_register_oneshot_snippet)*
+x_<Plug>(neosnippet_register_oneshot_snippet)
 		Register oneshot snippet in the current buffer.
 
-neosnippet#expandable()
 						*neosnippet#expandable()*
+neosnippet#expandable()
 		You can use this function with imap <expr>. It checks if
 		the cursor text is a snippet trigger. This is is useful to
 		save key mappings.
 
-neosnippet#jumpable()
 						*neosnippet#jumpable()*
+neosnippet#jumpable()
 		You can use this function with imap <expr>. It checks if the
 		cursor text is an existing placeholder in current buffer. This
 		is useful to save key mappings.
 
-neosnippet#expandable_or_jumpable()
 					*neosnippet#expandable_or_jumpable()*
+neosnippet#expandable_or_jumpable()
 		You can use this function with imap <expr>. It checks if
 		the cursor text is a snippet trigger or a placeholder. This is
 		is useful to save key mappings.
@@ -276,8 +277,8 @@ neosnippet#expandable_or_jumpable()
 ------------------------------------------------------------------------------
 FUNCTIONS					*neosnippet-functions*
 
-neosnippet#get_snippets_directory()
 					*neosnippet#get_snippets_directory()*
+neosnippet#get_snippets_directory()
 		Gets snippet directories. This directories contain runtime
 		snippets directories and |g:neosnippet#snippets_directory|
 		directories.
