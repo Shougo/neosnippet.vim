@@ -31,7 +31,7 @@ set cpo&vim
 call neosnippet#util#set_default(
       \ 'g:neosnippet#disable_runtime_snippets', {})
 call neosnippet#util#set_default(
-      \ 'g:neosnippet#snippets_directory', [])
+      \ 'g:neosnippet#snippets_directory', '')
 call neosnippet#util#set_default(
       \ 'g:neosnippet#disable_select_mode_mappings', 1)
 call neosnippet#util#set_default(

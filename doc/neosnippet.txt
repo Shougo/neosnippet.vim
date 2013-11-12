@@ -144,7 +144,7 @@ g:neosnippet#snippets_directory		*g:neosnippet#snippets_directory*
 		- "vim_*.snip*"
 	        - "vim/**/*.snip"
 
-		The default value is [].
+		The default value is ''.
 
 				*g:neosnippet#disable_select_mode_mappings*
 g:neosnippet#disable_select_mode_mappings
