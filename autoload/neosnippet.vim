@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: neosnippet.vim
 " AUTHOR:  Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 28 Oct 2013.
+" Last Modified: 12 Nov 2013.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -1343,10 +1343,16 @@ function! s:initialize_script_variables() "{{{
   " Initialize.
   let s:snippets_expand_stack = []
   let s:snippets = {}
+  let s:runtime_dir = []
 
   " Set runtime dir.
-  let s:runtime_dir = split(globpath(&runtimepath,
+  let s:runtime_dir += split(globpath(&runtimepath,
         \ 'autoload/neosnippet/snippets'), '\n')
+  if g:neosnippet#enable_snipmate_compatibility
+    " Load snipMate snippet directories.
+    let s:runtime_dir += split(globpath(&runtimepath,
+          \ 'snippets'), '\n')
+  endif
   let s:runtime_dir += (exists('g:snippets_dir') ?
         \ split(g:snippets_dir, '\s*,\s*')
         \ : split(globpath(&runtimepath, 'snippets'), '\n'))
