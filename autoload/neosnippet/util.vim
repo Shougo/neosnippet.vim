@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: util.vim
 " AUTHOR: Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 12 Nov 2013.
+" Last Modified: 13 Nov 2013.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -65,11 +65,8 @@ function! neosnippet#util#expand(path) "{{{
         \ expand(escape(a:path, '*?[]"={}'), 1))
 endfunction"}}}
 function! neosnippet#util#set_default(var, val, ...)  "{{{
-  if !exists(a:var) || type({a:var}) != type(a:val)
-    let alternate_var = get(a:000, 0, '')
-
-    let {a:var} = exists(alternate_var) ?
-          \ {alternate_var} : a:val
+  if !exists(a:var)
+    let {a:var} = a:val
   endif
 endfunction"}}}
 function! neosnippet#util#set_dictionary_helper(...) "{{{
