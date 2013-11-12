@@ -114,6 +114,9 @@ built-in ones, then you can set a path to the snippets with
 the `g:neosnippet#snippets_directory` variable (e.g [Honza's
 Snippets](https://github.com/honza/vim-snippets))
 
+But if you enable g:neosnippet#enable_snipmate_compatibility, neosnippet will
+load snipMate snippets from runtime path automatically.
+
 ```vim
 " Enable snipMate compatibility feature.
 let g:neosnippet#enable_snipmate_compatibility = 1
