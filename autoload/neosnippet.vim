@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: neosnippet.vim
 " AUTHOR:  Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 12 Nov 2013.
+" Last Modified: 18 Nov 2013.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -1012,15 +1012,16 @@ function! neosnippet#get_snippets() "{{{
     call extend(snippets, s:snippets[filetype], 'keep')
   endfor
 
+  let cur_text = neosnippet#util#get_cur_text()
+
   if mode() ==# 'i'
     " Special filters.
-    let cur_text = neosnippet#util#get_cur_text()
     if !s:is_beginning_of_line(cur_text)
       call filter(snippets, '!v:val.options.head')
     endif
-
-    call filter(snippets, "cur_text =~ get(v:val, 'regexp', '')")
   endif
+
+  call filter(snippets, "cur_text =~# get(v:val, 'regexp', '')")
 
   return snippets
 endfunction"}}}
