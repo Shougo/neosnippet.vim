@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: neosnippet.vim
 " AUTHOR:  Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 04 Jun 2013.
+" Last Modified: 18 Nov 2013.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -39,21 +39,21 @@ set cpo&vim
 
 " Plugin key-mappings. "{{{
 inoremap <silent><expr> <Plug>(neosnippet_expand_or_jump)
-      \ neosnippet#expand_or_jump_impl()
+      \ neosnippet#mappings#expand_or_jump_impl()
 inoremap <silent><expr> <Plug>(neosnippet_jump_or_expand)
-      \ neosnippet#jump_or_expand_impl()
+      \ neosnippet#mappings#jump_or_expand_impl()
 inoremap <silent><expr> <Plug>(neosnippet_expand)
-      \ neosnippet#expand_impl()
+      \ neosnippet#mappings#expand_impl()
 inoremap <silent><expr> <Plug>(neosnippet_jump)
-      \ neosnippet#jump_impl()
+      \ neosnippet#mappings#jump_impl()
 snoremap <silent><expr> <Plug>(neosnippet_expand_or_jump)
-      \ neosnippet#expand_or_jump_impl()
+      \ neosnippet#mappings#expand_or_jump_impl()
 snoremap <silent><expr> <Plug>(neosnippet_jump_or_expand)
-      \ neosnippet#jump_or_expand_impl()
+      \ neosnippet#mappings#jump_or_expand_impl()
 snoremap <silent><expr> <Plug>(neosnippet_expand)
-      \ neosnippet#expand_impl()
+      \ neosnippet#mappings#expand_impl()
 snoremap <silent><expr> <Plug>(neosnippet_jump)
-      \ neosnippet#jump_impl()
+      \ neosnippet#mappings#jump_impl()
 
 xnoremap <silent> <Plug>(neosnippet_get_selected_text)
       \ :call neosnippet#get_selected_text(visualmode(), 1)<CR>
