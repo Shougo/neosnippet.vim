@@ -74,17 +74,17 @@ augroup neosnippet "{{{
 augroup END"}}}
 
 " Commands. "{{{
-command! -nargs=? -complete=customlist,neosnippet#edit_complete
+command! -nargs=? -complete=customlist,neosnippet#commands#_edit_complete
       \ NeoSnippetEdit
-      \ call neosnippet#edit_snippets(<q-args>)
+      \ call neosnippet#commands#_edit(<q-args>)
 
 command! -nargs=? -complete=customlist,neosnippet#filetype_complete
       \ NeoSnippetMakeCache
-      \ call neosnippet#make_cache(<q-args>)
+      \ call neosnippet#commands#_make_cache(<q-args>)
 
 command! -nargs=1 -complete=file
       \ NeoSnippetSource
-      \ call neosnippet#source_file(<q-args>)
+      \ call neosnippet#commands#_source(<q-args>)
 "}}}
 
 let g:loaded_neosnippet = 1

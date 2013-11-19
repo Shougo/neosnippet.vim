@@ -38,13 +38,6 @@ call neosnippet#util#set_default(
       \ 'g:neosnippet#enable_snipmate_compatibility', 0)
 "}}}
 
-" Variables  "{{{
-let s:neosnippet_options = [
-      \ '-runtime',
-      \ '-vertical', '-horizontal', '-direction=', '-split',
-      \]
-"}}}
-
 " For echodoc. "{{{
 let s:doc_dict = {
       \ 'name' : 'neosnippet',
@@ -88,7 +81,7 @@ function! neosnippet#jumpable() "{{{
 endfunction"}}}
 
 function! neosnippet#caching() "{{{
-  call neosnippet#make_cache(&filetype)
+  call neosnippet#commands#_make_cache(&filetype)
 endfunction"}}}
 
 function! neosnippet#recaching() "{{{
@@ -157,56 +150,6 @@ function! s:initialize_snippet_options() "{{{
   return { 'head' : 0, 'word' : 0, 'indent' : 0 }
 endfunction"}}}
 
-function! neosnippet#edit_snippets(args) "{{{
-  if neosnippet#util#is_sudo()
-    call neosnippet#util#print_error(
-          \ '"sudo vim" is detected. This feature is disabled.')
-    return
-  endif
-
-  call neosnippet#init#check()
-
-  let [args, options] = neosnippet#util#parse_options(
-        \ a:args, s:neosnippet_options)
-
-  let filetype = get(args, 0, '')
-  if filetype == ''
-    let filetype = neosnippet#get_filetype()
-  endif
-
-  let options = s:initialize_options(options)
-  let snippet_dir = (options.runtime ?
-        \ get(neosnippet#get_runtime_snippets_directory(), 0, '') :
-        \ get(neosnippet#get_user_snippets_directory(), -1, ''))
-
-  if snippet_dir == ''
-    call neosnippet#util#print_error('Snippet directory is not found.')
-    return
-  endif
-
-  " Edit snippet file.
-  let filename = snippet_dir .'/'.filetype
-
-  if isdirectory(filename)
-    " Edit in snippet directory.
-    let filename .= '/'.filetype
-  endif
-
-  if filename !~ '\.snip*$'
-    let filename .= '.snip'
-  endif
-
-  if options.split
-    " Split window.
-    execute options.direction
-          \ (options.vertical ? 'vsplit' : 'split')
-  endif
-
-  try
-    edit `=filename`
-  catch /^Vim\%((\a\+)\)\=:E749/
-  endtry
-endfunction"}}}
 
 function! s:initialize_options(options) "{{{
   let default_options = {
@@ -227,45 +170,7 @@ function! s:initialize_options(options) "{{{
   return options
 endfunction"}}}
 
-function! neosnippet#make_cache(filetype) "{{{
-  call neosnippet#init#check()
-
-  let filetype = a:filetype == '' ?
-        \ &filetype : a:filetype
-  if filetype ==# ''
-    let filetype = 'nothing'
-  endif
-
-  let snippets = neosnippet#variables#get_snippets()
-  if has_key(snippets, filetype)
-    return
-  endif
-
-  let snippets_dir = neosnippet#get_snippets_directory()
-  let snippet = {}
-  let snippets_files =
-        \   split(globpath(join(snippets_dir, ','),
-        \   filetype .  '.snip*'), '\n')
-        \ + split(globpath(join(snippets_dir, ','),
-        \   filetype .  '_*.snip*'), '\n')
-        \ + split(globpath(join(snippets_dir, ','),
-        \   filetype .  '/**/*.snip*'), '\n')
-  for snippets_file in reverse(snippets_files)
-    call s:parse_snippets_file(snippet, snippets_file)
-  endfor
-
-  let snippets = neosnippet#variables#get_snippets()
-  let snippets[filetype] = snippet
-endfunction"}}}
-
-function! neosnippet#source_file(filename) "{{{
-  call neosnippet#init#check()
-
-  let neosnippet = neosnippet#get_current_neosnippet()
-  call s:parse_snippets_file(neosnippet.snippets, a:filename)
-endfunction"}}}
-
-function! s:parse_snippets_file(snippets, snippets_file) "{{{
+function! neosnippet#_parse_snippets_file(snippets, snippets_file) "{{{
   let dup_check = {}
   let snippet_dict = {}
 
@@ -292,7 +197,7 @@ function! s:parse_snippets_file(snippets, snippets_file) "{{{
       for snippets_file in split(globpath(join(
             \ neosnippet#get_snippets_directory(), ','),
             \ filename), '\n')
-        call s:parse_snippets_file(a:snippets, snippets_file)
+        call neosnippet#_parse_snippets_file(a:snippets, snippets_file)
       endfor
     elseif line =~ '^delete\s'
       let name = matchstr(line, '^delete\s\+\zs.*$')
@@ -968,7 +873,7 @@ function! neosnippet#get_snippets() "{{{
   let neosnippet = neosnippet#get_current_neosnippet()
   let snippets = copy(neosnippet.snippets)
   for filetype in s:get_sources_filetypes(neosnippet#get_filetype())
-    call neosnippet#make_cache(filetype)
+    call neosnippet#commands#_make_cache(filetype)
     call extend(snippets,
           \ neosnippet#variables#get_snippets()[filetype], 'keep')
   endfor
@@ -1032,10 +937,6 @@ function! s:get_sources_filetypes(filetype) "{{{
   return filetypes + ['_']
 endfunction"}}}
 
-function! neosnippet#edit_complete(arglead, cmdline, cursorpos) "{{{
-  return filter(s:neosnippet_options + neosnippet#filetype_complete(
-        \ a:arglead, a:cmdline, a:cursorpos), 'stridx(v:val, a:arglead) == 0')
-endfunction"}}}
 " Complete filetype helper.
 function! neosnippet#filetype_complete(arglead, cmdline, cursorpos) "{{{
   " Dup check.

@@ -68,8 +68,8 @@ function! s:initialize_script_variables() "{{{
   call map(snippets_dir, 'substitute(v:val, "[\\\\/]$", "", "")')
 endfunction"}}}
 function! s:initialize_cache() "{{{
-  " Caching _ snippets.
-  call neosnippet#make_cache('_')
+  " Make cache for _ snippets.
+  call neosnippet#commands#_make_cache('_')
 
   " Initialize check.
   call neosnippet#caching()
