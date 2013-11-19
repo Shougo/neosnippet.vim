@@ -1155,32 +1155,6 @@ function! neosnippet#substitute_selected_text(type, text) "{{{
   endtry
 endfunction"}}}
 
-function! neosnippet#clear_select_mode_mappings() "{{{
-  if !g:neosnippet#disable_select_mode_mappings
-    return
-  endif
-
-  redir => mappings
-    silent! smap
-  redir END
-
-  for line in map(filter(split(mappings, '\n'),
-        \ "v:val !~# '^s'"),
-        \ "substitute(v:val, '<NL>', '<C-J>', 'g')")
-    let map = matchstr(line, '^\a*\s*\zs\S\+')
-    let map = substitute(map, '<NL>', '<C-j>', 'g')
-
-    silent! execute 'sunmap' map
-    silent! execute 'sunmap <buffer>' map
-  endfor
-
-  " Define default select mode mappings.
-  snoremap <CR>     a<BS>
-  snoremap <BS>     a<BS>
-  snoremap <Del>    a<BS>
-  snoremap <C-h>    a<BS>
-endfunction"}}}
-
 function! s:skip_next_auto_completion() "{{{
   " Skip next auto completion.
   if exists('*neocomplcache#skip_next_complete')

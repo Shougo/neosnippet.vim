@@ -83,7 +83,7 @@ function! s:initialize_others() "{{{
     autocmd BufWritePost *.snip,*.snippets
           \ call neosnippet#recaching()
     autocmd BufEnter *
-          \ call neosnippet#clear_select_mode_mappings()
+          \ call neosnippet#mappings#_clear_select_mode_mappings()
     autocmd InsertLeave * call s:on_insert_leave()
   augroup END"}}}
 
@@ -112,7 +112,7 @@ function! s:initialize_others() "{{{
     call echodoc#register('snippets_complete', s:doc_dict)
   endif
 
-  call neosnippet#clear_select_mode_mappings()
+  call neosnippet#mappings#_clear_select_mode_mappings()
 endfunction"}}}
 
 function! s:on_insert_leave() "{{{

@@ -27,15 +27,6 @@
 let s:save_cpo = &cpo
 set cpo&vim
 
-function! s:snippets_expand(cur_text, col) "{{{
-  let cur_word = neosnippet#get_cursor_snippet(
-        \ neosnippet#get_snippets(),
-        \ a:cur_text)
-
-  call neosnippet#expand(
-        \ a:cur_text, a:col, cur_word)
-endfunction"}}}
-
 function! neosnippet#mappings#_get_cursor_snippet(snippets, cur_text) "{{{
   let cur_word = matchstr(a:cur_text, '\S\+$')
   if cur_word != '' && has_key(a:snippets, cur_word)
@@ -52,6 +43,41 @@ function! neosnippet#mappings#_get_cursor_snippet(snippets, cur_text) "{{{
   endwhile
 
   return cur_word
+endfunction"}}}
+
+function! neosnippet#mappings#_clear_select_mode_mappings() "{{{
+  if !g:neosnippet#disable_select_mode_mappings
+    return
+  endif
+
+  redir => mappings
+    silent! smap
+  redir END
+
+  for line in map(filter(split(mappings, '\n'),
+        \ "v:val !~# '^s'"),
+        \ "substitute(v:val, '<NL>', '<C-J>', 'g')")
+    let map = matchstr(line, '^\a*\s*\zs\S\+')
+    let map = substitute(map, '<NL>', '<C-j>', 'g')
+
+    silent! execute 'sunmap' map
+    silent! execute 'sunmap <buffer>' map
+  endfor
+
+  " Define default select mode mappings.
+  snoremap <CR>     a<BS>
+  snoremap <BS>     a<BS>
+  snoremap <Del>    a<BS>
+  snoremap <C-h>    a<BS>
+endfunction"}}}
+
+function! s:snippets_expand(cur_text, col) "{{{
+  let cur_word = neosnippet#get_cursor_snippet(
+        \ neosnippet#get_snippets(),
+        \ a:cur_text)
+
+  call neosnippet#expand(
+        \ a:cur_text, a:col, cur_word)
 endfunction"}}}
 
 function! s:snippets_expand_or_jump(cur_text, col) "{{{
