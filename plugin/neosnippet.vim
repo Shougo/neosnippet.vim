@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: neosnippet.vim
 " AUTHOR:  Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 04 Jun 2013.
+" Last Modified: 19 Nov 2013.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -39,21 +39,21 @@ set cpo&vim
 
 " Plugin key-mappings. "{{{
 inoremap <silent><expr> <Plug>(neosnippet_expand_or_jump)
-      \ neosnippet#expand_or_jump_impl()
+      \ neosnippet#mappings#expand_or_jump_impl()
 inoremap <silent><expr> <Plug>(neosnippet_jump_or_expand)
-      \ neosnippet#jump_or_expand_impl()
+      \ neosnippet#mappings#jump_or_expand_impl()
 inoremap <silent><expr> <Plug>(neosnippet_expand)
-      \ neosnippet#expand_impl()
+      \ neosnippet#mappings#expand_impl()
 inoremap <silent><expr> <Plug>(neosnippet_jump)
-      \ neosnippet#jump_impl()
+      \ neosnippet#mappings#jump_impl()
 snoremap <silent><expr> <Plug>(neosnippet_expand_or_jump)
-      \ neosnippet#expand_or_jump_impl()
+      \ neosnippet#mappings#expand_or_jump_impl()
 snoremap <silent><expr> <Plug>(neosnippet_jump_or_expand)
-      \ neosnippet#jump_or_expand_impl()
+      \ neosnippet#mappings#jump_or_expand_impl()
 snoremap <silent><expr> <Plug>(neosnippet_expand)
-      \ neosnippet#expand_impl()
+      \ neosnippet#mappings#expand_impl()
 snoremap <silent><expr> <Plug>(neosnippet_jump)
-      \ neosnippet#jump_impl()
+      \ neosnippet#mappings#jump_impl()
 
 xnoremap <silent> <Plug>(neosnippet_get_selected_text)
       \ :call neosnippet#get_selected_text(visualmode(), 1)<CR>
@@ -70,21 +70,21 @@ inoremap <expr><silent> <Plug>(neosnippet_start_unite_snippet)
 "}}}
 
 augroup neosnippet "{{{
-  autocmd InsertEnter * call neosnippet#initialize()
+  autocmd InsertEnter * call neosnippet#init#_initialize()
 augroup END"}}}
 
 " Commands. "{{{
-command! -nargs=? -complete=customlist,neosnippet#edit_complete
+command! -nargs=? -complete=customlist,neosnippet#commands#_edit_complete
       \ NeoSnippetEdit
-      \ call neosnippet#edit_snippets(<q-args>)
+      \ call neosnippet#commands#_edit(<q-args>)
 
 command! -nargs=? -complete=customlist,neosnippet#filetype_complete
       \ NeoSnippetMakeCache
-      \ call neosnippet#make_cache(<q-args>)
+      \ call neosnippet#commands#_make_cache(<q-args>)
 
 command! -nargs=1 -complete=file
       \ NeoSnippetSource
-      \ call neosnippet#source_file(<q-args>)
+      \ call neosnippet#commands#_source(<q-args>)
 "}}}
 
 let g:loaded_neosnippet = 1
