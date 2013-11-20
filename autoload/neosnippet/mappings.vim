@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: mappings.vim
 " AUTHOR:  Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 19 Nov 2013.
+" Last Modified: 20 Nov 2013.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -126,7 +126,7 @@ function! s:trigger(function) "{{{
   let neosnippet = neosnippet#get_current_neosnippet()
   let neosnippet.trigger = 1
   if mode() ==# 's' && neosnippet.selected_text =~ '^#:'
-    let expr .= "a\<BS>"
+    let expr .= "\<C-o>\"_d"
   endif
 
   let expr .= printf("\<ESC>:call %s(%s,%d)\<CR>",
