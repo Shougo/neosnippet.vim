@@ -188,7 +188,7 @@ function! s:doc_dict.search(cur_text) "{{{
 
   let snippets = neosnippet#get_snippets()
 
-  let cur_word = neosnippet#get_cursor_snippet(snippets, a:cur_text)
+  let cur_word = neosnippet#helpers#get_cursor_snippet(snippets, a:cur_text)
   if cur_word == ''
     return []
   endif

@@ -32,31 +32,13 @@ function! neosnippet#mappings#expandable_or_jumpable() "{{{
 endfunction"}}}
 function! neosnippet#mappings#expandable() "{{{
   " Check snippet trigger.
-  return neosnippet#get_cursor_snippet(
+  return neosnippet#helpers#get_cursor_snippet(
         \ neosnippet#get_snippets(), neosnippet#util#get_cur_text()) != ''
 endfunction"}}}
 function! neosnippet#mappings#jumpable() "{{{
   " Found snippet placeholder.
   return search(neosnippet#get_placeholder_marker_pattern(). '\|'
             \ .neosnippet#get_sync_placeholder_marker_pattern(), 'nw') > 0
-endfunction"}}}
-
-function! neosnippet#mappings#_get_cursor_snippet(snippets, cur_text) "{{{
-  let cur_word = matchstr(a:cur_text, '\S\+$')
-  if cur_word != '' && has_key(a:snippets, cur_word)
-      return cur_word
-  endif
-
-  while cur_word != ''
-    if has_key(a:snippets, cur_word) &&
-          \ a:snippets[cur_word].options.word
-      return cur_word
-    endif
-
-    let cur_word = substitute(cur_word, '^\%(\w\+\|\W\)', '', '')
-  endwhile
-
-  return cur_word
 endfunction"}}}
 
 function! neosnippet#mappings#_clear_select_mode_mappings() "{{{
@@ -113,7 +95,7 @@ function! neosnippet#mappings#_register_oneshot_snippet() "{{{
 endfunction"}}}
 
 function! s:snippets_expand(cur_text, col) "{{{
-  let cur_word = neosnippet#get_cursor_snippet(
+  let cur_word = neosnippet#helpers#get_cursor_snippet(
         \ neosnippet#get_snippets(),
         \ a:cur_text)
 
@@ -122,7 +104,7 @@ function! s:snippets_expand(cur_text, col) "{{{
 endfunction"}}}
 
 function! s:snippets_expand_or_jump(cur_text, col) "{{{
-  let cur_word = neosnippet#get_cursor_snippet(
+  let cur_word = neosnippet#helpers#get_cursor_snippet(
         \ neosnippet#get_snippets(), a:cur_text)
 
   if cur_word != ''
@@ -135,7 +117,7 @@ function! s:snippets_expand_or_jump(cur_text, col) "{{{
 endfunction"}}}
 
 function! s:snippets_jump_or_expand(cur_text, col) "{{{
-  let cur_word = neosnippet#get_cursor_snippet(
+  let cur_word = neosnippet#helpers#get_cursor_snippet(
         \ neosnippet#get_snippets(), a:cur_text)
   if search(neosnippet#get_placeholder_marker_pattern(). '\|'
             \ .neosnippet#get_sync_placeholder_marker_pattern(), 'nw') > 0

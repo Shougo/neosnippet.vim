@@ -56,23 +56,6 @@ function! s:is_beginning_of_line(cur_text) "{{{
 
   return prev_word_end <= 0
 endfunction"}}}
-function! neosnippet#get_cursor_snippet(snippets, cur_text) "{{{
-  let cur_word = matchstr(a:cur_text, '\S\+$')
-  if cur_word != '' && has_key(a:snippets, cur_word)
-      return cur_word
-  endif
-
-  while cur_word != ''
-    if has_key(a:snippets, cur_word) &&
-          \ a:snippets[cur_word].options.word
-      return cur_word
-    endif
-
-    let cur_word = substitute(cur_word, '^\%(\w\+\|\W\)', '', '')
-  endwhile
-
-  return cur_word
-endfunction"}}}
 
 function! neosnippet#jump(cur_text, col) "{{{
   call s:skip_next_auto_completion()
