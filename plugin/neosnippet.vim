@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: neosnippet.vim
 " AUTHOR:  Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 19 Nov 2013.
+" Last Modified: 21 Nov 2013.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -63,7 +63,7 @@ xnoremap <silent> <Plug>(neosnippet_expand_target)
 xnoremap <silent><expr> <Plug>(neosnippet_start_unite_snippet_target)
       \ unite#sources#snippet_target#start()
 xnoremap <silent> <Plug>(neosnippet_register_oneshot_snippet)
-      \ :<C-u>call neosnippet#register_oneshot_snippet()<CR>
+      \ :<C-u>call neosnippet#mappings#_register_oneshot_snippet()<CR>
 
 inoremap <expr><silent> <Plug>(neosnippet_start_unite_snippet)
       \ unite#sources#snippet#start_complete()

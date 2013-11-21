@@ -284,33 +284,6 @@ function! s:indent_snippet(begin, end) "{{{
   endtry
 endfunction"}}}
 
-function! neosnippet#register_oneshot_snippet() "{{{
-  let trigger = input('Please input snippet trigger: ', 'oneshot')
-  if trigger == ''
-    return
-  endif
-
-  let selected_text = substitute(
-        \ neosnippet#get_selected_text(visualmode(), 1), '\n$', '', '')
-  call neosnippet#delete_selected_text(visualmode(), 1)
-
-  let base_indent = matchstr(selected_text, '^\s*')
-
-  " Delete base_indent.
-  let selected_text = substitute(selected_text,
-        \'^' . base_indent, '', 'g')
-
-  let neosnippet = neosnippet#get_current_neosnippet()
-  let options = neosnippet#parser#_initialize_snippet_options()
-  let options.word = 1
-
-  let neosnippet.snippets[trigger] = neosnippet#parser#_initialize_snippet(
-        \ { 'name' : trigger, 'word' : selected_text, 'options' : options },
-        \ '', 0, '', trigger)
-
-  echo 'Registered trigger : ' . trigger
-endfunction"}}}
-
 function! neosnippet#_get_snippet_range(begin_line, begin_patterns, end_line, end_patterns) "{{{
   let pos = getpos('.')
 
