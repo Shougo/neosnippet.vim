@@ -113,6 +113,20 @@ function! s:initialize_others() "{{{
   endif
 
   call neosnippet#mappings#_clear_select_mode_mappings()
+
+  if g:neosnippet#enable_snipmate_compatibility "{{{
+    " For snipMate function.
+    function! Filename(...)
+      let filename = expand('%:t:r')
+      if filename == ''
+        return a:0 == 2 ? a:2 : ''
+      elseif a:0 == 0 || a:1 == ''
+        return filename
+      else
+        return substitute(a:1, '$1', filename, 'g')
+      endif
+    endfunction
+  endif"}}}
 endfunction"}}}
 
 function! s:on_insert_leave() "{{{
