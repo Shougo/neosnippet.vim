@@ -94,7 +94,7 @@ function! neosnippet#commands#_make_cache(filetype) "{{{
     let filetype = 'nothing'
   endif
 
-  let snippets = neosnippet#variables#get_snippets()
+  let snippets = neosnippet#variables#snippets()
   if has_key(snippets, filetype)
     return
   endif
@@ -112,14 +112,14 @@ function! neosnippet#commands#_make_cache(filetype) "{{{
     call neosnippet#parser#_parse(snippet, snippets_file)
   endfor
 
-  let snippets = neosnippet#variables#get_snippets()
+  let snippets = neosnippet#variables#snippets()
   let snippets[filetype] = snippet
 endfunction"}}}
 
 function! neosnippet#commands#_source(filename) "{{{
   call neosnippet#init#check()
 
-  let neosnippet = neosnippet#get_current_neosnippet()
+  let neosnippet = neosnippet#variables#current_neosnippet()
   call neosnippet#parser#_parse(neosnippet.snippets, a:filename)
 endfunction"}}}
 

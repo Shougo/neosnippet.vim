@@ -43,7 +43,7 @@ endfunction"}}}
 
 function! s:initialize_script_variables() "{{{
   " Set runtime dir.
-  let runtime_dir = neosnippet#variables#get_runtime_dir()
+  let runtime_dir = neosnippet#variables#runtime_dir()
   let runtime_dir += split(globpath(&runtimepath,
         \ 'autoload/neosnippet/snippets'), '\n')
   if g:neosnippet#enable_snipmate_compatibility
@@ -57,7 +57,7 @@ function! s:initialize_script_variables() "{{{
   call map(runtime_dir, 'substitute(v:val, "[\\\\/]$", "", "")')
 
   " Set snippets_dir.
-  let snippets_dir = neosnippet#variables#get_snippets_dir()
+  let snippets_dir = neosnippet#variables#snippets_dir()
   for dir in neosnippet#util#option2list(g:neosnippet#snippets_directory)
     let dir = neosnippet#util#expand(dir)
     if !isdirectory(dir) && !neosnippet#util#is_sudo()
@@ -130,11 +130,11 @@ function! s:initialize_others() "{{{
 endfunction"}}}
 
 function! s:on_insert_leave() "{{{
-  let expand_stack = neosnippet#variables#get_expand_stack()
+  let expand_stack = neosnippet#variables#expand_stack()
 
   " Get patterns and count.
   if empty(expand_stack)
-        \ || neosnippet#get_current_neosnippet().trigger
+        \ || neosnippet#variables#current_neosnippet().trigger
     return
   endif
 

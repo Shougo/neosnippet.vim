@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: variables.vim
 " AUTHOR:  Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 19 Nov 2013.
+" Last Modified: 21 Nov 2013.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -27,14 +27,26 @@
 let s:save_cpo = &cpo
 set cpo&vim
 
-function! neosnippet#variables#get_expand_stack() "{{{
+function! neosnippet#variables#current_neosnippet() "{{{
+  if !exists('b:neosnippet')
+    let b:neosnippet = {
+          \ 'snippets' : {},
+          \ 'selected_text' : '',
+          \ 'target' : '',
+          \ 'trigger' : 0,
+          \}
+  endif
+
+  return b:neosnippet
+endfunction"}}}
+function! neosnippet#variables#expand_stack() "{{{
   if !exists('s:expand_stack')
     let s:expand_stack = []
   endif
 
   return s:expand_stack
 endfunction"}}}
-function! neosnippet#variables#get_snippets() "{{{
+function! neosnippet#variables#snippets() "{{{
   if !exists('s:snippets')
     let s:snippets= {}
   endif
@@ -48,14 +60,14 @@ function! neosnippet#variables#set_snippets(list) "{{{
 
   let s:snippets = a:list
 endfunction"}}}
-function! neosnippet#variables#get_snippets_dir() "{{{
+function! neosnippet#variables#snippets_dir() "{{{
   if !exists('s:snippets_dir')
     let s:snippets_dir = []
   endif
 
   return s:snippets_dir
 endfunction"}}}
-function! neosnippet#variables#get_runtime_dir() "{{{
+function! neosnippet#variables#runtime_dir() "{{{
   if !exists('s:runtime_dir')
     let s:runtime_dir = []
   endif

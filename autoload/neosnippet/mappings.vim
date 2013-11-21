@@ -101,7 +101,7 @@ function! neosnippet#mappings#_register_oneshot_snippet() "{{{
   let selected_text = substitute(selected_text,
         \'^' . base_indent, '', 'g')
 
-  let neosnippet = neosnippet#get_current_neosnippet()
+  let neosnippet = neosnippet#variables#current_neosnippet()
   let options = neosnippet#parser#_initialize_snippet_options()
   let options.word = 1
 
@@ -164,7 +164,7 @@ function! s:trigger(function) "{{{
   endif
 
   " Get selected text.
-  let neosnippet = neosnippet#get_current_neosnippet()
+  let neosnippet = neosnippet#variables#current_neosnippet()
   let neosnippet.trigger = 1
   if mode() ==# 's' && neosnippet.selected_text =~ '^#:'
     let expr .= "\<C-o>\"_d"

@@ -77,7 +77,7 @@ endfunction"}}}
 function! neosnippet#jump(cur_text, col) "{{{
   call s:skip_next_auto_completion()
 
-  let expand_stack = neosnippet#variables#get_expand_stack()
+  let expand_stack = neosnippet#variables#expand_stack()
 
   " Get patterns and count.
   if empty(expand_stack)
@@ -103,7 +103,7 @@ function! neosnippet#jump(cur_text, col) "{{{
   endif
 
   " Not found.
-  let expand_stack = neosnippet#variables#get_expand_stack()
+  let expand_stack = neosnippet#variables#expand_stack()
   let expand_stack = expand_stack[: -2]
 
   return s:search_outof_range(a:col)
@@ -171,7 +171,7 @@ function! neosnippet#expand(cur_text, col, trigger_name) "{{{
     let &l:foldmethod = 'manual'
   endif
 
-  let expand_stack = neosnippet#variables#get_expand_stack()
+  let expand_stack = neosnippet#variables#expand_stack()
 
   try
     call setline('.', snippet_lines[0])
@@ -214,7 +214,7 @@ endfunction"}}}
 function! neosnippet#expand_target() "{{{
   let trigger = input('Please input snippet trigger: ',
         \ '', 'customlist,neosnippet#complete_target_snippets')
-  let neosnippet = neosnippet#get_current_neosnippet()
+  let neosnippet = neosnippet#variables#current_neosnippet()
   if !has_key(neosnippet#get_snippets(), trigger) ||
         \ neosnippet#get_snippets()[trigger].snip !~#
         \   neosnippet#get_placeholder_target_marker_pattern()
@@ -229,7 +229,7 @@ function! neosnippet#expand_target() "{{{
   call neosnippet#expand_target_trigger(trigger)
 endfunction"}}}
 function! neosnippet#expand_target_trigger(trigger) "{{{
-  let neosnippet = neosnippet#get_current_neosnippet()
+  let neosnippet = neosnippet#variables#current_neosnippet()
   let neosnippet.target = substitute(
         \ neosnippet#get_selected_text(visualmode(), 1), '\n$', '', '')
 
@@ -249,7 +249,7 @@ function! s:indent_snippet(begin, end) "{{{
 
   let pos = getpos('.')
 
-  let neosnippet = neosnippet#get_current_neosnippet()
+  let neosnippet = neosnippet#variables#current_neosnippet()
 
   let equalprg = &l:equalprg
   try
@@ -366,7 +366,7 @@ function! s:expand_placeholder(start, end, holder_cnt, line, ...) "{{{
         \ '\\d\\+', a:holder_cnt, '')
   let current_line = getline(a:line)
   let match = match(current_line, pattern)
-  let neosnippet = neosnippet#get_current_neosnippet()
+  let neosnippet = neosnippet#variables#current_neosnippet()
 
   let default_pattern = substitute(
         \ neosnippet#get_placeholder_marker_default_pattern(),
@@ -438,7 +438,7 @@ function! s:expand_placeholder(start, end, holder_cnt, line, ...) "{{{
 endfunction"}}}
 function! s:expand_target_placeholder(line, col) "{{{
   " Expand target
-  let neosnippet = neosnippet#get_current_neosnippet()
+  let neosnippet = neosnippet#variables#current_neosnippet()
   let next_line = getline(a:line)[a:col-1 :]
   let target_lines = split(neosnippet.target, '\n', 1)
 
@@ -557,7 +557,7 @@ function! s:eval_snippet(snippet_text) "{{{
 
   return snip_word
 endfunction"}}}
-function! neosnippet#get_current_neosnippet() "{{{
+function! neosnippet#variables#current_neosnippet() "{{{
   if !exists('b:neosnippet')
     let b:neosnippet = {
           \ 'snippets' : {},
@@ -572,12 +572,12 @@ endfunction"}}}
 function! neosnippet#get_snippets() "{{{
   call neosnippet#init#check()
 
-  let neosnippet = neosnippet#get_current_neosnippet()
+  let neosnippet = neosnippet#variables#current_neosnippet()
   let snippets = copy(neosnippet.snippets)
   for filetype in s:get_sources_filetypes(neosnippet#get_filetype())
     call neosnippet#commands#_make_cache(filetype)
     call extend(snippets,
-          \ neosnippet#variables#get_snippets()[filetype], 'keep')
+          \ neosnippet#variables#snippets()[filetype], 'keep')
   endfor
 
   let cur_text = neosnippet#util#get_cur_text()
@@ -594,20 +594,20 @@ function! neosnippet#get_snippets() "{{{
   return snippets
 endfunction"}}}
 function! neosnippet#get_snippets_directory() "{{{
-  let snippets_dir = copy(neosnippet#variables#get_snippets_dir())
+  let snippets_dir = copy(neosnippet#variables#snippets_dir())
   if !get(g:neosnippet#disable_runtime_snippets,
         \ neosnippet#get_filetype(),
         \ get(g:neosnippet#disable_runtime_snippets, '_', 0))
-    let snippets_dir += neosnippet#variables#get_runtime_dir()
+    let snippets_dir += neosnippet#variables#runtime_dir()
   endif
 
   return snippets_dir
 endfunction"}}}
 function! neosnippet#get_user_snippets_directory() "{{{
-  return copy(neosnippet#variables#get_snippets_dir())
+  return copy(neosnippet#variables#snippets_dir())
 endfunction"}}}
 function! neosnippet#get_runtime_snippets_directory() "{{{
-  return copy(neosnippet#variables#get_runtime_dir())
+  return copy(neosnippet#variables#runtime_dir())
 endfunction"}}}
 function! neosnippet#get_filetype() "{{{
   if !exists('s:exists_context_filetype')
@@ -661,6 +661,7 @@ function! neosnippet#complete_target_snippets(arglead, cmdline, cursorpos) "{{{
         \ && v:val.snip =~# neosnippet#get_placeholder_target_marker_pattern()"), 'v:val.word')
 endfunction"}}}
 
+" Get marker patterns.
 function! neosnippet#get_placeholder_target_marker_pattern() "{{{
   return '\${\d\+:TARGET\%(:.\{-}\)\?\\\@<!}'
 endfunction"}}}
@@ -767,7 +768,7 @@ function! s:skip_next_auto_completion() "{{{
     call neocomplete#skip_next_complete()
   endif
 
-  let neosnippet = neosnippet#get_current_neosnippet()
+  let neosnippet = neosnippet#variables#current_neosnippet()
   let neosnippet.trigger = 0
 endfunction"}}}
 
