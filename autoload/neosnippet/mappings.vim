@@ -94,12 +94,44 @@ function! neosnippet#mappings#_register_oneshot_snippet() "{{{
   echo 'Registered trigger : ' . trigger
 endfunction"}}}
 
+function! neosnippet#mappings#_expand_target() "{{{
+  let trigger = input('Please input snippet trigger: ',
+        \ '', 'customlist,neosnippet#commands#_complete_target_snippets')
+  let neosnippet = neosnippet#variables#current_neosnippet()
+  if !has_key(neosnippet#helpers#get_snippets(), trigger) ||
+        \ neosnippet#helpers#get_snippets()[trigger].snip !~#
+        \   neosnippet#get_placeholder_target_marker_pattern()
+    if trigger != ''
+      echo 'The trigger is invalid.'
+    endif
+
+    let neosnippet.target = ''
+    return
+  endif
+
+  call neosnippet#mappings#_expand_target_trigger(trigger)
+endfunction"}}}
+function! neosnippet#mappings#_expand_target_trigger(trigger) "{{{
+  let neosnippet = neosnippet#variables#current_neosnippet()
+  let neosnippet.target = substitute(
+        \ neosnippet#helpers#get_selected_text(visualmode(), 1), '\n$', '', '')
+
+  let line = getpos("'<")[1]
+  let col = getpos("'<")[2]
+
+  call neosnippet#helpers#delete_selected_text(visualmode())
+
+  call cursor(line, col)
+
+  call neosnippet#view#_expand(neosnippet#util#get_cur_text(), col, a:trigger)
+endfunction"}}}
+
 function! s:snippets_expand(cur_text, col) "{{{
   let cur_word = neosnippet#helpers#get_cursor_snippet(
         \ neosnippet#helpers#get_snippets(),
         \ a:cur_text)
 
-  call neosnippet#expand(
+  call neosnippet#view#_expand(
         \ a:cur_text, a:col, cur_word)
 endfunction"}}}
 
@@ -109,10 +141,10 @@ function! s:snippets_expand_or_jump(cur_text, col) "{{{
 
   if cur_word != ''
     " Found snippet trigger.
-    call neosnippet#expand(
+    call neosnippet#view#_expand(
           \ a:cur_text, a:col, cur_word)
   else
-    call neosnippet#jump(a:cur_text, a:col)
+    call neosnippet#view#_jump(a:cur_text, a:col)
   endif
 endfunction"}}}
 
@@ -122,9 +154,9 @@ function! s:snippets_jump_or_expand(cur_text, col) "{{{
   if search(neosnippet#get_placeholder_marker_pattern(). '\|'
             \ .neosnippet#get_sync_placeholder_marker_pattern(), 'nw') > 0
     " Found snippet placeholder.
-    call neosnippet#jump(a:cur_text, a:col)
+    call neosnippet#view#_jump(a:cur_text, a:col)
   else
-    call neosnippet#expand(
+    call neosnippet#view#_expand(
           \ a:cur_text, a:col, cur_word)
   endif
 endfunction"}}}

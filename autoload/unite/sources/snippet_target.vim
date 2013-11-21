@@ -82,7 +82,7 @@ function! s:source.action_table.select.func(candidate) "{{{
     return
   endif
 
-  call neosnippet#expand_target_trigger(a:candidate.source__trigger)
+  call neosnippet#mappings#_expand_target_trigger(a:candidate.source__trigger)
 endfunction"}}}
 "}}}
 

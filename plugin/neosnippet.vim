@@ -59,7 +59,7 @@ xnoremap <silent> <Plug>(neosnippet_get_selected_text)
       \ :call neosnippet#helpers#get_selected_text(visualmode(), 1)<CR>
 
 xnoremap <silent> <Plug>(neosnippet_expand_target)
-      \ :<C-u>call neosnippet#expand_target()<CR>
+      \ :<C-u>call neosnippet#mappings#_expand_target()<CR>
 xnoremap <silent><expr> <Plug>(neosnippet_start_unite_snippet_target)
       \ unite#sources#snippet_target#start()
 xnoremap <silent> <Plug>(neosnippet_register_oneshot_snippet)

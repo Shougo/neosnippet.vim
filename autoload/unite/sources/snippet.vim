@@ -87,7 +87,7 @@ function! s:action_table.expand.func(candidate) "{{{
   let cur_text = neosnippet#util#get_cur_text()
   let cur_keyword_str = matchstr(cur_text, '\S\+$')
   let context = unite#get_context()
-  call neosnippet#expand(
+  call neosnippet#view#_expand(
         \ cur_text . a:candidate.action__complete_word[len(cur_keyword_str)],
         \ context.col, a:candidate.action__complete_word)
 endfunction"}}}

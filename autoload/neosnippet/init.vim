@@ -77,14 +77,14 @@ endfunction"}}}
 function! s:initialize_others() "{{{
   augroup neosnippet "{{{
     autocmd!
-    " Set caching event.
+    " Set make cache event.
     autocmd FileType * call neosnippet#commands#_make_cache(&filetype)
-    " Recaching events
+    " Re make cache events
     autocmd BufWritePost *.snip,*.snippets
           \ call neosnippet#variables#set_snippets({})
     autocmd BufEnter *
           \ call neosnippet#mappings#_clear_select_mode_mappings()
-    autocmd InsertLeave * call s:on_insert_leave()
+    autocmd InsertLeave * call neosnippet#view#_on_insert_leave()
   augroup END"}}}
 
   augroup neosnippet
@@ -123,52 +123,6 @@ function! s:initialize_others() "{{{
       endif
     endfunction
   endif"}}}
-endfunction"}}}
-
-function! s:on_insert_leave() "{{{
-  let expand_stack = neosnippet#variables#expand_stack()
-
-  " Get patterns and count.
-  if empty(expand_stack)
-        \ || neosnippet#variables#current_neosnippet().trigger
-    return
-  endif
-
-  let expand_info = expand_stack[-1]
-
-  if expand_info.begin_line != expand_info.end_line
-    return
-  endif
-
-  " Search patterns.
-  let [begin, end] = neosnippet#_get_snippet_range(
-        \ expand_info.begin_line,
-        \ expand_info.begin_patterns,
-        \ expand_info.end_line,
-        \ expand_info.end_patterns)
-
-  let pos = getpos('.')
-
-  " Found snippet.
-  let found = 0
-  try
-    while neosnippet#_search_snippet_range(begin, end, expand_info.holder_cnt, 0)
-      " Next count.
-      let expand_info.holder_cnt += 1
-      let found = 1
-    endwhile
-
-    " Search placeholder 0.
-    if neosnippet#_search_snippet_range(begin, end, 0)
-      let found = 1
-    endif
-  finally
-    if found
-      stopinsert
-    endif
-
-    call setpos('.', pos)
-  endtry
 endfunction"}}}
 
 let &cpo = s:save_cpo
