@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: init.vim
 " AUTHOR:  Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 19 Nov 2013.
+" Last Modified: 21 Nov 2013.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -72,16 +72,16 @@ function! s:initialize_cache() "{{{
   call neosnippet#commands#_make_cache('_')
 
   " Initialize check.
-  call neosnippet#caching()
+  call neosnippet#commands#_make_cache(&filetype)
 endfunction"}}}
 function! s:initialize_others() "{{{
   augroup neosnippet "{{{
     autocmd!
     " Set caching event.
-    autocmd FileType * call neosnippet#caching()
+    autocmd FileType * call neosnippet#commands#_make_cache(&filetype)
     " Recaching events
     autocmd BufWritePost *.snip,*.snippets
-          \ call neosnippet#recaching()
+          \ call neosnippet#variables#set_snippets({})
     autocmd BufEnter *
           \ call neosnippet#mappings#_clear_select_mode_mappings()
     autocmd InsertLeave * call s:on_insert_leave()
@@ -160,6 +160,34 @@ function! s:on_insert_leave() "{{{
     call setpos('.', pos)
   endtry
 endfunction"}}}
+
+" For echodoc. "{{{
+let s:doc_dict = {
+      \ 'name' : 'neosnippet',
+      \ 'rank' : 100,
+      \ 'filetypes' : {},
+      \ }
+function! s:doc_dict.search(cur_text) "{{{
+  if mode() !=# 'i'
+    return []
+  endif
+
+  let snippets = neosnippet#get_snippets()
+
+  let cur_word = neosnippet#get_cursor_snippet(snippets, a:cur_text)
+  if cur_word == ''
+    return []
+  endif
+
+  let snip = snippets[cur_word]
+  let ret = []
+  call add(ret, { 'text' : snip.word, 'highlight' : 'String' })
+  call add(ret, { 'text' : ' ' })
+  call add(ret, { 'text' : snip.menu_abbr, 'highlight' : 'Special' })
+
+  return ret
+endfunction"}}}
+"}}}
 
 let &cpo = s:save_cpo
 unlet s:save_cpo

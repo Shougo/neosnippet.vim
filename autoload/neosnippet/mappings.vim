@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: mappings.vim
 " AUTHOR:  Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 20 Nov 2013.
+" Last Modified: 21 Nov 2013.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -26,6 +26,20 @@
 
 let s:save_cpo = &cpo
 set cpo&vim
+
+function! neosnippet#mappings#expandable_or_jumpable() "{{{
+  return neosnippet#mappings#expandable() || neosnippet#mappings#jumpable()
+endfunction"}}}
+function! neosnippet#mappings#expandable() "{{{
+  " Check snippet trigger.
+  return neosnippet#get_cursor_snippet(
+        \ neosnippet#get_snippets(), neosnippet#util#get_cur_text()) != ''
+endfunction"}}}
+function! neosnippet#mappings#jumpable() "{{{
+  " Found snippet placeholder.
+  return search(neosnippet#get_placeholder_marker_pattern(). '\|'
+            \ .neosnippet#get_sync_placeholder_marker_pattern(), 'nw') > 0
+endfunction"}}}
 
 function! neosnippet#mappings#_get_cursor_snippet(snippets, cur_text) "{{{
   let cur_word = matchstr(a:cur_text, '\S\+$')

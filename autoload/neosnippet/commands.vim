@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: commands.vim
 " AUTHOR:  Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 19 Nov 2013.
+" Last Modified: 21 Nov 2013.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -109,7 +109,7 @@ function! neosnippet#commands#_make_cache(filetype) "{{{
         \ + split(globpath(join(snippets_dir, ','),
         \   filetype .  '/**/*.snip*'), '\n')
   for snippets_file in reverse(snippets_files)
-    call neosnippet#_parse_snippets_file(snippet, snippets_file)
+    call neosnippet#parser#_parse(snippet, snippets_file)
   endfor
 
   let snippets = neosnippet#variables#get_snippets()
@@ -120,13 +120,32 @@ function! neosnippet#commands#_source(filename) "{{{
   call neosnippet#init#check()
 
   let neosnippet = neosnippet#get_current_neosnippet()
-  call neosnippet#_parse_snippets_file(neosnippet.snippets, a:filename)
+  call neosnippet#parser#_parse(neosnippet.snippets, a:filename)
 endfunction"}}}
 
 function! neosnippet#commands#_edit_complete(arglead, cmdline, cursorpos) "{{{
   return filter(s:edit_options +
         \ neosnippet#filetype_complete(a:arglead, a:cmdline, a:cursorpos),
         \ 'stridx(v:val, a:arglead) == 0')
+endfunction"}}}
+
+function! s:initialize_options(options) "{{{
+  let default_options = {
+        \ 'runtime' : 0,
+        \ 'vertical' : 0,
+        \ 'direction' : 'below',
+        \ 'split' : 0,
+        \ }
+
+  let options = extend(default_options, a:options)
+
+  " Complex initializer.
+  if has_key(options, 'horizontal')
+    " Disable vertically.
+    let options.vertical = 0
+  endif
+
+  return options
 endfunction"}}}
 
 let &cpo = s:save_cpo
