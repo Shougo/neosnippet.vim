@@ -52,7 +52,7 @@ function! neosnippet#parser#_parse(snippets, snippets_file) "{{{
       let filename = matchstr(line, '^include\s\+\zs.*$')
 
       for snippets_file in split(globpath(join(
-            \ neosnippet#get_snippets_directory(), ','),
+            \ neosnippet#helpers#get_snippets_directory(), ','),
             \ filename), '\n')
         call neosnippet#parser#_parse(a:snippets, snippets_file)
       endfor

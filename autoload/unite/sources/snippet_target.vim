@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: snippet_target.vim
 " AUTHOR:  Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 05 Mar 2013.
+" Last Modified: 21 Nov 2013.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -49,7 +49,7 @@ function! s:source.hooks.on_init(args, context) "{{{
   let a:context.source__linenr = line('.')
 
   let a:context.source__snippets =
-        \ sort(filter(values(neosnippet#get_snippets()),
+        \ sort(filter(values(neosnippet#helpers#get_snippets()),
         \    "v:val.snip =~# neosnippet#get_placeholder_target_marker_pattern()"))
 endfunction"}}}
 

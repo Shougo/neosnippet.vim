@@ -48,15 +48,6 @@ function! neosnippet#jumpable() "{{{
   return neosnippet#mappings#jumpable()
 endfunction"}}}
 
-function! s:is_beginning_of_line(cur_text) "{{{
-  let keyword_pattern = '\S\+'
-  let cur_keyword_str = matchstr(a:cur_text, keyword_pattern.'$')
-  let line_part = a:cur_text[: -1-len(cur_keyword_str)]
-  let prev_word_end = matchend(line_part, keyword_pattern)
-
-  return prev_word_end <= 0
-endfunction"}}}
-
 function! neosnippet#jump(cur_text, col) "{{{
   call s:skip_next_auto_completion()
 
@@ -94,7 +85,7 @@ endfunction"}}}
 function! neosnippet#expand(cur_text, col, trigger_name) "{{{
   call s:skip_next_auto_completion()
 
-  let snippets = neosnippet#get_snippets()
+  let snippets = neosnippet#helpers#get_snippets()
 
   if a:trigger_name == '' || !has_key(snippets, a:trigger_name)
     let pos = getpos('.')
@@ -196,10 +187,10 @@ function! neosnippet#expand(cur_text, col, trigger_name) "{{{
 endfunction"}}}
 function! neosnippet#expand_target() "{{{
   let trigger = input('Please input snippet trigger: ',
-        \ '', 'customlist,neosnippet#complete_target_snippets')
+        \ '', 'customlist,neosnippet#commands#_complete_target_snippets')
   let neosnippet = neosnippet#variables#current_neosnippet()
-  if !has_key(neosnippet#get_snippets(), trigger) ||
-        \ neosnippet#get_snippets()[trigger].snip !~#
+  if !has_key(neosnippet#helpers#get_snippets(), trigger) ||
+        \ neosnippet#helpers#get_snippets()[trigger].snip !~#
         \   neosnippet#get_placeholder_target_marker_pattern()
     if trigger != ''
       echo 'The trigger is invalid.'
@@ -214,12 +205,12 @@ endfunction"}}}
 function! neosnippet#expand_target_trigger(trigger) "{{{
   let neosnippet = neosnippet#variables#current_neosnippet()
   let neosnippet.target = substitute(
-        \ neosnippet#get_selected_text(visualmode(), 1), '\n$', '', '')
+        \ neosnippet#helpers#get_selected_text(visualmode(), 1), '\n$', '', '')
 
   let line = getpos("'<")[1]
   let col = getpos("'<")[2]
 
-  call neosnippet#delete_selected_text(visualmode())
+  call neosnippet#helpers#delete_selected_text(visualmode())
 
   call cursor(line, col)
 
@@ -540,108 +531,15 @@ function! s:eval_snippet(snippet_text) "{{{
 
   return snip_word
 endfunction"}}}
-function! neosnippet#variables#current_neosnippet() "{{{
-  if !exists('b:neosnippet')
-    let b:neosnippet = {
-          \ 'snippets' : {},
-          \ 'selected_text' : '',
-          \ 'target' : '',
-          \ 'trigger' : 0,
-          \}
-  endif
 
-  return b:neosnippet
-endfunction"}}}
-function! neosnippet#get_snippets() "{{{
-  call neosnippet#init#check()
-
-  let neosnippet = neosnippet#variables#current_neosnippet()
-  let snippets = copy(neosnippet.snippets)
-  for filetype in s:get_sources_filetypes(neosnippet#get_filetype())
-    call neosnippet#commands#_make_cache(filetype)
-    call extend(snippets,
-          \ neosnippet#variables#snippets()[filetype], 'keep')
-  endfor
-
-  let cur_text = neosnippet#util#get_cur_text()
-
-  if mode() ==# 'i'
-    " Special filters.
-    if !s:is_beginning_of_line(cur_text)
-      call filter(snippets, '!v:val.options.head')
-    endif
-  endif
-
-  call filter(snippets, "cur_text =~# get(v:val, 'regexp', '')")
-
-  return snippets
-endfunction"}}}
 function! neosnippet#get_snippets_directory() "{{{
-  let snippets_dir = copy(neosnippet#variables#snippets_dir())
-  if !get(g:neosnippet#disable_runtime_snippets,
-        \ neosnippet#get_filetype(),
-        \ get(g:neosnippet#disable_runtime_snippets, '_', 0))
-    let snippets_dir += neosnippet#variables#runtime_dir()
-  endif
-
-  return snippets_dir
+  return neosnippet#helpers#get_snippets_directory()
 endfunction"}}}
 function! neosnippet#get_user_snippets_directory() "{{{
   return copy(neosnippet#variables#snippets_dir())
 endfunction"}}}
 function! neosnippet#get_runtime_snippets_directory() "{{{
   return copy(neosnippet#variables#runtime_dir())
-endfunction"}}}
-function! neosnippet#get_filetype() "{{{
-  if !exists('s:exists_context_filetype')
-    " context_filetype.vim installation check.
-    try
-      call context_filetype#version()
-      let s:exists_context_filetype = 1
-    catch
-      let s:exists_context_filetype = 0
-    endtry
-  endif
-
-  let context_filetype =
-        \ s:exists_context_filetype ?
-        \ context_filetype#get_filetype() : &filetype
-  if context_filetype == ''
-    let context_filetype = 'nothing'
-  endif
-
-  return context_filetype
-endfunction"}}}
-function! s:get_sources_filetypes(filetype) "{{{
-  let filetypes =
-        \ exists('*neocomplete#get_source_filetypes') ?
-        \   neocomplete#get_source_filetypes(a:filetype) :
-        \ exists('*neocomplcache#get_source_filetypes') ?
-        \   neocomplcache#get_source_filetypes(a:filetype) :
-        \   [(a:filetype == '') ? 'nothing' : a:filetype]
-  return filetypes + ['_']
-endfunction"}}}
-
-" Complete filetype helper.
-function! neosnippet#filetype_complete(arglead, cmdline, cursorpos) "{{{
-  " Dup check.
-  let ret = {}
-  for item in map(
-        \ split(globpath(&runtimepath, 'syntax/*.vim'), '\n') +
-        \ split(globpath(&runtimepath, 'indent/*.vim'), '\n') +
-        \ split(globpath(&runtimepath, 'ftplugin/*.vim'), '\n')
-        \ , 'fnamemodify(v:val, ":t:r")')
-    if !has_key(ret, item) && item =~ '^'.a:arglead
-      let ret[item] = 1
-    endif
-  endfor
-
-  return sort(keys(ret))
-endfunction"}}}
-function! neosnippet#complete_target_snippets(arglead, cmdline, cursorpos) "{{{
-  return map(filter(values(neosnippet#get_snippets()),
-        \ "stridx(v:val.word, a:arglead) == 0
-        \ && v:val.snip =~# neosnippet#get_placeholder_target_marker_pattern()"), 'v:val.word')
 endfunction"}}}
 
 " Get marker patterns.
@@ -668,78 +566,6 @@ function! neosnippet#get_mirror_placeholder_marker_pattern() "{{{
 endfunction"}}}
 function! neosnippet#get_mirror_placeholder_marker_substitute_pattern() "{{{
   return '\$\(\d\+\)'
-endfunction"}}}
-
-function! neosnippet#get_selected_text(type, ...) "{{{
-  let sel_save = &selection
-  let &selection = 'inclusive'
-  let reg_save = @@
-  let pos = getpos('.')
-
-  try
-    " Invoked from Visual mode, use '< and '> marks.
-    if a:0
-      silent exe "normal! `<" . a:type . "`>y"
-    elseif a:type == 'line'
-      silent exe "normal! '[V']y"
-    elseif a:type == 'block'
-      silent exe "normal! `[\<C-v>`]y"
-    else
-      silent exe "normal! `[v`]y"
-    endif
-
-    return @@
-  finally
-    let &selection = sel_save
-    let @@ = reg_save
-    call setpos('.', pos)
-  endtry
-endfunction"}}}
-function! neosnippet#delete_selected_text(type, ...) "{{{
-  let sel_save = &selection
-  let &selection = 'inclusive'
-  let reg_save = @@
-  let pos = getpos('.')
-
-  try
-    " Invoked from Visual mode, use '< and '> marks.
-    if a:0
-      silent exe "normal! `<" . a:type . "`>d"
-    elseif a:type ==# 'V'
-      silent exe "normal! `[V`]s"
-    elseif a:type ==# "\<C-v>"
-      silent exe "normal! `[\<C-v>`]d"
-    else
-      silent exe "normal! `[v`]d"
-    endif
-  finally
-    let &selection = sel_save
-    let @@ = reg_save
-    call setpos('.', pos)
-  endtry
-endfunction"}}}
-function! neosnippet#substitute_selected_text(type, text) "{{{
-  let sel_save = &selection
-  let &selection = 'inclusive'
-  let reg_save = @@
-  let pos = getpos('.')
-
-  try
-    " Invoked from Visual mode, use '< and '> marks.
-    if a:0
-      silent exe "normal! `<" . a:type . "`>s" . a:text
-    elseif a:type ==# 'V'
-      silent exe "normal! '[V']hs" . a:text
-    elseif a:type ==# "\<C-v>"
-      silent exe "normal! `[\<C-v>`]s" . a:text
-    else
-      silent exe "normal! `[v`]s" . a:text
-    endif
-  finally
-    let &selection = sel_save
-    let @@ = reg_save
-    call setpos('.', pos)
-  endtry
 endfunction"}}}
 
 function! s:skip_next_auto_completion() "{{{

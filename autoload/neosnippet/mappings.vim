@@ -33,7 +33,7 @@ endfunction"}}}
 function! neosnippet#mappings#expandable() "{{{
   " Check snippet trigger.
   return neosnippet#helpers#get_cursor_snippet(
-        \ neosnippet#get_snippets(), neosnippet#util#get_cur_text()) != ''
+        \ neosnippet#helpers#get_snippets(), neosnippet#util#get_cur_text()) != ''
 endfunction"}}}
 function! neosnippet#mappings#jumpable() "{{{
   " Found snippet placeholder.
@@ -74,8 +74,8 @@ function! neosnippet#mappings#_register_oneshot_snippet() "{{{
   endif
 
   let selected_text = substitute(
-        \ neosnippet#get_selected_text(visualmode(), 1), '\n$', '', '')
-  call neosnippet#delete_selected_text(visualmode(), 1)
+        \ neosnippet#helpers#get_selected_text(visualmode(), 1), '\n$', '', '')
+  call neosnippet#helpers#delete_selected_text(visualmode(), 1)
 
   let base_indent = matchstr(selected_text, '^\s*')
 
@@ -96,7 +96,7 @@ endfunction"}}}
 
 function! s:snippets_expand(cur_text, col) "{{{
   let cur_word = neosnippet#helpers#get_cursor_snippet(
-        \ neosnippet#get_snippets(),
+        \ neosnippet#helpers#get_snippets(),
         \ a:cur_text)
 
   call neosnippet#expand(
@@ -105,7 +105,7 @@ endfunction"}}}
 
 function! s:snippets_expand_or_jump(cur_text, col) "{{{
   let cur_word = neosnippet#helpers#get_cursor_snippet(
-        \ neosnippet#get_snippets(), a:cur_text)
+        \ neosnippet#helpers#get_snippets(), a:cur_text)
 
   if cur_word != ''
     " Found snippet trigger.
@@ -118,7 +118,7 @@ endfunction"}}}
 
 function! s:snippets_jump_or_expand(cur_text, col) "{{{
   let cur_word = neosnippet#helpers#get_cursor_snippet(
-        \ neosnippet#get_snippets(), a:cur_text)
+        \ neosnippet#helpers#get_snippets(), a:cur_text)
   if search(neosnippet#get_placeholder_marker_pattern(). '\|'
             \ .neosnippet#get_sync_placeholder_marker_pattern(), 'nw') > 0
     " Found snippet placeholder.

@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: snippet.vim
 " AUTHOR:  Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 11 Jul 2013.
+" Last Modified: 21 Nov 2013.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -51,7 +51,7 @@ function! s:source.hooks.on_init(args, context) "{{{
   let a:context.source__cur_keyword_pos =
         \ s:get_keyword_pos(neosnippet#util#get_cur_text())
   let a:context.source__snippets =
-        \ sort(values(neosnippet#get_snippets()))
+        \ sort(values(neosnippet#helpers#get_snippets()))
 endfunction"}}}
 
 function! s:source.gather_candidates(args, context) "{{{

@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: neosnippet_file.vim
 " AUTHOR:  Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 19 Nov 2013.
+" Last Modified: 21 Nov 2013.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -65,7 +65,7 @@ let s:source_user.action_table.unite__new_candidate = {
       \ }
 function! s:source_user.action_table.unite__new_candidate.func(candidate) "{{{
   let filename = input(
-        \ 'New snippet file name: ', neosnippet#get_filetype())
+        \ 'New snippet file name: ', neosnippet#helpers#get_filetype())
   if filename != ''
     call neosnippet#commands#_edit(filename)
   endif
@@ -90,7 +90,7 @@ let s:source_runtime.action_table.unite__new_candidate = {
       \ }
 function! s:source_runtime.action_table.unite__new_candidate.func(candidate) "{{{
   let filename = input(
-        \ 'New snippet file name: ', neosnippet#get_filetype())
+        \ 'New snippet file name: ', neosnippet#helpers#get_filetype())
   if filename != ''
     call neosnippet#commands#_edit('-runtime ' . filename)
   endif

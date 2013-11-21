@@ -56,7 +56,7 @@ snoremap <silent><expr> <Plug>(neosnippet_jump)
       \ neosnippet#mappings#jump_impl()
 
 xnoremap <silent> <Plug>(neosnippet_get_selected_text)
-      \ :call neosnippet#get_selected_text(visualmode(), 1)<CR>
+      \ :call neosnippet#helpers#get_selected_text(visualmode(), 1)<CR>
 
 xnoremap <silent> <Plug>(neosnippet_expand_target)
       \ :<C-u>call neosnippet#expand_target()<CR>
@@ -78,7 +78,7 @@ command! -nargs=? -complete=customlist,neosnippet#commands#_edit_complete
       \ NeoSnippetEdit
       \ call neosnippet#commands#_edit(<q-args>)
 
-command! -nargs=? -complete=customlist,neosnippet#filetype_complete
+command! -nargs=? -complete=customlist,neosnippet#commands#_filetype_complete
       \ NeoSnippetMakeCache
       \ call neosnippet#commands#_make_cache(<q-args>)
 

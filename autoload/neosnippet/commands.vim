@@ -48,7 +48,7 @@ function! neosnippet#commands#_edit(args) "{{{
 
   let filetype = get(args, 0, '')
   if filetype == ''
-    let filetype = neosnippet#get_filetype()
+    let filetype = neosnippet#helpers#get_filetype()
   endif
 
   let options = s:initialize_options(options)
@@ -99,7 +99,7 @@ function! neosnippet#commands#_make_cache(filetype) "{{{
     return
   endif
 
-  let snippets_dir = neosnippet#get_snippets_directory()
+  let snippets_dir = neosnippet#helpers#get_snippets_directory()
   let snippet = {}
   let snippets_files =
         \   split(globpath(join(snippets_dir, ','),
@@ -123,10 +123,31 @@ function! neosnippet#commands#_source(filename) "{{{
   call neosnippet#parser#_parse(neosnippet.snippets, a:filename)
 endfunction"}}}
 
+" Complete helpers.
 function! neosnippet#commands#_edit_complete(arglead, cmdline, cursorpos) "{{{
   return filter(s:edit_options +
-        \ neosnippet#filetype_complete(a:arglead, a:cmdline, a:cursorpos),
+        \ neosnippet#commands#_filetype_complete(a:arglead, a:cmdline, a:cursorpos),
         \ 'stridx(v:val, a:arglead) == 0')
+endfunction"}}}
+function! neosnippet#commands#_filetype_complete(arglead, cmdline, cursorpos) "{{{
+  " Dup check.
+  let ret = {}
+  for item in map(
+        \ split(globpath(&runtimepath, 'syntax/*.vim'), '\n') +
+        \ split(globpath(&runtimepath, 'indent/*.vim'), '\n') +
+        \ split(globpath(&runtimepath, 'ftplugin/*.vim'), '\n')
+        \ , 'fnamemodify(v:val, ":t:r")')
+    if !has_key(ret, item) && item =~ '^'.a:arglead
+      let ret[item] = 1
+    endif
+  endfor
+
+  return sort(keys(ret))
+endfunction"}}}
+function! neosnippet#commands#_complete_target_snippets(arglead, cmdline, cursorpos) "{{{
+  return map(filter(values(neosnippet#helpers#get_snippets()),
+        \ "stridx(v:val.word, a:arglead) == 0
+        \ && v:val.snip =~# neosnippet#get_placeholder_target_marker_pattern()"), 'v:val.word')
 endfunction"}}}
 
 function! s:initialize_options(options) "{{{
