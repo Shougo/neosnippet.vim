@@ -108,10 +108,6 @@ function! s:initialize_others() "{{{
 
   hi def link neosnippetExpandSnippets Special
 
-  if get(g:, 'loaded_echodoc', 0)
-    call echodoc#register('snippets_complete', s:doc_dict)
-  endif
-
   call neosnippet#mappings#_clear_select_mode_mappings()
 
   if g:neosnippet#enable_snipmate_compatibility "{{{
@@ -174,34 +170,6 @@ function! s:on_insert_leave() "{{{
     call setpos('.', pos)
   endtry
 endfunction"}}}
-
-" For echodoc. "{{{
-let s:doc_dict = {
-      \ 'name' : 'neosnippet',
-      \ 'rank' : 100,
-      \ 'filetypes' : {},
-      \ }
-function! s:doc_dict.search(cur_text) "{{{
-  if mode() !=# 'i'
-    return []
-  endif
-
-  let snippets = neosnippet#helpers#get_snippets()
-
-  let cur_word = neosnippet#helpers#get_cursor_snippet(snippets, a:cur_text)
-  if cur_word == ''
-    return []
-  endif
-
-  let snip = snippets[cur_word]
-  let ret = []
-  call add(ret, { 'text' : snip.word, 'highlight' : 'String' })
-  call add(ret, { 'text' : ' ' })
-  call add(ret, { 'text' : snip.menu_abbr, 'highlight' : 'Special' })
-
-  return ret
-endfunction"}}}
-"}}}
 
 let &cpo = s:save_cpo
 unlet s:save_cpo
