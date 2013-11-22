@@ -372,6 +372,10 @@ function! s:expand_placeholder(start, end, holder_cnt, line, ...) "{{{
           \ '<{'.cnt.':'.escape(default, '\').'}>', ''))
     let pos[2] += len('<{'.cnt.':')
   else
+    if is_target
+      let default = ''
+    endif
+
     " Substitute holder.
     call setline(a:line,
           \ substitute(current_line, pattern, escape(default, '\'), ''))
