@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: view.vim
 " AUTHOR:  Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 21 Nov 2013.
+" Last Modified: 22 Nov 2013.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -344,14 +344,8 @@ function! s:expand_placeholder(start, end, holder_cnt, line, ...) "{{{
         \ matchstr(current_line, default_pattern),
         \ '\\\ze[^\\]', '', 'g')
 
-  if default =~ '^TARGET\>' && neosnippet.target != ''
-    let default = ''
-    let is_target = 1
-  else
-    let is_target = 0
-  endif
-
-  let default = substitute(default, '^TARGET:\?', '', '')
+  let is_target = (default =~ '^TARGET\>' && neosnippet.target != '')
+  let default = substitute(default, '^TARGET:\?', neosnippet.target, '')
 
   let neosnippet.selected_text = default
 
@@ -385,7 +379,7 @@ function! s:expand_placeholder(start, end, holder_cnt, line, ...) "{{{
 
   call setpos('.', pos)
 
-  if is_target
+  if is_target && cnt < 0
     " Expand target
     return s:expand_target_placeholder(a:line, match+1)
   endif
