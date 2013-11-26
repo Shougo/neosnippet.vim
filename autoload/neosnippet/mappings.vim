@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: mappings.vim
 " AUTHOR:  Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 21 Nov 2013.
+" Last Modified: 26 Nov 2013.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -201,7 +201,7 @@ function! neosnippet#mappings#expand_impl()
   return s:trigger(s:SID_PREFIX().'snippets_expand')
 endfunction
 function! neosnippet#mappings#jump_impl()
-  return s:trigger('neosnippet#jump')
+  return s:trigger('neosnippet#view#_jump')
 endfunction
 
 let &cpo = s:save_cpo
