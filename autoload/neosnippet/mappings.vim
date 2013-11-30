@@ -162,7 +162,7 @@ function! s:snippets_jump_or_expand(cur_text, col) "{{{
 endfunction"}}}
 
 function! s:SID_PREFIX() "{{{
-  return matchstr(expand('<sfile>'), '<SNR>\d\+_')
+  return matchstr(expand('<sfile>'), '<SNR>\d\+_\ze\w\+$')
 endfunction"}}}
 
 function! s:trigger(function) "{{{
