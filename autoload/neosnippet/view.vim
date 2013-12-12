@@ -93,10 +93,10 @@ function! neosnippet#view#_expand(cur_text, col, trigger_name) "{{{
   let expand_stack = neosnippet#variables#expand_stack()
 
   try
-    call setline('.', snippet_lines[0])
     if len(snippet_lines) > 1
       call append('.', snippet_lines[1:])
     endif
+    call setline('.', snippet_lines[0])
 
     if begin_line != end_line || snippet.options.indent
       call s:indent_snippet(begin_line, end_line)
