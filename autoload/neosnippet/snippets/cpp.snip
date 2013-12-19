@@ -1,5 +1,14 @@
 include c.snip
 
+# #include <...>
+snippet inc
+alias   #inc, #include
+    #include <${1:iostream}>${0}
+# #include "..."
+snippet inc2
+alias   #inc2, #include2
+    #include "${1}"${0}
+
 snippet     template
 abbr        template <T>
     template<typename ${1:T}> 
