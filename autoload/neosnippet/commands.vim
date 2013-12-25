@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: commands.vim
 " AUTHOR:  Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 21 Nov 2013.
+" Last Modified: 25 Dec 2013.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -121,6 +121,49 @@ function! neosnippet#commands#_source(filename) "{{{
 
   let neosnippet = neosnippet#variables#current_neosnippet()
   call neosnippet#parser#_parse(neosnippet.snippets, a:filename)
+endfunction"}}}
+
+function! neosnippet#commands#_clear_markers() "{{{
+  let expand_stack = neosnippet#variables#expand_stack()
+
+  " Get patterns and count.
+  if empty(expand_stack)
+        \ || neosnippet#variables#current_neosnippet().trigger
+    return
+  endif
+
+  let expand_info = expand_stack[-1]
+
+  " Search patterns.
+  let [begin, end] = neosnippet#view#_get_snippet_range(
+        \ expand_info.begin_line,
+        \ expand_info.begin_patterns,
+        \ expand_info.end_line,
+        \ expand_info.end_patterns)
+
+  let pos = getpos('.')
+
+  " Found snippet.
+  let found = 0
+  try
+    while neosnippet#view#_search_snippet_range(
+          \ begin, end, expand_info.holder_cnt, 0)
+      " Next count.
+      let expand_info.holder_cnt += 1
+      let found = 1
+    endwhile
+
+    " Search placeholder 0.
+    if neosnippet#view#_search_snippet_range(begin, end, 0)
+      let found = 1
+    endif
+  finally
+    if found
+      stopinsert
+    endif
+
+    call setpos('.', pos)
+  endtry
 endfunction"}}}
 
 " Complete helpers.
