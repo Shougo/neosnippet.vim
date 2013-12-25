@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: init.vim
 " AUTHOR:  Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 21 Nov 2013.
+" Last Modified: 25 Dec 2013.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -84,7 +84,6 @@ function! s:initialize_others() "{{{
           \ call neosnippet#variables#set_snippets({})
     autocmd BufEnter *
           \ call neosnippet#mappings#_clear_select_mode_mappings()
-    autocmd InsertLeave * call neosnippet#view#_on_insert_leave()
   augroup END"}}}
 
   augroup neosnippet

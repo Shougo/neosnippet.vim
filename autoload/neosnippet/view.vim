@@ -166,22 +166,6 @@ function! neosnippet#view#_jump(cur_text, col) "{{{
   return s:search_outof_range(a:col)
 endfunction"}}}
 
-function! neosnippet#view#_on_insert_leave() "{{{
-  let expand_stack = neosnippet#variables#expand_stack()
-
-  " Get patterns and count.
-  if empty(expand_stack)
-        \ || neosnippet#variables#current_neosnippet().trigger
-    return
-  endif
-
-  if expand_stack[-1].begin_line != expand_stack[-1].end_line
-    return
-  endif
-
-  call neosnippet#commands#_clear_markers()
-endfunction"}}}
-
 function! s:indent_snippet(begin, end) "{{{
   if a:begin > a:end
     return
