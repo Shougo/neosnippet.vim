@@ -134,3 +134,13 @@ options     head
   Dir.glob(${1:'**/*'}) do |fname|
     ${0:TARGET}
   end
+
+snippet     case
+abbr        case ... when ... else ... end
+options     head
+  case ${1}
+  when ${2}
+    ${3}
+  else
+    ${4}
+  end
