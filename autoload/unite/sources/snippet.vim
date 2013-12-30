@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: snippet.vim
 " AUTHOR:  Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 21 Nov 2013.
+" Last Modified: 31 Dec 2013.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -55,26 +55,19 @@ function! s:source.hooks.on_init(args, context) "{{{
 endfunction"}}}
 
 function! s:source.gather_candidates(args, context) "{{{
-  let keyword_pos = a:context.source__cur_keyword_pos
-  let list = []
-  for keyword in a:context.source__snippets
-    let dict = {
-        \   'word' : keyword.word,
-        \   'abbr' : printf('%-50s %s', keyword.word, keyword.menu_abbr),
-        \   'kind': 'snippet',
-        \   'action__complete_word' : keyword.word,
-        \   'action__complete_pos' : keyword_pos,
-        \   'action__path' : keyword.action__path,
-        \   'action__pattern' : keyword.action__pattern,
-        \   'source__menu' : keyword.menu_abbr,
-        \   'source__snip' : keyword.snip,
-        \   'source__snip_ref' : keyword,
-        \ }
-
-    call add(list, dict)
-  endfor
-
-  return list
+  return map(copy(a:context.source__snippets), "{
+        \   'word' : v:val.word,
+        \   'abbr' : printf('%-50s %s', v:val.word, v:val.menu_abbr),
+        \   'kind' : 'snippet',
+        \   'dup' : 1,
+        \   'action__complete_word' : v:val.word,
+        \   'action__complete_pos' : a:context.source__cur_keyword_pos,
+        \   'action__path' : v:val.action__path,
+        \   'action__pattern' : v:val.action__pattern,
+        \   'source__menu' : v:val.menu_abbr,
+        \   'source__snip' : v:val.snip,
+        \   'source__snip_ref' : v:val,
+        \ "})
 endfunction "}}}
 
 " Actions "{{{
