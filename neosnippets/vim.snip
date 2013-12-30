@@ -222,3 +222,7 @@ abbr    use option save
       let &$1 = $1_save
     endtry
 
+snippet     p
+abbr        debug-echomsg
+options     head
+  echomsg string([${0:TARGET}])
