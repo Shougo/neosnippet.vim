@@ -333,7 +333,7 @@ function! s:expand_placeholder(start, end, holder_cnt, line, ...) "{{{
 
     " Substitute holder.
     call setline(a:line,
-          \ substitute(current_line, pattern, escape(default, '\'), ''))
+          \ substitute(current_line, pattern, escape(default, '&\'), ''))
   endif
 
   call setpos('.', pos)
