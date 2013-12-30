@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: snippet_target.vim
 " AUTHOR:  Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 21 Nov 2013.
+" Last Modified: 31 Dec 2013.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -27,7 +27,7 @@
 let s:save_cpo = &cpo
 set cpo&vim
 
-function! unite#sources#snippet_target#define() "{{{
+function! unite#sources#neosnippet_target#define() "{{{
   if !exists('*unite#version') || unite#version() < 150
     echoerr 'Your unite.vim is too old.'
     return []
@@ -37,7 +37,7 @@ function! unite#sources#snippet_target#define() "{{{
 endfunction "}}}
 
 let s:source = {
-      \ 'name': 'snippet/target',
+      \ 'name': 'neosnippet/target',
       \ 'hooks' : {},
       \ 'default_action' : 'select',
       \ 'action_table' : {},
@@ -54,20 +54,13 @@ function! s:source.hooks.on_init(args, context) "{{{
 endfunction"}}}
 
 function! s:source.gather_candidates(args, context) "{{{
-  let list = []
-  for keyword in a:context.source__snippets
-    let dict = {
-        \   'word' : printf('%-50s %s', keyword.word, keyword.menu_abbr),
-        \   'source__trigger' : keyword.word,
-        \   'source__menu' : keyword.menu_abbr,
-        \   'source__snip' : keyword.snip,
+  return map(copy(a:context.source__snippets), "{
+        \   'word' : printf('%-50s %s', v:val.word, v:val.menu_abbr),
+        \   'source__trigger' : v:val.word,
+        \   'source__menu' : v:val.menu_abbr,
+        \   'source__snip' : v:val.snip,
         \   'source__context' : a:context,
-        \ }
-
-    call add(list, dict)
-  endfor
-
-  return list
+        \ }")
 endfunction "}}}
 
 " Actions "{{{
@@ -82,11 +75,12 @@ function! s:source.action_table.select.func(candidate) "{{{
     return
   endif
 
-  call neosnippet#mappings#_expand_target_trigger(a:candidate.source__trigger)
+  call neosnippet#mappings#_expand_target_trigger(
+        \ a:candidate.source__trigger)
 endfunction"}}}
 "}}}
 
-function! unite#sources#snippet_target#start() "{{{
+function! unite#sources#neosnippet_target#start() "{{{
   if !exists(':Unite')
     call neosnippet#util#print_error(
           \ 'unite.vim is not installed.')
@@ -101,8 +95,8 @@ function! unite#sources#snippet_target#start() "{{{
     return ''
   endif
 
-  return unite#start_complete(['snippet/target'],
-        \ { 'buffer_name' : 'snippet/target' })
+  return unite#start_complete(['neosnippet/target'],
+        \ { 'buffer_name' : 'neosnippet/target' })
 endfunction "}}}
 
 function! s:get_keyword_pos(cur_text) "{{{

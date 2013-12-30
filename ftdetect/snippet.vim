@@ -1,2 +1,2 @@
 " Detect syntax file.
-autocmd BufNewFile,BufRead *.snip,*.snippets set filetype=snippet
+autocmd BufNewFile,BufRead *.snip,*.snippets set filetype=neosnippet

@@ -642,14 +642,14 @@ insert empty line in snippet end, you must insert placeholder.
 ==============================================================================
 UNITE SOURCES					*neosnippet-unite-sources*
 
-					*neosnippet-unite-source-snippet*
-snippet
+					*neosnippet-unite-source-neosnippet*
+neosnippet
 		The candidates of the snippet source are neosnippet snippets.
 		and their kind is "snippet". You can use the snippet source
 		with the mapping |<Plug>(neosnippet_start_unite_snippet)|.
-		But you can also execute it by ":Unite snippet". The snippet
-		source offers an edit action you can use to edit the snippet
-		files.
+		But you can also execute it by ":Unite neosnippet". The
+		snippet source offers an edit action you can use to edit the
+		snippet files.
 		
 		Example:
 >
@@ -665,7 +665,7 @@ neosnippet/runtime
 
 source actions
 
-snippet					*neosnippet-unite-action-snippet*
+neosnippet				*neosnippet-unite-action-neosnippet*
 	expand		Expand snippet (default action)
 	edit		Edit snippet
 	preview		View snippet definition

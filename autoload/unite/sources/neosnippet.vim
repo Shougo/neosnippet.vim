@@ -27,9 +27,9 @@
 let s:save_cpo = &cpo
 set cpo&vim
 
-function! unite#sources#snippet#define() "{{{
+function! unite#sources#neosnippet#define() "{{{
   let kind = {
-        \ 'name' : 'snippet',
+        \ 'name' : 'neosnippet',
         \ 'default_action' : 'expand',
         \ 'action_table': {},
         \ 'parents': ['jump_list', 'completion'],
@@ -42,7 +42,7 @@ endfunction "}}}
 
 " neosnippet source.
 let s:source = {
-      \ 'name': 'snippet',
+      \ 'name': 'neosnippet',
       \ 'hooks' : {},
       \ 'action_table' : {},
       \ }
@@ -58,8 +58,7 @@ function! s:source.gather_candidates(args, context) "{{{
   return map(copy(a:context.source__snippets), "{
         \   'word' : v:val.word,
         \   'abbr' : printf('%-50s %s', v:val.word, v:val.menu_abbr),
-        \   'kind' : 'snippet',
-        \   'dup' : 1,
+        \   'kind' : 'neosnippet',
         \   'action__complete_word' : v:val.word,
         \   'action__complete_pos' : a:context.source__cur_keyword_pos,
         \   'action__path' : v:val.action__path,
@@ -67,7 +66,7 @@ function! s:source.gather_candidates(args, context) "{{{
         \   'source__menu' : v:val.menu_abbr,
         \   'source__snip' : v:val.snip,
         \   'source__snip_ref' : v:val,
-        \ "})
+        \ }")
 endfunction "}}}
 
 " Actions "{{{
@@ -138,7 +137,7 @@ let s:source.action_table = s:action_table
 unlet! s:action_table
 "}}}
 
-function! unite#sources#snippet#start_complete() "{{{
+function! unite#sources#neosnippet#start_complete() "{{{
   if !exists(':Unite')
     call neosnippet#util#print_error(
           \ 'unite.vim is not installed.')
