@@ -1,133 +1,133 @@
 snippet     if
 abbr        if ... end
-    if ${1:#:condition}
-        ${2:TARGET}
-    end
+  if ${1:#:condition}
+    ${2:TARGET}
+  end
 
 snippet     def
 abbr        def ... end
-    def ${1:#:method_name}
-        ${2:TARGET}
-    end
+  def ${1:#:method_name}{}
+    ${2:TARGET}
+  end
 
 snippet     defrescue
 alias       defr
 abbr        def ... rescue ... end
-    def ${1:#:method_name}
-        ${2:TARGET}
-    rescue ${3:#:StandardError} => ${4:error}
-        ${5}
-    end
+  def ${1:#:method_name}
+    ${2:TARGET}
+  rescue ${3:#:StandardError} => ${4:error}
+    ${5}
+  end
 
 snippet     do
 abbr        do ... end
-    do
-        ${1:TARGET}
-    end
+  do
+    ${1:TARGET}
+  end
 
 snippet     dovar
 abbr        do |var| ... end
-    do |${1:#:var}|
-        ${2:TARGET}
-    end
+  do |${1:#:var}|
+    ${2:TARGET}
+  end
 
 snippet     block
 abbr        { ... }
-    {
-        ${1:TARGET}
-    }
+  {
+    ${1:TARGET}
+  }
 
 snippet     blockvar
 abbr        {|var| ... }
-    {|${1:#:var}|
-        ${2:TARGET}
-    }
+  {|${1:#:var}|
+    ${2:TARGET}
+  }
 
 snippet     fileopen
 abbr        File.open(filename) do ... end
-    File.open(${1:#:filename}, '${2:#:mode}') do |${3:io}|
-        ${0:TARGET}
-    end
+  File.open(${1:#:filename}, '${2:#:mode}') do |${3:io}|
+    ${0:TARGET}
+  end
 
 snippet     edn
 abbr        => end?
-    end
+  end
 
 snippet     urlencode
-    # coding: utf-8
-    require 'erb'
-    puts ERB::Util.url_encode '${1}'
+  # coding: utf-8
+  require 'erb'
+  puts ERB::Util.url_encode '${1}'
 
 snippet encoding
 alias   enc
-    # coding: utf-8
-    ${0}
+  # coding: utf-8
+  ${0}
 
 snippet each
 options word
-    each { |${1:#:variable}| ${2} }
+  each { |${1:#:variable}| ${2} }
 
 snippet each_do
 options word
-    each do |${1:#:variable}|
-      ${2}
-    end
+  each do |${1:#:variable}|
+    ${2}
+  end
 
 snippet each_byte
 options word
-    each_byte {|${1:#:variable}| ${2} }
+  each_byte {|${1:#:variable}| ${2} }
 
 snippet each_char
 options word
-    each_char {|${1:#:variable}| ${2} }
+  each_char {|${1:#:variable}| ${2} }
 
 snippet each_index
 options word
-    each_index {|${1:#:variable}| ${2} }
+  each_index {|${1:#:variable}| ${2} }
 
 snippet each_key
 options word
-    each_key {|${1:#:variable}| ${2} }
+  each_key {|${1:#:variable}| ${2} }
 
 snippet each_line
 options word
-    each_line {|${1:#:variable}| ${2} }
+  each_line {|${1:#:variable}| ${2} }
 
 snippet each_with_index
 options word
-    each_with_index {|${1:#:variable}| ${2} }
+  each_with_index {|${1:#:variable}| ${2} }
 
 snippet map
 options word
-    map {|${1:#:variable}| ${2} }
+  map {|${1:#:variable}| ${2} }
 
 snippet sort
 options word
-    sort {|${1:#:variable}| ${2} }
+  sort {|${1:#:variable}| ${2} }
 
 snippet sort_by
 options word
-    sort_by {|${1:#:variable}| ${2} }
+  sort_by {|${1:#:variable}| ${2} }
 
 snippet lambda
 options word
-    -> (${1:#:args}) { ${2} }
+  -> (${1:#:args}) { ${2} }
 
 snippet lambda-keyword
 options word
-    lambda {|${1:#:args}| ${2} }
+  lambda {|${1:#:args}| ${2} }
 
 snippet     main
 options     head
-    if __FILE__ == \$0
-        ${0:TARGET}
-    end
+  if __FILE__ == \$0
+    ${0:TARGET}
+  end
 
 # This idiom is only for legacy ruby such as 1.9.3
 snippet filedir-legacy-compatibility
 alias __dir__
 abbr File.dirname(...)
-    File.dirname(File.expand_path(__FILE__))
+  File.dirname(File.expand_path(__FILE__))
 
 snippet     glob
 options     head
@@ -144,3 +144,5 @@ options     head
   else
     ${4}
   end
+
+# vim:set et ts=2 sts=2 sw=2 tw=0:
