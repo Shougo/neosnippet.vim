@@ -14,6 +14,7 @@ name.
 Note: neocomplcache/neocomplete is NOT required! But recommended.
 
 Extra snippets files are available in:
+[neosnippet-snippets](https://github.com/Shougo/neosnippet-snippets)
 [vim-snippets](https://github.com/honza/vim-snippets)
 
 Installation

@@ -57,6 +57,7 @@ neocomplete(https://github.com/Shougo/neocomplete.vim).
 Note: neocomplcache or neocomplete is NOT required! But recommended.
 
 Extra snippets files are available in:
+https://github.com/Shougo/neosnippet-snippets
 https://github.com/honza/vim-snippets
 
 Note: To enable context filetype feature, you must install
