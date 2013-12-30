@@ -17,6 +17,17 @@ snippet     class
 abbr        class {}
     class ${1:#:name} {
         ${2}
+    public:
+        $1(${3});
+    };
+    $1::$1($3) {
+        ${0:TARGET}
+    }
+
+snippet     class-without-constructor
+abbr        class {}
+    class ${1:#:name} {
+        ${2}
     };
 
 snippet     try
@@ -31,6 +42,12 @@ abbr        try catch
 snippet     for_CPP11
 abbr        for (:) {}
     for (${1:#:var} : ${2:#:container}) {
+        ${0:TARGET}
+    }
+
+# range based for ( C++11 feature )
+snippet     for_CPP11_const_auto
+    for (const auto &${1:#:var} : ${2:#:container}) {
         ${0:TARGET}
     }
 
@@ -76,10 +93,13 @@ abbr        dynamic_cast<>()
 snippet     helloworld
 abbr        #include<iostream> int main...
     #include <iostream>
+
     int main(int argc, char const* argv[])
     {
-        using namespace std;
-        cout << "hello, world!" << endl;
+        std::cout << "hello, world!" << std::endl;
         return 0;
     }
 
+snippet     p
+options     head
+  std::cout << ${0:TARGET} << std::endl;
