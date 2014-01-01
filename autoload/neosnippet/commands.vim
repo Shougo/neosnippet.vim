@@ -108,7 +108,7 @@ function! neosnippet#commands#_make_cache(filetype) "{{{
 
   let path = join(neosnippet#helpers#get_snippets_directory(), ',')
   let snippets_files = []
-  for glob in call(s:get_list().flatten,
+  for glob in s:get_list().flatten(
         \ map(split(get(g:neosnippet#scope_aliases,
         \   filetype, filetype), '\s*,\s*'), "
         \   [v:val . '.snip*', v:val .  '/**/*.snip*']
