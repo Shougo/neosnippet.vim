@@ -36,7 +36,7 @@ let s:edit_options = [
 
 function! s:get_list() "{{{
   if !exists('s:List')
-    let s:List = unite#util#get_vital().import('Data.List')
+    let s:List = vital#of('neosnippet').import('Data.List')
   endif
   return s:List
 endfunction"}}}
