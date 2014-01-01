@@ -195,10 +195,22 @@ g:neosnippet#enable_snipmate_compatibility
 		The default value is 0.
 
 g:neosnippet#enable_preview			 *g:neosnippet#enable_preview*
-		If this variable is not 0, neosnippet will enable the preview window
-		feature.
+		If this variable is not 0, neosnippet will enable the preview
+		window feature in neocomplcache/neocomplete sources.
 
 		The default value is 0.
+
+						*g:neosnippet#scope_aliases*
+g:neosnippet#scope_aliases
+		It is a dictionary that associating certain filetypes with
+		other snippet files.
+		The key is filetype, and the value is comma separated snippet
+		filenames excluded extensions.
+		It works like |g:snipMate.scope_aliases|.
+		The default value is {}. >
+
+		let g:neosnippet#scope_aliases = {}
+		let g:neosnippet#scope_aliases['ruby'] = 'ruby,ruby-rails'
 
 ------------------------------------------------------------------------------
 KEY MAPPINGS 					*neosnippet-key-mappings*

@@ -34,6 +34,13 @@ let s:edit_options = [
       \]
 "}}}
 
+function! s:get_list() "{{{
+  if !exists('s:List')
+    let s:List = unite#util#get_vital().import('Data.List')
+  endif
+  return s:List
+endfunction"}}}
+
 function! neosnippet#commands#_edit(args) "{{{
   if neosnippet#util#is_sudo()
     call neosnippet#util#print_error(
@@ -101,8 +108,11 @@ function! neosnippet#commands#_make_cache(filetype) "{{{
 
   let path = join(neosnippet#helpers#get_snippets_directory(), ',')
   let snippets_files = []
-  for glob in [filetype.'.snip*', filetype.'_*.snip*',
-        \ filetype .  '/**/*.snip*']
+  for glob in call(s:get_list().flatten,
+        \ map(split(get(g:neosnippet#scope_aliases,
+        \   filetype, filetype), '\s*,\s*'), "
+        \   [v:val . '.snip*', v:val .  '/**/*.snip*']
+        \ + (v:val ==# filetype ? [v:val . '_*.snip*'] : [])"))
     let snippets_files += split(globpath(path, glob), '\n')
   endfor
 
