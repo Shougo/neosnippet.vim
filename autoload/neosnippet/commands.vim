@@ -112,12 +112,14 @@ function! neosnippet#commands#_make_cache(filetype) "{{{
         \ map(split(get(g:neosnippet#scope_aliases,
         \   filetype, filetype), '\s*,\s*'), "
         \   [v:val . '.snip*', v:val .  '/**/*.snip*']
-        \ + (v:val ==# filetype ? [v:val . '_*.snip*'] : [])"))
+        \ + (filetype != '_' &&
+        \    !has_key(g:neosnippet#scope_aliases, filetype) ?
+        \    [v:val . '_*.snip*'] : [])"))
     let snippets_files += split(globpath(path, glob), '\n')
   endfor
 
   let snippet = {}
-  call map(reverse(snippets_files),
+  call map(reverse(s:get_list().uniq(snippets_files)),
         \ "neosnippet#parser#_parse(snippet, v:val)")
 
   let snippets = neosnippet#variables#snippets()
