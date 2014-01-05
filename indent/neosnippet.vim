@@ -44,11 +44,11 @@ setlocal indentexpr=SnippetsIndent()
 function! SnippetsIndent() "{{{
     let line = getline('.')
     let prev_line = (line('.') == 1)? '' : getline(line('.')-1)
+    let syntax = '\%(include\|snippet\|abbr\|prev_word\|delete\|alias\|options\|regexp\)'
 
     if prev_line =~ '^\s*$'
         return 0
-    elseif prev_line =~ '^\%(include\|snippet\|abbr\|prev_word\|delete\|alias\|options\)'
-                \&& line !~ '^\s*\%(include\|snippet\|abbr\|prev_word\|delete\|alias\|options\)'
+    elseif prev_line =~ '^' . syntax && line !~ '^\s*' . syntax
         return &shiftwidth
     else
         return match(line, '\S')
