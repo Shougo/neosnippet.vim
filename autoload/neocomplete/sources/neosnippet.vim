@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: neosnippet.vim
 " AUTHOR:  Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 21 Nov 2013.
+" Last Modified: 05 Jan 2014.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -32,6 +32,9 @@ let s:source = {
       \ 'kind' : 'keyword',
       \ 'rank' : 8,
       \ 'hooks' : {},
+      \ 'matchers' :
+      \      (g:neocomplete#enable_fuzzy_completion ?
+      \          ['matcher_fuzzy'] : ['matcher_head']),
       \}
 
 function! s:source.hooks.on_init(context) "{{{
