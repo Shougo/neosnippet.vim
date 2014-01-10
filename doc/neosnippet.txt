@@ -154,9 +154,9 @@ g:neosnippet#snippets_directory		*g:neosnippet#snippets_directory*
 				*g:neosnippet#disable_select_mode_mappings*
 g:neosnippet#disable_select_mode_mappings
 		This variable disables key-mappings in |Select-mode| where the
-		snippets_complete performs the snippet completion. Usually it
-		is better to leave it as it is. But if you have troubles with
-		the buffer switcher LustyJuggler you can switch them off.
+		neosnippet performs the snippet completion. Usually it is
+		better to leave it as it is. But if you have troubles with the
+		buffer switcher LustyJuggler you can switch them off.
 		
 		The default value is 1.
 
@@ -396,8 +396,8 @@ Snippet Keywords:
 	Options influence the snippet behavior. The possible values are:
 
 	+ word	This snippet expands by a word boundary.
-		Note: To complete the trigger with snippets_complete, it must
-		be a word character (digits, alphabetical characters or "_").
+		Note: To complete the trigger with neosnippet, it must be a
+		word character (digits, alphabetical characters or "_").
 
 >
 	snippet     date
