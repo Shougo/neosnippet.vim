@@ -37,6 +37,38 @@ options     head
 		}
 	}
 
+snippet     object
+options     head
+	object ${1:X} {
+		${0:TARGET}
+	}
+
+snippet     should-scalatest
+options     word
+	should {
+		"${1}" in {
+			${0:TARGET}
+		}
+	}
+
+snippet     akka-actor
+options     head
+	import akka.actor.{ActorSystem, Actor, ActorLogging, Props}
+
+	object ${1:X} {
+		def props(${2}) = Props(new X($2))
+	}
+
+	class $1($2) extends Actor with ActorLogging {
+		def receive = {
+			case e =>
+				${0:TARGET:println(e)}
+		}
+	}
+
+snippet     package
+options     head
+	package `substitute(substitute(expand('%:h'), '^src/main/scala/', '', ''), '/', '.', 'g')`
+
 # scala's indent plugin doesn't work well. use hard-tab for this snippet.
 # vim: set noexpandtab :
-
