@@ -41,13 +41,7 @@ abbr        try catch
 # range based for ( C++11 feature )
 snippet     for_CPP11
 abbr        for (:) {}
-    for (${1:#:var} : ${2:#:container}) {
-        ${0:TARGET}
-    }
-
-# range based for ( C++11 feature )
-snippet     for_CPP11_const_auto
-    for (const auto &${1:#:var} : ${2:#:container}) {
+    for (${1:auto&& }${2:var} : ${3:container}) {
         ${0:TARGET}
     }
 
