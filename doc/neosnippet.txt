@@ -164,12 +164,11 @@ g:neosnippet#disable_select_mode_mappings
 g:neosnippet#disable_runtime_snippets
 		This is a dictionary variable which uses file types as key.
 		If you set the value of a file type entry to 1, this prevents
-		loading all the file type specific built-in snippets. This is
-		very useful to prevent snippet conflicts between self
-		defined snippet files and the built-in snippet files of
-		neosnippet. If you use a "_" as key for an entry this will
-		treat the value of the entry as default value for all file
-		types.
+		loading "neosnippets" directories from 'runtimepath'. This is
+		very useful to prevent snippet conflicts between self defined
+		snippet files and the built-in snippet files of neosnippet. If
+		you use a "_" as key for an entry this will treat the value of
+		the entry as default value for all file types.
 
 		Note: This dictionary must be set in your .vimrc.
 
@@ -190,7 +189,8 @@ g:neosnippet#disable_runtime_snippets
 g:neosnippet#enable_snipmate_compatibility
 		If this variable is not 0, neosnippet will enable the snipMate
 		compatibility feature (For example: Filename() function) and
-		load snipMate snippets automatically from 'runtimepath'.
+		load |g:snippets_dir| and snipMate snippets automatically from
+		'runtimepath'.
 
 		The default value is 0.
 
