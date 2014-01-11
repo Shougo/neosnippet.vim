@@ -11,10 +11,15 @@ snipMate.vim or snippetsEmu.vim. But since you can choose snippets with the
 have less trouble using them, because you do not have to remember each snippet
 name.
 
+Note: Default snippets are required! You must install them or disable runtime
+snippets by `g:neosnippet#disable_runtime_snippets`.
+
+Default snippets files are available in:
+[neosnippet-snippets](https://github.com/Shougo/neosnippet-snippets)
+
 Note: neocomplcache/neocomplete is NOT required! But recommended.
 
 Extra snippets files are available in:
-[neosnippet-snippets](https://github.com/Shougo/neosnippet-snippets)
 [vim-snippets](https://github.com/honza/vim-snippets)
 
 Installation
@@ -28,16 +33,19 @@ required files into your `.vim` folder.
 
 1. Install the
    [neocomplcache](https://github.com/Shougo/neocomplcache.vim)/
-   [neocomplete](https://github.com/Shougo/neocomplete.vim) plugin first.
+   [neocomplete](https://github.com/Shougo/neocomplete.vim) and
+   [neosnippet-snippets](https://github.com/Shougo/neosnippet-snippets)
+   first.
 2. Put files in your Vim directory (usually `~/.vim/` or
    `%PROGRAMFILES%/Vim/vimfiles` on Windows).
 
-### Vundle 
+### Vundle
 
 1. Setup the [vundle](https://github.com/gmarik/vundle) package manager
-2. Set the bundles for [Neocomplcache](https://github.com/Shougo/neocomplcache)
+2. Set the bundles for [neocomplcache](https://github.com/Shougo/neocomplcache)
    or [neocomplete](https://github.com/Shougo/neocomplete.vim)
-   And [Neosnippet](https://github.com/Shougo/neosnippet)
+   And [neosnippet](https://github.com/Shougo/neosnippet)
+   And [neosnippet-snippets](https://github.com/Shougo/neosnippet-snippets)
 
     ```vim
     Bundle 'Shougo/neocomplcache'
@@ -45,16 +53,18 @@ required files into your `.vim` folder.
     Bundle 'Shougo/neocomplete'
 
     Bundle 'Shougo/neosnippet'
+    Bundle 'Shougo/neosnippet-snippets'
     ```
 
 3. Open up Vim and start installation with `:BundleInstall`
 
-### Neobundle 
+### Neobundle
 
-1. Setup the [neobundle](https://github.com/Shougo/neobundle.vim) package manager 
-2. Set the bundles for [Neocomplcache](https://github.com/Shougo/neocomplcache)
+1. Setup the [neobundle](https://github.com/Shougo/neobundle.vim) package manager
+2. Set the bundles for [neocomplcache](https://github.com/Shougo/neocomplcache)
    or [neocomplete](https://github.com/Shougo/neocomplete.vim)
-   And [Neosnippet](https://github.com/Shougo/neosnippet)
+   And [neosnippet](https://github.com/Shougo/neosnippet)
+   And [neosnippet-snippets](https://github.com/Shougo/neosnippet-snippets)
 
     ```vim
     NeoBundle 'Shougo/neocomplcache'
@@ -62,6 +72,7 @@ required files into your `.vim` folder.
     NeoBundle 'Shougo/neocomplete'
 
     NeoBundle 'Shougo/neosnippet'
+    NeoBundle 'Shougo/neosnippet-snippets'
     ```
 
 3. Open up Vim and start installation with `:NeoBundleInstall`
@@ -73,7 +84,7 @@ required files into your `.vim` folder.
 2. Add `neosnippet` to the list of addons in your vimrc:
 
     ```vim
-    call vam#ActivateAddons(['neosnippet'])
+    call vam#ActivateAddons(['neosnippet', 'neosnippet-snippets'])
     ```
 
     . Installation will start automatically when you open vim next time.
@@ -115,7 +126,7 @@ built-in ones, then you can set a path to the snippets with
 the `g:neosnippet#snippets_directory` variable (e.g [Honza's
 Snippets](https://github.com/honza/vim-snippets))
 
-But if you enable g:neosnippet#enable_snipmate_compatibility, neosnippet will
+But if you enable `g:neosnippet#enable_snipmate_compatibility`, neosnippet will
 load snipMate snippets from runtime path automatically.
 
 ```vim
