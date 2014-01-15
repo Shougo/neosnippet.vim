@@ -11,23 +11,22 @@ snipMate.vim or snippetsEmu.vim. But since you can choose snippets with the
 have less trouble using them, because you do not have to remember each snippet
 name.
 
-Note: Default snippets are required! You must install them or disable runtime
-snippets by `g:neosnippet#disable_runtime_snippets`.
-
-Default snippets files are available in:
-[neosnippet-snippets](https://github.com/Shougo/neosnippet-snippets)
-
-Note: neocomplcache/neocomplete is NOT required! But recommended.
-
-Extra snippets files are available in:
-[vim-snippets](https://github.com/honza/vim-snippets)
-
 Installation
 ------------
 
 To install neosnippet and other Vim plug-ins it is recommended to use one of the
 popular package managers for Vim, rather than installing by drag and drop all
 required files into your `.vim` folder.
+
+Notes:
+
+* Default snippets files are available in:
+  [neosnippet-snippets](https://github.com/Shougo/neosnippet-snippets)
+* Installing default snippets is optional. If choose not to install them,
+  you must deactivate them with `g:neosnippet#disable_runtime_snippets`.
+* neocomplcache/neocomplete is not required to use neosnippet, but it's highly recommended.
+* Extra snippets files can be found in:
+  [vim-snippets](https://github.com/honza/vim-snippets).
 
 ### Manual (not recommended)
 
