@@ -50,22 +50,25 @@ INSTALL						*neosnippet-install*
 1: Extract the file and put files in your Vim directory
    (usually ~/.vim/ or Program Files/Vim/vimfiles on Windows).
 
-Note: If you want to complete snippets, you must install neocomplcache
-(https://github.com/Shougo/neocomplcache.vim) or
-neocomplete(https://github.com/Shougo/neocomplete.vim). It's not required,
-but highly recommended.
+Note: If you want to complete snippets, you must install either neocomplcache
+(https://github.com/Shougo/neocomplcache.vim) or neocomplete
+(https://github.com/Shougo/neocomplete.vim). It's not required, but highly
+recommended.
 
-Default snippets files are available in:
+Default snippets files are available in neosnippet-snippets.
 https://github.com/Shougo/neosnippet-snippets
 
 Note: Installing the default snippets is optional. If you choose not to install
-them, you must disable them by |g:neosnippet#disable_runtime_snippets|.
+them, you must disable finding snippets by giving 1 to 
+|g:neosnippet#disable_runtime_snippets|.
 
-Extra snippets files are available in:
+Extra snippets files are also available. e.g.:
 https://github.com/honza/vim-snippets
 
-Note: To enable context filetype feature, you must install
-context_filetype.vim.
+Note: To enable context-filetype feature, you must install
+context_filetype.vim. This allows you to use snippets not only depend on the
+current 'filetype' of the file, but also depends on the cursor location, such
+as javascript inside html, or lua inside Vim scripts.
 https://github.com/Shougo/context_filetype.vim
 
 ==============================================================================
@@ -151,7 +154,7 @@ g:neosnippet#snippets_directory		*g:neosnippet#snippets_directory*
 
 		- "vim.snip*"
 		- "vim_*.snip*"
-	        - "vim/**/*.snip"
+		- "vim/**/*.snip"
 
 		The default value is ''.
 
@@ -748,10 +751,10 @@ Q: I want to delete markers when InsertLeave event.
 A: You can use |:NeoSnippetClearMarkers| command. >
 	autocmd InsertLeave * NeoSnippetClearMarkers
 
-Q: Why did you split default snippets?
+Q: Why did you separate default snippets from neosnippet core?
 
-A: Because, users should choose default snippet collection.
-neosnippet has many forks, but almost forked users change default snippet
+A: Because users should choose default snippet collection.
+neosnippet has many forks, but almost all forked users change default snippet
 files.
 https://github.com/Shougo/neosnippet.vim/network
 If splitted default snippets, users can fork and change it easily.
