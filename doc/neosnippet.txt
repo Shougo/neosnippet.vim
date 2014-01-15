@@ -52,15 +52,14 @@ INSTALL						*neosnippet-install*
 
 Note: If you want to complete snippets, you must install neocomplcache
 (https://github.com/Shougo/neocomplcache.vim) or
-neocomplete(https://github.com/Shougo/neocomplete.vim).
-
-Note: Default snippets are required! You must install them or disable runtime
-snippets by |g:neosnippet#disable_runtime_snippets|.
+neocomplete(https://github.com/Shougo/neocomplete.vim). It's not required,
+but highly recommended.
 
 Default snippets files are available in:
 https://github.com/Shougo/neosnippet-snippets
 
-Note: neocomplcache or neocomplete is NOT required! But recommended.
+Note: Installing the default snippets is optional. If you choose not to install
+them, you must disable them by |g:neosnippet#disable_runtime_snippets|.
 
 Extra snippets files are available in:
 https://github.com/honza/vim-snippets
@@ -86,7 +85,7 @@ COMMANDS 					*neosnippet-commands*
 		Opens the snippets for a given [filetype] to edit. It automatically
 		selects the current buffer's filetype unless you specify
 		another one by [filetype].
-		
+
 		If the path to [filetype] snippets is a directory, it
 		automatically selects "[filetype].snip" in the [filetype]
 		subdirectory.
@@ -106,7 +105,7 @@ COMMANDS 					*neosnippet-commands*
 					*neosnippet-edit-options-horizontal*
 		-horizontal
 		Split the window horizontally.
-		
+
 		Note: The behavior is undefined when both options are set.
 
 					*neosnippet-edit-options-direction*
@@ -145,7 +144,7 @@ g:neosnippet#snippets_directory		*g:neosnippet#snippets_directory*
 		User defined snippet files are read after the built-in snippet
 		files. If redundant snippets occur they get overwritten and
 		only the last one remains.
-		
+
 		Note: The neosnippet plug-in loads file type snippets from
 		several files if available. For example if you edit a "Vim"
 		file it loads the snippets from:
@@ -162,7 +161,7 @@ g:neosnippet#disable_select_mode_mappings
 		neosnippet performs the snippet completion. Usually it is
 		better to leave it as it is. But if you have troubles with the
 		buffer switcher LustyJuggler you can switch them off.
-		
+
 		The default value is 1.
 
 				*g:neosnippet#disable_runtime_snippets*
@@ -182,7 +181,7 @@ g:neosnippet#disable_runtime_snippets
 		let g:neosnippet#disable_runtime_snippets = {
 		\   'c' : 1, 'cpp' : 1,
 		\ }
-		
+
 		" which disables all runtime snippets
 		let g:neosnippet#disable_runtime_snippets = {
 		\   '_' : 1,
@@ -327,10 +326,10 @@ EXAMPLES					*neosnippet-examples*
 	if has('conceal')
 	  set conceallevel=2 concealcursor=i
 	endif
-	
+
 	" Enable snipMate compatibility feature.
 	" let g:neosnippet#enable_snipmate_compatibility = 1
-	
+
 ==============================================================================
 SNIPPET SYNTAX					*neosnippet-snippet-syntax*
 
@@ -644,7 +643,7 @@ insert empty line in snippet end, you must insert placeholder.
 	alias       shebang
 	options     head
 	  #!/usr/bin/env ruby
-	  
+
 	  ${0}
 
 	# This is invalid(ignores spaces lines!).
@@ -653,8 +652,8 @@ insert empty line in snippet end, you must insert placeholder.
 	alias       shebang
 	options     head
 	  #!/usr/bin/env ruby
-	  
-	  
+
+
 <
 ==============================================================================
 UNITE SOURCES					*neosnippet-unite-sources*
@@ -667,7 +666,7 @@ neosnippet
 		But you can also execute it by ":Unite neosnippet". The
 		snippet source offers an edit action you can use to edit the
 		snippet files.
-		
+
 		Example:
 >
 		imap <C-s>  <Plug>(neosnippet_start_unite_snippet)
