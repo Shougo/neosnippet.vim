@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: commands.vim
 " AUTHOR:  Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 01 Jan 2014.
+" Last Modified: 20 Jan 2014.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -158,6 +158,7 @@ function! neosnippet#commands#_clear_markers() "{{{
   try
     while neosnippet#view#_search_snippet_range(
           \ begin, end, expand_info.holder_cnt, 0)
+
       " Next count.
       let expand_info.holder_cnt += 1
       let found = 1

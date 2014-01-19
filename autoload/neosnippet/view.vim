@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: view.vim
 " AUTHOR:  Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 25 Dec 2013.
+" Last Modified: 20 Jan 2014.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -298,6 +298,10 @@ function! s:expand_placeholder(start, end, holder_cnt, line, ...) "{{{
   let default = substitute(
         \ matchstr(current_line, default_pattern),
         \ '\\\ze[^\\]', '', 'g')
+  if !is_select && default =~ '^#:'
+    " Delete comments.
+    let default = ''
+  endif
 
   let is_target = (default =~ '^TARGET\>' && neosnippet.target != '')
   let default = substitute(default, '^TARGET:\?', neosnippet.target, '')
