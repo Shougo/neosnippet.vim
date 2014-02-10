@@ -1,5 +1,5 @@
 "=============================================================================
-" FILE: snippet_target.vim
+" FILE: neosnippet_target.vim
 " AUTHOR:  Shougo Matsushita <Shougo.Matsu@gmail.com>
 " Last Modified: 31 Dec 2013.
 " License: MIT license  {{{

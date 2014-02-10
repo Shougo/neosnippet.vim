@@ -1,5 +1,5 @@
 "=============================================================================
-" FILE: snippet.vim
+" FILE: neosnippet.vim
 " AUTHOR:  Shougo Matsushita <Shougo.Matsu@gmail.com>
 " Last Modified: 31 Dec 2013.
 " License: MIT license  {{{
@@ -146,7 +146,7 @@ function! unite#sources#neosnippet#start_complete() "{{{
     return ''
   endif
 
-  return unite#start_complete(['snippet'],
+  return unite#start_complete(['neosnippet'],
         \ { 'input': neosnippet#util#get_cur_text(), 'buffer_name' : '' })
 endfunction "}}}
 
