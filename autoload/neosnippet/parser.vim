@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: parser.vim
 " AUTHOR:  Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 21 Nov 2013.
+" Last Modified: 11 Mar 2014.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -238,7 +238,8 @@ function! neosnippet#parser#_initialize_snippet(dict, path, line, pattern, name)
 endfunction"}}}
 
 function! neosnippet#parser#_initialize_snippet_options() "{{{
-  return { 'head' : 0, 'word' : 0, 'indent' : 0 }
+  return { 'head' : 0, 'word' :
+        \   g:neosnippet#expand_word_boundary, 'indent' : 0 }
 endfunction"}}}
 
 let &cpo = s:save_cpo

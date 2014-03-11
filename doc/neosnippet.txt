@@ -210,6 +210,13 @@ g:neosnippet#enable_preview			 *g:neosnippet#enable_preview*
 
 		The default value is 0.
 
+					 *g:neosnippet#expand_word_boundary*
+g:neosnippet#expand_word_boundary
+		It it is not 0, neosnippet will expand snippets by a word
+		boundary.
+
+		The default value is 0.
+
 						*g:neosnippet#scope_aliases*
 g:neosnippet#scope_aliases
 		It is a dictionary that associating certain filetypes with
@@ -698,7 +705,8 @@ FAQ						*neosnippet-faq*
 Q: What if I want to expand a snippet trigger after (, [, " etc...:
 
 A: You should use "options word" in the snippet definition. This changes the
-expansion behavior to a word boundary.
+expansion behavior to a word boundary or set
+|g:neosnippet#enable_word_expand|.
 >
 	snippet     date
 	options     word
