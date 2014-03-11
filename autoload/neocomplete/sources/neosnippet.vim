@@ -1,7 +1,7 @@
 "=============================================================================
 " FILE: neosnippet.vim
 " AUTHOR:  Shougo Matsushita <Shougo.Matsu@gmail.com>
-" Last Modified: 05 Jan 2014.
+" Last Modified: 11 Mar 2014.
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
 "     a copy of this software and associated documentation files (the
@@ -44,7 +44,13 @@ function! s:source.hooks.on_init(context) "{{{
 endfunction"}}}
 
 function! s:source.gather_candidates(context) "{{{
-  return values(neosnippet#helpers#get_snippets())
+  let snippets = values(neosnippet#helpers#get_snippets())
+  if matchstr(a:context.input, '\S\+$') !=#
+        \ matchstr(a:context.input, '\w\+$')
+    " Word filtering
+    call filter(snippets, 'v:val.options.word')
+  endif
+  return snippets
 endfunction"}}}
 
 function! s:source.hooks.on_post_filter(context) "{{{
