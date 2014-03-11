@@ -214,6 +214,7 @@ g:neosnippet#enable_preview			 *g:neosnippet#enable_preview*
 g:neosnippet#expand_word_boundary
 		It it is not 0, neosnippet will expand snippets by a word
 		boundary.
+		Note: It must be initialized before snippet loading.
 
 		The default value is 0.
 
