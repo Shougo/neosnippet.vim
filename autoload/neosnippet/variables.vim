@@ -73,6 +73,17 @@ function! neosnippet#variables#runtime_dir() "{{{
 
   return s:runtime_dir
 endfunction"}}}
+function! neosnippet#variables#data_dir() "{{{
+  let g:neosnippet#data_directory =
+        \ substitute(fnamemodify(get(
+        \   g:, 'neosnippet#data_directory', '~/.cache/neosnippet'),
+        \  ':p'), '\\', '/', 'g')
+  if !isdirectory(g:neosnippet#data_directory)
+    call mkdir(g:neosnippet#data_directory, 'p')
+  endif
+
+  return g:neosnippet#data_directory
+endfunction"}}}
 
 let &cpo = s:save_cpo
 unlet s:save_cpo

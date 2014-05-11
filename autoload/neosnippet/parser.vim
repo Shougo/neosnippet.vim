@@ -35,7 +35,17 @@ function! neosnippet#parser#_parse(snippet_file) "{{{
     return {}
   endif
 
-  return s:parse(a:snippet_file)
+  let cache_dir = neosnippet#variables#data_dir()
+  if s:Cache.check_old_cache(cache_dir, a:snippet_file)
+    let snippets = s:parse(a:snippet_file)
+    if len(snippets) > 5
+      call s:Cache.writefile(cache_dir, a:snippet_file, [string(snippets)])
+    endif
+  else
+    sandbox let snippets = eval(s:Cache.readfile(cache_dir, a:snippet_file)[0])
+  endif
+
+  return snippets
 endfunction"}}}
 
 function! s:parse(snippet_file) "{{{
