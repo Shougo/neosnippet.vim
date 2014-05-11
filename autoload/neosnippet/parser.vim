@@ -26,19 +26,25 @@
 let s:save_cpo = &cpo
 set cpo&vim
 
-function! neosnippet#parser#_parse(snippets, snippets_file) "{{{
-  let dup_check = {}
-  let snippet_dict = {}
+let s:Cache = neosnippet#util#get_vital().import('System.Cache')
 
-  let linenr = 1
-
-  if !filereadable(a:snippets_file)
+function! neosnippet#parser#_parse(snippet_file) "{{{
+  if !filereadable(a:snippet_file)
     call neosnippet#util#print_error(
-          \ printf('snippet file "%s" is not found.', a:snippets_file))
-    return a:snippets
+          \ printf('snippet file "%s" is not found.', a:snippet_file))
+    return {}
   endif
 
-  for line in readfile(a:snippets_file)
+  return s:parse(a:snippet_file)
+endfunction"}}}
+
+function! s:parse(snippet_file) "{{{
+  let dup_check = {}
+  let snippet_dict = {}
+  let linenr = 1
+  let snippets = {}
+
+  for line in readfile(a:snippet_file)
     if line =~ '^\h\w*.*\s$'
       " Delete spaces.
       let line = substitute(line, '\s\+$', '', '')
@@ -50,25 +56,26 @@ function! neosnippet#parser#_parse(snippets, snippets_file) "{{{
       " Include snippets.
       let filename = matchstr(line, '^include\s\+\zs.*$')
 
-      for snippets_file in split(globpath(join(
+      for snippet_file in split(globpath(join(
             \ neosnippet#helpers#get_snippets_directory(), ','),
             \ filename), '\n')
-        call neosnippet#parser#_parse(a:snippets, snippets_file)
+        let snippets = extend(snippets,
+              \ neosnippet#parser#_parse(snippets, snippet_file))
       endfor
     elseif line =~ '^delete\s'
       let name = matchstr(line, '^delete\s\+\zs.*$')
-      if name != '' && has_key(a:snippets, name)
-        call filter(a:snippets, 'v:val.real_name !=# name')
+      if name != '' && has_key(snippets, name)
+        call filter(snippets, 'v:val.real_name !=# name')
       endif
     elseif line =~ '^snippet\s'
       if !empty(snippet_dict)
         " Set previous snippet.
         call s:set_snippet_dict(snippet_dict,
-              \ a:snippets, dup_check, a:snippets_file)
+              \ snippets, dup_check, a:snippet_file)
       endif
 
       let snippet_dict = s:parse_snippet_name(
-            \ a:snippets_file, line, linenr, dup_check)
+            \ a:snippet_file, line, linenr, dup_check)
     elseif !empty(snippet_dict)
       if line =~ '^\s' || line == ''
         if snippet_dict.word == ''
@@ -77,10 +84,10 @@ function! neosnippet#parser#_parse(snippets, snippets_file) "{{{
         endif
 
         let snippet_dict.word .=
-                \ substitute(line, '^ *', '', '') . "\n"
+              \ substitute(line, '^ *', '', '') . "\n"
       else
         call s:add_snippet_attribute(
-              \ a:snippets_file, line, linenr, snippet_dict)
+              \ a:snippet_file, line, linenr, snippet_dict)
       endif
     endif
 
@@ -90,13 +97,13 @@ function! neosnippet#parser#_parse(snippets, snippets_file) "{{{
   if !empty(snippet_dict)
     " Set previous snippet.
     call s:set_snippet_dict(snippet_dict,
-          \ a:snippets, dup_check, a:snippets_file)
+          \ snippets, dup_check, a:snippet_file)
   endif
 
-  return a:snippets
+  return snippets
 endfunction"}}}
 
-function! s:parse_snippet_name(snippets_file, line, linenr, dup_check) "{{{
+function! s:parse_snippet_name(snippet_file, line, linenr, dup_check) "{{{
   " Initialize snippet dict.
   let snippet_dict = { 'word' : '', 'linenr' : a:linenr,
         \ 'options' : neosnippet#parser#_initialize_snippet_options() }
@@ -125,7 +132,7 @@ function! s:parse_snippet_name(snippets_file, line, linenr, dup_check) "{{{
     let dup = a:dup_check[snippet_dict.name]
     call neosnippet#util#print_error(printf(
           \ 'Warning: %s:%d is overriding `%s` from %s:%d',
-          \ a:snippets_file, a:linenr, snippet_dict.name,
+          \ a:snippet_file, a:linenr, snippet_dict.name,
           \ dup.action__path, dup.action__line))
     call neosnippet#util#print_error(printf(
           \ 'Please rename the snippet name or use `delete %s`.',
@@ -135,7 +142,7 @@ function! s:parse_snippet_name(snippets_file, line, linenr, dup_check) "{{{
   return snippet_dict
 endfunction"}}}
 
-function! s:add_snippet_attribute(snippets_file, line, linenr, snippet_dict) "{{{
+function! s:add_snippet_attribute(snippet_file, line, linenr, snippet_dict) "{{{
   " Allow overriding/setting of the description (abbr) of the snippet.
   " This will override what was set via the snippet line.
   if a:line =~ '^abbr\s'
@@ -161,7 +168,7 @@ function! s:add_snippet_attribute(snippets_file, line, linenr, snippet_dict) "{{
           \ '^options\s\+\zs.*$'), '[,[:space:]]\+')
       if !has_key(a:snippet_dict.options, option)
         call neosnippet#util#print_error(
-              \ printf('[neosnippet] %s:%d', a:snippets_file, a:linenr))
+              \ printf('[neosnippet] %s:%d', a:snippet_file, a:linenr))
         call neosnippet#util#print_error(
               \ printf('[neosnippet] Invalid option name : "%s"', option))
       else
@@ -170,20 +177,20 @@ function! s:add_snippet_attribute(snippets_file, line, linenr, snippet_dict) "{{
     endfor
   else
     call neosnippet#util#print_error(
-          \ printf('[neosnippet] %s:%d', a:snippets_file, a:linenr))
+          \ printf('[neosnippet] %s:%d', a:snippet_file, a:linenr))
     call neosnippet#util#print_error(
           \ printf('[neosnippet] Invalid syntax : "%s"', a:line))
   endif
 endfunction"}}}
 
-function! s:set_snippet_dict(snippet_dict, snippets, dup_check, snippets_file) "{{{
+function! s:set_snippet_dict(snippet_dict, snippets, dup_check, snippet_file) "{{{
   if empty(a:snippet_dict)
     return
   endif
 
   let action_pattern = '^snippet\s\+' . a:snippet_dict.name . '$'
   let snippet = neosnippet#parser#_initialize_snippet(
-        \ a:snippet_dict, a:snippets_file,
+        \ a:snippet_dict, a:snippet_file,
         \ a:snippet_dict.linenr, action_pattern,
         \ a:snippet_dict.name)
   let a:snippets[a:snippet_dict.name] = snippet

@@ -104,6 +104,7 @@ function! neosnippet#commands#_make_cache(filetype) "{{{
   if has_key(snippets, filetype)
     return
   endif
+  let snippets[filetype] = {}
 
   let path = join(neosnippet#helpers#get_snippets_directory(), ',')
   let snippets_files = []
@@ -117,19 +118,19 @@ function! neosnippet#commands#_make_cache(filetype) "{{{
     let snippets_files += split(globpath(path, glob), '\n')
   endfor
 
-  let snippet = {}
-  call map(reverse(s:get_list().uniq(snippets_files)),
-        \ "neosnippet#parser#_parse(snippet, v:val)")
-
   let snippets = neosnippet#variables#snippets()
-  let snippets[filetype] = snippet
+  for snippet_file in reverse(s:get_list().uniq(snippets_files))
+    let snippets[filetype] = extend(snippets[filetype],
+          \ neosnippet#parser#_parse(snippet_file))
+  endfor
 endfunction"}}}
 
 function! neosnippet#commands#_source(filename) "{{{
   call neosnippet#init#check()
 
   let neosnippet = neosnippet#variables#current_neosnippet()
-  call neosnippet#parser#_parse(neosnippet.snippets, a:filename)
+  let neosnippet.snippets = extend(neosnippet.snippets,
+        \ neosnippet#parser#_parse(a:filename))
 endfunction"}}}
 
 function! neosnippet#commands#_clear_markers() "{{{
