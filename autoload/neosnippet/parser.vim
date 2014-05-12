@@ -70,7 +70,7 @@ function! s:parse(snippet_file) "{{{
             \ neosnippet#helpers#get_snippets_directory(), ','),
             \ filename), '\n')
         let snippets = extend(snippets,
-              \ neosnippet#parser#_parse(snippets, snippet_file))
+              \ neosnippet#parser#_parse(snippet_file))
       endfor
     elseif line =~ '^delete\s'
       let name = matchstr(line, '^delete\s\+\zs.*$')
