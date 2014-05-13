@@ -435,7 +435,7 @@ function! s:substitute_placeholder_marker(start, end, snippet_holder_cnt) "{{{
       if getline(line) =~ sync_marker
         let sub = escape(matchstr(getline(line),
               \ substitute(neosnippet#get_sync_placeholder_marker_default_pattern(),
-              \ '\\d\\+', cnt, '')), '/\')
+              \ '\\d\\+', cnt, '')), '/\&')
         silent execute printf('%d,%ds/\m' . mirror_marker . '/%s/'
           \ . (&gdefault ? '' : 'g'), a:start, a:end, sub)
         call setline(line, substitute(getline(line), sync_marker, sub, ''))
