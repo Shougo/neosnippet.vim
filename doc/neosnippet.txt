@@ -230,7 +230,7 @@ g:neosnippet#scope_aliases
 		let g:neosnippet#scope_aliases = {}
 		let g:neosnippet#scope_aliases['ruby'] = 'ruby,ruby-rails'
 
-g:neosnippet_data_directory			*g:neosnippet_data_directory*
+g:neosnippet#data_directory			*g:neosnippet#data_directory*
 		Specifies directory for neosnippet cache.  If the directory
 		doesn't exist the directory will be automatically generated.
 		
