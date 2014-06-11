@@ -49,12 +49,9 @@ function! neosnippet#mappings#_clear_select_mode_mappings() "{{{
     silent! smap
   redir END
 
-  for line in map(filter(split(mappings, '\n'),
-        \ "v:val !~# '^s'"),
-        \ "substitute(v:val, '<NL>', '<C-J>', 'g')")
-    let map = matchstr(line, '^\a*\s*\zs\S\+')
-    let map = substitute(map, '<NL>', '<C-j>', 'g')
-
+  for map in map(filter(split(mappings, '\n'),
+        \ "v:val !~# '^s' && v:val !~ '^\\a*\\s*<\\S\\+>'"),
+        \ "matchstr(v:val, '^\\a*\\s*\\zs\\S\\+')")
     silent! execute 'sunmap' map
     silent! execute 'sunmap <buffer>' map
   endfor
