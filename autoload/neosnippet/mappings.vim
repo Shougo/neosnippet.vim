@@ -119,7 +119,8 @@ function! neosnippet#mappings#_expand_target_trigger(trigger) "{{{
 
   call cursor(line, col)
 
-  call neosnippet#view#_expand(neosnippet#util#get_cur_text(), col, a:trigger)
+  call neosnippet#view#_expand(
+        \ neosnippet#util#get_cur_text(). ' ', col, a:trigger)
 endfunction"}}}
 
 function! s:snippets_expand(cur_text, col) "{{{
