@@ -39,7 +39,7 @@ FAQ			|neosnippet-faq|
 ==============================================================================
 INTRODUCTION					*neosnippet-introduction*
 
-This plugin offers functionality similar to snipMate.vim or snippetsEmu.vim.
+|neosnippet| offers functionality similar to snipMate.vim or snippetsEmu.vim.
 This analyzes snippet files which you can use for the completion.  Since you
 can choose snippets with the neocomplcache/neocomplete interface, you might
 have less trouble using them, because you do not have to remember each snippet
