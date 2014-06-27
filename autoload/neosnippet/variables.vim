@@ -76,7 +76,9 @@ endfunction"}}}
 function! neosnippet#variables#data_dir() "{{{
   let g:neosnippet#data_directory =
         \ substitute(fnamemodify(get(
-        \   g:, 'neosnippet#data_directory', '~/.cache/neosnippet'),
+        \   g:, 'neosnippet#data_directory',
+        \  ($XDG_CACHE_DIR != '' ?
+        \   $XDG_CACHE_DIR . '/neosnippet' : expand('~/.cache/neosnippet'))),
         \  ':p'), '\\', '/', 'g')
   if !isdirectory(g:neosnippet#data_directory)
     call mkdir(g:neosnippet#data_directory, 'p')
