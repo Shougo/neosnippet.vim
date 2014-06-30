@@ -79,9 +79,9 @@ function! neosnippet#view#_expand(cur_text, col, trigger_name) "{{{
   let end_line = line('.') + len(snippet_lines) - 1
 
   let snippet_lines[0] = cur_text . snippet_lines[0]
-  let next_col = len(snippet_lines[-1]) + 1
   let snippet_lines[-1] = snippet_lines[-1] . next_line
 
+  let foldmethod_save = ''
   if has('folding')
     " Note: Change foldmethod to "manual". Because, if you use foldmethod is
     " expr, whole snippet is visually selected.
@@ -172,8 +172,6 @@ function! s:indent_snippet(begin, end) "{{{
 
   let pos = getpos('.')
 
-  let neosnippet = neosnippet#variables#current_neosnippet()
-
   let equalprg = &l:equalprg
   try
     setlocal equalprg=
@@ -211,8 +209,8 @@ function! neosnippet#view#_get_snippet_range(begin_line, begin_patterns, end_lin
   if empty(a:begin_patterns)
     let begin = line('.') - 50
   else
-    let [begin, _] = searchpos('^' . neosnippet#util#escape_pattern(
-          \ a:begin_patterns[0]) . '$', 'bnW')
+    let begin = searchpos('^' . neosnippet#util#escape_pattern(
+          \ a:begin_patterns[0]) . '$', 'bnW')[0]
     if begin <= 0
       let begin = line('.') - 50
     endif
@@ -225,8 +223,8 @@ function! neosnippet#view#_get_snippet_range(begin_line, begin_patterns, end_lin
   if empty(a:end_patterns)
     let end = line('.') + 50
   else
-    let [end, _] = searchpos('^' . neosnippet#util#escape_pattern(
-          \ a:end_patterns[0]) . '$', 'nW')
+    let end = searchpos('^' . neosnippet#util#escape_pattern(
+          \ a:end_patterns[0]) . '$', 'nW')[0]
     if end <= 0
       let end = line('.') + 50
     endif
@@ -366,7 +364,6 @@ function! s:expand_target_placeholder(line, col) "{{{
 
   let cur_text = getline(a:line)[: a:col-2]
   let target_lines[0] = cur_text . target_lines[0]
-  let next_col = len(target_lines[-1]) + 1
   let target_lines[-1] = target_lines[-1] . next_line
 
   let begin_line = a:line
@@ -414,10 +411,10 @@ function! s:search_sync_placeholder(start, end, number) "{{{
   let pattern = substitute(
           \ neosnippet#get_mirror_placeholder_marker_pattern(),
           \ '\\d\\+', a:number, '')
-  for line in filter(range(a:start, a:end),
-        \ 'getline(v:val) =~ pattern')
+  if !empty(filter(range(a:start, a:end),
+        \ 'getline(v:val) =~ pattern'))
     return a:number
-  endfor
+  endif
 
   return -1
 endfunction"}}}
