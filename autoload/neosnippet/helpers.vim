@@ -188,7 +188,7 @@ function! s:get_sources_filetypes(filetype) "{{{
         \   neocomplete#get_source_filetypes(a:filetype) :
         \ exists('*neocomplcache#get_source_filetypes') ?
         \   neocomplcache#get_source_filetypes(a:filetype) :
-        \   [(a:filetype == '') ? 'nothing' : a:filetype]
+        \ split(((a:filetype == '') ? 'nothing' : a:filetype), '\.')
   return filetypes + ['_']
 endfunction"}}}
 
