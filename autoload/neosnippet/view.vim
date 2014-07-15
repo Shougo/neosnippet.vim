@@ -125,9 +125,6 @@ function! neosnippet#view#_expand(cur_text, col, trigger_name) "{{{
       silent! execute begin_line . ',' . end_line . 'foldopen!'
     endif
   endtry
-
-  let &l:iminsert = 0
-  let &l:imsearch = 0
 endfunction"}}}
 function! neosnippet#view#_jump(cur_text, col) "{{{
   call s:skip_next_auto_completion()
