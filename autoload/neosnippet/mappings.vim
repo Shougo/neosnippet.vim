@@ -127,6 +127,11 @@ function! neosnippet#mappings#_expand_target_trigger(trigger) "{{{
   endif
 
   call neosnippet#view#_expand(cur_text, col, a:trigger)
+
+  if !neosnippet#mappings#jumpable()
+    call cursor(0, col('.') - 1)
+    stopinsert
+  endif
 endfunction"}}}
 
 function! s:snippets_expand(cur_text, col) "{{{
