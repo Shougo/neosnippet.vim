@@ -86,7 +86,7 @@ function! neosnippet#commands#_edit(args) "{{{
   endif
 
   try
-    edit `=filename`
+    execute 'edit' fnameescape(filename)
   catch /^Vim\%((\a\+)\)\=:E749/
   endtry
 endfunction"}}}
