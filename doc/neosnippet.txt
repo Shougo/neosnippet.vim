@@ -39,7 +39,7 @@ FAQ			|neosnippet-faq|
 ==============================================================================
 INTRODUCTION					*neosnippet-introduction*
 
-|neosnippet| offers functionality similar to snipMate.vim or snippetsEmu.vim.
+*neosnippet* offers functionality similar to snipMate.vim or snippetsEmu.vim.
 This analyzes snippet files which you can use for the completion.  Since you
 can choose snippets with the neocomplcache/neocomplete interface, you might
 have less trouble using them, because you do not have to remember each snippet
@@ -177,7 +177,7 @@ g:neosnippet#disable_runtime_snippets
 		loading "neosnippets" directories from 'runtimepath'. This is
 		very useful to prevent snippet conflicts between self defined
 		snippet files and the built-in snippet files of neosnippet. If
-		you use a "_" as key for an entry this will treat the value of
+		you use an "_" as key for an entry this will treat the value of
 		the entry as default value for all file types.
 
 		Note: This dictionary must be set in your .vimrc.
@@ -212,7 +212,7 @@ g:neosnippet#enable_preview			 *g:neosnippet#enable_preview*
 
 					 *g:neosnippet#expand_word_boundary*
 g:neosnippet#expand_word_boundary
-		It it is not 0, neosnippet will expand snippets by a word
+		If it is not 0, neosnippet will expand snippets by a word
 		boundary.
 		Note: It must be initialized before snippet loading.
 
@@ -294,8 +294,8 @@ x_<Plug>(neosnippet_register_oneshot_snippet)
 						*neosnippet#expandable()*
 neosnippet#expandable()
 		You can use this function with imap <expr>. It checks if
-		the cursor text is a snippet trigger. This is is useful to
-		save key mappings.
+		the cursor text is a snippet trigger. This is useful to save
+		key mappings.
 
 						*neosnippet#jumpable()*
 neosnippet#jumpable()
@@ -307,7 +307,7 @@ neosnippet#jumpable()
 neosnippet#expandable_or_jumpable()
 		You can use this function with imap <expr>. It checks if
 		the cursor text is a snippet trigger or a placeholder. This is
-		is useful to save key mappings.
+		useful to save key mappings.
 		Note: If you don't like to jump to the next placeholder, you must use
 		|neosnippet#expandable()| instead of
 		|neosnippet#expandable_or_jumpable()|.
@@ -321,7 +321,7 @@ FUNCTIONS					*neosnippet-functions*
 
 					*neosnippet#get_snippets_directory()*
 neosnippet#get_snippets_directory()
-		Gets snippet directories. This directories contain runtime
+		Gets snippet directories. These directories contain runtime
 		snippets directories and |g:neosnippet#snippets_directory|
 		directories.
 
@@ -335,7 +335,7 @@ EXAMPLES					*neosnippet-examples*
 	xmap <C-k>     <Plug>(neosnippet_expand_target)
 	xmap <C-l>     <Plug>(neosnippet_start_unite_snippet_target)
 
-	" SuperTab like snippets behavior.
+	" SuperTab like snippets' behavior.
 	"imap <expr><TAB> neosnippet#expandable_or_jumpable() ?
 	" \ "\<Plug>(neosnippet_expand_or_jump)"
 	" \: pumvisible() ? "\<C-n>" : "\<TAB>"
