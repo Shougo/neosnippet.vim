@@ -453,7 +453,7 @@ available providing different functionality.
 
 The structure of a placeholder can be:
 
-- ${number:placeholder text}
+- ${number:default placeholder text}
 
 	The placeholder starts with a dollar sign "$". The number of a
 	placeholder and the placeholder text are separated by a colon ":".
@@ -472,7 +472,7 @@ The structure of a placeholder can be:
 	   endif
 <
 
-- ${number:#:placeholder text}
+- ${number:#:optional placeholder text}
 
 	In this kind of placeholder the number is followed by the hash
 	character "#".  If you jump over this placeholder and do not insert

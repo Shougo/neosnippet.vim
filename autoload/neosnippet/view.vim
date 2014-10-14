@@ -289,10 +289,14 @@ function! s:expand_placeholder(start, end, holder_cnt, line, ...) "{{{
   let default = substitute(
         \ matchstr(current_line, default_pattern),
         \ '\\\ze[^\\]', '', 'g')
+  let neosnippet.optional_tabstop = (default =~ '^#:')
   if !is_select && default =~ '^#:'
     " Delete comments.
     let default = ''
   endif
+
+  " Remove optional marker
+  let default = substitute(default, '^#:', '', '')
 
   let is_target = (default =~ '^TARGET\>' && neosnippet.target != '')
   let default = substitute(default, '^TARGET:\?', neosnippet.target, '')

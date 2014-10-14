@@ -33,6 +33,7 @@ function! neosnippet#variables#current_neosnippet() "{{{
           \ 'selected_text' : '',
           \ 'target' : '',
           \ 'trigger' : 0,
+          \ 'optional_tabstop' : 0,
           \}
   endif
 

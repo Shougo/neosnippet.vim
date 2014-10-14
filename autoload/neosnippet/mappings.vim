@@ -188,7 +188,7 @@ function! s:trigger(function) "{{{
   " Get selected text.
   let neosnippet = neosnippet#variables#current_neosnippet()
   let neosnippet.trigger = 1
-  if mode() ==# 's' && neosnippet.selected_text =~ '^#:'
+  if mode() ==# 's' && neosnippet.optional_tabstop
     let expr .= "\<C-o>\"_d"
   endif
 
