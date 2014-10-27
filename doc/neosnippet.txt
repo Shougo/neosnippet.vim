@@ -281,12 +281,6 @@ i_<Plug>(neosnippet_start_unite_snippet)
 x_<Plug>(neosnippet_expand_target)
 		Expand the input trigger by a selected target text.
 
-			*x_<Plug>(neosnippet_start_unite_snippet_target)*
-x_<Plug>(neosnippet_start_unite_snippet_target)
-		Expand the input trigger by a selected target text with the
-		unite interface.
-		Note: The plug-in |unite.vim| is required for that feature.
-
 			*x_<Plug>(neosnippet_register_oneshot_snippet)*
 x_<Plug>(neosnippet_register_oneshot_snippet)
 		Register oneshot snippet in the current buffer.
@@ -333,7 +327,6 @@ EXAMPLES					*neosnippet-examples*
 	imap <C-k>     <Plug>(neosnippet_expand_or_jump)
 	smap <C-k>     <Plug>(neosnippet_expand_or_jump)
 	xmap <C-k>     <Plug>(neosnippet_expand_target)
-	xmap <C-l>     <Plug>(neosnippet_start_unite_snippet_target)
 
 	" SuperTab like snippets' behavior.
 	"imap <expr><TAB> neosnippet#expandable_or_jumpable() ?
