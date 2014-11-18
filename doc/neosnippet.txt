@@ -234,7 +234,7 @@ g:neosnippet#data_directory			*g:neosnippet#data_directory*
 		Specifies directory for neosnippet cache.  If the directory
 		doesn't exist the directory will be automatically generated.
 		
-		Default value is "$XDG_CACHE_DIR/neosnippet" or
+		Default value is "$XDG_CACHE_HOME/neosnippet" or
 		expand("~/.cache/neosnippet"); the absolute path of it.
 
 ------------------------------------------------------------------------------
