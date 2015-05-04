@@ -249,8 +249,8 @@ function! neosnippet#view#_search_snippet_range(start, end, cnt, ...) "{{{
 
   for linenum in range(a:start, a:end)
     let tmp_line = getline(linenum)
-    let tmp_line = substitute(tmp_line, '\v\%uc\(([^)]+)\)', '\U\1\E', 'g')
-    let tmp_line = substitute(tmp_line, '\v\%ucfirst\(([^)]+)\)', '\u\1', 'g')
+    let tmp_line = substitute(tmp_line, '\%uc(\([^)]\+\))', '\U\1\E', 'g')
+    let tmp_line = substitute(tmp_line, '\%ucfirst(\([^)]+\))', '\u\1', 'g')
     call setline(linenum, tmp_line)
   endfor
 
