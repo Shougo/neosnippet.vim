@@ -1,7 +1,8 @@
 neosnippet
-d3554a5
+1c73bcc
 
 Prelude
 Data.List
 Process
 System.Cache
+Data.String
