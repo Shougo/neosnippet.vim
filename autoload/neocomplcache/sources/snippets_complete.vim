@@ -39,8 +39,6 @@ function! s:source.initialize() "{{{
         \ g:neocomplcache_source_rank, 'snippets_complete', 8)
   call neocomplcache#set_completion_length('snippets_complete',
         \ g:neocomplcache_auto_completion_start_length)
-  call neosnippet#util#set_default(
-        \ 'g:neosnippet#enable_preview', 0)
 endfunction"}}}
 
 function! s:source.get_keyword_pos(cur_text) "{{{
@@ -63,9 +61,6 @@ function! s:source.get_complete_words(cur_keyword_pos, cur_keyword_str) "{{{
 
     let snippet.menu = neosnippet#util#strwidthpart(
           \ snippet.menu_template, winwidth(0)/3)
-    if g:neosnippet#enable_preview
-      let snippet.info = snippet.snip
-    endif
   endfor
 
   return list

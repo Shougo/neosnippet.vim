@@ -204,12 +204,6 @@ g:neosnippet#enable_snipmate_compatibility
 
 		The default value is 0.
 
-g:neosnippet#enable_preview			 *g:neosnippet#enable_preview*
-		If this variable is not 0, neosnippet will enable the preview
-		window feature in neocomplcache/neocomplete sources.
-
-		The default value is 0.
-
 					 *g:neosnippet#expand_word_boundary*
 g:neosnippet#expand_word_boundary
 		If it is not 0, neosnippet will expand snippets by a word
