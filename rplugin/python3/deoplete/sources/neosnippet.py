@@ -27,6 +27,7 @@ import re
 
 class Source(object):
     def __init__(self):
+        self.mark = '[nsnip]'
         self.filters = ['matcher_fuzzy']
         pass
 
@@ -38,4 +39,10 @@ class Source(object):
             return -1
 
     def gather_candidates(self, vim, context):
-        return vim.eval("map(values(neosnippet#helpers#get_snippets()), 'v:val.word')")
+        return vim.eval("values(neosnippet#helpers#get_snippets())")
+
+    def on_post_filter(self, vim, context):
+        for candidate in context['candidates']:
+            candidate['dup'] = 1
+        return context['candidates']
+
