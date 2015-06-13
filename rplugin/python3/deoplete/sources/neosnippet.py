@@ -24,12 +24,13 @@
 #=============================================================================
 
 import re
+from .base import Base
 
-class Source(object):
+class Source(Base):
     def __init__(self):
+        Base.__init__(self)
+
         self.mark = '[nsnip]'
-        self.filters = ['matcher_fuzzy']
-        pass
 
     def get_complete_position(self, vim, context):
         m = re.search(context.input, r'[a-zA-Z_][a-zA-Z0-9_]')
