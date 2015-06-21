@@ -30,6 +30,7 @@ class Source(Base):
     def __init__(self):
         Base.__init__(self)
 
+        self.name = 'vimshell'
         self.mark = '[nsnip]'
 
     def gather_candidates(self, vim, context):
