@@ -97,7 +97,7 @@ function! s:initialize_others() "{{{
           \ .neosnippet#get_sync_placeholder_marker_pattern().'\|'
           \ .neosnippet#get_mirror_placeholder_marker_pattern()."'"
           \ 'containedin=ALL oneline'
-    if has('conceal')
+    if g:neosnippet#enable_conceal_markers && has('conceal')
       autocmd BufNewFile,BufRead,Syntax *
             \ syntax region neosnippetConcealExpandSnippets
             \ matchgroup=neosnippetExpandSnippets
