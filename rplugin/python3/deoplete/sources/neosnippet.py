@@ -27,16 +27,16 @@ import re
 from .base import Base
 
 class Source(Base):
-    def __init__(self):
-        Base.__init__(self)
+    def __init__(self, vim):
+        Base.__init__(self, vim)
 
-        self.name = 'vimshell'
+        self.name = 'neosnippet'
         self.mark = '[nsnip]'
 
-    def gather_candidates(self, vim, context):
-        return vim.eval('values(neosnippet#helpers#get_snippets())')
+    def gather_candidates(self, context):
+        return self.vim.eval('values(neosnippet#helpers#get_snippets())')
 
-    def on_post_filter(self, vim, context):
+    def on_post_filter(self, context):
         for candidate in context['candidates']:
             candidate['dup'] = 1
         return context['candidates']
