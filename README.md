@@ -91,7 +91,7 @@ Notes:
 Configuration
 -------------
 
-This is an example `~/.vimrc` configuration for Neosnippet. It is assumes you
+This is an example `~/.vimrc` configuration for Neosnippet. It is assumed you
 already have Neocomplcache configured. With the settings of the example, you
 can use the following keys:
 
