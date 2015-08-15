@@ -141,7 +141,7 @@ function! s:parse_snippet_name(snippet_file, line, linenr, dup_check) "{{{
   if has_key(a:dup_check, snippet_dict.name)
     let dup = a:dup_check[snippet_dict.name]
     call neosnippet#util#print_error(printf(
-          \ 'Warning: %s:%d is overriding `%s` from %s:%d',
+          \ '%s:%d is overriding `%s` from %s:%d',
           \ a:snippet_file, a:linenr, snippet_dict.name,
           \ dup.action__path, dup.action__line))
     call neosnippet#util#print_error(printf(
@@ -178,18 +178,18 @@ function! s:add_snippet_attribute(snippet_file, line, linenr, snippet_dict) "{{{
           \ '^options\s\+\zs.*$'), '[,[:space:]]\+')
       if !has_key(a:snippet_dict.options, option)
         call neosnippet#util#print_error(
-              \ printf('[neosnippet] %s:%d', a:snippet_file, a:linenr))
+              \ printf('%s:%d', a:snippet_file, a:linenr))
         call neosnippet#util#print_error(
-              \ printf('[neosnippet] Invalid option name : "%s"', option))
+              \ printf('Invalid option name : "%s"', option))
       else
         let a:snippet_dict.options[option] = 1
       endif
     endfor
   else
     call neosnippet#util#print_error(
-          \ printf('[neosnippet] %s:%d', a:snippet_file, a:linenr))
+          \ printf('%s:%d', a:snippet_file, a:linenr))
     call neosnippet#util#print_error(
-          \ printf('[neosnippet] Invalid syntax : "%s"', a:line))
+          \ printf('Invalid syntax : "%s"', a:line))
   endif
 endfunction"}}}
 

@@ -107,7 +107,7 @@ function! neosnippet#util#get_cur_text() "{{{
         \         '^.*\%' . col('.') . 'c' . (mode() ==# 'i' ? '' : '.'))
 endfunction"}}}
 function! neosnippet#util#print_error(string) "{{{
-  echohl Error | echomsg a:string | echohl None
+  echohl Error | echomsg '[neosnippet] ' . a:string | echohl None
 endfunction"}}}
 
 function! neosnippet#util#parse_options(args, options_list) "{{{
