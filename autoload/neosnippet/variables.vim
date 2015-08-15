@@ -46,6 +46,9 @@ function! neosnippet#variables#expand_stack() "{{{
 
   return s:expand_stack
 endfunction"}}}
+function! neosnippet#variables#clear_expand_stack() "{{{
+  let s:expand_stack = []
+endfunction"}}}
 function! neosnippet#variables#snippets() "{{{
   if !exists('s:snippets')
     let s:snippets= {}

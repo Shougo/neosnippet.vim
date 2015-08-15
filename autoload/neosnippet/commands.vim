@@ -175,6 +175,8 @@ function! neosnippet#commands#_clear_markers() "{{{
     endif
 
     call setpos('.', pos)
+
+    call neosnippet#variables#clear_expand_stack()
   endtry
 endfunction"}}}
 
