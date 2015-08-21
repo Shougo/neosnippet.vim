@@ -1,5 +1,5 @@
 "=============================================================================
-" FILE: neosnippet.vim
+" FILE: handlers.vim
 " AUTHOR:  Shougo Matsushita <Shougo.Matsu@gmail.com>
 " License: MIT license  {{{
 "     Permission is hereby granted, free of charge, to any person obtaining
@@ -26,38 +26,55 @@
 let s:save_cpo = &cpo
 set cpo&vim
 
-let s:source = {
-      \ 'name' : 'neosnippet',
-      \ 'kind' : 'keyword',
-      \ 'rank' : 8,
-      \ 'hooks' : {},
-      \ 'matchers' :
-      \      (g:neocomplete#enable_fuzzy_completion ?
-      \          ['matcher_fuzzy'] : ['matcher_head']),
-      \}
-
-function! s:source.gather_candidates(context) "{{{
-  let snippets = values(neosnippet#helpers#get_completion_snippets())
-  if matchstr(a:context.input, '\S\+$') !=#
-        \ matchstr(a:context.input, '\w\+$')
-    " Word filtering
-    call filter(snippets, 'v:val.options.word')
+function! neosnippet#handlers#_complete_done() "{{{
+  if empty(v:completed_item)
+    return
   endif
-  return snippets
-endfunction"}}}
 
-function! s:source.hooks.on_post_filter(context) "{{{
-  for snippet in a:context.candidates
-    let snippet.dup = 1
-    let snippet.menu = neosnippet#util#strwidthpart(
-          \ snippet.menu_template, winwidth(0)/3)
+  let item = v:completed_item
+
+  let abbr = (item.abbr != '') ? item.abbr : item.word
+  if len(item.menu) > 5
+    " Combine menu.
+    let abbr .= ' ' . item.menu
+  endif
+
+  if item.info != ''
+    let abbr = split(item.info, '\n')[0]
+  endif
+
+  if abbr !~ '(.*)'
+    return
+  endif
+
+  " Make snippet arguments
+  let cnt = 1
+  let snippet = item.word
+  if snippet !~ '($'
+    let snippet .= '('
+  endif
+  for arg in split(matchstr(abbr, '(\zs.\{-}\ze)'), '[^[]\zs\s*,\s*')
+    if cnt != 1
+      let snippet .= ', '
+    endif
+    let snippet .= printf('${%d:#%s}', cnt, escape(arg, '{}'))
+    let cnt += 1
   endfor
+  if snippet !~ ')$'
+    let snippet .= ')'
+  endif
+  let snippet .= '${0}'
 
-  return a:context.candidates
-endfunction"}}}
+  let trigger = item.word
+  let options = neosnippet#parser#_initialize_snippet_options()
+  let options.word = 1
+  let options.oneshot = 1
 
-function! neocomplete#sources#neosnippet#define() "{{{
-  return s:source
+  let neosnippet = neosnippet#variables#current_neosnippet()
+  let neosnippet.snippets[trigger] =
+        \ neosnippet#parser#_initialize_snippet(
+        \   { 'name' : trigger, 'word' : snippet, 'options' : options },
+        \   '', 0, '', trigger)
 endfunction"}}}
 
 let &cpo = s:save_cpo

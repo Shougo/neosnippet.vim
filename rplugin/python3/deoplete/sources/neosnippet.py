@@ -34,7 +34,7 @@ class Source(Base):
         self.mark = '[nsnip]'
 
     def gather_candidates(self, context):
-        return self.vim.eval('values(neosnippet#helpers#get_snippets())')
+        return self.vim.eval('values(neosnippet#helpers#get_completion_snippets())')
 
     def on_post_filter(self, context):
         for candidate in context['candidates']:

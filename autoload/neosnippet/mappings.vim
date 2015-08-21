@@ -82,6 +82,7 @@ function! neosnippet#mappings#_register_oneshot_snippet() "{{{
   let neosnippet = neosnippet#variables#current_neosnippet()
   let options = neosnippet#parser#_initialize_snippet_options()
   let options.word = 1
+  let options.oneshot = 1
 
   let neosnippet.snippets[trigger] = neosnippet#parser#_initialize_snippet(
         \ { 'name' : trigger, 'word' : selected_text, 'options' : options },

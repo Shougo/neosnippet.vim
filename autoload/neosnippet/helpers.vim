@@ -68,6 +68,10 @@ function! neosnippet#helpers#get_snippets() "{{{
 
   return snippets
 endfunction"}}}
+function! neosnippet#helpers#get_completion_snippets() "{{{
+  return filter(neosnippet#helpers#get_snippets(),
+        \ "!get(v:val.options, 'oneshot', 0)")
+endfunction"}}}
 
 function! neosnippet#helpers#get_snippets_directory() "{{{
   let snippets_dir = copy(neosnippet#variables#snippets_dir())

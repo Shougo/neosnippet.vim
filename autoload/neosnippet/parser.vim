@@ -254,8 +254,13 @@ function! neosnippet#parser#_initialize_snippet(dict, path, line, pattern, name)
 endfunction"}}}
 
 function! neosnippet#parser#_initialize_snippet_options() "{{{
-  return { 'head' : 0, 'word' :
-        \   g:neosnippet#expand_word_boundary, 'indent' : 0 }
+  return {
+        \ 'head' : 0,
+        \ 'word' :
+        \   g:neosnippet#expand_word_boundary,
+        \ 'indent' : 0,
+        \ 'oneshot' : 0,
+        \ }
 endfunction"}}}
 
 let &cpo = s:save_cpo

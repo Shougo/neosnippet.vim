@@ -91,6 +91,11 @@ function! s:initialize_others() "{{{
     autocmd BufWritePre * NeoSnippetClearMarkers
   augroup END"}}}
 
+  if exists('v:completed_item')
+    autocmd neosnippet CompleteDone *
+          \ call neosnippet#handlers#_complete_done()
+  endif
+
   augroup neosnippet
     autocmd BufNewFile,BufRead,Syntax *
           \ execute 'syntax match neosnippetExpandSnippets'
