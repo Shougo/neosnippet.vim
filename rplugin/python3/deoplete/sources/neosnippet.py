@@ -32,6 +32,7 @@ class Source(Base):
 
         self.name = 'neosnippet'
         self.mark = '[nsnip]'
+        self.rank = 200
 
     def gather_candidates(self, context):
         return self.vim.eval('values(neosnippet#helpers#get_completion_snippets())')
