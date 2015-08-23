@@ -31,6 +31,11 @@ function! neosnippet#handlers#_complete_done() "{{{
     return
   endif
 
+  if has_key(neosnippet#helpers#get_snippets(), v:completed_item.word)
+    " Don't overwrite exists snippets
+    return
+  endif
+
   let item = v:completed_item
 
   let abbr = (item.abbr != '') ? item.abbr : item.word
@@ -57,7 +62,7 @@ function! neosnippet#handlers#_complete_done() "{{{
     if cnt != 1
       let snippet .= ', '
     endif
-    let snippet .= printf('${%d:#%s}', cnt, escape(arg, '{}'))
+    let snippet .= printf('${%d:#:%s}', cnt, escape(arg, '{}'))
     let cnt += 1
   endfor
   if snippet !~ ')$'
@@ -65,12 +70,12 @@ function! neosnippet#handlers#_complete_done() "{{{
   endif
   let snippet .= '${0}'
 
-  let trigger = item.word
   let options = neosnippet#parser#_initialize_snippet_options()
   let options.word = 1
   let options.oneshot = 1
 
   let neosnippet = neosnippet#variables#current_neosnippet()
+  let trigger = item.word
   let neosnippet.snippets[trigger] =
         \ neosnippet#parser#_initialize_snippet(
         \   { 'name' : trigger, 'word' : snippet, 'options' : options },
