@@ -772,5 +772,13 @@ files.
 https://github.com/Shougo/neosnippet.vim/network
 If splitted default snippets, users can fork and change it easily.
 
+Q: I want to complete function arguments using neosnippet like clang_complete.
+
+A: Yes, you can.  You can just complete the candidate from completion window
+and expand the candidate as trigger.
+Note: It works in "func(arg1, arg2, ...)" prototypes only.
+Note: It is experiental feature.
+Note: |v:completed_item| feature is needed.
+
 ==============================================================================
 vim:tw=78:ts=8:ft=help:norl:noet:fen:noet:
