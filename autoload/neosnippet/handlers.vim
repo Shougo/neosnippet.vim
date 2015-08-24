@@ -55,7 +55,7 @@ function! neosnippet#handlers#_complete_done() "{{{
   " Make snippet arguments
   let cnt = 1
   let snippet = item.word
-  if snippet !~ '($'
+  if snippet !~ '()\?$'
     let snippet .= '('
   endif
   for arg in split(matchstr(abbr, '(\zs.\{-}\ze)'), '[^[]\zs\s*,\s*')
