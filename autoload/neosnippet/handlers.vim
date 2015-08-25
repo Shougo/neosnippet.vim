@@ -31,7 +31,9 @@ function! neosnippet#handlers#_complete_done() "{{{
     return
   endif
 
-  if has_key(neosnippet#helpers#get_snippets(), v:completed_item.word)
+  let snippets = neosnippet#helpers#get_snippets()
+  if has_key(snippets, v:completed_item.word)
+        \ && !get(snippets[v:completed_item.word], 'oneshot', 0)
     " Don't overwrite exists snippets
     return
   endif
