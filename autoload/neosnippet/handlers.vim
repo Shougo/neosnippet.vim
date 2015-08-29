@@ -84,6 +84,22 @@ function! neosnippet#handlers#_complete_done() "{{{
         \   '', 0, '', trigger)
 endfunction"}}}
 
+function! neosnippet#handlers#_cursor_moved() "{{{
+  let expand_stack = neosnippet#variables#expand_stack()
+
+  " Get patterns and count.
+  if !&l:modifiable || !&l:modified
+        \ || empty(expand_stack)
+    return
+  endif
+
+  let expand_info = expand_stack[-1]
+  if expand_info.begin_line == expand_info.end_line
+        \ && line('.') != expand_info.begin_line
+    call neosnippet#commands#_clear_markers()
+  endif
+endfunction"}}}
+
 let &cpo = s:save_cpo
 unlet s:save_cpo
 

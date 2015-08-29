@@ -88,6 +88,8 @@ function! s:initialize_others() "{{{
           \ call neosnippet#variables#set_snippets({})
     autocmd BufEnter *
           \ call neosnippet#mappings#_clear_select_mode_mappings()
+    autocmd CursorMoved,CursorMovedI *
+          \ call neosnippet#handlers#_cursor_moved()
     autocmd BufWritePre * NeoSnippetClearMarkers
   augroup END"}}}
 
