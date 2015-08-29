@@ -61,6 +61,7 @@ function! neosnippet#mappings#_clear_select_mode_mappings() "{{{
   snoremap <BS>     a<BS>
   snoremap <Del>    a<BS>
   snoremap <C-h>    a<BS>
+  snoremap <ESC>    <BS><ESC>
 endfunction"}}}
 
 function! neosnippet#mappings#_register_oneshot_snippet() "{{{
