@@ -60,7 +60,9 @@ function! neosnippet#handlers#_complete_done() "{{{
   if snippet !~ '()\?$'
     let snippet .= '('
   endif
-  for arg in split(matchstr(abbr, '(\zs.\{-}\ze)'), '[^[]\zs\s*,\s*')
+
+  for arg in split(substitute(neosnippet#handlers#_get_in_paren(abbr),
+        \ '(\zs.\{-}\ze)', '', 'g'), '[^[]\zs\s*,\s*')
     if cnt != 1
       let snippet .= ', '
     endif
@@ -98,6 +100,30 @@ function! neosnippet#handlers#_cursor_moved() "{{{
         \ && line('.') != expand_info.begin_line
     call neosnippet#commands#_clear_markers()
   endif
+endfunction"}}}
+
+function! neosnippet#handlers#_get_in_paren(str) abort "{{{
+  let s = ''
+  let level = 0
+  for c in split(a:str, '\zs')
+    if c == '('
+      let level += 1
+
+      if level == 1
+        continue
+      endif
+    elseif c == ')'
+      if level == 1
+        return s
+      else
+        let level -= 1
+      endif
+    endif
+
+    let s .= c
+  endfor
+
+  return s
 endfunction"}}}
 
 let &cpo = s:save_cpo
