@@ -29,6 +29,7 @@ set cpo&vim
 let s:source = {
       \ 'name' : 'neosnippet',
       \ 'kind' : 'keyword',
+      \ 'mark' : '[nsnip]',
       \ 'rank' : 8,
       \ 'hooks' : {},
       \ 'matchers' :

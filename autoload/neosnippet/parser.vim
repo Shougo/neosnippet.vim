@@ -223,8 +223,6 @@ function! neosnippet#parser#_initialize_snippet(dict, path, line, pattern, name)
     let a:dict.word .= '${0}'
   endif
 
-  let menu_prefix = '[nsnip] '
-
   if !has_key(a:dict, 'abbr') || a:dict.abbr == ''
     " Set default abbr.
     let abbr = substitute(a:dict.word,
@@ -239,7 +237,7 @@ function! neosnippet#parser#_initialize_snippet(dict, path, line, pattern, name)
   let snippet = {
         \ 'word' : a:dict.name, 'snip' : a:dict.word,
         \ 'description' : a:dict.word,
-        \ 'menu_template' : menu_prefix . abbr,
+        \ 'menu_template' : abbr,
         \ 'menu_abbr' : abbr,
         \ 'options' : a:dict.options,
         \ 'action__path' : a:path, 'action__line' : a:line,
