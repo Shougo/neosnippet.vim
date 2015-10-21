@@ -316,6 +316,17 @@ neosnippet#expandable_or_jumpable()
 		\ neosnippet#expandable_or_jumpable() ?
 		\ "\<Plug>(neosnippet_expand_or_jump)" : "\<C-n>"
 <
+					*neosnippet#annonymous()*
+neosnippet#annonymous({snippet}, [{options}])
+		It defines anonymous snippet.
+		{snippet} is snippet definition.
+		{options} is snippet option.
+		You can expand snippet definition without defining snippet
+		trigger. >
+
+		inoremap <silent> ((
+		\ ((<C-r>=neosnippet#annonymous('\left(${1}\right)${0}')<CR>
+
 ------------------------------------------------------------------------------
 FUNCTIONS					*neosnippet-functions*
 

@@ -136,6 +136,15 @@ function! neosnippet#mappings#_expand_target_trigger(trigger) "{{{
   endif
 endfunction"}}}
 
+function! neosnippet#mappings#_annonymous(snippet, options) "{{{
+  let cur_text = neosnippet#util#get_cur_text()
+  let options = extend(
+        \ neosnippet#parser#_initialize_snippet_options(),
+        \ a:options)
+  call neosnippet#view#_insert(a:snippet, options, cur_text, col('.'))
+  return ''
+endfunction"}}}
+
 function! s:snippets_expand(cur_text, col) "{{{
   let cur_word = neosnippet#helpers#get_cursor_snippet(
         \ neosnippet#helpers#get_snippets(),

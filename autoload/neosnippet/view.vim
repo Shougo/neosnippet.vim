@@ -48,7 +48,10 @@ function! neosnippet#view#_expand(cur_text, col, trigger_name) "{{{
   let snippet = snippets[a:trigger_name]
   let cur_text = a:cur_text[: -1-len(a:trigger_name)]
 
-  let snip_word = snippet.snip
+  call neosnippet#view#_insert(snippet.snip, snippet.options, cur_text, a:col)
+endfunction"}}}
+function! neosnippet#view#_insert(snippet, options, cur_text, col) "{{{
+  let snip_word = a:snippet
   if snip_word =~ '\\\@<!`.*\\\@<!`'
     let snip_word = s:eval_snippet(snip_word)
   endif
@@ -78,7 +81,7 @@ function! neosnippet#view#_expand(cur_text, col, trigger_name) "{{{
   let begin_line = line('.')
   let end_line = line('.') + len(snippet_lines) - 1
 
-  let snippet_lines[0] = cur_text . snippet_lines[0]
+  let snippet_lines[0] = a:cur_text . snippet_lines[0]
   let snippet_lines[-1] = snippet_lines[-1] . next_line
 
   let foldmethod_save = ''
@@ -97,7 +100,7 @@ function! neosnippet#view#_expand(cur_text, col, trigger_name) "{{{
     endif
     call setline('.', snippet_lines[0])
 
-    if begin_line != end_line || snippet.options.indent
+    if begin_line != end_line || a:options.indent
       call s:indent_snippet(begin_line, end_line)
     endif
 

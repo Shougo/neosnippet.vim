@@ -52,6 +52,9 @@ endfunction"}}}
 function! neosnippet#jumpable() "{{{
   return neosnippet#mappings#jumpable()
 endfunction"}}}
+function! neosnippet#annonymous(snippet, ...) "{{{
+  return neosnippet#mappings#_annonymous(a:snippet, get(a:000, 0, {}))
+endfunction"}}}
 
 function! neosnippet#get_snippets_directory() "{{{
   return neosnippet#helpers#get_snippets_directory()
