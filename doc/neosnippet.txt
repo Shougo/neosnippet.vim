@@ -322,11 +322,13 @@ neosnippet#anonymous({snippet}, [{options}])
 		{snippet} is snippet definition.
 		{options} is snippet option.
 		You can expand snippet definition without defining snippet
-		trigger. >
-
+		trigger.
+		Note: You cannot use it in |map-<expr>|.  It changes the
+		buffer text.
+>
 		inoremap <silent> ((
 		\ <C-r>=neosnippet#anonymous('\left(${1}\right)${0}')<CR>
-
+<
 ------------------------------------------------------------------------------
 FUNCTIONS					*neosnippet-functions*
 
