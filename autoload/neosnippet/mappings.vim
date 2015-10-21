@@ -136,7 +136,7 @@ function! neosnippet#mappings#_expand_target_trigger(trigger) "{{{
   endif
 endfunction"}}}
 
-function! neosnippet#mappings#_annonymous(snippet, options) "{{{
+function! neosnippet#mappings#_anonymous(snippet, options) "{{{
   let cur_text = neosnippet#util#get_cur_text()
   let options = extend(
         \ neosnippet#parser#_initialize_snippet_options(),
