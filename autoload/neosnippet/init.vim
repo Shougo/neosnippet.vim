@@ -29,7 +29,6 @@ set cpo&vim
 function! neosnippet#init#_initialize() "{{{
   let s:is_initialized = 1
 
-  call s:initialize_script_variables()
   call s:initialize_others()
   call s:initialize_cache()
 endfunction"}}}
@@ -40,37 +39,6 @@ function! neosnippet#init#check() "{{{
   endif
 endfunction"}}}
 
-function! s:initialize_script_variables() "{{{
-  " Set runtime dir.
-  let runtime_dir = neosnippet#variables#runtime_dir()
-  let runtime_dir += split(globpath(&runtimepath, 'neosnippets'), '\n')
-  if empty(runtime_dir) && empty(g:neosnippet#disable_runtime_snippets)
-    call neosnippet#util#print_error(
-          \ 'neosnippet default snippets cannot be loaded.')
-    call neosnippet#util#print_error(
-          \ 'You must install neosnippet-snippets or disable runtime snippets.')
-  endif
-  if g:neosnippet#enable_snipmate_compatibility
-    " Load snipMate snippet directories.
-    let runtime_dir += split(globpath(&runtimepath,
-          \ 'snippets'), '\n')
-    if exists('g:snippets_dir')
-      let runtime_dir += neosnippet#util#option2list(g:snippets_dir)
-    endif
-  endif
-  call map(runtime_dir, 'substitute(v:val, "[\\\\/]$", "", "")')
-
-  " Set snippets_dir.
-  let snippets_dir = neosnippet#variables#snippets_dir()
-  for dir in neosnippet#util#option2list(g:neosnippet#snippets_directory)
-    let dir = neosnippet#util#expand(dir)
-    if !isdirectory(dir) && !neosnippet#util#is_sudo()
-      call mkdir(dir, 'p')
-    endif
-    call add(snippets_dir, dir)
-  endfor
-  call map(snippets_dir, 'substitute(v:val, "[\\\\/]$", "", "")')
-endfunction"}}}
 function! s:initialize_cache() "{{{
   " Make cache for _ snippets.
   call neosnippet#commands#_make_cache('_')
