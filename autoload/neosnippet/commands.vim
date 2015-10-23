@@ -119,9 +119,9 @@ function! neosnippet#commands#_make_cache(filetype) "{{{
   endfor
 
   let snippets = neosnippet#variables#snippets()
-  for snippet_file in reverse(s:get_list().uniq(snippets_files))
+  for snippets_file in reverse(s:get_list().uniq(snippets_files))
     let snippets[filetype] = extend(snippets[filetype],
-          \ neosnippet#parser#_parse(snippet_file))
+          \ neosnippet#parser#_parse(snippets_file))
   endfor
 endfunction"}}}
 
