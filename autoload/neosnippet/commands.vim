@@ -111,10 +111,11 @@ function! neosnippet#commands#_make_cache(filetype) "{{{
   for glob in s:get_list().flatten(
         \ map(split(get(g:neosnippet#scope_aliases,
         \   filetype, filetype), '\s*,\s*'), "
-        \   [v:val . '.snip*', v:val .  '/**/*.snip*']
+        \   [v:val.'.snip', v:val.'.snippet',
+        \    v:val.'/**/*.snip', v:val.'/**/*.snippet']
         \ + (filetype != '_' &&
         \    !has_key(g:neosnippet#scope_aliases, filetype) ?
-        \    [v:val . '_*.snip*'] : [])"))
+        \    [v:val . '_*.snip', v:val . '_*.snippet'] : [])"))
     let snippets_files += split(globpath(path, glob), '\n')
   endfor
 
