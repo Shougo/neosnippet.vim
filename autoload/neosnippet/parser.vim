@@ -39,10 +39,12 @@ function! neosnippet#parser#_parse(snippets_file) "{{{
   if s:Cache.check_old_cache(cache_dir, a:snippets_file)
     let snippets = s:parse(a:snippets_file)
     if len(snippets) > 5 && !neosnippet#util#is_sudo()
-      call s:Cache.writefile(cache_dir, a:snippets_file, [string(snippets)])
+      call s:Cache.writefile(
+            \ cache_dir, a:snippets_file, [string(snippets)])
     endif
   else
-    sandbox let snippets = eval(s:Cache.readfile(cache_dir, a:snippets_file)[0])
+    sandbox let snippets = eval(
+          \ s:Cache.readfile(cache_dir, a:snippets_file)[0])
   endif
 
   return snippets
