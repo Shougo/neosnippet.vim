@@ -122,7 +122,7 @@ function! neosnippet#commands#_make_cache(filetype) "{{{
   let snippets = neosnippet#variables#snippets()
   for snippets_file in reverse(s:get_list().uniq(snippets_files))
     let snippets[filetype] = extend(snippets[filetype],
-          \ neosnippet#parser#_parse(snippets_file))
+          \ neosnippet#parser#_parse_snippets(snippets_file))
   endfor
 endfunction"}}}
 
@@ -131,7 +131,7 @@ function! neosnippet#commands#_source(filename) "{{{
 
   let neosnippet = neosnippet#variables#current_neosnippet()
   let neosnippet.snippets = extend(neosnippet.snippets,
-        \ neosnippet#parser#_parse(a:filename))
+        \ neosnippet#parser#_parse_snippets(a:filename))
 endfunction"}}}
 
 function! neosnippet#commands#_clear_markers() "{{{

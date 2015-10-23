@@ -28,23 +28,23 @@ set cpo&vim
 
 let s:Cache = neosnippet#util#get_vital().import('System.Cache')
 
-function! neosnippet#parser#_parse(snippets_file) "{{{
-  if !filereadable(a:snippets_file)
+function! neosnippet#parser#_parse_snippets(filename) "{{{
+  if !filereadable(a:filename)
     call neosnippet#util#print_error(
-          \ printf('snippet file "%s" is not found.', a:snippets_file))
+          \ printf('snippet file "%s" is not found.', a:filename))
     return {}
   endif
 
   let cache_dir = neosnippet#variables#data_dir()
-  if s:Cache.check_old_cache(cache_dir, a:snippets_file)
-    let snippets = s:parse(a:snippets_file)
+  if s:Cache.check_old_cache(cache_dir, a:filename)
+    let snippets = s:parse(a:filename)
     if len(snippets) > 5 && !neosnippet#util#is_sudo()
       call s:Cache.writefile(
-            \ cache_dir, a:snippets_file, [string(snippets)])
+            \ cache_dir, a:filename, [string(snippets)])
     endif
   else
     sandbox let snippets = eval(
-          \ s:Cache.readfile(cache_dir, a:snippets_file)[0])
+          \ s:Cache.readfile(cache_dir, a:filename)[0])
   endif
 
   return snippets
@@ -72,7 +72,7 @@ function! s:parse(snippets_file) "{{{
             \ neosnippet#helpers#get_snippets_directory(), ','),
             \ filename), '\n')
         let snippets = extend(snippets,
-              \ neosnippet#parser#_parse(snippets_file))
+              \ neosnippet#parser#_parse_snippets(snippets_file))
       endfor
     elseif line =~ '^delete\s'
       let name = matchstr(line, '^delete\s\+\zs.*$')
