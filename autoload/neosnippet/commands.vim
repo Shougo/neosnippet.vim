@@ -104,26 +104,24 @@ function! neosnippet#commands#_make_cache(filetype) "{{{
   if has_key(snippets, filetype)
     return
   endif
+
   let snippets[filetype] = {}
 
   let path = join(neosnippet#helpers#get_snippets_directory(), ',')
-  let snippets_files = []
-  for glob in s:get_list().flatten(
-        \ map(split(get(g:neosnippet#scope_aliases,
-        \   filetype, filetype), '\s*,\s*'), "
-        \   [v:val.'.snip', v:val.'.snippet',
-        \    v:val.'/**/*.snip', v:val.'/**/*.snippet']
-        \ + (filetype != '_' &&
-        \    !has_key(g:neosnippet#scope_aliases, filetype) ?
-        \    [v:val . '_*.snip', v:val . '_*.snippet'] : [])"))
-    let snippets_files += split(globpath(path, glob), '\n')
+
+  for filename in s:get_snippets_files(path, filetype)
+    let snippets[filetype] = extend(snippets[filetype],
+          \ neosnippet#parser#_parse_snippets(filename))
   endfor
 
-  let snippets = neosnippet#variables#snippets()
-  for snippets_file in reverse(s:get_list().uniq(snippets_files))
-    let snippets[filetype] = extend(snippets[filetype],
-          \ neosnippet#parser#_parse_snippets(snippets_file))
-  endfor
+  if g:neosnippet#enable_snipmate_compatibility
+    " Load file snippets
+    for filename in s:get_snippet_files(path, filetype)
+      let trigger = fnamemodify(filename, ':t:r')
+      let snippets[filetype][trigger] =
+            \ neosnippet#parser#_parse_snippet(filename, trigger)
+    endfor
+  endif
 endfunction"}}}
 
 function! neosnippet#commands#_source(filename) "{{{
@@ -226,6 +224,31 @@ function! s:initialize_options(options) "{{{
   endif
 
   return options
+endfunction"}}}
+
+function! s:get_snippets_files(path, filetype) abort "{{{
+  let snippets_files = []
+  for glob in s:get_list().flatten(
+        \ map(split(get(g:neosnippet#scope_aliases,
+        \   a:filetype, a:filetype), '\s*,\s*'), "
+        \   [v:val.'.snip', v:val.'.snippet',
+        \    v:val.'/**/*.snip', v:val.'/**/*.snippet']
+        \ + (a:filetype != '_' &&
+        \    !has_key(g:neosnippet#scope_aliases, a:filetype) ?
+        \    [v:val . '_*.snip', v:val . '_*.snippet'] : [])"))
+    let snippets_files += split(globpath(a:path, glob), '\n')
+  endfor
+  return reverse(s:get_list().uniq(snippets_files))
+endfunction"}}}
+function! s:get_snippet_files(path, filetype) abort "{{{
+  let snippet_files = []
+  for glob in s:get_list().flatten(
+        \ map(split(get(g:neosnippet#scope_aliases,
+        \   a:filetype, a:filetype), '\s*,\s*'), "
+        \   [v:val.'/*.snippet']"))
+    let snippet_files += split(globpath(a:path, glob), '\n')
+  endfor
+  return reverse(s:get_list().uniq(snippet_files))
 endfunction"}}}
 
 let &cpo = s:save_cpo

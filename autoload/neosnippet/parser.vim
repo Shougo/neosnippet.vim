@@ -49,6 +49,22 @@ function! neosnippet#parser#_parse_snippets(filename) "{{{
 
   return snippets
 endfunction"}}}
+function! neosnippet#parser#_parse_snippet(filename, trigger) "{{{
+  if !filereadable(a:filename)
+    call neosnippet#util#print_error(
+          \ printf('snippet file "%s" is not found.', a:filename))
+    return {}
+  endif
+
+  let snippet_dict = {
+        \ 'word' : join(readfile(a:filename), "\n\t"),
+        \ 'name' : a:trigger,
+        \ 'options' : neosnippet#parser#_initialize_snippet_options()
+        \ }
+
+  return neosnippet#parser#_initialize_snippet(
+        \ snippet_dict, a:filename, 1, '', a:trigger)
+endfunction"}}}
 
 function! s:parse(snippets_file) "{{{
   let dup_check = {}
@@ -117,8 +133,11 @@ endfunction"}}}
 
 function! s:parse_snippet_name(snippets_file, line, linenr, dup_check) "{{{
   " Initialize snippet dict.
-  let snippet_dict = { 'word' : '', 'linenr' : a:linenr,
-        \ 'options' : neosnippet#parser#_initialize_snippet_options() }
+  let snippet_dict = {
+        \ 'word' : '',
+        \ 'linenr' : a:linenr,
+        \ 'options' : neosnippet#parser#_initialize_snippet_options()
+        \ }
 
   " Try using the name without the description (abbr).
   let snippet_dict.name = matchstr(a:line, '^snippet\s\+\zs\S\+')
