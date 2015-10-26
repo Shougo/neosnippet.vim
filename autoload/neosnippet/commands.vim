@@ -231,11 +231,11 @@ function! s:get_snippets_files(path, filetype) abort "{{{
   for glob in s:get_list().flatten(
         \ map(split(get(g:neosnippet#scope_aliases,
         \   a:filetype, a:filetype), '\s*,\s*'), "
-        \   [v:val.'.snip', v:val.'.snippet',
-        \    v:val.'/**/*.snip', v:val.'/**/*.snippet']
+        \   [v:val.'.snip', v:val.'.snippets',
+        \    v:val.'/**/*.snip', v:val.'/**/*.snippets']
         \ + (a:filetype != '_' &&
         \    !has_key(g:neosnippet#scope_aliases, a:filetype) ?
-        \    [v:val . '_*.snip', v:val . '_*.snippet'] : [])"))
+        \    [v:val . '_*.snip', v:val . '_*.snippets'] : [])"))
     let snippets_files += split(globpath(a:path, glob), '\n')
   endfor
   return reverse(s:get_list().uniq(snippets_files))
