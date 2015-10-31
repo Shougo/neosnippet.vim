@@ -193,10 +193,8 @@ endfunction"}}}
 
 function! s:get_sources_filetypes(filetype) "{{{
   let filetypes =
-        \ exists('*neocomplete#get_source_filetypes') ?
-        \   neocomplete#get_source_filetypes(a:filetype) :
-        \ exists('*neocomplcache#get_source_filetypes') ?
-        \   neocomplcache#get_source_filetypes(a:filetype) :
+        \ exists('*context_filetype#get_filetypes') ?
+        \   context_filetype#get_filetypes(a:filetype) :
         \ split(((a:filetype == '') ? 'nothing' : a:filetype), '\.')
   return filetypes + ['_']
 endfunction"}}}
