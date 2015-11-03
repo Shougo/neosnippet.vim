@@ -145,15 +145,28 @@ function! neosnippet#mappings#_anonymous(snippet, options) "{{{
   return ''
 endfunction"}}}
 function! neosnippet#mappings#_expand(trigger) "{{{
+  call neosnippet#init#check()
+
+  let cur_text = neosnippet#util#get_cur_text()
+
   let col = col('.')
   if mode() !=# 'i'
     " Fix column.
     let col += 2
   endif
 
-  call neosnippet#view#_expand(
-        \ neosnippet#util#get_cur_text(), col, a:trigger)
-  return ''
+  " Get selected text.
+  let neosnippet = neosnippet#variables#current_neosnippet()
+  let neosnippet.trigger = 1
+  let expr = ''
+  if mode() ==# 's' && neosnippet.optional_tabstop
+    let expr .= "\<C-o>\"_d"
+  endif
+
+  let expr .= printf("\<ESC>:call neosnippet#view#_expand(%s,%d, %s)\<CR>",
+        \ string(cur_text), col, string(a:trigger))
+
+  return expr
 endfunction"}}}
 
 function! s:snippets_expand(cur_text, col) "{{{

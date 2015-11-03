@@ -335,10 +335,13 @@ neosnippet#anonymous({snippet}, [{options}])
 						*neosnippet#expand()*
 neosnippet#expand({trigger})
 		It expands the snippet trigger.
-		{trigger} is snippet trigger. >
-
-		nnoremap <silent> test
+		{trigger} is snippet trigger.
+		Note: You can use this function with |map-<expr>|.
+>
+		inoremap <silent> test
 		\ i<C-r>=neosnippet#expand('date_english')<CR>
+		nnoremap <silent><expr> test
+		\ neosnippet#expand('date_english')
 
 ------------------------------------------------------------------------------
 FUNCTIONS					*neosnippet-functions*
