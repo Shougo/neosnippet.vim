@@ -55,6 +55,9 @@ endfunction"}}}
 function! neosnippet#anonymous(snippet, ...) "{{{
   return neosnippet#mappings#_anonymous(a:snippet, get(a:000, 0, {}))
 endfunction"}}}
+function! neosnippet#expand(trigger) "{{{
+  return neosnippet#mappings#_expand(a:trigger)
+endfunction"}}}
 
 function! neosnippet#get_snippets_directory() "{{{
   return neosnippet#helpers#get_snippets_directory()

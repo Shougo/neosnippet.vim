@@ -319,7 +319,7 @@ neosnippet#expandable_or_jumpable()
 		\ neosnippet#expandable_or_jumpable() ?
 		\ "\<Plug>(neosnippet_expand_or_jump)" : "\<C-n>"
 <
-					*neosnippet#anonymous()*
+						*neosnippet#anonymous()*
 neosnippet#anonymous({snippet}, [{options}])
 		It defines anonymous snippet.
 		{snippet} is snippet definition.
@@ -332,6 +332,14 @@ neosnippet#anonymous({snippet}, [{options}])
 		inoremap <silent> ((
 		\ <C-r>=neosnippet#anonymous('\left(${1}\right)${0}')<CR>
 <
+						*neosnippet#expand()*
+neosnippet#expand({trigger})
+		It expands the snippet trigger.
+		{trigger} is snippet trigger. >
+
+		nnoremap <silent> test
+		\ i<C-r>=neosnippet#expand('date_english')<CR>
+
 ------------------------------------------------------------------------------
 FUNCTIONS					*neosnippet-functions*
 

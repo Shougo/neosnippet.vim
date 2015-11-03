@@ -144,14 +144,24 @@ function! neosnippet#mappings#_anonymous(snippet, options) "{{{
   call neosnippet#view#_insert(a:snippet, options, cur_text, col('.'))
   return ''
 endfunction"}}}
+function! neosnippet#mappings#_expand(trigger) "{{{
+  let col = col('.')
+  if mode() !=# 'i'
+    " Fix column.
+    let col += 2
+  endif
+
+  call neosnippet#view#_expand(
+        \ neosnippet#util#get_cur_text(), col, a:trigger)
+  return ''
+endfunction"}}}
 
 function! s:snippets_expand(cur_text, col) "{{{
   let cur_word = neosnippet#helpers#get_cursor_snippet(
         \ neosnippet#helpers#get_snippets(),
         \ a:cur_text)
 
-  call neosnippet#view#_expand(
-        \ a:cur_text, a:col, cur_word)
+  call neosnippet#view#_expand(a:cur_text, a:col, cur_word)
 endfunction"}}}
 
 function! s:snippets_expand_or_jump(cur_text, col) "{{{
@@ -184,7 +194,7 @@ function! s:SID_PREFIX() "{{{
   return matchstr(expand('<sfile>'), '<SNR>\d\+_\ze\w\+$')
 endfunction"}}}
 
-function! s:trigger(function) "{{{
+function! neosnippet#mappings#_trigger(function) "{{{
   call neosnippet#init#check()
 
   let cur_text = neosnippet#util#get_cur_text()
@@ -211,16 +221,16 @@ endfunction"}}}
 
 " Plugin key-mappings.
 function! neosnippet#mappings#expand_or_jump_impl()
-  return s:trigger(s:SID_PREFIX().'snippets_expand_or_jump')
+  return neosnippet#mappings#_trigger(s:SID_PREFIX().'snippets_expand_or_jump')
 endfunction
 function! neosnippet#mappings#jump_or_expand_impl()
-  return s:trigger(s:SID_PREFIX().'snippets_jump_or_expand')
+  return neosnippet#mappings#_trigger(s:SID_PREFIX().'snippets_jump_or_expand')
 endfunction
 function! neosnippet#mappings#expand_impl()
-  return s:trigger(s:SID_PREFIX().'snippets_expand')
+  return neosnippet#mappings#_trigger(s:SID_PREFIX().'snippets_expand')
 endfunction
 function! neosnippet#mappings#jump_impl()
-  return s:trigger('neosnippet#view#_jump')
+  return neosnippet#mappings#_trigger('neosnippet#view#_jump')
 endfunction
 
 let &cpo = s:save_cpo
