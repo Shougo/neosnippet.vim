@@ -136,34 +136,17 @@ function! neosnippet#mappings#_expand_target_trigger(trigger) "{{{
   endif
 endfunction"}}}
 
-function! neosnippet#mappings#_anonymous(snippet, options) "{{{
-  let cur_text = neosnippet#util#get_cur_text()
-  let options = extend(
-        \ neosnippet#parser#_initialize_snippet_options(),
-        \ a:options)
-  call neosnippet#view#_insert(a:snippet, options, cur_text, col('.'))
-  return ''
+function! neosnippet#mappings#_anonymous(snippet) "{{{
+  let [cur_text, col, expr] = s:pre_trigger()
+  let expr .= printf("\<ESC>:call neosnippet#view#_insert(%s, {}, %s, %d)\<CR>",
+        \ string(a:snippet), string(cur_text), col)
+
+  return expr
 endfunction"}}}
 function! neosnippet#mappings#_expand(trigger) "{{{
-  call neosnippet#init#check()
+  let [cur_text, col, expr] = s:pre_trigger()
 
-  let cur_text = neosnippet#util#get_cur_text()
-
-  let col = col('.')
-  if mode() !=# 'i'
-    " Fix column.
-    let col += 2
-  endif
-
-  " Get selected text.
-  let neosnippet = neosnippet#variables#current_neosnippet()
-  let neosnippet.trigger = 1
-  let expr = ''
-  if mode() ==# 's' && neosnippet.optional_tabstop
-    let expr .= "\<C-o>\"_d"
-  endif
-
-  let expr .= printf("\<ESC>:call neosnippet#view#_expand(%s,%d, %s)\<CR>",
+  let expr .= printf("\<ESC>:call neosnippet#view#_expand(%s, %d, %s)\<CR>",
         \ string(cur_text), col, string(a:trigger))
 
   return expr
@@ -208,6 +191,15 @@ function! s:SID_PREFIX() "{{{
 endfunction"}}}
 
 function! neosnippet#mappings#_trigger(function) "{{{
+  let [cur_text, col, expr] = s:pre_trigger()
+
+  let expr .= printf("\<ESC>:call %s(%s,%d)\<CR>",
+        \ a:function, string(cur_text), col)
+
+  return expr
+endfunction"}}}
+
+function! s:pre_trigger() "{{{
   call neosnippet#init#check()
 
   let cur_text = neosnippet#util#get_cur_text()
@@ -226,10 +218,7 @@ function! neosnippet#mappings#_trigger(function) "{{{
     let expr .= "\<C-o>\"_d"
   endif
 
-  let expr .= printf("\<ESC>:call %s(%s,%d)\<CR>",
-        \ a:function, string(cur_text), col)
-
-  return expr
+  return [cur_text, col, expr]
 endfunction"}}}
 
 " Plugin key-mappings.

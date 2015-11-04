@@ -51,6 +51,10 @@ function! neosnippet#view#_expand(cur_text, col, trigger_name) "{{{
   call neosnippet#view#_insert(snippet.snip, snippet.options, cur_text, a:col)
 endfunction"}}}
 function! neosnippet#view#_insert(snippet, options, cur_text, col) "{{{
+  let options = extend(
+        \ neosnippet#parser#_initialize_snippet_options(),
+        \ a:options)
+
   let snip_word = a:snippet
   if snip_word =~ '\\\@<!`.*\\\@<!`'
     let snip_word = s:eval_snippet(snip_word)
@@ -100,7 +104,7 @@ function! neosnippet#view#_insert(snippet, options, cur_text, col) "{{{
     endif
     call setline('.', snippet_lines[0])
 
-    if begin_line != end_line || a:options.indent
+    if begin_line != end_line || options.indent
       call s:indent_snippet(begin_line, end_line)
     endif
 

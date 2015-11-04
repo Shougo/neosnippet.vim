@@ -320,17 +320,19 @@ neosnippet#expandable_or_jumpable()
 		\ "\<Plug>(neosnippet_expand_or_jump)" : "\<C-n>"
 <
 						*neosnippet#anonymous()*
-neosnippet#anonymous({snippet}, [{options}])
+neosnippet#anonymous({snippet})
 		It defines anonymous snippet.
 		{snippet} is snippet definition.
 		{options} is snippet option.
 		You can expand snippet definition without defining snippet
 		trigger.
-		Note: You cannot use it in |map-<expr>|.  It changes the
-		buffer text.
+		Note: You can use this function with |map-<expr>|.
 >
 		inoremap <silent> ((
 		\ <C-r>=neosnippet#anonymous('\left(${1}\right)${0}')<CR>
+		" OR
+		inoremap <expr><silent> ((
+		\ neosnippet#anonymous('\left(${1}\right)${0}')
 <
 						*neosnippet#expand()*
 neosnippet#expand({trigger})
