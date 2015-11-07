@@ -104,6 +104,9 @@ COMMANDS 					*neosnippet-commands*
 		the behavior of the command. Note: You must escape spaces with
 		a backslash "\".
 
+		Note: You must set |g:neosnippet#snippets_directory| before
+		using it.
+
 					*neosnippet-edit-options-vertical*
 		-vertical
 		Split the window vertically.
