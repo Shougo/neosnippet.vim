@@ -88,9 +88,9 @@ COMMANDS 					*neosnippet-commands*
 
 					*:NeoSnippetEdit*
 :NeoSnippetEdit [{options}] [filetype]
-		Opens the snippets for a given [filetype] to edit. It automatically
-		selects the current buffer's filetype unless you specify
-		another one by [filetype].
+		Opens the snippets for a given [filetype] to edit. It
+		automatically selects the current buffer's filetype unless you
+		specify another one by [filetype].
 
 		If the path to [filetype] snippets is a directory, it
 		automatically selects "[filetype].snip" in the [filetype]
