@@ -72,6 +72,10 @@ function! neosnippet#handlers#_complete_done() "{{{
   if snippet !~ ')$'
     let snippet .= ')'
   endif
+  if s:is_auto_pairs()
+    " Remove auto pair from the snippet
+    let snippet = substitute(snippet, ')$', '', '')
+  endif
   let snippet .= '${0}'
 
   let options = neosnippet#parser#_initialize_snippet_options()
@@ -124,6 +128,11 @@ function! neosnippet#handlers#_get_in_paren(str) abort "{{{
   endfor
 
   return s
+endfunction"}}}
+
+function! s:is_auto_pairs() abort "{{{
+  return get(g:, 'deoplete#enable_auto_pairs', 0)
+        \ || get(g:, 'neocomplete#enable_auto_pairs', 0)
 endfunction"}}}
 
 let &cpo = s:save_cpo
