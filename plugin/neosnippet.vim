@@ -33,9 +33,6 @@ endif
 let s:save_cpo = &cpo
 set cpo&vim
 
-" Obsolute options check. "{{{
-"}}}
-
 " Plugin key-mappings. "{{{
 inoremap <silent><expr> <Plug>(neosnippet_expand_or_jump)
       \ neosnippet#mappings#expand_or_jump_impl()

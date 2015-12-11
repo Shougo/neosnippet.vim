@@ -41,6 +41,8 @@ call neosnippet#util#set_default(
       \ 'g:neosnippet#expand_word_boundary', 0)
 call neosnippet#util#set_default(
       \ 'g:neosnippet#enable_conceal_markers', 1)
+call neosnippet#util#set_default(
+      \ 'g:neosnippet#enable_complete_done', 0)
 "}}}
 
 function! neosnippet#expandable_or_jumpable() "{{{

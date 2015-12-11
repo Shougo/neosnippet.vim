@@ -225,6 +225,13 @@ g:neosnippet#enable_conceal_markers
 
 		The default value is 1.
 
+					*g:neosnippet#enable_complete_done*
+g:neosnippet#enable_complete_done
+		If this variable is not 0, neosnippet will expand the function
+		prototype when |CompleteDone| autocmd.
+
+		The default value is 0.
+
 						*g:neosnippet#scope_aliases*
 g:neosnippet#scope_aliases
 		It is a dictionary that associating certain filetypes with

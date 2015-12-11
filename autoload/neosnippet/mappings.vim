@@ -137,14 +137,14 @@ function! neosnippet#mappings#_expand_target_trigger(trigger) "{{{
 endfunction"}}}
 
 function! neosnippet#mappings#_anonymous(snippet) "{{{
-  let [cur_text, col, expr] = s:pre_trigger()
+  let [cur_text, col, expr] = neosnippet#mappings#_pre_trigger()
   let expr .= printf("\<ESC>:call neosnippet#view#_insert(%s, {}, %s, %d)\<CR>",
         \ string(a:snippet), string(cur_text), col)
 
   return expr
 endfunction"}}}
 function! neosnippet#mappings#_expand(trigger) "{{{
-  let [cur_text, col, expr] = s:pre_trigger()
+  let [cur_text, col, expr] = neosnippet#mappings#_pre_trigger()
 
   let expr .= printf("\<ESC>:call neosnippet#view#_expand(%s, %d, %s)\<CR>",
         \ string(cur_text), col, string(a:trigger))
@@ -191,7 +191,7 @@ function! s:SID_PREFIX() "{{{
 endfunction"}}}
 
 function! neosnippet#mappings#_trigger(function) "{{{
-  let [cur_text, col, expr] = s:pre_trigger()
+  let [cur_text, col, expr] = neosnippet#mappings#_pre_trigger()
 
   let expr .= printf("\<ESC>:call %s(%s,%d)\<CR>",
         \ a:function, string(cur_text), col)
@@ -199,7 +199,7 @@ function! neosnippet#mappings#_trigger(function) "{{{
   return expr
 endfunction"}}}
 
-function! s:pre_trigger() "{{{
+function! neosnippet#mappings#_pre_trigger() "{{{
   call neosnippet#init#check()
 
   let cur_text = neosnippet#util#get_cur_text()

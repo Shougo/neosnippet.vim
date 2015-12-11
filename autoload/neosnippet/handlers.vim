@@ -27,7 +27,7 @@ let s:save_cpo = &cpo
 set cpo&vim
 
 function! neosnippet#handlers#_complete_done() "{{{
-  if empty(v:completed_item)
+  if empty(v:completed_item) || !g:neosnippet#enable_complete_done
     return
   endif
 
@@ -74,9 +74,12 @@ function! neosnippet#handlers#_complete_done() "{{{
     " Remove auto pair from the snippet
     let snippet = substitute(snippet, ')$', '', '')
   else
-    if snippet !~ ')$'
+    if snippet =~ '($'
+      let snippet .= '${'. cnt .'})'
+    elseif snippet !~ ')$'
       let snippet .= ')'
     endif
+
     let snippet .= '${0}'
   endif
 
@@ -90,6 +93,9 @@ function! neosnippet#handlers#_complete_done() "{{{
         \ neosnippet#parser#_initialize_snippet(
         \   { 'name' : trigger, 'word' : snippet, 'options' : options },
         \   '', 0, '', trigger)
+
+  let [cur_text, col, expr] = neosnippet#mappings#_pre_trigger()
+  call neosnippet#view#_expand(cur_text, col, trigger)
 endfunction"}}}
 
 function! neosnippet#handlers#_cursor_moved() "{{{
