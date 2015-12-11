@@ -8,5 +8,9 @@ function! s:suite.get_in_paren()
         \ 'foobar, baz')
   call s:assert.equals(neosnippet#handlers#_get_in_paren('(foobar, (baz))'),
         \ 'foobar, (baz)')
+  call s:assert.equals(neosnippet#handlers#_get_in_paren('foobar('),
+        \ '')
+  call s:assert.equals(neosnippet#handlers#_get_in_paren('foobar(fname)'),
+        \ 'fname')
 endfunction
 
