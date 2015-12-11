@@ -150,12 +150,16 @@ function! neosnippet#view#_jump(cur_text, col) "{{{
         \ expand_info.begin_patterns,
         \ expand_info.end_line,
         \ expand_info.end_patterns)
-  if neosnippet#view#_search_snippet_range(
-        \ begin, end, expand_info.holder_cnt)
+
+  let begin_cnt = expand_info.holder_cnt
+  while (expand_info.holder_cnt - begin_cnt) < 5
     " Next count.
     let expand_info.holder_cnt += 1
-    return 1
-  endif
+    if neosnippet#view#_search_snippet_range(
+          \ begin, end, expand_info.holder_cnt - 1)
+      return 1
+    endif
+  endwhile
 
   " Search placeholder 0.
   if neosnippet#view#_search_snippet_range(begin, end, 0)
