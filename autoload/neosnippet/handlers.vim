@@ -107,7 +107,7 @@ function! neosnippet#handlers#_get_in_paren(str) abort "{{{
         continue
       endif
     elseif c == ')'
-      if level == 1
+      if level == 1 && s != ''
         return s
       else
         let level -= 1
