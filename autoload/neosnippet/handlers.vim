@@ -76,7 +76,7 @@ function! neosnippet#handlers#_complete_done() "{{{
     let snippet .= '${0}'
   endif
 
-  let [cur_text, col, expr] = neosnippet#mappings#_pre_trigger()
+  let [cur_text, col, _] = neosnippet#mappings#_pre_trigger()
   call neosnippet#view#_insert(snippet, {}, cur_text, col)
 endfunction"}}}
 
