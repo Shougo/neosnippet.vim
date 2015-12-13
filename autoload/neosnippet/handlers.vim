@@ -57,6 +57,11 @@ function! neosnippet#handlers#_complete_done() "{{{
 
   for arg in split(substitute(neosnippet#handlers#_get_in_paren(abbr),
         \ '(\zs.\{-}\ze)', '', 'g'), '[^[]\zs\s*,\s*')
+    if arg ==# 'self' && &filetype ==# 'python'
+      " Ignore self argument
+      continue
+    endif
+
     if cnt != 1
       let snippet .= ', '
     endif
