@@ -121,7 +121,7 @@ function! neosnippet#view#_insert(snippet, options, cur_text, col) "{{{
           \ })
 
     if snip_word =~ neosnippet#get_placeholder_marker_pattern()
-      call neosnippet#view#_jump(a:cur_text, a:col)
+      call neosnippet#view#_jump('', a:col)
     endif
   finally
     if has('folding')
@@ -133,7 +133,7 @@ function! neosnippet#view#_insert(snippet, options, cur_text, col) "{{{
     endif
   endtry
 endfunction"}}}
-function! neosnippet#view#_jump(cur_text, col) "{{{
+function! neosnippet#view#_jump(_, col) "{{{
   call s:skip_next_auto_completion()
 
   let expand_stack = neosnippet#variables#expand_stack()
@@ -415,7 +415,7 @@ function! s:expand_target_placeholder(line, col) "{{{
 
   let neosnippet.target = ''
 
-  call neosnippet#view#_jump(neosnippet#util#get_cur_text(), col)
+  call neosnippet#view#_jump('', col)
 endfunction"}}}
 function! s:search_sync_placeholder(start, end, number) "{{{
   if a:end == 0

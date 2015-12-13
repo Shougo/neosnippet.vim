@@ -157,7 +157,8 @@ function! s:snippets_expand(cur_text, col) "{{{
         \ neosnippet#helpers#get_snippets(),
         \ a:cur_text)
 
-  call neosnippet#view#_expand(a:cur_text, a:col, cur_word)
+  call neosnippet#view#_expand(
+        \ neosnippet#util#get_cur_text(), a:col, cur_word)
 endfunction"}}}
 
 function! s:snippets_expand_or_jump(cur_text, col) "{{{
@@ -167,9 +168,9 @@ function! s:snippets_expand_or_jump(cur_text, col) "{{{
   if cur_word != ''
     " Found snippet trigger.
     call neosnippet#view#_expand(
-          \ a:cur_text, a:col, cur_word)
+          \ neosnippet#util#get_cur_text(), a:col, cur_word)
   else
-    call neosnippet#view#_jump(a:cur_text, a:col)
+    call neosnippet#view#_jump('', a:col)
   endif
 endfunction"}}}
 
@@ -179,10 +180,10 @@ function! s:snippets_jump_or_expand(cur_text, col) "{{{
   if search(neosnippet#get_placeholder_marker_pattern(). '\|'
             \ .neosnippet#get_sync_placeholder_marker_pattern(), 'nw') > 0
     " Found snippet placeholder.
-    call neosnippet#view#_jump(a:cur_text, a:col)
+    call neosnippet#view#_jump('', a:col)
   else
     call neosnippet#view#_expand(
-          \ a:cur_text, a:col, cur_word)
+          \ neosnippet#util#get_cur_text(), a:col, cur_word)
   endif
 endfunction"}}}
 
