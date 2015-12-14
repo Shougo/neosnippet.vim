@@ -184,8 +184,10 @@ function! s:indent_snippet(begin, end) "{{{
   try
     setlocal equalprg=
 
+    let neosnippet = neosnippet#variables#current_neosnippet()
     let base_indent = matchstr(getline(a:begin), '^\s\+')
-    for line_nr in range(a:begin + 1, a:end)
+    for line_nr in range((neosnippet.target != '' ?
+          \ a:begin : a:begin + 1), a:end)
       call cursor(line_nr, 0)
 
       if getline('.') =~ '^\t\+'
