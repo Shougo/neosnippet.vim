@@ -415,6 +415,7 @@ function! s:expand_target_placeholder(line, col) "{{{
     endif
   endtry
 
+  call s:indent_snippet(begin_line, end_line)
   let neosnippet.target = ''
 
   call neosnippet#view#_jump('', col)
