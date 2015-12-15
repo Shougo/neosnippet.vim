@@ -140,7 +140,7 @@ function! neosnippet#view#_jump(_, col) "{{{
 
   " Get patterns and count.
   if empty(expand_stack)
-    return s:search_outof_range(a:col)
+    return neosnippet#view#_search_outof_range(a:col)
   endif
 
   let expand_info = expand_stack[-1]
@@ -170,7 +170,7 @@ function! neosnippet#view#_jump(_, col) "{{{
   let expand_stack = neosnippet#variables#expand_stack()
   let expand_stack = expand_stack[: -2]
 
-  return s:search_outof_range(a:col)
+  return neosnippet#view#_search_outof_range(a:col)
 endfunction"}}}
 
 function! s:indent_snippet(begin, end) "{{{
@@ -269,7 +269,7 @@ function! neosnippet#view#_search_snippet_range(start, end, cnt, ...) "{{{
 
   return 0
 endfunction"}}}
-function! s:search_outof_range(col) "{{{
+function! neosnippet#view#_search_outof_range(col) "{{{
   call s:substitute_placeholder_marker(1, 0, 0)
 
   let pattern = neosnippet#get_placeholder_marker_pattern()

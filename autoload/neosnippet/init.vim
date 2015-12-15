@@ -50,7 +50,8 @@ function! s:initialize_others() "{{{
   augroup neosnippet "{{{
     autocmd!
     " Set make cache event.
-    autocmd FileType * call neosnippet#commands#_make_cache(&filetype)
+    autocmd FileType *
+          \ call neosnippet#commands#_make_cache(&filetype)
     " Re make cache events
     autocmd BufWritePost *.snip,*.snippets
           \ call neosnippet#variables#set_snippets({})
@@ -58,7 +59,8 @@ function! s:initialize_others() "{{{
           \ call neosnippet#mappings#_clear_select_mode_mappings()
     autocmd CursorMoved,CursorMovedI *
           \ call neosnippet#handlers#_cursor_moved()
-    autocmd BufWritePre * NeoSnippetClearMarkers
+    autocmd BufWritePre *
+          \ call neosnippet#handlers#_all_clear_markers()
   augroup END"}}}
 
   if exists('v:completed_item')

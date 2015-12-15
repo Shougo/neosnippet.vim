@@ -101,6 +101,22 @@ function! neosnippet#handlers#_cursor_moved() "{{{
   endif
 endfunction"}}}
 
+function! neosnippet#handlers#_all_clear_markers() "{{{
+  let pos = getpos('.')
+
+  try
+    " Search out of range.
+    while neosnippet#view#_search_outof_range(col('.'))
+    endwhile
+  finally
+    stopinsert
+
+    call setpos('.', pos)
+
+    call neosnippet#variables#clear_expand_stack()
+  endtry
+endfunction"}}}
+
 function! neosnippet#handlers#_get_in_paren(str) abort "{{{
   let s = ''
   let level = 0
