@@ -27,10 +27,18 @@ let s:save_cpo = &cpo
 set cpo&vim
 
 function! neosnippet#handlers#_complete_done() "{{{
-  if empty(v:completed_item) || !g:neosnippet#enable_complete_done
+  if empty(v:completed_item)
+        \ || !g:neosnippet#enable_complete_done
         \ || v:completed_item.word !~ '($'
     return
   endif
+
+  let pairs = { '(' : ')', '{' : '}', '"' : '"' }
+  if index(keys(pairs), v:completed_item.word[-1:]) < 0
+    return
+  endif
+  let key = v:completed_item.word[-1:]
+  let pair = pairs[key]
 
   let item = v:completed_item
 
@@ -44,39 +52,30 @@ function! neosnippet#handlers#_complete_done() "{{{
     let abbr = split(item.info, '\n')[0]
   endif
 
-  if abbr !~ '('
-    return
-  endif
-
   " Make snippet arguments
   let cnt = 1
   let snippet = ''
-  if item.word !~ '()\?$'
-    let snippet .= '('
+  if key == '('
+    for arg in split(substitute(neosnippet#handlers#_get_in_paren(abbr),
+          \ '(\zs.\{-}\ze)', '', 'g'), '[^[]\zs\s*,\s*')
+      if arg ==# 'self' && &filetype ==# 'python'
+        " Ignore self argument
+        continue
+      endif
+
+      if cnt != 1
+        let snippet .= ', '
+      endif
+      let snippet .= printf('${%d:#:%s}', cnt, escape(arg, '{}'))
+      let cnt += 1
+    endfor
   endif
 
-  for arg in split(substitute(neosnippet#handlers#_get_in_paren(abbr),
-        \ '(\zs.\{-}\ze)', '', 'g'), '[^[]\zs\s*,\s*')
-    if arg ==# 'self' && &filetype ==# 'python'
-      " Ignore self argument
-      continue
-    endif
-
-    if cnt != 1
-      let snippet .= ', '
-    endif
-    let snippet .= printf('${%d:#:%s}', cnt, escape(arg, '{}'))
-    let cnt += 1
-  endfor
-
-  if s:is_auto_pairs()
-    " Remove auto pair from the snippet
-    let snippet = substitute(snippet, ')$', '', '')
-  else
-    if snippet =~ '($'
-      let snippet .= '${'. cnt .'})'
-    elseif snippet !~ ')$'
-      let snippet .= ')'
+  if !s:is_auto_pairs()
+    if key != '(' && snippet =~ key.'$'
+      let snippet .= '${'. cnt .'}'.pair
+    elseif snippet !~ pair.'$'
+      let snippet .= pair
     endif
 
     let snippet .= '${0}'
