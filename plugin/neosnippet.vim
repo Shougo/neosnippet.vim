@@ -68,19 +68,21 @@ augroup neosnippet "{{{
 augroup END"}}}
 
 " Commands. "{{{
-command! -nargs=? -complete=customlist,neosnippet#commands#_edit_complete
+command! -nargs=? -bar
+      \ -complete=customlist,neosnippet#commands#_edit_complete
       \ NeoSnippetEdit
       \ call neosnippet#commands#_edit(<q-args>)
 
-command! -nargs=? -complete=customlist,neosnippet#commands#_filetype_complete
+command! -nargs=? -bar
+      \ -complete=customlist,neosnippet#commands#_filetype_complete
       \ NeoSnippetMakeCache
       \ call neosnippet#commands#_make_cache(<q-args>)
 
-command! -nargs=1 -complete=file
+command! -nargs=1 -bar -complete=file
       \ NeoSnippetSource
       \ call neosnippet#commands#_source(<q-args>)
 
-command! NeoSnippetClearMarkers
+command! -bar NeoSnippetClearMarkers
       \ call neosnippet#commands#_clear_markers()
 "}}}
 
