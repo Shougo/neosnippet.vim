@@ -142,7 +142,7 @@ function! neosnippet#commands#_clear_markers() "{{{
     return
   endif
 
-  call neosnippet#view#_clear_markers(expand_info[-1])
+  call neosnippet#view#_clear_markers(expand_stack[-1])
 endfunction"}}}
 
 " Complete helpers.
