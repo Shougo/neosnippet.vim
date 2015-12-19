@@ -86,6 +86,9 @@ endfunction"}}}
 function! neosnippet#get_placeholder_marker_substitute_nonzero_pattern() "{{{
   return '\${\([1-9]\d*\%(:.\{-}\)\?\\\@<!\)}'
 endfunction"}}}
+function! neosnippet#get_placeholder_marker_substitute_zero_pattern() "{{{
+  return '\${\(0\%(:.\{-}\)\?\\\@<!\)}'
+endfunction"}}}
 function! neosnippet#get_placeholder_marker_default_pattern() "{{{
   return '<`\d\+:\zs.\{-}\ze\\\@<!`>'
 endfunction"}}}
