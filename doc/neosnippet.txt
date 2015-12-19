@@ -232,6 +232,14 @@ g:neosnippet#enable_complete_done
 
 		The default value is 0.
 
+					*g:neosnippet#enable_auto_clear_markers*
+g:neosnippet#enable_auto_clear_markers
+		If this variable is not 0, neosnippet will clear the markers
+		in the buffer when |BufWritePost|, |CursorMoved| and
+		|CursorMovedI| autocmd.
+
+		The default value is 1.
+
 						*g:neosnippet#scope_aliases*
 g:neosnippet#scope_aliases
 		It is a dictionary that associating certain filetypes with

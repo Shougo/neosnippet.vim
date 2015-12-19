@@ -297,6 +297,42 @@ function! neosnippet#view#_search_outof_range(col) "{{{
   " Not found.
   return 0
 endfunction"}}}
+function! neosnippet#view#_clear_markers(expand_info) "{{{
+  " Search patterns.
+  let [begin, end] = neosnippet#view#_get_snippet_range(
+        \ a:expand_info.begin_line,
+        \ a:expand_info.begin_patterns,
+        \ a:expand_info.end_line,
+        \ a:expand_info.end_patterns)
+
+  let mode = mode()
+  let pos = getpos('.')
+
+  " Found snippet.
+  let found = 0
+  try
+    while neosnippet#view#_search_snippet_range(
+          \ begin, end, a:expand_info.holder_cnt, 0)
+
+      " Next count.
+      let a:expand_info.holder_cnt += 1
+      let found = 1
+    endwhile
+
+    " Search placeholder 0.
+    if neosnippet#view#_search_snippet_range(begin, end, 0)
+      let found = 1
+    endif
+  finally
+    if found && mode !=# 'i'
+      stopinsert
+    endif
+
+    call setpos('.', pos)
+
+    call neosnippet#variables#pop_expand_stack()
+  endtry
+endfunction"}}}
 function! s:expand_placeholder(start, end, holder_cnt, line, ...) "{{{
   let is_select = get(a:000, 0, 1)
 

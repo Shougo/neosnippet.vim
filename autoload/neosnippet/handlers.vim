@@ -97,7 +97,7 @@ function! neosnippet#handlers#_cursor_moved() "{{{
   let expand_info = expand_stack[-1]
   if expand_info.begin_line == expand_info.end_line
         \ && line('.') != expand_info.begin_line
-    call neosnippet#commands#_clear_markers()
+    call neosnippet#view#_clear_markers(expand_info)
   endif
 endfunction"}}}
 
@@ -105,15 +105,14 @@ function! neosnippet#handlers#_all_clear_markers() "{{{
   let pos = getpos('.')
 
   try
-    " Search out of range.
-    while neosnippet#view#_search_outof_range(col('.'))
+    while !empty(neosnippet#variables#expand_stack())
+      call neosnippet#view#_clear_markers(
+            \ neosnippet#variables#expand_stack()[-1])
     endwhile
   finally
     stopinsert
 
     call setpos('.', pos)
-
-    call neosnippet#variables#clear_expand_stack()
   endtry
 endfunction"}}}
 

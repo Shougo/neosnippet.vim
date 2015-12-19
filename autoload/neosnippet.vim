@@ -43,6 +43,8 @@ call neosnippet#util#set_default(
       \ 'g:neosnippet#enable_conceal_markers', 1)
 call neosnippet#util#set_default(
       \ 'g:neosnippet#enable_complete_done', 0)
+call neosnippet#util#set_default(
+      \ 'g:neosnippet#enable_auto_clear_markers', 1)
 "}}}
 
 function! neosnippet#expandable_or_jumpable() "{{{
