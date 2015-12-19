@@ -78,8 +78,6 @@ function! neosnippet#handlers#_complete_done() "{{{
     elseif snippet !~ pair.'$'
       let snippet .= pair
     endif
-
-    let snippet .= '${' . cnt . '}'
   endif
 
   let [cur_text, col, _] = neosnippet#mappings#_pre_trigger()
