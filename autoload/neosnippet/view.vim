@@ -113,6 +113,7 @@ function! neosnippet#view#_insert(snippet, options, cur_text, col) "{{{
     let end_patterns =  (end_line < line('$')) ?
           \ [getline(end_line + 1)] : []
     call add(expand_stack, {
+          \ 'snippet' : a:snippet,
           \ 'begin_line' : begin_line,
           \ 'begin_patterns' : begin_patterns,
           \ 'end_line' : end_line,
@@ -152,14 +153,17 @@ function! neosnippet#view#_jump(_, col) "{{{
         \ expand_info.end_patterns)
 
   let begin_cnt = expand_info.holder_cnt
-  while (expand_info.holder_cnt - begin_cnt) < 5
-    " Next count.
-    let expand_info.holder_cnt += 1
-    if neosnippet#view#_search_snippet_range(
-          \ begin, end, expand_info.holder_cnt - 1)
-      return 1
-    endif
-  endwhile
+  if expand_info.snippet =~
+        \ neosnippet#get_placeholder_marker_substitute_nonzero_pattern()
+    while (expand_info.holder_cnt - begin_cnt) < 5
+      " Next count.
+      let expand_info.holder_cnt += 1
+      if neosnippet#view#_search_snippet_range(
+            \ begin, end, expand_info.holder_cnt - 1)
+        return 1
+      endif
+    endwhile
+  endif
 
   " Search placeholder 0.
   if neosnippet#view#_search_snippet_range(begin, end, 0)
