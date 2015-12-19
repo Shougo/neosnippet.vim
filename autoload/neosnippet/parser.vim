@@ -238,11 +238,6 @@ endfunction"}}}
 
 function! neosnippet#parser#_initialize_snippet(dict, path, line, pattern, name) "{{{
   let a:dict.word = substitute(a:dict.word, '\n\+$', '', '')
-  if a:dict.word !~
-        \ neosnippet#get_placeholder_marker_substitute_pattern()
-    " Add placeholder.
-    let a:dict.word .= '${0}'
-  endif
 
   if !has_key(a:dict, 'abbr') || a:dict.abbr == ''
     " Set default abbr.
