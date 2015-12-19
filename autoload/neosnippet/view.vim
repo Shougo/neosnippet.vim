@@ -167,10 +167,9 @@ function! neosnippet#view#_jump(_, col) "{{{
   endif
 
   " Not found.
-  let expand_stack = neosnippet#variables#expand_stack()
-  let expand_stack = expand_stack[: -2]
+  call neosnippet#variables#pop_expand_stack()
 
-  return neosnippet#view#_search_outof_range(a:col)
+  return neosnippet#view#_jump(a:_, a:col)
 endfunction"}}}
 
 function! s:indent_snippet(begin, end) "{{{
@@ -227,6 +226,10 @@ function! neosnippet#view#_get_snippet_range(begin_line, begin_patterns, end_lin
   endif
   if begin <= 0
     let begin = 1
+  endif
+
+  if a:begin_line == a:end_line
+    return [begin, begin]
   endif
 
   call cursor(a:end_line, 0)
