@@ -72,12 +72,14 @@ function! neosnippet#handlers#_complete_done() "{{{
   endif
 
   if !s:is_auto_pairs()
-    if key != '(' && snippet =~ key.'$'
-      let snippet .= '${'. cnt .'}'.pair
+    if key != '(' && snippet[-1:] ==# key
+      let snippet .= '${' . cnt . '}' . pair
       let cnt += 1
-    elseif snippet !~ pair.'$'
+    elseif snippet[-1:] !=# pair
       let snippet .= pair
     endif
+
+    let snippet .= '${' . cnt . '}'
   endif
 
   let [cur_text, col, _] = neosnippet#mappings#_pre_trigger()
