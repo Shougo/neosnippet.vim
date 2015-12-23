@@ -726,7 +726,12 @@ insert empty line in snippet end, you must insert placeholder.
 	  #!/usr/bin/env ruby
 
 
+You can load a Vim script file for snippets.
+
+>
+	source go.vim
 <
+
 ==============================================================================
 UNITE SOURCES					*neosnippet-unite-sources*
 

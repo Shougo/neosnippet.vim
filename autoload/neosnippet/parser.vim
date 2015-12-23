@@ -81,7 +81,7 @@ function! s:parse(snippets_file) "{{{
     if line =~ '^#'
       " Ignore.
     elseif line =~ '^include'
-      " Include snippets.
+      " Include snippets file.
       let filename = matchstr(line, '^include\s\+\zs.*$')
 
       for snippets_file in split(globpath(join(
@@ -89,6 +89,13 @@ function! s:parse(snippets_file) "{{{
             \ filename), '\n')
         let snippets = extend(snippets,
               \ neosnippet#parser#_parse_snippets(snippets_file))
+      endfor
+    elseif line =~ '^source'
+      " Source Vim script file.
+      for file in split(globpath(join(
+            \ neosnippet#helpers#get_snippets_directory(), ','),
+            \ matchstr(line, '^source\s\+\zs.*$')), '\n')
+        execute 'source' fnameescape(file)
       endfor
     elseif line =~ '^delete\s'
       let name = matchstr(line, '^delete\s\+\zs.*$')
