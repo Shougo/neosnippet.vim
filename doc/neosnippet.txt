@@ -158,9 +158,12 @@ g:neosnippet#snippets_directory		*g:neosnippet#snippets_directory*
 		several files if available. For example if you edit a "Vim"
 		file it loads the snippets from:
 
-		- "vim.snip*"
-		- "vim_*.snip*"
+		- "vim.snip"
+		- "vim.snippets"
+		- "vim_*.snip"
+		- "vim_*.snippets"
 		- "vim/**/*.snip"
+		- "vim/**/*.snippets"
 
 		The default value is ''.
 
@@ -402,6 +405,8 @@ SNIPPET SYNTAX					*neosnippet-snippet-syntax*
 
 It is quite easy to create your own snippets. You can use the example below to
 get started.
+
+Note: The snippets file extension must be ".snip" or ".snippets".
 
 Example:
 
