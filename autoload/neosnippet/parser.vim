@@ -37,8 +37,8 @@ function! neosnippet#parser#_parse_snippets(filename) "{{{
 
   let cache_dir = neosnippet#variables#data_dir()
   if s:Cache.check_old_cache(cache_dir, a:filename)
-    let snippets = s:parse(a:filename)
-    if len(snippets) > 5 && !neosnippet#util#is_sudo()
+    let [snippets, sourced] = s:parse(a:filename)
+    if len(snippets) > 5 && !neosnippet#util#is_sudo() && !sourced
       call s:Cache.writefile(
             \ cache_dir, a:filename, [string(snippets)])
     endif
@@ -71,6 +71,7 @@ function! s:parse(snippets_file) "{{{
   let snippet_dict = {}
   let linenr = 1
   let snippets = {}
+  let sourced = 0
 
   for line in readfile(a:snippets_file)
     if line =~ '^\h\w*.*\s$'
@@ -96,6 +97,7 @@ function! s:parse(snippets_file) "{{{
             \ neosnippet#helpers#get_snippets_directory(), ','),
             \ matchstr(line, '^source\s\+\zs.*$')), '\n')
         execute 'source' fnameescape(file)
+        let sourced = 1
       endfor
     elseif line =~ '^delete\s'
       let name = matchstr(line, '^delete\s\+\zs.*$')
@@ -135,7 +137,7 @@ function! s:parse(snippets_file) "{{{
           \ snippets, dup_check, a:snippets_file)
   endif
 
-  return snippets
+  return [snippets, sourced]
 endfunction"}}}
 
 function! s:parse_snippet_name(snippets_file, line, linenr, dup_check) "{{{
