@@ -224,16 +224,17 @@ function! neosnippet#view#_get_snippet_range(begin_line, begin_patterns, end_lin
   else
     let begin = searchpos('^' . neosnippet#util#escape_pattern(
           \ a:begin_patterns[0]) . '$', 'bnW')[0]
+    if begin > 0 && a:begin_line == a:end_line
+      call setpos('.', pos)
+      return [begin + 1, begin + 1]
+    endif
+
     if begin <= 0
       let begin = line('.') - 50
     endif
   endif
   if begin <= 0
     let begin = 1
-  endif
-
-  if a:begin_line == a:end_line
-    return [begin, begin]
   endif
 
   call cursor(a:end_line, 0)
