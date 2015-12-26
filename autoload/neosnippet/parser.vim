@@ -315,6 +315,26 @@ function! neosnippet#parser#_get_completed_snippet(completed_item) "{{{
   " Make snippet arguments
   let cnt = 1
   let snippet = ''
+
+  if abbr =~ '<.\+>'
+    " Add angle analysis
+    let snippet .= '<'
+
+    let args = ''
+    for arg in split(substitute(
+          \ neosnippet#parser#_get_in_paren('<', '>', abbr),
+          \ '<\zs.\{-}\ze>', '', 'g'), '[^[]\zs\s*,\s*')
+      if args != ''
+        let args .= ', '
+      endif
+      let args .= printf('${%d:#:%s}', cnt, escape(arg, '{}'))
+      let cnt += 1
+    endfor
+    let snippet .= args
+    let snippet .= '>'
+  endif
+
+  let args = ''
   for arg in split(substitute(
         \ neosnippet#parser#_get_in_paren(key, pair, abbr),
         \ key.'\zs.\{-}\ze'.pair, '', 'g'), '[^[]\zs\s*,\s*')
@@ -323,12 +343,13 @@ function! neosnippet#parser#_get_completed_snippet(completed_item) "{{{
       continue
     endif
 
-    if cnt != 1
-      let snippet .= ', '
+    if args != ''
+      let args .= ', '
     endif
-    let snippet .= printf('${%d:#:%s}', cnt, escape(arg, '{}'))
+    let args .= printf('${%d:#:%s}', cnt, escape(arg, '{}'))
     let cnt += 1
   endfor
+  let snippet .= args
 
   let snippet .= pair
 
