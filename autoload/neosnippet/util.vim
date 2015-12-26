@@ -91,7 +91,10 @@ function! neosnippet#util#expand(path) "{{{
         \ expand(escape(a:path, '*?[]"={}'), 1))
 endfunction"}}}
 function! neosnippet#util#set_default(var, val, ...)  "{{{
-  if !exists(a:var)
+  let old_var = get(a:000, 0, '')
+  if exists(old_var)
+    let {a:var} = {old_var}
+  elseif !exists(a:var)
     let {a:var} = a:val
   endif
 endfunction"}}}

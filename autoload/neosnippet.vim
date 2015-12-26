@@ -42,7 +42,8 @@ call neosnippet#util#set_default(
 call neosnippet#util#set_default(
       \ 'g:neosnippet#enable_conceal_markers', 1)
 call neosnippet#util#set_default(
-      \ 'g:neosnippet#enable_complete_done', 0)
+      \ 'g:neosnippet#enable_completed_snippet', 0,
+      \ 'g:neosnippet#enable_complete_done')
 call neosnippet#util#set_default(
       \ 'g:neosnippet#enable_auto_clear_markers', 1)
 "}}}

@@ -28,7 +28,7 @@ set cpo&vim
 
 function! neosnippet#handlers#_complete_done() "{{{
   if empty(v:completed_item)
-        \ || !g:neosnippet#enable_complete_done
+        \ || !g:neosnippet#enable_completed_snippet
         \ || v:completed_item.word !~ '($'
     return
   endif

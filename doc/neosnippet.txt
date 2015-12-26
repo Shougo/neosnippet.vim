@@ -228,8 +228,8 @@ g:neosnippet#enable_conceal_markers
 
 		The default value is 1.
 
-					*g:neosnippet#enable_complete_done*
-g:neosnippet#enable_complete_done
+					*g:neosnippet#enable_completed_snippet*
+g:neosnippet#enable_completed_snippet
 		If this variable is not 0, neosnippet will expand the function
 		prototype when |CompleteDone| autocmd.
 
