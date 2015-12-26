@@ -292,6 +292,57 @@ function! neosnippet#parser#_initialize_snippet_options() "{{{
         \ }
 endfunction"}}}
 
+function! neosnippet#parser#_get_completed_snippet(completed_item) "{{{
+  let pairs = { '(' : ')', '{' : '}', '"' : '"' }
+  if index(keys(pairs), a:completed_item.word[-1:]) < 0
+    return ''
+  endif
+  let key = a:completed_item.word[-1:]
+  let pair = pairs[key]
+
+  let item = a:completed_item
+
+  let abbr = (item.abbr != '') ? item.abbr : item.word
+  if len(item.menu) > 5
+    " Combine menu.
+    let abbr .= ' ' . item.menu
+  endif
+
+  if item.info != ''
+    let abbr = split(item.info, '\n')[0]
+  endif
+
+  " Make snippet arguments
+  let cnt = 1
+  let snippet = ''
+  if key == '('
+    for arg in split(substitute(neosnippet#handlers#_get_in_paren(abbr),
+          \ '(\zs.\{-}\ze)', '', 'g'), '[^[]\zs\s*,\s*')
+      if arg ==# 'self' && &filetype ==# 'python'
+        " Ignore self argument
+        continue
+      endif
+
+      if cnt != 1
+        let snippet .= ', '
+      endif
+      let snippet .= printf('${%d:#:%s}', cnt, escape(arg, '{}'))
+      let cnt += 1
+    endfor
+  endif
+
+  if key != '(' && snippet[-1:] ==# key
+    let snippet .= '${' . cnt . '}' . pair
+    let cnt += 1
+  elseif snippet[-1:] !=# pair
+    let snippet .= pair
+  endif
+
+  let snippet .= '${' . cnt . '}'
+
+  return snippet
+endfunction"}}}
+
 let &cpo = s:save_cpo
 unlet s:save_cpo
 
