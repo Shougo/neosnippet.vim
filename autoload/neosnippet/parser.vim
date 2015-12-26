@@ -315,33 +315,54 @@ function! neosnippet#parser#_get_completed_snippet(completed_item) "{{{
   " Make snippet arguments
   let cnt = 1
   let snippet = ''
-  if key == '('
-    for arg in split(substitute(neosnippet#handlers#_get_in_paren(abbr),
-          \ '(\zs.\{-}\ze)', '', 'g'), '[^[]\zs\s*,\s*')
-      if arg ==# 'self' && &filetype ==# 'python'
-        " Ignore self argument
-        continue
-      endif
+  for arg in split(substitute(
+        \ neosnippet#parser#_get_in_paren(key, pair, abbr),
+        \ key.'\zs.\{-}\ze'.pair, '', 'g'), '[^[]\zs\s*,\s*')
+    if key ==# '(' && arg ==# 'self' && &filetype ==# 'python'
+      " Ignore self argument
+      continue
+    endif
 
-      if cnt != 1
-        let snippet .= ', '
-      endif
-      let snippet .= printf('${%d:#:%s}', cnt, escape(arg, '{}'))
-      let cnt += 1
-    endfor
-  endif
-
-  if key != '(' && snippet[-1:] ==# key
-    let snippet .= '${' . cnt . '}' . pair
+    if cnt != 1
+      let snippet .= ', '
+    endif
+    let snippet .= printf('${%d:#:%s}', cnt, escape(arg, '{}'))
     let cnt += 1
-  elseif snippet[-1:] !=# pair
-    let snippet .= pair
-  endif
+  endfor
+
+  let snippet .= pair
 
   let snippet .= '${' . cnt . '}'
 
   return snippet
 endfunction"}}}
+
+function! neosnippet#parser#_get_in_paren(key, pair, str) abort "{{{
+  let s = ''
+  let level = 0
+  for c in split(a:str, '\zs')
+    if c ==# a:key
+      let level += 1
+
+      if level == 1
+        continue
+      endif
+    elseif c ==# a:pair
+      if level == 1 && s != ''
+        return s
+      else
+        let level -= 1
+      endif
+    endif
+
+    if level > 0
+      let s .= c
+    endif
+  endfor
+
+  return ''
+endfunction"}}}
+
 
 let &cpo = s:save_cpo
 unlet s:save_cpo

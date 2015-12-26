@@ -73,32 +73,6 @@ function! neosnippet#handlers#_all_clear_markers() "{{{
   endtry
 endfunction"}}}
 
-function! neosnippet#handlers#_get_in_paren(str) abort "{{{
-  let s = ''
-  let level = 0
-  for c in split(a:str, '\zs')
-    if c == '('
-      let level += 1
-
-      if level == 1
-        continue
-      endif
-    elseif c == ')'
-      if level == 1 && s != ''
-        return s
-      else
-        let level -= 1
-      endif
-    endif
-
-    if level > 0
-      let s .= c
-    endif
-  endfor
-
-  return ''
-endfunction"}}}
-
 function! s:is_auto_pairs() abort "{{{
   return get(g:, 'neopairs#enable', 0)
 endfunction"}}}
