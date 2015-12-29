@@ -31,6 +31,7 @@ let s:edit_options = [
       \ '-runtime',
       \ '-vertical', '-horizontal', '-direction=', '-split',
       \]
+let s:Cache = neosnippet#util#get_vital().import('System.Cache')
 "}}}
 
 function! s:get_list() "{{{
@@ -108,8 +109,11 @@ function! neosnippet#commands#_make_cache(filetype) "{{{
   let snippets[filetype] = {}
 
   let path = join(neosnippet#helpers#get_snippets_directory(), ',')
+  let cache_dir = neosnippet#variables#data_dir()
 
   for filename in s:get_snippets_files(path, filetype)
+    " Clear cache file
+    call s:Cache.deletefile(cache_dir, filename)
     let snippets[filetype] = extend(snippets[filetype],
           \ neosnippet#parser#_parse_snippets(filename))
   endfor
