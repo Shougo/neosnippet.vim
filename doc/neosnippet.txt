@@ -770,7 +770,7 @@ Q: What if I want to expand a snippet trigger after (, [, " etc...:
 
 A: You should use "options word" in the snippet definition. This changes the
 expansion behavior to a word boundary or set
-|g:neosnippet#enable_word_expand|.
+|g:neosnippet#expand_word_boundary|.
 >
 	snippet     date
 	options     word
