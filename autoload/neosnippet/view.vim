@@ -429,7 +429,9 @@ function! s:expand_target_placeholder(line, col) "{{{
   let target_lines = split(neosnippet.target, '\n', 1)
 
   let cur_text = getline(a:line)[: a:col-2]
-  let target_lines[0] = cur_text . target_lines[0]
+  if match(cur_text, '^\s\+$') < 0
+    let target_lines[0] = cur_text . target_lines[0]
+  endif
   let target_lines[-1] = target_lines[-1] . next_line
 
   let begin_line = a:line
@@ -438,10 +440,27 @@ function! s:expand_target_placeholder(line, col) "{{{
   let col = col('.')
   try
     let base_indent = matchstr(cur_text, '^\s\+')
+    let target_base_indent = -1
+    for target_line in target_lines
+      if match(target_line, '^\s\+$') < 0
+        let target_current_indent = max([matchend(target_line, '^ *'), matchend(target_line, '^\t*') * &tabstop])
+        if target_base_indent < 0 || target_current_indent < target_base_indent
+          let target_base_indent = target_current_indent
+        endif
+      endif
+    endfor
+    if target_base_indent < 0
+      let target_base_indent = 0
+    end
+    let target_strip_indent_regex = '^\s\+$\|^' .
+        \ repeat(' ', target_base_indent) . '\|^' .
+        \ repeat('\t', target_base_indent / &tabstop)
+    call map(target_lines, 'substitute(v:val, target_strip_indent_regex, "", "")')
+    call map(target_lines, 'v:val == "" ? "" : base_indent . v:val')
+
     call setline(a:line, target_lines[0])
     if len(target_lines) > 1
-      call append(a:line, map(target_lines[1:],
-            \ 'base_indent . v:val'))
+      call append(a:line, target_lines[1:])
     endif
 
     call cursor(end_line, 0)
@@ -459,7 +478,6 @@ function! s:expand_target_placeholder(line, col) "{{{
     endif
   endtry
 
-  call s:indent_snippet(begin_line, end_line)
   let neosnippet.target = ''
 
   call neosnippet#view#_jump('', col)
