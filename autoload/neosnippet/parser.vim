@@ -324,10 +324,12 @@ function! neosnippet#parser#_get_completed_snippet(completed_item) "{{{
     for arg in split(substitute(
           \ neosnippet#parser#_get_in_paren('<', '>', abbr),
           \ '<\zs.\{-}\ze>', '', 'g'), '[^[]\zs\s*,\s*')
-      if args != ''
+      if args != '' && arg !=# '...'
         let args .= ', '
       endif
-      let args .= printf('${%d:#:%s}', cnt, escape(arg, '{}'))
+      let args .= printf('${%d:#:%s%s}',
+            \ cnt, ((args != '' && arg ==# '...') ? ', ' : ''),
+            \ escape(arg, '{}'))
       let cnt += 1
     endfor
     let snippet .= args
@@ -343,10 +345,12 @@ function! neosnippet#parser#_get_completed_snippet(completed_item) "{{{
       continue
     endif
 
-    if args != ''
+    if args != '' && arg !=# '...'
       let args .= ', '
     endif
-    let args .= printf('${%d:#:%s}', cnt, escape(arg, '{}'))
+    let args .= printf('${%d:#:%s%s}',
+          \ cnt, ((args != '' && arg ==# '...') ? ', ' : ''),
+          \ escape(arg, '{}'))
     let cnt += 1
   endfor
   let snippet .= args

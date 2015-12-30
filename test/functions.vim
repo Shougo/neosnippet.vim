@@ -59,6 +59,21 @@ function! s:suite.get_completed_snippet()
         \ }), '${1:#:hoge}, ${2:#:piyo()})${3}')
 
   call s:assert.equals(neosnippet#parser#_get_completed_snippet({
+        \ 'word' : 'foo(', 'abbr' : 'foo(hoge[, abc])',
+        \ 'menu' : '', 'info' : ''
+        \ }), '${1:#:hoge[, abc]})${2}')
+
+  call s:assert.equals(neosnippet#parser#_get_completed_snippet({
+        \ 'word' : 'foo(', 'abbr' : 'foo(...)',
+        \ 'menu' : '', 'info' : ''
+        \ }), '${1:#:...})${2}')
+
+  call s:assert.equals(neosnippet#parser#_get_completed_snippet({
+        \ 'word' : 'foo(', 'abbr' : 'foo(hoge, ...)',
+        \ 'menu' : '', 'info' : ''
+        \ }), '${1:#:hoge}${2:#:, ...})${3}')
+
+  call s:assert.equals(neosnippet#parser#_get_completed_snippet({
         \ 'word' : 'foo{', 'abbr' : 'foo{}',
         \ 'menu' : '', 'info' : ''
         \ }), '}${1}')
