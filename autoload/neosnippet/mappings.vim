@@ -224,10 +224,16 @@ endfunction"}}}
 
 " Plugin key-mappings.
 function! neosnippet#mappings#expand_or_jump_impl()
-  return neosnippet#mappings#_trigger(s:SID_PREFIX().'snippets_expand_or_jump')
+  return mode() ==# 's' ?
+        \ neosnippet#mappings#_trigger('neosnippet#view#_jump') :
+        \ neosnippet#mappings#_trigger(
+        \   s:SID_PREFIX().'snippets_expand_or_jump')
 endfunction
 function! neosnippet#mappings#jump_or_expand_impl()
-  return neosnippet#mappings#_trigger(s:SID_PREFIX().'snippets_jump_or_expand')
+  return mode() ==# 's' ?
+        \ neosnippet#mappings#_trigger('neosnippet#view#_jump') :
+        \ neosnippet#mappings#_trigger(
+        \   s:SID_PREFIX().'snippets_jump_or_expand')
 endfunction
 function! neosnippet#mappings#expand_impl()
   return neosnippet#mappings#_trigger(s:SID_PREFIX().'snippets_expand')
