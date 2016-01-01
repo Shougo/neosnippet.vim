@@ -39,6 +39,11 @@ function! s:suite.get_completed_snippet()
         \ }), ')${1}')
 
   call s:assert.equals(neosnippet#parser#_get_completed_snippet({
+        \ 'word' : 'foo(', 'abbr' : '',
+        \ 'menu' : '', 'info' : ''
+        \ }), '${1})${2}')
+
+  call s:assert.equals(neosnippet#parser#_get_completed_snippet({
         \ 'word' : 'foo(', 'abbr' : 'foo(hoge)',
         \ 'menu' : '', 'info' : ''
         \ }), '${1:#:hoge})${2}')
@@ -77,6 +82,11 @@ function! s:suite.get_completed_snippet()
         \ 'word' : 'foo{', 'abbr' : 'foo{}',
         \ 'menu' : '', 'info' : ''
         \ }), '}${1}')
+
+  call s:assert.equals(neosnippet#parser#_get_completed_snippet({
+        \ 'word' : 'foo{', 'abbr' : 'foo{',
+        \ 'menu' : '', 'info' : ''
+        \ }), '${1}}${2}')
 
   call s:assert.equals(neosnippet#parser#_get_completed_snippet({
         \ 'word' : 'foo{', 'abbr' : 'foo{piyo}',

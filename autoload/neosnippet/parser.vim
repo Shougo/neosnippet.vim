@@ -316,6 +316,12 @@ function! neosnippet#parser#_get_completed_snippet(completed_item) "{{{
   let cnt = 1
   let snippet = ''
 
+  if empty(filter(values(pairs), 'stridx(abbr, v:val) > 0'))
+    " Pairs not found pattern
+    let snippet .= '${' . cnt . '}'
+    let cnt += 1
+  endif
+
   if abbr =~ '<.\+>(.*)'
     " Add angle analysis
     let snippet .= '<'
