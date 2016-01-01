@@ -316,7 +316,7 @@ function! neosnippet#parser#_get_completed_snippet(completed_item) "{{{
   let cnt = 1
   let snippet = ''
 
-  if abbr =~ '<.\+>'
+  if abbr =~ '<.\+>(.*)'
     " Add angle analysis
     let snippet .= '<'
 
