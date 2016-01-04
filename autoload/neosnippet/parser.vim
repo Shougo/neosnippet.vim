@@ -292,29 +292,43 @@ function! neosnippet#parser#_initialize_snippet_options() "{{{
         \ }
 endfunction"}}}
 
-function! neosnippet#parser#_get_completed_snippet(completed_item) "{{{
-  let pairs = { '(' : ')', '{' : '}', '"' : '"' }
-  if index(keys(pairs), a:completed_item.word[-1:]) < 0
-    return ''
-  endif
-  let key = a:completed_item.word[-1:]
-  let pair = pairs[key]
-
+function! neosnippet#parser#_get_completed_snippet(completed_item, next_text) "{{{
   let item = a:completed_item
 
+  " Set abbr
   let abbr = (item.abbr != '') ? item.abbr : item.word
   if len(item.menu) > 5
     " Combine menu.
     let abbr .= ' ' . item.menu
   endif
-
   if item.info != ''
     let abbr = split(item.info, '\n')[0]
   endif
 
+  let pairs = { '(' : ')', '{' : '}', '"' : '"' }
+  let word_pattern = neosnippet#util#escape_pattern(item.word)
+  let angle_pattern = word_pattern . '<.\+>(.*)'
+  let no_key = index(keys(pairs), item.word[-1:]) < 0
+  if no_key && abbr !~# word_pattern . '\%(<.\+>\)\?(.*)'
+    return ''
+  endif
+
+  let key = no_key ? '(' : item.word[-1:]
+  if a:next_text[:0] ==# key
+    " Disable auto pair
+    return ''
+  endif
+
+  let pair = pairs[key]
+
   " Make snippet arguments
   let cnt = 1
   let snippet = ''
+
+  if no_key && abbr !~# angle_pattern
+    " Auto key
+    let snippet .= key
+  endif
 
   if empty(filter(values(pairs), 'stridx(abbr, v:val) > 0'))
     " Pairs not found pattern
@@ -322,7 +336,7 @@ function! neosnippet#parser#_get_completed_snippet(completed_item) "{{{
     let cnt += 1
   endif
 
-  if abbr =~ '<.\+>(.*)'
+  if abbr =~# angle_pattern
     " Add angle analysis
     let snippet .= '<'
 
@@ -340,6 +354,10 @@ function! neosnippet#parser#_get_completed_snippet(completed_item) "{{{
     endfor
     let snippet .= args
     let snippet .= '>'
+
+    if no_key
+      let snippet .= key
+    endif
   endif
 
   let args = ''
@@ -361,9 +379,10 @@ function! neosnippet#parser#_get_completed_snippet(completed_item) "{{{
   endfor
   let snippet .= args
 
-  let snippet .= pair
-
-  let snippet .= '${' . cnt . '}'
+  if a:next_text[:0] !=# pair
+    let snippet .= pair
+    let snippet .= '${' . cnt . '}'
+  endif
 
   return snippet
 endfunction"}}}

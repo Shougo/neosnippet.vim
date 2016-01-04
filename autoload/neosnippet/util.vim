@@ -109,6 +109,9 @@ function! neosnippet#util#get_cur_text() "{{{
         \      matchstr(getline('.'),
         \         '^.*\%' . col('.') . 'c' . (mode() ==# 'i' ? '' : '.'))
 endfunction"}}}
+function! neosnippet#util#get_next_text() "{{{
+  return getline('.')[len(neosnippet#util#get_cur_text()) :]
+endfunction"}}}
 function! neosnippet#util#print_error(string) "{{{
   echohl Error | echomsg '[neosnippet] ' . a:string | echohl None
 endfunction"}}}

@@ -33,7 +33,8 @@ function! neosnippet#handlers#_complete_done() "{{{
     return
   endif
 
-  let snippet = neosnippet#parser#_get_completed_snippet(v:completed_item)
+  let snippet = neosnippet#parser#_get_completed_snippet(
+        \ v:completed_item, neosnippet#util#get_next_text())
   if snippet == ''
     return
   endif
