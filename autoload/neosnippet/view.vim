@@ -566,7 +566,12 @@ function! s:skip_next_auto_completion() "{{{
   let neosnippet = neosnippet#variables#current_neosnippet()
   let neosnippet.trigger = 0
 
-  doautocmd CompleteDone
+  if exists('neocomplete#CompleteDone')
+    doautocmd neocomplete CompleteDone
+  endif
+  if exists('deoplete#CompleteDone')
+    doautocmd deoplete CompleteDone
+  endif
 endfunction"}}}
 
 let &cpo = s:save_cpo
