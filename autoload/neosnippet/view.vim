@@ -563,15 +563,10 @@ function! s:eval_snippet(snippet_text) "{{{
 endfunction"}}}
 function! s:skip_next_auto_completion() "{{{
   " Skip next auto completion.
-  if exists('*neocomplcache#skip_next_complete')
-    call neocomplcache#skip_next_complete()
-  endif
-  if exists('*neocomplete#skip_next_complete')
-    call neocomplete#skip_next_complete()
-  endif
-
   let neosnippet = neosnippet#variables#current_neosnippet()
   let neosnippet.trigger = 0
+
+  doautocmd CompleteDone
 endfunction"}}}
 
 let &cpo = s:save_cpo
