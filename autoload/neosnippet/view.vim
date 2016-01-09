@@ -27,8 +27,6 @@ let s:save_cpo = &cpo
 set cpo&vim
 
 function! neosnippet#view#_expand(cur_text, col, trigger_name) "{{{
-  call s:skip_next_auto_completion()
-
   let snippets = neosnippet#helpers#get_snippets()
 
   if a:trigger_name == '' || !has_key(snippets, a:trigger_name)
@@ -135,45 +133,47 @@ function! neosnippet#view#_insert(snippet, options, cur_text, col) "{{{
   endtry
 endfunction"}}}
 function! neosnippet#view#_jump(_, col) "{{{
-  call s:skip_next_auto_completion()
+  try
+    let expand_stack = neosnippet#variables#expand_stack()
 
-  let expand_stack = neosnippet#variables#expand_stack()
+    " Get patterns and count.
+    if empty(expand_stack)
+      return neosnippet#view#_search_outof_range(a:col)
+    endif
 
-  " Get patterns and count.
-  if empty(expand_stack)
-    return neosnippet#view#_search_outof_range(a:col)
-  endif
+    let expand_info = expand_stack[-1]
+    " Search patterns.
+    let [begin, end] = neosnippet#view#_get_snippet_range(
+          \ expand_info.begin_line,
+          \ expand_info.begin_patterns,
+          \ expand_info.end_line,
+          \ expand_info.end_patterns)
 
-  let expand_info = expand_stack[-1]
-  " Search patterns.
-  let [begin, end] = neosnippet#view#_get_snippet_range(
-        \ expand_info.begin_line,
-        \ expand_info.begin_patterns,
-        \ expand_info.end_line,
-        \ expand_info.end_patterns)
+    let begin_cnt = expand_info.holder_cnt
+    if expand_info.snippet =~
+          \ neosnippet#get_placeholder_marker_substitute_nonzero_pattern()
+      while (expand_info.holder_cnt - begin_cnt) < 5
+        " Next count.
+        let expand_info.holder_cnt += 1
+        if neosnippet#view#_search_snippet_range(
+              \ begin, end, expand_info.holder_cnt - 1)
+          return 1
+        endif
+      endwhile
+    endif
 
-  let begin_cnt = expand_info.holder_cnt
-  if expand_info.snippet =~
-        \ neosnippet#get_placeholder_marker_substitute_nonzero_pattern()
-    while (expand_info.holder_cnt - begin_cnt) < 5
-      " Next count.
-      let expand_info.holder_cnt += 1
-      if neosnippet#view#_search_snippet_range(
-            \ begin, end, expand_info.holder_cnt - 1)
-        return 1
-      endif
-    endwhile
-  endif
+    " Search placeholder 0.
+    if neosnippet#view#_search_snippet_range(begin, end, 0)
+      return 1
+    endif
 
-  " Search placeholder 0.
-  if neosnippet#view#_search_snippet_range(begin, end, 0)
-    return 1
-  endif
+    " Not found.
+    call neosnippet#variables#pop_expand_stack()
 
-  " Not found.
-  call neosnippet#variables#pop_expand_stack()
-
-  return neosnippet#view#_jump(a:_, a:col)
+    return neosnippet#view#_jump(a:_, a:col)
+  finally
+    call s:skip_next_auto_completion()
+  endtry
 endfunction"}}}
 
 function! s:indent_snippet(begin, end) "{{{
