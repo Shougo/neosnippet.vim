@@ -76,7 +76,7 @@ endfunction"}}}
 
 " Get marker patterns.
 function! neosnippet#get_placeholder_target_marker_pattern() "{{{
-  return '\${\d\+:TARGET\%(:.\{-}\)\?\\\@<!}'
+  return '\${\d\+:\(#:\)\?TARGET\%(:.\{-}\)\?\\\@<!}'
 endfunction"}}}
 function! neosnippet#get_placeholder_marker_pattern() "{{{
   return '<`\d\+\%(:.\{-}\)\?\\\@<!`>'
