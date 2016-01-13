@@ -117,7 +117,7 @@ function! s:suite.get_completed_snippet()
   call s:assert.equals(neosnippet#parser#_get_completed_snippet({
         \ 'word' : 'Dictionary(', 'abbr' : 'Dictionary(foo)',
         \ 'menu' : '', 'info' : ''
-        \ }, ')'), '${1:#:foo}')
+        \ }, ')'), '${1:#:foo})${2}')
 
   call s:assert.equals(neosnippet#parser#_get_completed_snippet({
         \ 'word' : 'Dictionary', 'abbr' : 'Dictionary(foo)',
