@@ -566,10 +566,10 @@ function! s:skip_next_auto_completion() "{{{
   let neosnippet = neosnippet#variables#current_neosnippet()
   let neosnippet.trigger = 0
 
-  if exists('neocomplete#CompleteDone')
+  if exists('#neocomplete#CompleteDone')
     doautocmd neocomplete CompleteDone
   endif
-  if exists('deoplete#CompleteDone')
+  if exists('#deoplete#CompleteDone')
     doautocmd deoplete CompleteDone
   endif
 endfunction"}}}
