@@ -138,6 +138,20 @@ function! neosnippet#util#parse_options(args, options_list) "{{{
 
   return [args, options]
 endfunction"}}}
+function! neosnippet#util#get_buffer_config(
+      \ filetype, buffer_var, user_var, default_var, ...) abort "{{{
+  let default_val = get(a:000, 0, '')
+
+  if exists(a:buffer_var)
+    return {a:buffer_var}
+  endif
+
+  let filetype = !has_key({a:user_var}, a:filetype)
+        \ && !has_key(eval(a:default_var), a:filetype) ? '_' : a:filetype
+
+  return get({a:user_var}, filetype,
+        \   get(eval(a:default_var), filetype, default_val))
+endfunction"}}}
 
 " Sudo check.
 function! neosnippet#util#is_sudo() "{{{
