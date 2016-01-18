@@ -123,5 +123,10 @@ function! s:suite.get_completed_snippet()
         \ 'word' : 'Dictionary', 'abbr' : 'Dictionary(foo)',
         \ 'menu' : '', 'info' : ''
         \ }, ''), '(${1:#:foo})${2}')
+
+  call s:assert.equals(neosnippet#parser#_get_completed_snippet({
+        \ 'word' : 'forEach', 'abbr' : 'forEach(BiConsumer<Object, Object>)',
+        \ 'menu' : '', 'info' : ''
+        \ }, ''), '(${1:#:BiConsumer<>})${2}')
 endfunction
 
