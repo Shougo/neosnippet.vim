@@ -31,7 +31,7 @@ class Source(Base):
         Base.__init__(self, vim)
 
         self.name = 'neosnippet'
-        self.mark = '[nsnip]'
+        self.mark = '[ns]'
         self.rank = 200
 
     def gather_candidates(self, context):
