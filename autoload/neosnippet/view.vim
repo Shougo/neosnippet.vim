@@ -408,6 +408,8 @@ function! s:expand_placeholder(start, end, holder_cnt, line, ...) "{{{
 
   if default_len > 0 && is_select
     " Select default value.
+    let neosnippet.unnamed_register = @"
+
     let len = default_len-1
     if &l:selection == 'exclusive'
       let len += 1

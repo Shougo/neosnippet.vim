@@ -74,6 +74,16 @@ function! neosnippet#handlers#_all_clear_markers() "{{{
   endtry
 endfunction"}}}
 
+function! neosnippet#handlers#_restore_unnamed_register() "{{{
+  let neosnippet = neosnippet#variables#current_neosnippet()
+
+  if neosnippet.unnamed_register != ''
+        \ && @" !=# neosnippet.unnamed_register
+    let @" = neosnippet.unnamed_register
+    let neosnippet.unnamed_register = ''
+  endif
+endfunction"}}}
+
 function! s:is_auto_pairs() abort "{{{
   return get(g:, 'neopairs#enable', 0)
 endfunction"}}}

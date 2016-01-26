@@ -34,6 +34,7 @@ function! neosnippet#variables#current_neosnippet() "{{{
           \ 'target' : '',
           \ 'trigger' : 0,
           \ 'optional_tabstop' : 0,
+          \ 'unnamed_register' : '',
           \}
   endif
 

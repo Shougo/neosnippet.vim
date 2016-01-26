@@ -57,6 +57,8 @@ function! s:initialize_others() "{{{
           \ call neosnippet#variables#set_snippets({})
     autocmd BufEnter *
           \ call neosnippet#mappings#_clear_select_mode_mappings()
+    autocmd TextChanged,TextChangedI *
+          \ call neosnippet#handlers#_restore_unnamed_register()
   augroup END"}}}
 
   if g:neosnippet#enable_auto_clear_markers
