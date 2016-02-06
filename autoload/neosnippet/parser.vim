@@ -381,6 +381,11 @@ function! neosnippet#parser#_get_completed_snippet(completed_item, next_text) "{
   endfor
   let snippet .= args
 
+  if key != '(' && snippet == ''
+    let snippet .= '${' . cnt . '}'
+    let cnt += 1
+  endif
+
   let snippet .= pair
   let snippet .= '${' . cnt . '}'
 

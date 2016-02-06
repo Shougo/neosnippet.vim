@@ -79,11 +79,6 @@ function! s:suite.get_completed_snippet()
         \ }, ''), '${1:#:hoge}${2:#:, ...})${3}')
 
   call s:assert.equals(neosnippet#parser#_get_completed_snippet({
-        \ 'word' : 'foo{', 'abbr' : 'foo{}',
-        \ 'menu' : '', 'info' : ''
-        \ }, ''), '}${1}')
-
-  call s:assert.equals(neosnippet#parser#_get_completed_snippet({
         \ 'word' : 'foo{', 'abbr' : 'foo{',
         \ 'menu' : '', 'info' : ''
         \ }, ''), '${1}}${2}')
@@ -128,5 +123,10 @@ function! s:suite.get_completed_snippet()
         \ 'word' : 'forEach', 'abbr' : 'forEach(BiConsumer<Object, Object>)',
         \ 'menu' : '', 'info' : ''
         \ }, ''), '(${1:#:BiConsumer<>})${2}')
+
+  call s:assert.equals(neosnippet#parser#_get_completed_snippet({
+        \ 'word' : 'for[', 'abbr' : '',
+        \ 'menu' : '', 'info' : ''
+        \ }, ''), '${1}]${2}')
 endfunction
 

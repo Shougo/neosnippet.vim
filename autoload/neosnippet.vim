@@ -50,7 +50,7 @@ call neosnippet#util#set_default(
       \ 'g:neosnippet#completed_pairs', {})
 call neosnippet#util#set_default(
       \ 'g:neosnippet#_completed_pairs',
-      \ {'_':{ '(' : ')', '{' : '}', '"' : '"' }})
+      \ {'_':{ '(' : ')', '{' : '}', '"' : '"', '[' : ']' }})
 "}}}
 
 function! neosnippet#expandable_or_jumpable() "{{{
