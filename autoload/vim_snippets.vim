@@ -1,5 +1,5 @@
 " For honza-snippets function.
-function! vim_snippets#Filename(...)
+function! vim_snippets#Filename(...) abort
   let filename = expand('%:t:r')
   if filename == ''
     return a:0 == 2 ? a:2 : ''

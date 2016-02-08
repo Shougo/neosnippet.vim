@@ -53,61 +53,61 @@ call neosnippet#util#set_default(
       \ {'_':{ '(' : ')', '{' : '}', '"' : '"', '[' : ']' }})
 "}}}
 
-function! neosnippet#expandable_or_jumpable() "{{{
+function! neosnippet#expandable_or_jumpable() abort "{{{
   return neosnippet#mappings#expandable_or_jumpable()
 endfunction"}}}
-function! neosnippet#expandable() "{{{
+function! neosnippet#expandable() abort "{{{
   return neosnippet#mappings#expandable()
 endfunction"}}}
-function! neosnippet#jumpable() "{{{
+function! neosnippet#jumpable() abort "{{{
   return neosnippet#mappings#jumpable()
 endfunction"}}}
-function! neosnippet#anonymous(snippet) "{{{
+function! neosnippet#anonymous(snippet) abort "{{{
   return neosnippet#mappings#_anonymous(a:snippet)
 endfunction"}}}
-function! neosnippet#expand(trigger) "{{{
+function! neosnippet#expand(trigger) abort "{{{
   return neosnippet#mappings#_expand(a:trigger)
 endfunction"}}}
 
-function! neosnippet#get_snippets_directory() "{{{
+function! neosnippet#get_snippets_directory() abort "{{{
   return neosnippet#helpers#get_snippets_directory()
 endfunction"}}}
-function! neosnippet#get_user_snippets_directory() "{{{
+function! neosnippet#get_user_snippets_directory() abort "{{{
   return copy(neosnippet#variables#snippets_dir())
 endfunction"}}}
-function! neosnippet#get_runtime_snippets_directory() "{{{
+function! neosnippet#get_runtime_snippets_directory() abort "{{{
   return copy(neosnippet#variables#runtime_dir())
 endfunction"}}}
 
 " Get marker patterns.
-function! neosnippet#get_placeholder_target_marker_pattern() "{{{
+function! neosnippet#get_placeholder_target_marker_pattern() abort "{{{
   return '\${\d\+:\(#:\)\?TARGET\%(:.\{-}\)\?\\\@<!}'
 endfunction"}}}
-function! neosnippet#get_placeholder_marker_pattern() "{{{
+function! neosnippet#get_placeholder_marker_pattern() abort "{{{
   return '<`\d\+\%(:.\{-}\)\?\\\@<!`>'
 endfunction"}}}
-function! neosnippet#get_placeholder_marker_substitute_pattern() "{{{
+function! neosnippet#get_placeholder_marker_substitute_pattern() abort "{{{
   return '\${\(\d\+\%(:.\{-}\)\?\\\@<!\)}'
 endfunction"}}}
-function! neosnippet#get_placeholder_marker_substitute_nonzero_pattern() "{{{
+function! neosnippet#get_placeholder_marker_substitute_nonzero_pattern() abort "{{{
   return '\${\([1-9]\d*\%(:.\{-}\)\?\\\@<!\)}'
 endfunction"}}}
-function! neosnippet#get_placeholder_marker_substitute_zero_pattern() "{{{
+function! neosnippet#get_placeholder_marker_substitute_zero_pattern() abort "{{{
   return '\${\(0\%(:.\{-}\)\?\\\@<!\)}'
 endfunction"}}}
-function! neosnippet#get_placeholder_marker_default_pattern() "{{{
+function! neosnippet#get_placeholder_marker_default_pattern() abort "{{{
   return '<`\d\+:\zs.\{-}\ze\\\@<!`>'
 endfunction"}}}
-function! neosnippet#get_sync_placeholder_marker_pattern() "{{{
+function! neosnippet#get_sync_placeholder_marker_pattern() abort "{{{
   return '<{\d\+\%(:.\{-}\)\?\\\@<!}>'
 endfunction"}}}
-function! neosnippet#get_sync_placeholder_marker_default_pattern() "{{{
+function! neosnippet#get_sync_placeholder_marker_default_pattern() abort "{{{
   return '<{\d\+:\zs.\{-}\ze\\\@<!}>'
 endfunction"}}}
-function! neosnippet#get_mirror_placeholder_marker_pattern() "{{{
+function! neosnippet#get_mirror_placeholder_marker_pattern() abort "{{{
   return '<|\d\+|>'
 endfunction"}}}
-function! neosnippet#get_mirror_placeholder_marker_substitute_pattern() "{{{
+function! neosnippet#get_mirror_placeholder_marker_substitute_pattern() abort "{{{
   return '\$\(\d\+\)'
 endfunction"}}}
 

@@ -26,7 +26,7 @@
 let s:save_cpo = &cpo
 set cpo&vim
 
-function! neosnippet#helpers#get_cursor_snippet(snippets, cur_text) "{{{
+function! neosnippet#helpers#get_cursor_snippet(snippets, cur_text) abort "{{{
   let cur_word = matchstr(a:cur_text, '\S\+$')
   if cur_word != '' && has_key(a:snippets, cur_word)
       return cur_word
@@ -44,7 +44,7 @@ function! neosnippet#helpers#get_cursor_snippet(snippets, cur_text) "{{{
   return cur_word
 endfunction"}}}
 
-function! neosnippet#helpers#get_snippets() "{{{
+function! neosnippet#helpers#get_snippets() abort "{{{
   call neosnippet#init#check()
 
   let neosnippet = neosnippet#variables#current_neosnippet()
@@ -72,12 +72,12 @@ function! neosnippet#helpers#get_snippets() "{{{
 
   return snippets
 endfunction"}}}
-function! neosnippet#helpers#get_completion_snippets() "{{{
+function! neosnippet#helpers#get_completion_snippets() abort "{{{
   return filter(neosnippet#helpers#get_snippets(),
         \ "!get(v:val.options, 'oneshot', 0)")
 endfunction"}}}
 
-function! neosnippet#helpers#get_snippets_directory() "{{{
+function! neosnippet#helpers#get_snippets_directory() abort "{{{
   let snippets_dir = copy(neosnippet#variables#snippets_dir())
   if !get(g:neosnippet#disable_runtime_snippets,
         \ neosnippet#helpers#get_filetype(),
@@ -88,7 +88,7 @@ function! neosnippet#helpers#get_snippets_directory() "{{{
   return snippets_dir
 endfunction"}}}
 
-function! neosnippet#helpers#get_filetype() "{{{
+function! neosnippet#helpers#get_filetype() abort "{{{
   if !exists('s:exists_context_filetype')
     " context_filetype.vim installation check.
     try
@@ -109,7 +109,7 @@ function! neosnippet#helpers#get_filetype() "{{{
   return context_filetype
 endfunction"}}}
 
-function! neosnippet#helpers#get_selected_text(type, ...) "{{{
+function! neosnippet#helpers#get_selected_text(type, ...) abort "{{{
   let sel_save = &selection
   let &selection = 'inclusive'
   let reg_save = @@
@@ -134,7 +134,7 @@ function! neosnippet#helpers#get_selected_text(type, ...) "{{{
     call setpos('.', pos)
   endtry
 endfunction"}}}
-function! neosnippet#helpers#delete_selected_text(type, ...) "{{{
+function! neosnippet#helpers#delete_selected_text(type, ...) abort "{{{
   let sel_save = &selection
   let &selection = 'inclusive'
   let reg_save = @@
@@ -157,7 +157,7 @@ function! neosnippet#helpers#delete_selected_text(type, ...) "{{{
     call setpos('.', pos)
   endtry
 endfunction"}}}
-function! neosnippet#helpers#substitute_selected_text(type, text) "{{{
+function! neosnippet#helpers#substitute_selected_text(type, text) abort "{{{
   let sel_save = &selection
   let &selection = 'inclusive'
   let reg_save = @@
@@ -181,7 +181,7 @@ function! neosnippet#helpers#substitute_selected_text(type, text) "{{{
   endtry
 endfunction"}}}
 
-function! s:is_beginning_of_line(cur_text) "{{{
+function! s:is_beginning_of_line(cur_text) abort "{{{
   let keyword_pattern = '\S\+'
   let cur_keyword_str = matchstr(a:cur_text, keyword_pattern.'$')
   let line_part = a:cur_text[: -1-len(cur_keyword_str)]
@@ -190,7 +190,7 @@ function! s:is_beginning_of_line(cur_text) "{{{
   return prev_word_end <= 0
 endfunction"}}}
 
-function! s:get_sources_filetypes(filetype) "{{{
+function! s:get_sources_filetypes(filetype) abort "{{{
   let filetypes =
         \ exists('*context_filetype#get_filetypes') ?
         \   context_filetype#get_filetypes(a:filetype) :

@@ -1,7 +1,7 @@
 let s:suite = themis#suite('toml')
 let s:assert = themis#helper('assert')
 
-function! s:suite.get_in_paren()
+function! s:suite.get_in_paren() abort
   call s:assert.equals(neosnippet#parser#_get_in_paren(
         \ '(', ')',
         \ '(foobar)'),
@@ -32,7 +32,7 @@ function! s:suite.get_in_paren()
         \ 'long, int')
 endfunction
 
-function! s:suite.get_completed_snippet()
+function! s:suite.get_completed_snippet() abort
   call s:assert.equals(neosnippet#parser#_get_completed_snippet({
         \ 'word' : 'foo(', 'abbr' : 'foo()',
         \ 'menu' : '', 'info' : ''

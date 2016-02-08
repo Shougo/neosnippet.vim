@@ -26,7 +26,7 @@
 let s:save_cpo = &cpo
 set cpo&vim
 
-function! neosnippet#handlers#_complete_done() "{{{
+function! neosnippet#handlers#_complete_done() abort "{{{
   if empty(v:completed_item)
         \ || !g:neosnippet#enable_completed_snippet
         \ || s:is_auto_pairs()
@@ -43,7 +43,7 @@ function! neosnippet#handlers#_complete_done() "{{{
   call neosnippet#view#_insert(snippet, {}, cur_text, col)
 endfunction"}}}
 
-function! neosnippet#handlers#_cursor_moved() "{{{
+function! neosnippet#handlers#_cursor_moved() abort "{{{
   let expand_stack = neosnippet#variables#expand_stack()
 
   " Get patterns and count.
@@ -59,7 +59,7 @@ function! neosnippet#handlers#_cursor_moved() "{{{
   endif
 endfunction"}}}
 
-function! neosnippet#handlers#_all_clear_markers() "{{{
+function! neosnippet#handlers#_all_clear_markers() abort "{{{
   let pos = getpos('.')
 
   try
@@ -74,7 +74,7 @@ function! neosnippet#handlers#_all_clear_markers() "{{{
   endtry
 endfunction"}}}
 
-function! neosnippet#handlers#_restore_unnamed_register() "{{{
+function! neosnippet#handlers#_restore_unnamed_register() abort "{{{
   let neosnippet = neosnippet#variables#current_neosnippet()
 
   if neosnippet.unnamed_register != ''

@@ -28,7 +28,7 @@ set cpo&vim
 
 let s:Cache = neosnippet#util#get_vital().import('System.Cache')
 
-function! neosnippet#parser#_parse_snippets(filename) "{{{
+function! neosnippet#parser#_parse_snippets(filename) abort "{{{
   if !filereadable(a:filename)
     call neosnippet#util#print_error(
           \ printf('snippet file "%s" is not found.', a:filename))
@@ -49,7 +49,7 @@ function! neosnippet#parser#_parse_snippets(filename) "{{{
 
   return snippets
 endfunction"}}}
-function! neosnippet#parser#_parse_snippet(filename, trigger) "{{{
+function! neosnippet#parser#_parse_snippet(filename, trigger) abort "{{{
   if !filereadable(a:filename)
     call neosnippet#util#print_error(
           \ printf('snippet file "%s" is not found.', a:filename))
@@ -66,7 +66,7 @@ function! neosnippet#parser#_parse_snippet(filename, trigger) "{{{
         \ snippet_dict, a:filename, 1, '', a:trigger)
 endfunction"}}}
 
-function! s:parse(snippets_file) "{{{
+function! s:parse(snippets_file) abort "{{{
   let dup_check = {}
   let snippet_dict = {}
   let linenr = 1
@@ -138,7 +138,7 @@ function! s:parse(snippets_file) "{{{
   return [snippets, sourced]
 endfunction"}}}
 
-function! s:parse_snippet_name(snippets_file, line, linenr, dup_check) "{{{
+function! s:parse_snippet_name(snippets_file, line, linenr, dup_check) abort "{{{
   " Initialize snippet dict.
   let snippet_dict = {
         \ 'word' : '',
@@ -180,7 +180,7 @@ function! s:parse_snippet_name(snippets_file, line, linenr, dup_check) "{{{
   return snippet_dict
 endfunction"}}}
 
-function! s:add_snippet_attribute(snippets_file, line, linenr, snippet_dict) "{{{
+function! s:add_snippet_attribute(snippets_file, line, linenr, snippet_dict) abort "{{{
   " Allow overriding/setting of the description (abbr) of the snippet.
   " This will override what was set via the snippet line.
   if a:line =~ '^abbr\s'
@@ -221,7 +221,7 @@ function! s:add_snippet_attribute(snippets_file, line, linenr, snippet_dict) "{{
   endif
 endfunction"}}}
 
-function! s:set_snippet_dict(snippet_dict, snippets, dup_check, snippets_file) "{{{
+function! s:set_snippet_dict(snippet_dict, snippets, dup_check, snippets_file) abort "{{{
   if empty(a:snippet_dict)
     return
   endif
@@ -243,7 +243,7 @@ function! s:set_snippet_dict(snippet_dict, snippets, dup_check, snippets_file) "
   endfor
 endfunction"}}}
 
-function! neosnippet#parser#_initialize_snippet(dict, path, line, pattern, name) "{{{
+function! neosnippet#parser#_initialize_snippet(dict, path, line, pattern, name) abort "{{{
   let a:dict.word = substitute(a:dict.word, '\n\+$', '', '')
   if a:dict.word !~ '\n'
         \ && a:dict.word !~
@@ -282,7 +282,7 @@ function! neosnippet#parser#_initialize_snippet(dict, path, line, pattern, name)
   return snippet
 endfunction"}}}
 
-function! neosnippet#parser#_initialize_snippet_options() "{{{
+function! neosnippet#parser#_initialize_snippet_options() abort "{{{
   return {
         \ 'head' : 0,
         \ 'word' :
@@ -292,7 +292,7 @@ function! neosnippet#parser#_initialize_snippet_options() "{{{
         \ }
 endfunction"}}}
 
-function! neosnippet#parser#_get_completed_snippet(completed_item, next_text) "{{{
+function! neosnippet#parser#_get_completed_snippet(completed_item, next_text) abort "{{{
   let item = a:completed_item
 
   " Set abbr

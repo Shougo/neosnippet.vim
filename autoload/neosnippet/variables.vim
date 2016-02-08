@@ -26,7 +26,7 @@
 let s:save_cpo = &cpo
 set cpo&vim
 
-function! neosnippet#variables#current_neosnippet() "{{{
+function! neosnippet#variables#current_neosnippet() abort "{{{
   if !exists('b:neosnippet')
     let b:neosnippet = {
           \ 'snippets' : {},
@@ -40,34 +40,34 @@ function! neosnippet#variables#current_neosnippet() "{{{
 
   return b:neosnippet
 endfunction"}}}
-function! neosnippet#variables#expand_stack() "{{{
+function! neosnippet#variables#expand_stack() abort "{{{
   if !exists('s:expand_stack')
     let s:expand_stack = []
   endif
 
   return s:expand_stack
 endfunction"}}}
-function! neosnippet#variables#pop_expand_stack() "{{{
+function! neosnippet#variables#pop_expand_stack() abort "{{{
   let s:expand_stack = s:expand_stack[: -2]
 endfunction"}}}
-function! neosnippet#variables#clear_expand_stack() "{{{
+function! neosnippet#variables#clear_expand_stack() abort "{{{
   let s:expand_stack = []
 endfunction"}}}
-function! neosnippet#variables#snippets() "{{{
+function! neosnippet#variables#snippets() abort "{{{
   if !exists('s:snippets')
     let s:snippets= {}
   endif
 
   return s:snippets
 endfunction"}}}
-function! neosnippet#variables#set_snippets(list) "{{{
+function! neosnippet#variables#set_snippets(list) abort "{{{
   if !exists('s:snippets')
     let s:snippets= {}
   endif
 
   let s:snippets = a:list
 endfunction"}}}
-function! neosnippet#variables#snippets_dir() "{{{
+function! neosnippet#variables#snippets_dir() abort "{{{
   " Set snippets_dir.
   let snippets_dir = []
   for dir in neosnippet#util#option2list(g:neosnippet#snippets_directory)
@@ -80,7 +80,7 @@ function! neosnippet#variables#snippets_dir() "{{{
 
   return map(snippets_dir, 'substitute(v:val, "[\\\\/]$", "", "")')
 endfunction"}}}
-function! neosnippet#variables#runtime_dir() "{{{
+function! neosnippet#variables#runtime_dir() abort "{{{
   " Set runtime dir.
   let runtime_dir = split(globpath(&runtimepath, 'neosnippets'), '\n')
   if empty(runtime_dir) && empty(g:neosnippet#disable_runtime_snippets)
@@ -100,7 +100,7 @@ function! neosnippet#variables#runtime_dir() "{{{
 
   return map(runtime_dir, 'substitute(v:val, "[\\\\/]$", "", "")')
 endfunction"}}}
-function! neosnippet#variables#data_dir() "{{{
+function! neosnippet#variables#data_dir() abort "{{{
   let g:neosnippet#data_directory =
         \ substitute(fnamemodify(get(
         \   g:, 'neosnippet#data_directory',

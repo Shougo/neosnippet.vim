@@ -37,7 +37,7 @@ let s:source = {
       \          ['matcher_fuzzy'] : ['matcher_head']),
       \}
 
-function! s:source.gather_candidates(context) "{{{
+function! s:source.gather_candidates(context) abort "{{{
   let snippets = values(neosnippet#helpers#get_completion_snippets())
   if matchstr(a:context.input, '\S\+$') !=#
         \ matchstr(a:context.input, '\w\+$')
@@ -47,7 +47,7 @@ function! s:source.gather_candidates(context) "{{{
   return snippets
 endfunction"}}}
 
-function! s:source.hooks.on_post_filter(context) "{{{
+function! s:source.hooks.on_post_filter(context) abort "{{{
   for snippet in a:context.candidates
     let snippet.dup = 1
     let snippet.menu = neosnippet#util#strwidthpart(
@@ -57,7 +57,7 @@ function! s:source.hooks.on_post_filter(context) "{{{
   return a:context.candidates
 endfunction"}}}
 
-function! neocomplete#sources#neosnippet#define() "{{{
+function! neocomplete#sources#neosnippet#define() abort "{{{
   return s:source
 endfunction"}}}
 

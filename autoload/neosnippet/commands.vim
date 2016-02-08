@@ -34,14 +34,14 @@ let s:edit_options = [
 let s:Cache = neosnippet#util#get_vital().import('System.Cache')
 "}}}
 
-function! s:get_list() "{{{
+function! s:get_list() abort "{{{
   if !exists('s:List')
     let s:List = vital#of('neosnippet').import('Data.List')
   endif
   return s:List
 endfunction"}}}
 
-function! neosnippet#commands#_edit(args) "{{{
+function! neosnippet#commands#_edit(args) abort "{{{
   if neosnippet#util#is_sudo()
     call neosnippet#util#print_error(
           \ '"sudo vim" is detected. This feature is disabled.')
@@ -92,7 +92,7 @@ function! neosnippet#commands#_edit(args) "{{{
   endtry
 endfunction"}}}
 
-function! neosnippet#commands#_make_cache(filetype) "{{{
+function! neosnippet#commands#_make_cache(filetype) abort "{{{
   call neosnippet#init#check()
 
   let filetype = a:filetype == '' ?
@@ -128,7 +128,7 @@ function! neosnippet#commands#_make_cache(filetype) "{{{
   endif
 endfunction"}}}
 
-function! neosnippet#commands#_source(filename) "{{{
+function! neosnippet#commands#_source(filename) abort "{{{
   call neosnippet#init#check()
 
   let neosnippet = neosnippet#variables#current_neosnippet()
@@ -136,7 +136,7 @@ function! neosnippet#commands#_source(filename) "{{{
         \ neosnippet#parser#_parse_snippets(a:filename))
 endfunction"}}}
 
-function! neosnippet#commands#_clear_markers() "{{{
+function! neosnippet#commands#_clear_markers() abort "{{{
   let expand_stack = neosnippet#variables#expand_stack()
 
   " Get patterns and count.
@@ -150,12 +150,12 @@ function! neosnippet#commands#_clear_markers() "{{{
 endfunction"}}}
 
 " Complete helpers.
-function! neosnippet#commands#_edit_complete(arglead, cmdline, cursorpos) "{{{
+function! neosnippet#commands#_edit_complete(arglead, cmdline, cursorpos) abort "{{{
   return filter(s:edit_options +
         \ neosnippet#commands#_filetype_complete(a:arglead, a:cmdline, a:cursorpos),
         \ 'stridx(v:val, a:arglead) == 0')
 endfunction"}}}
-function! neosnippet#commands#_filetype_complete(arglead, cmdline, cursorpos) "{{{
+function! neosnippet#commands#_filetype_complete(arglead, cmdline, cursorpos) abort "{{{
   " Dup check.
   let ret = {}
   for item in map(
@@ -170,13 +170,13 @@ function! neosnippet#commands#_filetype_complete(arglead, cmdline, cursorpos) "{
 
   return sort(keys(ret))
 endfunction"}}}
-function! neosnippet#commands#_complete_target_snippets(arglead, cmdline, cursorpos) "{{{
+function! neosnippet#commands#_complete_target_snippets(arglead, cmdline, cursorpos) abort "{{{
   return map(filter(values(neosnippet#helpers#get_snippets()),
         \ "stridx(v:val.word, a:arglead) == 0
         \ && v:val.snip =~# neosnippet#get_placeholder_target_marker_pattern()"), 'v:val.word')
 endfunction"}}}
 
-function! s:initialize_options(options) "{{{
+function! s:initialize_options(options) abort "{{{
   let default_options = {
         \ 'runtime' : 0,
         \ 'vertical' : 0,
