@@ -194,6 +194,10 @@ endfunction"}}}
 function! neosnippet#mappings#_trigger(function) abort "{{{
   let [cur_text, col, expr] = neosnippet#mappings#_pre_trigger()
 
+  if !neosnippet#mappings#expandable_or_jumpable()
+    return ''
+  endif
+
   let expr .= printf("\<ESC>:call %s(%s,%d)\<CR>",
         \ a:function, string(cur_text), col)
 
