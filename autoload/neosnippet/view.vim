@@ -415,10 +415,12 @@ function! s:expand_placeholder(start, end, holder_cnt, line, ...) abort "{{{
       let len += 1
     endif
 
+    let mode = mode()
+
     stopinsert
 
     normal! v
-    call cursor(0, col('.') + (mode() == 'i' ? len+1 : len))
+    call cursor(0, col('.') + (mode ==# 'i' ? len+1 : len))
     execute 'normal! ' "\<C-g>"
   elseif pos[2] < col('$')
     startinsert
