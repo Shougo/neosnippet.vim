@@ -68,6 +68,10 @@ function! neosnippet#commands#_edit(args) abort "{{{
     return
   endif
 
+  if !isdirectory(snippet_dir) && !neosnippet#util#is_sudo()
+    call mkdir(snippet_dir, 'p')
+  endif
+
   " Edit snippet file.
   let filename = snippet_dir .'/'.filetype
 

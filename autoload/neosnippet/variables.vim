@@ -69,15 +69,9 @@ function! neosnippet#variables#set_snippets(list) abort "{{{
 endfunction"}}}
 function! neosnippet#variables#snippets_dir() abort "{{{
   " Set snippets_dir.
-  let snippets_dir = []
-  for dir in neosnippet#util#option2list(g:neosnippet#snippets_directory)
-    let dir = neosnippet#util#expand(dir)
-    if !isdirectory(dir) && !neosnippet#util#is_sudo()
-      call mkdir(dir, 'p')
-    endif
-    call add(snippets_dir, dir)
-  endfor
-
+  let snippets_dir = map(neosnippet#util#option2list(
+        \   g:neosnippet#snippets_directory),
+        \ 'neosnippet#util#expand(v:val)')
   return map(snippets_dir, 'substitute(v:val, "[\\\\/]$", "", "")')
 endfunction"}}}
 function! neosnippet#variables#runtime_dir() abort "{{{
