@@ -31,7 +31,7 @@ let s:edit_options = [
       \ '-runtime',
       \ '-vertical', '-horizontal', '-direction=', '-split',
       \]
-let s:Cache = neosnippet#util#get_vital().import('System.Cache')
+let s:Cache = neosnippet#util#get_vital().import('System.Cache.Deprecated')
 "}}}
 
 function! s:get_list() abort "{{{

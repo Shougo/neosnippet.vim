@@ -26,7 +26,7 @@
 let s:save_cpo = &cpo
 set cpo&vim
 
-let s:V = vital#of('neosnippet')
+let s:V = vital#neosnippet#of()
 function! neosnippet#util#get_vital() abort "{{{
   return s:V
 endfunction"}}}

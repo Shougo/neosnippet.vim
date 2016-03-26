@@ -1,8 +1,8 @@
 neosnippet
-1c73bcc
+024411ba1a5f3d545899c1be6eaa40bba036ae0d
 
 Prelude
 Data.List
 Process
-System.Cache
 Data.String
+System.Cache.Deprecated

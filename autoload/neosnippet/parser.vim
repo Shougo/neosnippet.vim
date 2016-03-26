@@ -26,7 +26,7 @@
 let s:save_cpo = &cpo
 set cpo&vim
 
-let s:Cache = neosnippet#util#get_vital().import('System.Cache')
+let s:Cache = neosnippet#util#get_vital().import('System.Cache.Deprecated')
 
 function! neosnippet#parser#_parse_snippets(filename) abort "{{{
   if !filereadable(a:filename)
