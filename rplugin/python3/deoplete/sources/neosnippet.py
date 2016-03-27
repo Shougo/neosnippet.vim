@@ -41,5 +41,6 @@ class Source(Base):
     def on_post_filter(self, context):
         for candidate in context['candidates']:
             candidate['dup'] = 1
+            candidate['menu'] = candidate['menu_abbr']
         return context['candidates']
 
