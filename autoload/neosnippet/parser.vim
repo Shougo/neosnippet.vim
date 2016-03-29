@@ -36,15 +36,21 @@ function! neosnippet#parser#_parse_snippets(filename) abort "{{{
   endif
 
   let cache_dir = neosnippet#variables#data_dir()
-  if s:Cache.check_old_cache(cache_dir, a:filename)
+  let snippets = {}
+  if !s:Cache.check_old_cache(cache_dir, a:filename)
+    try
+      let snippets = neosnippet#helpers#json2vim(
+            \ s:Cache.readfile(cache_dir, a:filename)[0])
+    catch
+    endtry
+  endif
+  if empty(snippets) || s:Cache.check_old_cache(cache_dir, a:filename)
     let [snippets, sourced] = s:parse(a:filename)
     if len(snippets) > 5 && !neosnippet#util#is_sudo() && !sourced
       call s:Cache.writefile(
-            \ cache_dir, a:filename, [string(snippets)])
+            \ cache_dir, a:filename,
+            \ [neosnippet#helpers#vim2json(snippets)])
     endif
-  else
-    sandbox let snippets = eval(
-          \ s:Cache.readfile(cache_dir, a:filename)[0])
   endif
 
   return snippets

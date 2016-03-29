@@ -181,6 +181,13 @@ function! neosnippet#helpers#substitute_selected_text(type, text) abort "{{{
   endtry
 endfunction"}}}
 
+function! neosnippet#helpers#vim2json(expr) abort "{{{
+  return has('patch-7.4.1498') ? js_encode(a:expr) : string(a:expr)
+endfunction "}}}
+function! neosnippet#helpers#json2vim(expr) abort "{{{
+  sandbox return has('patch-7.4.1498') ? js_decode(a:expr) : eval(a:expr)
+endfunction "}}}
+
 function! s:is_beginning_of_line(cur_text) abort "{{{
   let keyword_pattern = '\S\+'
   let cur_keyword_str = matchstr(a:cur_text, keyword_pattern.'$')
