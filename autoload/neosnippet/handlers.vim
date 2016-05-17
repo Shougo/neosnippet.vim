@@ -60,6 +60,10 @@ function! neosnippet#handlers#_cursor_moved() abort "{{{
 endfunction"}}}
 
 function! neosnippet#handlers#_all_clear_markers() abort "{{{
+  if !&l:modifiable
+    return
+  endif
+
   let pos = getpos('.')
 
   try
