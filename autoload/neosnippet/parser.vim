@@ -301,6 +301,10 @@ endfunction"}}}
 function! neosnippet#parser#_get_completed_snippet(completed_item, next_text) abort "{{{
   let item = a:completed_item
 
+  if has_key(item, "snippet")
+    return item.snippet
+  endif
+
   " Set abbr
   let abbr = (item.abbr != '') ? item.abbr : item.word
   if len(item.menu) > 5
