@@ -33,14 +33,16 @@ class Source(Base):
         self.name = 'neosnippet'
         self.mark = '[ns]'
         self.rank = 200
+        self.__cache = {}
 
-    def gather_candidates(self, context):
-        return self.vim.eval(
+    def on_event(self, context):
+        self.__cache[context['filetype']] = self.vim.eval(
             'values(neosnippet#helpers#get_completion_snippets())')
-
-    def on_post_filter(self, context):
-        for candidate in context['candidates']:
+        for candidate in self.__cache[context['filetype']]:
             candidate['dup'] = 1
             candidate['menu'] = candidate['menu_abbr']
-        return context['candidates']
 
+    def gather_candidates(self, context):
+        if not self.__cache:
+            self.on_event(context)
+        return self.__cache.get(context['filetype'], [])
