@@ -70,10 +70,9 @@ function! neosnippet#handlers#_all_clear_markers() abort "{{{
     while !empty(neosnippet#variables#expand_stack())
       call neosnippet#view#_clear_markers(
             \ neosnippet#variables#expand_stack()[-1])
+      stopinsert
     endwhile
   finally
-    stopinsert
-
     call setpos('.', pos)
   endtry
 endfunction"}}}
