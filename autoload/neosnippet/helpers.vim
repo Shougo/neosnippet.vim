@@ -91,14 +91,10 @@ function! neosnippet#helpers#get_snippets_directory() abort "{{{
 endfunction"}}}
 
 function! neosnippet#helpers#get_filetype() abort "{{{
+  " context_filetype.vim installation check.
   if !exists('s:exists_context_filetype')
-    " context_filetype.vim installation check.
-    try
-      call context_filetype#version()
-      let s:exists_context_filetype = 1
-    catch
-      let s:exists_context_filetype = 0
-    endtry
+    silent! call context_filetype#version()
+    let s:exists_context_filetype = exists('*context_filetype#version')
   endif
 
   let context_filetype =
