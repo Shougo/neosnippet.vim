@@ -120,6 +120,8 @@ function! neosnippet#view#_insert(snippet, options, cur_text, col) abort "{{{
           \ })
 
     if snip_word =~ neosnippet#get_placeholder_marker_pattern()
+          \ && (expand('<amatch>') == '' || &filetype !=# 'python')
+      " Note: Python filetype has completed snippet problem...
       call neosnippet#view#_jump('', a:col)
     endif
   finally
