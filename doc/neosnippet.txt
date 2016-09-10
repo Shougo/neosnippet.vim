@@ -243,6 +243,10 @@ g:neosnippet#enable_auto_clear_markers
 		in the buffer when |BufWritePost|, |CursorMoved| and
 		|CursorMovedI| autocmd.
 
+		Note: The feature does not work for multi lines snippets.
+		If you want to clear them, you should use
+		|:NeoSnippetClearMarkers| instead.
+
 		The default value is 1.
 
 						*g:neosnippet#scope_aliases*
