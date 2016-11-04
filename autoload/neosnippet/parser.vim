@@ -312,7 +312,7 @@ function! neosnippet#parser#_get_completed_snippet(completed_item, next_text) ab
     let abbr .= ' ' . item.menu
   endif
   if item.info != ''
-    let abbr = split(item.info, '\n')[0]
+    let abbr .= split(item.info, '\n')[0]
   endif
   let pairs = neosnippet#util#get_buffer_config(
       \ &filetype, '',
