@@ -31,14 +31,29 @@ function! neosnippet#mappings#expandable_or_jumpable() abort "{{{
 endfunction"}}}
 function! neosnippet#mappings#expandable() abort "{{{
   " Check snippet trigger.
-  return neosnippet#helpers#get_cursor_snippet(
-        \ neosnippet#helpers#get_snippets('i'),
-        \ neosnippet#util#get_cur_text()) != ''
+  return neosnippet#mappings#completed_expandable()
+        \ || neosnippet#helpers#get_cursor_snippet(
+        \      neosnippet#helpers#get_snippets('i'),
+        \      neosnippet#util#get_cur_text()) != ''
 endfunction"}}}
 function! neosnippet#mappings#jumpable() abort "{{{
   " Found snippet placeholder.
   return search(neosnippet#get_placeholder_marker_pattern(). '\|'
             \ .neosnippet#get_sync_placeholder_marker_pattern(), 'nw') > 0
+endfunction"}}}
+function! neosnippet#mappings#completed_expandable() abort "{{{
+  if !s:enabled_completed_snippet()
+    return 0
+  endif
+
+  let snippet = neosnippet#parser#_get_completed_snippet(
+        \ v:completed_item, neosnippet#util#get_next_text())
+  return snippet != ''
+endfunction"}}}
+function! s:enabled_completed_snippet() abort "{{{
+  return exists('v:completed_item')
+        \ && !empty(v:completed_item)
+        \ && g:neosnippet#enable_completed_snippet
 endfunction"}}}
 
 function! neosnippet#mappings#_clear_select_mode_mappings() abort "{{{
@@ -153,37 +168,41 @@ function! neosnippet#mappings#_expand(trigger) abort "{{{
 endfunction"}}}
 
 function! s:snippets_expand(cur_text, col) abort "{{{
+  if s:enabled_completed_snippet()
+    let snippet = neosnippet#parser#_get_completed_snippet(
+          \ v:completed_item, neosnippet#util#get_next_text())
+    if snippet != ''
+      call neosnippet#view#_insert(snippet, {}, a:cur_text, a:col)
+      return 0
+    endif
+  endif
+
   let cur_word = neosnippet#helpers#get_cursor_snippet(
         \ neosnippet#helpers#get_snippets('i'),
         \ a:cur_text)
-
-  call neosnippet#view#_expand(
-        \ neosnippet#util#get_cur_text(), a:col, cur_word)
-endfunction"}}}
-
-function! s:snippets_expand_or_jump(cur_text, col) abort "{{{
-  let cur_word = neosnippet#helpers#get_cursor_snippet(
-        \ neosnippet#helpers#get_snippets('i'), a:cur_text)
-
   if cur_word != ''
     " Found snippet trigger.
     call neosnippet#view#_expand(
           \ neosnippet#util#get_cur_text(), a:col, cur_word)
-  else
+    return 0
+  endif
+
+  return 1
+endfunction"}}}
+
+function! s:snippets_expand_or_jump(cur_text, col) abort "{{{
+  if s:snippets_expand(a:cur_text, a:col)
     call neosnippet#view#_jump('', a:col)
   endif
 endfunction"}}}
 
 function! s:snippets_jump_or_expand(cur_text, col) abort "{{{
-  let cur_word = neosnippet#helpers#get_cursor_snippet(
-        \ neosnippet#helpers#get_snippets('i'), a:cur_text)
   if search(neosnippet#get_placeholder_marker_pattern(). '\|'
             \ .neosnippet#get_sync_placeholder_marker_pattern(), 'nw') > 0
     " Found snippet placeholder.
     call neosnippet#view#_jump('', a:col)
   else
-    call neosnippet#view#_expand(
-          \ neosnippet#util#get_cur_text(), a:col, cur_word)
+    return s:snippets_expand(a:cur_text, a:col)
   endif
 endfunction"}}}
 

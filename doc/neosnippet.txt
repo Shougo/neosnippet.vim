@@ -230,10 +230,8 @@ g:neosnippet#enable_conceal_markers
 
 					*g:neosnippet#enable_completed_snippet*
 g:neosnippet#enable_completed_snippet
-		If this variable is not 0, neosnippet will expand the function
-		prototype when |CompleteDone| autocmd.
-		Note: It is disabled if you have installed
-		|neopairs.vim| plugin.
+		If this variable is not 0, neosnippet can expand the function
+		prototype.
 
 		The default value is 0.
 

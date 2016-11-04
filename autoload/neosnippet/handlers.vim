@@ -26,23 +26,6 @@
 let s:save_cpo = &cpo
 set cpo&vim
 
-function! neosnippet#handlers#_complete_done() abort "{{{
-  if empty(v:completed_item)
-        \ || !g:neosnippet#enable_completed_snippet
-        \ || s:is_auto_pairs()
-    return
-  endif
-
-  let snippet = neosnippet#parser#_get_completed_snippet(
-        \ v:completed_item, neosnippet#util#get_next_text())
-  if snippet == ''
-    return
-  endif
-
-  let [cur_text, col, _] = neosnippet#mappings#_pre_trigger()
-  call neosnippet#view#_insert(snippet, {}, cur_text, col)
-endfunction"}}}
-
 function! neosnippet#handlers#_cursor_moved() abort "{{{
   let expand_stack = neosnippet#variables#expand_stack()
 
@@ -85,10 +68,6 @@ function! neosnippet#handlers#_restore_unnamed_register() abort "{{{
     let @" = neosnippet.unnamed_register
     let neosnippet.unnamed_register = ''
   endif
-endfunction"}}}
-
-function! s:is_auto_pairs() abort "{{{
-  return get(g:, 'neopairs#enable', 0)
 endfunction"}}}
 
 let &cpo = s:save_cpo

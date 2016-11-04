@@ -66,11 +66,6 @@ function! s:initialize_others() abort "{{{
           \ call neosnippet#handlers#_all_clear_markers()
   endif
 
-  if exists('v:completed_item')
-    autocmd neosnippet CompleteDone *
-          \ call neosnippet#handlers#_complete_done()
-  endif
-
   if exists('##TextChanged') && exists('##TextChangedI')
     autocmd neosnippet TextChanged,TextChangedI *
           \ call neosnippet#handlers#_restore_unnamed_register()
