@@ -47,7 +47,8 @@ function! neosnippet#mappings#completed_expandable() abort "{{{
   endif
 
   let snippet = neosnippet#parser#_get_completed_snippet(
-        \ v:completed_item, neosnippet#util#get_next_text())
+        \ v:completed_item, neosnippet#util#get_cur_text(),
+        \ neosnippet#util#get_next_text())
   return snippet != ''
 endfunction"}}}
 function! s:enabled_completed_snippet() abort "{{{
@@ -170,7 +171,7 @@ endfunction"}}}
 function! s:snippets_expand(cur_text, col) abort "{{{
   if s:enabled_completed_snippet()
     let snippet = neosnippet#parser#_get_completed_snippet(
-          \ v:completed_item, neosnippet#util#get_next_text())
+          \ v:completed_item, a:cur_text, neosnippet#util#get_next_text())
     if snippet != ''
       call neosnippet#view#_insert(snippet, {}, a:cur_text, a:col)
       return 0
