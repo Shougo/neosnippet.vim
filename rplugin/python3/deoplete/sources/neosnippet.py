@@ -43,6 +43,6 @@ class Source(Base):
             candidate['menu'] = candidate['menu_abbr']
 
     def gather_candidates(self, context):
-        if not self.__cache:
+        if context['filetype'] not in self.__cache:
             self.on_event(context)
         return self.__cache.get(context['filetype'], [])
