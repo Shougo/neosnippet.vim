@@ -26,8 +26,10 @@
 let s:save_cpo = &cpo
 set cpo&vim
 
-let s:V = vital#neosnippet#of()
 function! neosnippet#util#get_vital() abort "{{{
+  if !exists('s:V')
+    let s:V = vital#neosnippet#new()
+  endif
   return s:V
 endfunction"}}}
 function! s:get_prelude() abort "{{{
@@ -74,7 +76,7 @@ function! neosnippet#util#get_last_status(...) abort "{{{
   return call(s:get_process().get_last_status, a:000)
 endfunction"}}}
 function! neosnippet#util#escape_pattern(...) abort "{{{
-  return call(s:get_prelude().escape_pattern, a:000)
+  return call(s:get_string().escape_pattern, a:000)
 endfunction"}}}
 function! neosnippet#util#iconv(...) abort "{{{
   return call(s:get_process().iconv, a:000)

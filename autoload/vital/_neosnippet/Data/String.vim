@@ -3,13 +3,13 @@
 " Do not mofidify the code nor insert new lines before '" ___vital___'
 if v:version > 703 || v:version == 703 && has('patch1170')
   function! vital#_neosnippet#Data#String#import() abort
-    return map({'trim': '', 'chomp': '', 'starts_with': '', 'truncate_skipping': '', 'pad_left': '', 'hash': '', 'trim_end': '', 'nr2enc_char': '', '_vital_depends': '', 'wrap': '', 'split3': '', 'strwidthpart_reverse': '', 'pad_both_sides': '', 'chop': '', 'lines': '', 'contains_multibyte': '', 'nr2byte': '', 'dstring': '', 'replace': '', 'scan': '', 'diffidx': '', 'strchars': '', 'pad_between_letters': '', 'ends_with': '', 'nsplit': '', 'justify_equal_spacing': '', 'strwidthpart': '', 'split_leftright': '', 'truncate': '', 'substitute_last': '', 'pad_right': '', 'replace_first': '', 'split_by_displaywidth': '', 'wcswidth': '', 'common_head': '', 'levenshtein_distance': '', 'reverse': '', 'trim_start': '', 'nr2hex': '', 'padding_by_displaywidth': '', '_vital_loaded': ''},  'function("s:" . v:key)')
+    return map({'starts_with': '', 'split3': '', 'replace_first': '', 'chop': '', 'unescape': '', 'split_posix_text': '', 'replace': '', 'scan': '', 'strwidthpart': '', 'common_head': '', 'reverse': '', 'escape_pattern': '', 'trim_end': '', '_vital_depends': '', 'wrap': '', 'join_posix_lines': '', 'contains_multibyte': '', 'truncate_skipping': '', 'split_leftright': '', 'ends_with': '', 'nsplit': '', 'strwidthpart_reverse': '', 'unescape_pattern': '', 'levenshtein_distance': '', 'trim_start': '', 'justify_equal_spacing': '', 'nr2hex': '', 'iconv': '', 'pad_left': '', 'nr2enc_char': '', 'lines': '', 'repair_posix_text': '', 'nr2byte': '', 'trim': '', 'diffidx': '', 'truncate': '', 'split_by_displaywidth': '', '_vital_created': '', 'padding_by_displaywidth': '', 'hash': '', 'chomp': '', 'pad_between_letters': '', 'dstring': '', 'pad_both_sides': '', 'substitute_last': '', 'pad_right': '', 'remove_ansi_sequences': '', '_vital_loaded': ''},  'function("s:" . v:key)')
   endfunction
 else
   function! s:_SID() abort
     return matchstr(expand('<sfile>'), '<SNR>\zs\d\+\ze__SID$')
   endfunction
-  execute join(['function! vital#_neosnippet#Data#String#import() abort', printf("return map({'trim': '', 'chomp': '', 'starts_with': '', 'truncate_skipping': '', 'pad_left': '', 'hash': '', 'trim_end': '', 'nr2enc_char': '', '_vital_depends': '', 'wrap': '', 'split3': '', 'strwidthpart_reverse': '', 'pad_both_sides': '', 'chop': '', 'lines': '', 'contains_multibyte': '', 'nr2byte': '', 'dstring': '', 'replace': '', 'scan': '', 'diffidx': '', 'strchars': '', 'pad_between_letters': '', 'ends_with': '', 'nsplit': '', 'justify_equal_spacing': '', 'strwidthpart': '', 'split_leftright': '', 'truncate': '', 'substitute_last': '', 'pad_right': '', 'replace_first': '', 'split_by_displaywidth': '', 'wcswidth': '', 'common_head': '', 'levenshtein_distance': '', 'reverse': '', 'trim_start': '', 'nr2hex': '', 'padding_by_displaywidth': '', '_vital_loaded': ''}, \"function('<SNR>%s_' . v:key)\")", s:_SID()), 'endfunction'], "\n")
+  execute join(['function! vital#_neosnippet#Data#String#import() abort', printf("return map({'starts_with': '', 'split3': '', 'replace_first': '', 'chop': '', 'unescape': '', 'split_posix_text': '', 'replace': '', 'scan': '', 'strwidthpart': '', 'common_head': '', 'reverse': '', 'escape_pattern': '', 'trim_end': '', '_vital_depends': '', 'wrap': '', 'join_posix_lines': '', 'contains_multibyte': '', 'truncate_skipping': '', 'split_leftright': '', 'ends_with': '', 'nsplit': '', 'strwidthpart_reverse': '', 'unescape_pattern': '', 'levenshtein_distance': '', 'trim_start': '', 'justify_equal_spacing': '', 'nr2hex': '', 'iconv': '', 'pad_left': '', 'nr2enc_char': '', 'lines': '', 'repair_posix_text': '', 'nr2byte': '', 'trim': '', 'diffidx': '', 'truncate': '', 'split_by_displaywidth': '', '_vital_created': '', 'padding_by_displaywidth': '', 'hash': '', 'chomp': '', 'pad_between_letters': '', 'dstring': '', 'pad_both_sides': '', 'substitute_last': '', 'pad_right': '', 'remove_ansi_sequences': '', '_vital_loaded': ''}, \"function('<SNR>%s_' . v:key)\")", s:_SID()), 'endfunction'], "\n")
   delfunction s:_SID
 endif
 " ___vital___
@@ -20,12 +20,21 @@ set cpo&vim
 
 function! s:_vital_loaded(V) abort
   let s:V = a:V
-  let s:P = s:V.import('Prelude')
   let s:L = s:V.import('Data.List')
 endfunction
 
 function! s:_vital_depends() abort
-  return ['Prelude', 'Data.List']
+  return ['Data.List']
+endfunction
+
+function! s:_vital_created(module) abort
+  " Expose script-local funcref
+  if exists('s:strchars')
+    let a:module.strchars = s:strchars
+  endif
+  if exists('s:wcswidth')
+    let a:module.wcswidth = s:wcswidth
+  endif
 endfunction
 
 " Substitute a:from => a:to by string.
@@ -143,9 +152,7 @@ endfunction
 " even if a:str contains multibyte character(s).
 " s:strchars(str) {{{
 if exists('*strchars')
-  function! s:strchars(str) abort
-    return strchars(a:str)
-  endfunction
+  let s:strchars = function('strchars')
 else
   function! s:strchars(str) abort
     return strlen(substitute(copy(a:str), '.', 'x', 'g'))
@@ -331,7 +338,7 @@ function! s:levenshtein_distance(str1, str2) abort
   let letters2 = split(a:str2, '\zs')
   let length1 = len(letters1)
   let length2 = len(letters2)
-  let distances = map(range(1, length1 + 1), 'map(range(1, length2 + 1), "0")')
+  let distances = map(range(1, length1 + 1), 'map(range(1, length2 + 1), ''0'')')
 
   for i1 in range(0, length1)
     let distances[i1][0] = i1
@@ -453,8 +460,9 @@ function! s:truncate(str, width) abort
   " http://github.com/mattn/googlereader-vim/tree/master
 
   if a:str =~# '^[\x00-\x7f]*$'
-    return len(a:str) < a:width ?
-          \ printf('%-'.a:width.'s', a:str) : strpart(a:str, 0, a:width)
+    return len(a:str) < a:width
+          \ ? printf('%-' . a:width . 's', a:str)
+          \ : strpart(a:str, 0, a:width)
   endif
 
   let ret = a:str
@@ -484,57 +492,20 @@ function! s:truncate_skipping(str, max, footer_width, separator) abort
 endfunction
 
 function! s:strwidthpart(str, width) abort
-  if a:width <= 0
-    return ''
-  endif
-  let strarr = split(a:str, '\zs')
-  let width = s:wcswidth(a:str)
-  let index = len(strarr)
-  let diff = (index + 1) / 2
-  let rightindex = index - 1
-  while width > a:width
-    let index = max([rightindex - diff + 1, 0])
-    let partwidth = s:wcswidth(join(strarr[(index):(rightindex)], ''))
-    if width - partwidth >= a:width || diff <= 1
-      let width -= partwidth
-      let rightindex = index - 1
-    endif
-    if diff > 1
-      let diff = diff / 2
-    endif
-  endwhile
-  return index ? join(strarr[:index - 1], '') : ''
+  let str = tr(a:str, "\t", ' ')
+  let vcol = a:width + 2
+  return matchstr(str, '.*\%<' . (vcol < 0 ? 0 : vcol) . 'v')
 endfunction
 
 function! s:strwidthpart_reverse(str, width) abort
-  if a:width <= 0
-    return ''
-  endif
-  let strarr = split(a:str, '\zs')
-  let width = s:wcswidth(a:str)
-  let strlen = len(strarr)
-  let diff = (strlen + 1) / 2
-  let leftindex = 0
-  let index = -1
-  while width > a:width
-    let index = min([leftindex + diff, strlen]) - 1
-    let partwidth = s:wcswidth(join(strarr[(leftindex):(index)], ''))
-    if width - partwidth >= a:width || diff <= 1
-      let width -= partwidth
-      let leftindex = index + 1
-    endif
-    if diff > 1
-      let diff = diff / 2
-    endif
-  endwhile
-  return index < strlen ? join(strarr[(index + 1):], '') : ''
+  let str = tr(a:str, "\t", ' ')
+  let vcol = s:wcswidth(str) - a:width
+  return matchstr(str, '\%>' . (vcol < 0 ? 0 : vcol) . 'v.*')
 endfunction
 
 if v:version >= 703
   " Use builtin function.
-  function! s:wcswidth(str) abort
-    return strwidth(a:str)
-  endfunction
+  let s:wcswidth = function('strwidth')
 else
   function! s:wcswidth(str) abort
     if a:str =~# '^[\x00-\x7f]*$'
@@ -577,7 +548,86 @@ else
   endfunction
 endif
 
+function! s:remove_ansi_sequences(text) abort
+  return substitute(a:text, '\e\[\%(\%(\d\+;\)*\d\+\)\?[mK]', '', 'g')
+endfunction
+
+function! s:escape_pattern(str) abort
+  " escape characters for no-magic
+  return escape(a:str, '^$~.*[]\')
+endfunction
+
+function! s:unescape_pattern(str) abort
+  " unescape characters for no-magic
+  return s:unescape(a:str, '^$~.*[]\')
+endfunction
+
+function! s:unescape(str, chars) abort
+  let chars = map(split(a:chars, '\zs'), 'escape(v:val, ''^$~.*[]\'')')
+  return substitute(a:str, '\\\(' . join(chars, '\|') . '\)', '\1', 'g')
+endfunction
+
+function! s:iconv(expr, from, to) abort
+  if a:from ==# '' || a:to ==# '' || a:from ==? a:to
+    return a:expr
+  endif
+  let result = iconv(a:expr, a:from, a:to)
+  return empty(result) ? a:expr : result
+endfunction
+
+" NOTE:
+" A definition of a TEXT file is "A file that contains characters organized
+" into one or more lines."
+" A definition of a LINE is "A sequence of zero or more non- <newline>s
+" plus a terminating <newline>"
+" That's why {stdin} always ends with <newline> ideally. However, there are
+" some programs which does not follow the POSIX rule and a Vim's way to join
+" List into TEXT; join({text}, "\n"); does not add <newline> to the end of
+" the last line.
+" That's why add a trailing <newline> if it does not exist.
+" REF:
+" http://pubs.opengroup.org/onlinepubs/000095399/basedefs/xbd_chap03.html#tag_03_392
+" http://pubs.opengroup.org/onlinepubs/000095399/basedefs/xbd_chap03.html#tag_03_205
+" :help split()
+" NOTE:
+" it does nothing if the text is a correct POSIX text
+function! s:repair_posix_text(text, ...) abort
+  let newline = get(a:000, 0, "\n")
+  return a:text =~# '\n$' ? a:text : a:text . newline
+endfunction
+
+" NOTE:
+" A definition of a TEXT file is "A file that contains characters organized
+" into one or more lines."
+" A definition of a LINE is "A sequence of zero or more non- <newline>s
+" plus a terminating <newline>"
+" REF:
+" http://pubs.opengroup.org/onlinepubs/000095399/basedefs/xbd_chap03.html#tag_03_392
+" http://pubs.opengroup.org/onlinepubs/000095399/basedefs/xbd_chap03.html#tag_03_205
+function! s:join_posix_lines(lines, ...) abort
+  let newline = get(a:000, 0, "\n")
+  return join(a:lines, newline) . newline
+endfunction
+
+" NOTE:
+" A definition of a TEXT file is "A file that contains characters organized
+" into one or more lines."
+" A definition of a LINE is "A sequence of zero or more non- <newline>s
+" plus a terminating <newline>"
+" TEXT into List; split({text}, '\r\?\n', 1); add an extra empty line at the
+" end of List because the end of TEXT ends with <newline> and keepempty=1 is
+" specified. (btw. keepempty=0 cannot be used because it will remove
+" emptylines in the head and the tail).
+" That's why removing a trailing <newline> before proceeding to 'split' is required
+" REF:
+" http://pubs.opengroup.org/onlinepubs/000095399/basedefs/xbd_chap03.html#tag_03_392
+" http://pubs.opengroup.org/onlinepubs/000095399/basedefs/xbd_chap03.html#tag_03_205
+function! s:split_posix_text(text, ...) abort
+  let newline = get(a:000, 0, '\r\?\n')
+  let text = substitute(a:text, newline . '$', '', '')
+  return split(text, newline, 1)
+endfunction
+
 let &cpo = s:save_cpo
 unlet s:save_cpo
-
 " vim:set et ts=2 sts=2 sw=2 tw=0:
