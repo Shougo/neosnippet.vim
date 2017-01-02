@@ -417,7 +417,7 @@ function! neosnippet#parser#_get_in_paren(key, pair, str) abort "{{{
         continue
       endif
     elseif c ==# a:pair
-      if level == 1 && s != ''
+      if level == 1 && (s != '' || a:str =~ '()\s*(.\{-})')
         return s
       else
         let level -= 1

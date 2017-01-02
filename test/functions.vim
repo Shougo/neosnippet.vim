@@ -30,6 +30,10 @@ function! s:suite.get_in_paren() abort
         \ '(', ')',
         \ 'wait()    wait(long, int)'),
         \ 'long, int')
+  call s:assert.equals(neosnippet#parser#_get_in_paren(
+        \ '(', ')',
+        \ 'wait()    (long, int)'),
+        \ '')
 endfunction
 
 function! s:suite.get_completed_snippet() abort
