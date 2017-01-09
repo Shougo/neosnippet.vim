@@ -65,12 +65,12 @@ function! s:suite.get_completed_snippet() abort
   call s:assert.equals(neosnippet#parser#_get_completed_snippet({
         \ 'word' : 'foo(', 'abbr' : 'foo(hoge, piyo)',
         \ 'menu' : '', 'info' : ''
-        \ }, 'foo(', ''), '${1:#:hoge}, ${2:#:piyo})${3}')
+        \ }, 'foo(', ''), '${1:#:hoge}${2:#:, piyo})${3}')
 
   call s:assert.equals(neosnippet#parser#_get_completed_snippet({
         \ 'word' : 'foo(', 'abbr' : 'foo(hoge, piyo(foobar))',
         \ 'menu' : '', 'info' : ''
-        \ }, 'foo(', ''), '${1:#:hoge}, ${2:#:piyo()})${3}')
+        \ }, 'foo(', ''), '${1:#:hoge}${2:#:, piyo()})${3}')
 
   call s:assert.equals(neosnippet#parser#_get_completed_snippet({
         \ 'word' : 'foo(', 'abbr' : 'foo(hoge[, abc])',
@@ -100,7 +100,7 @@ function! s:suite.get_completed_snippet() abort
   call s:assert.equals(neosnippet#parser#_get_completed_snippet({
         \ 'word' : 'Dictionary', 'abbr' : 'Dictionary<Key, Value>(foo)',
         \ 'menu' : '', 'info' : ''
-        \ }, 'Dictionary', ''), '<${1:#:Key}, ${2:#:Value}>(${3:#:foo})${4}')
+        \ }, 'Dictionary', ''), '<${1:#:Key}${2:#:, Value}>(${3:#:foo})${4}')
 
   call s:assert.equals(neosnippet#parser#_get_completed_snippet({
         \ 'word' : 'Dictionary(',
