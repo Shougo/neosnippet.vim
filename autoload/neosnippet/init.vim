@@ -82,7 +82,7 @@ function! s:initialize_others() abort "{{{
       autocmd BufNewFile,BufRead,Syntax *
             \ syntax region neosnippetConcealExpandSnippets
             \ matchgroup=neosnippetExpandSnippets
-            \ start='<`\d\+:\=\|<{\d\+:\=\|<|'
+            \ start='<`\d\+:\=\%(#:\)\?\|<{\d\+:\=\%(#:\)\?\|<|'
             \ end='`>\|}>\||>'
             \ containedin=ALL
             \ concealends oneline
