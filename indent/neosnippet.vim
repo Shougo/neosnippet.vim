@@ -48,7 +48,7 @@ function! SnippetsIndent() abort "{{{
     if prev_line =~ '^\s*$'
         return 0
     elseif prev_line =~ '^' . syntax && line !~ '^\s*' . syntax
-        return &shiftwidth
+        return shiftwidth()
     else
         return match(line, '\S')
     endif

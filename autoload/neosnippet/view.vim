@@ -200,7 +200,7 @@ function! s:indent_snippet(begin, end) abort "{{{
         if &l:expandtab && current_line =~ '^\t\+'
           " Expand tab.
           cal setline('.', substitute(current_line,
-                \ '^\t\+', base_indent . repeat(' ', &shiftwidth *
+                \ '^\t\+', base_indent . repeat(' ', shiftwidth() *
                 \    len(matchstr(current_line, '^\t\+'))), ''))
         elseif line_nr != a:begin
           call setline('.', base_indent . current_line)
