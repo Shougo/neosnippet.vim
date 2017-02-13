@@ -20,6 +20,8 @@ required files into your `.vim` folder.
 
 Notes:
 
+* Vim 7.4 or above is needed.
+
 * Default snippets files are available in:
   [neosnippet-snippets](https://github.com/Shougo/neosnippet-snippets)
 * Installing default snippets is optional. If choose not to install them,

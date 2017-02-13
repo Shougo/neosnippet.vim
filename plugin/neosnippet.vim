@@ -25,7 +25,7 @@
 
 if exists('g:loaded_neosnippet')
   finish
-elseif v:version < 702
+elseif v:version < 704
   echoerr 'neosnippet does not work this version of Vim "' . v:version . '".'
   finish
 endif
