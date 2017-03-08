@@ -46,7 +46,7 @@ let b:undo_indent .= 'setlocal
 
 setlocal indentexpr=SnippetsIndent()
 setlocal autoindent
-setlocal indentkeys=o,O,=include\ ,=snippet\ ,=abbr\ ,=prev_word\ ,=delete\ ,=alias\ ,=options\ ,=regexp\ ,!^F
+setlocal indentkeys=o,O,=abbr\ ,=prev_word\ ,=alias\ ,=options\ ,=regexp\ ,!^F
 
 function! SnippetsIndent() abort "{{{
     let line = getline('.')
@@ -78,7 +78,7 @@ function! s:is_empty(line)
 endfunction
 
 function! s:is_syntax(line)
-    return a:line =~ '\v^\s*%(include|snippet|abbr|prev_word|delete|alias|options|regexp)\s'
+    return a:line =~ '\v^\s*%(snippet|abbr|prev_word|alias|options|regexp)\s'
 endfunction
 
 let &cpo = s:save_cpo
