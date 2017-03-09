@@ -74,11 +74,11 @@ function! SnippetsIndent() abort "{{{
 endfunction"}}}
 
 function! s:is_empty(line)
-    return a:line =~ '\v^\s*$'
+    return a:line =~ '^\s*$'
 endfunction
 
 function! s:is_syntax(line)
-    return a:line =~ '\v^\s*%(snippet|abbr|prev_word|alias|options|regexp)\s'
+    return a:line =~ '^\s*\%(snippet\|abbr\|prev_word\|alias\|options\|regexp\)\s'
 endfunction
 
 let &cpo = s:save_cpo
