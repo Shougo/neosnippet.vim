@@ -35,28 +35,51 @@ set cpo&vim
 if !exists('b:undo_indent')
     let b:undo_indent = ''
 else
-    let b:undo_indent = '|'
+    let b:undo_indent .= '|'
 endif
 
+let b:undo_indent .= 'setlocal
+    \ indentexpr<
+    \ autoindent<
+    \ indentkeys<
+    \'
+
 setlocal indentexpr=SnippetsIndent()
+setlocal autoindent
+setlocal indentkeys=o,O,=abbr\ ,=prev_word\ ,=alias\ ,=options\ ,=regexp\ ,!^F
 
 function! SnippetsIndent() abort "{{{
     let line = getline('.')
     let prev_line = (line('.') == 1)? '' : getline(line('.')-1)
-    let syntax = '\%(include\|snippet\|abbr\|prev_word\|delete\|alias\|options\|regexp\)'
 
-    if prev_line =~ '^\s*$'
+    if s:is_empty(prev_line)
         return 0
-    elseif prev_line =~ '^' . syntax && line !~ '^\s*' . syntax
-        return shiftwidth()
+    endif
+
+    "for indentkeys o,O
+    if s:is_empty(line)
+        if s:is_syntax(prev_line)
+            return shiftwidth()
+        else
+            return -1
+        endif
+    "for indentkeys =words
     else
-        return match(line, '\S')
+        if s:is_syntax(line) && s:is_syntax(prev_line)
+            return 0
+        else
+            return -1
+        endif
     endif
 endfunction"}}}
 
-let b:undo_indent .= '
-    \ setlocal indentexpr<
-    \'
+function! s:is_empty(line)
+    return a:line =~ '^\s*$'
+endfunction
+
+function! s:is_syntax(line)
+    return a:line =~ '^\s*\%(snippet\|abbr\|prev_word\|alias\|options\|regexp\)\s'
+endfunction
 
 let &cpo = s:save_cpo
 unlet s:save_cpo
