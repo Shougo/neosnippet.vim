@@ -40,7 +40,7 @@ endif
 
 setlocal autoindent
 setlocal indentexpr=SnippetsIndent()
-setlocal indentkeys=o,O,=abbr\ ,=prev_word\ ,=alias\ ,=options\ ,=regexp\ ,!^F
+setlocal indentkeys=o,O,=include\ ,=snippet\ ,=abbr\ ,=prev_word\ ,=delete\ ,=alias\ ,=options\ ,=regexp\ ,!^F
 
 let b:undo_indent .= 'setlocal
     \ autoindent<
@@ -56,9 +56,7 @@ function! SnippetsIndent() abort "{{{
 
     "for indentkeys o,O
     if s:is_empty(line)
-        if s:is_empty(prev_line)
-            return 0
-        elseif prev_line =~ '^' . defining
+        if prev_line =~ '^' . defining
             return shiftwidth()
         else
             return -1
@@ -67,6 +65,8 @@ function! SnippetsIndent() abort "{{{
     "for indentkeys =words
     else
         if line =~ '^\s*' . syntax
+           \ && (s:is_empty(prev_line)
+                \ || prev_line =~ '^' . defining)
             return 0
         else
             return -1
