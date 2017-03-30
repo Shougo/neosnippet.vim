@@ -318,6 +318,7 @@ function! neosnippet#parser#_get_completed_snippet(completed_item, cur_text, nex
   if item.info != ''
     let abbr .= split(item.info, '\n')[0]
   endif
+  let abbr = escape(abbr, '\')
   let pairs = neosnippet#util#get_buffer_config(
       \ &filetype, '',
       \ 'g:neosnippet#completed_pairs', 'g:neosnippet#_completed_pairs', {})
