@@ -58,20 +58,16 @@ function! neosnippet#view#_insert(snippet, options, cur_text, col) abort "{{{
     let snip_word = s:eval_snippet(snip_word)
   endif
 
-  " Substitute escaped `.
-  let snip_word = substitute(snip_word, '\\`', '`', 'g')
-
   " Substitute markers.
   let snip_word = substitute(snip_word,
-        \ '\\\@<!'.neosnippet#get_placeholder_marker_substitute_pattern(),
+        \ neosnippet#get_placeholder_marker_substitute_pattern(),
         \ '<`\1`>', 'g')
   let snip_word = substitute(snip_word,
-        \ '\\\@<!'.neosnippet#get_mirror_placeholder_marker_substitute_pattern(),
+        \ neosnippet#get_mirror_placeholder_marker_substitute_pattern(),
         \ '<|\1|>', 'g')
-  let snip_word = substitute(snip_word,
-        \ '\\'.neosnippet#get_mirror_placeholder_marker_substitute_pattern().'\|'.
-        \ '\\'.neosnippet#get_placeholder_marker_substitute_pattern(),
-        \ '\=submatch(0)[1:]', 'g')
+
+  " Substitute escaped characters.
+  let snip_word = substitute(snip_word, '\\\\', '\\', 'g')
 
   " Insert snippets.
   let next_line = getline('.')[a:col-1 :]

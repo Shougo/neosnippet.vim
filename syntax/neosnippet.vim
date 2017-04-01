@@ -42,7 +42,7 @@ syntax match   neosnippetWord
       \ '^\s\+.*$' contains=
       \neosnippetEval,neosnippetPlaceHolder,neosnippetEscape,neosnippetVariable
 syntax match   neosnippetPlaceHolder
-      \ '\\\@<!\${\d\+\%(:.\{-}\)\?\\\@<!}'
+      \ '\%(\\\@<!\|\\\\\zs\)\${\d\+\%(:.\{-}\)\?\\\@<!}'
       \ contained contains=neosnippetPlaceHolderComment
 syntax match   neosnippetVariable
       \ '\\\@<!\$\d\+' contained
