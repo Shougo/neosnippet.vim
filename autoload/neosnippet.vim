@@ -108,7 +108,7 @@ function! neosnippet#get_mirror_placeholder_marker_pattern() abort "{{{
   return '<|\d\+|>'
 endfunction"}}}
 function! neosnippet#get_mirror_placeholder_marker_substitute_pattern() abort "{{{
-  return '\$\(\d\+\)'
+  return '\\\@<!\$\(\d\+\)'
 endfunction"}}}
 
 let &cpo = s:save_cpo

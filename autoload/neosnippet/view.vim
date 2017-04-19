@@ -67,7 +67,7 @@ function! neosnippet#view#_insert(snippet, options, cur_text, col) abort "{{{
         \ '<|\1|>', 'g')
 
   " Substitute escaped characters.
-  let snip_word = substitute(snip_word, '\\\(\\\|`\)', '\1', 'g')
+  let snip_word = substitute(snip_word, '\\\(\\\|`\|\$\)', '\1', 'g')
 
   " Insert snippets.
   let next_line = getline('.')[a:col-1 :]
