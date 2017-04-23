@@ -266,6 +266,7 @@ function! neosnippet#parser#_initialize_snippet(dict, path, line, pattern, name)
         \   neosnippet#get_placeholder_marker_pattern(). '\|'.
         \   neosnippet#get_mirror_placeholder_marker_pattern().
         \   '\|\s\+\|\n\|TARGET', ' ', 'g')
+    let abbr = substitute(abbr, '\\\(\\\|`\|\$\)', '\1', 'g')
     let a:dict.abbr = a:dict.name
   else
     let abbr = a:dict.abbr
