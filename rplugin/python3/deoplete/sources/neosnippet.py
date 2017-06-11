@@ -43,6 +43,9 @@ class Source(Base):
             candidate['menu'] = candidate['menu_abbr']
 
     def gather_candidates(self, context):
+        candidates = self.__cache.get(context['filetype'], [])
         if context['filetype'] not in self.__cache:
             self.on_event(context)
-        return self.__cache.get(context['filetype'], [])
+        if not re.match(r'\w\+$', context['complete_str']):
+            candidates = [x for x in candidates if x['options']['word']]
+        return candidates
