@@ -1,11 +1,8 @@
 "=============================================================================
 " FILE: snippets.vim
-" AUTHOR:  Shougo Matsushita <Shougo.Matsu@gmail.com>
+" AUTHOR:  Shougo Matsushita <Shougo.Matsu at gmail.com>
 " License: MIT license
 "=============================================================================
-
-let s:save_cpo = &cpo
-set cpo&vim
 
 if !exists('b:undo_ftplugin')
     let b:undo_ftplugin = ''
@@ -21,6 +18,3 @@ let &l:commentstring="#%s"
 let b:undo_ftplugin .= '
     \ setlocal expandtab< shiftwidth< softtabstop< tabstop< commentstring<
     \'
-
-let &cpo = s:save_cpo
-unlet s:save_cpo

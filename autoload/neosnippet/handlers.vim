@@ -1,11 +1,8 @@
 "=============================================================================
 " FILE: handlers.vim
-" AUTHOR:  Shougo Matsushita <Shougo.Matsu@gmail.com>
+" AUTHOR:  Shougo Matsushita <Shougo.Matsu at gmail.com>
 " License: MIT license
 "=============================================================================
-
-let s:save_cpo = &cpo
-set cpo&vim
 
 function! neosnippet#handlers#_cursor_moved() abort "{{{
   let expand_stack = neosnippet#variables#expand_stack()
@@ -50,8 +47,5 @@ function! neosnippet#handlers#_restore_unnamed_register() abort "{{{
     let neosnippet.unnamed_register = ''
   endif
 endfunction"}}}
-
-let &cpo = s:save_cpo
-unlet s:save_cpo
 
 " vim: foldmethod=marker

@@ -1,11 +1,8 @@
 "=============================================================================
 " FILE: util.vim
-" AUTHOR: Shougo Matsushita <Shougo.Matsu@gmail.com>
+" AUTHOR: Shougo Matsushita <Shougo.Matsu at gmail.com>
 " License: MIT license
 "=============================================================================
-
-let s:save_cpo = &cpo
-set cpo&vim
 
 function! neosnippet#util#get_vital() abort "{{{
   if !exists('s:V')
@@ -146,8 +143,5 @@ endfunction"}}}
 function! neosnippet#util#option2list(str) abort "{{{
   return type(a:str) == type('') ? split(a:str, '\s*,\s*') : a:str
 endfunction"}}}
-
-let &cpo = s:save_cpo
-unlet s:save_cpo
 
 " vim: foldmethod=marker

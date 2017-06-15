@@ -1,11 +1,8 @@
 "=============================================================================
 " FILE: neosnippet.vim
-" AUTHOR:  Shougo Matsushita <Shougo.Matsu@gmail.com>
+" AUTHOR:  Shougo Matsushita <Shougo.Matsu at gmail.com>
 " License: MIT license
 "=============================================================================
-
-let s:save_cpo = &cpo
-set cpo&vim
 
 " Global options definition. "{{{
 call neosnippet#util#set_default(
@@ -91,8 +88,5 @@ endfunction"}}}
 function! neosnippet#get_mirror_placeholder_marker_substitute_pattern() abort "{{{
   return '\\\@<!\$\(\d\+\)'
 endfunction"}}}
-
-let &cpo = s:save_cpo
-unlet s:save_cpo
 
 " vim: foldmethod=marker

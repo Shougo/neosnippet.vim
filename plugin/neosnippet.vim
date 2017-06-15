@@ -1,6 +1,6 @@
 "=============================================================================
 " FILE: neosnippet.vim
-" AUTHOR:  Shougo Matsushita <Shougo.Matsu@gmail.com>
+" AUTHOR:  Shougo Matsushita <Shougo.Matsu at gmail.com>
 " License: MIT license
 "=============================================================================
 
@@ -10,9 +10,6 @@ elseif v:version < 704
   echoerr 'neosnippet does not work this version of Vim "' . v:version . '".'
   finish
 endif
-
-let s:save_cpo = &cpo
-set cpo&vim
 
 " Plugin key-mappings. "{{{
 inoremap <silent><expr> <Plug>(neosnippet_expand_or_jump)
@@ -68,9 +65,6 @@ command! -bar NeoSnippetClearMarkers
 "}}}
 
 let g:loaded_neosnippet = 1
-
-let &cpo = s:save_cpo
-unlet s:save_cpo
 
 " __END__
 " vim: foldmethod=marker

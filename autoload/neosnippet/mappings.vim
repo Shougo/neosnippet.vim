@@ -1,11 +1,8 @@
 "=============================================================================
 " FILE: mappings.vim
-" AUTHOR:  Shougo Matsushita <Shougo.Matsu@gmail.com>
+" AUTHOR:  Shougo Matsushita <Shougo.Matsu at gmail.com>
 " License: MIT license
 "=============================================================================
-
-let s:save_cpo = &cpo
-set cpo&vim
 
 function! neosnippet#mappings#expandable_or_jumpable() abort "{{{
   return neosnippet#mappings#expandable() || neosnippet#mappings#jumpable()
@@ -246,8 +243,5 @@ endfunction
 function! neosnippet#mappings#jump_impl() abort
   return neosnippet#mappings#_trigger('neosnippet#view#_jump')
 endfunction
-
-let &cpo = s:save_cpo
-unlet s:save_cpo
 
 " vim: foldmethod=marker

@@ -1,11 +1,8 @@
 "=============================================================================
 " FILE: view.vim
-" AUTHOR:  Shougo Matsushita <Shougo.Matsu@gmail.com>
+" AUTHOR:  Shougo Matsushita <Shougo.Matsu at gmail.com>
 " License: MIT license
 "=============================================================================
-
-let s:save_cpo = &cpo
-set cpo&vim
 
 function! neosnippet#view#_expand(cur_text, col, trigger_name) abort "{{{
   let snippets = neosnippet#helpers#get_snippets()
@@ -556,8 +553,5 @@ function! s:skip_next_auto_completion() abort "{{{
     doautocmd deoplete CompleteDone
   endif
 endfunction"}}}
-
-let &cpo = s:save_cpo
-unlet s:save_cpo
 
 " vim: foldmethod=marker

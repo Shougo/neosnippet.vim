@@ -1,11 +1,8 @@
 "=============================================================================
 " FILE: variables.vim
-" AUTHOR:  Shougo Matsushita <Shougo.Matsu@gmail.com>
+" AUTHOR:  Shougo Matsushita <Shougo.Matsu at gmail.com>
 " License: MIT license
 "=============================================================================
-
-let s:save_cpo = &cpo
-set cpo&vim
 
 function! neosnippet#variables#current_neosnippet() abort "{{{
   if !exists('b:neosnippet')
@@ -88,8 +85,5 @@ function! neosnippet#variables#data_dir() abort "{{{
 
   return g:neosnippet#data_directory
 endfunction"}}}
-
-let &cpo = s:save_cpo
-unlet s:save_cpo
 
 " vim: foldmethod=marker

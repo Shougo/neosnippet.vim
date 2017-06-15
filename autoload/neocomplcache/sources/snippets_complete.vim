@@ -1,11 +1,8 @@
 "=============================================================================
 " FILE: snippets_complete.vim
-" AUTHOR:  Shougo Matsushita <Shougo.Matsu@gmail.com>
+" AUTHOR:  Shougo Matsushita <Shougo.Matsu at gmail.com>
 " License: MIT license
 "=============================================================================
-
-let s:save_cpo = &cpo
-set cpo&vim
 
 let s:source = {
       \ 'name' : 'snippets_complete',
@@ -73,8 +70,5 @@ endfunction"}}}
 function! neocomplcache#sources#snippets_complete#define() abort "{{{
   return s:source
 endfunction"}}}
-
-let &cpo = s:save_cpo
-unlet s:save_cpo
 
 " vim: foldmethod=marker

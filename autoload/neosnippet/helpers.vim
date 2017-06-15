@@ -1,11 +1,8 @@
 "=============================================================================
 " FILE: helpers.vim
-" AUTHOR:  Shougo Matsushita <Shougo.Matsu@gmail.com>
+" AUTHOR:  Shougo Matsushita <Shougo.Matsu at gmail.com>
 " License: MIT license
 "=============================================================================
-
-let s:save_cpo = &cpo
-set cpo&vim
 
 function! neosnippet#helpers#get_cursor_snippet(snippets, cur_text) abort "{{{
   let cur_word = matchstr(a:cur_text, '\S\+$')
@@ -183,8 +180,5 @@ function! s:get_sources_filetypes(filetype) abort "{{{
         \ split(((a:filetype == '') ? 'nothing' : a:filetype), '\.')
   return ['_'] + filetypes
 endfunction"}}}
-
-let &cpo = s:save_cpo
-unlet s:save_cpo
 
 " vim: foldmethod=marker

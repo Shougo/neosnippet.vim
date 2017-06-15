@@ -1,11 +1,8 @@
 "=============================================================================
 " FILE: neosnippet.vim
-" AUTHOR:  Shougo Matsushita <Shougo.Matsu@gmail.com>
+" AUTHOR:  Shougo Matsushita <Shougo.Matsu at gmail.com>
 " License: MIT license
 "=============================================================================
-
-let s:save_cpo = &cpo
-set cpo&vim
 
 function! unite#sources#neosnippet#define() abort "{{{
   let kind = {
@@ -139,8 +136,5 @@ function! s:get_keyword_pos(cur_text) abort "{{{
 
   return cur_keyword_pos
 endfunction"}}}
-
-let &cpo = s:save_cpo
-unlet s:save_cpo
 
 " vim: foldmethod=marker

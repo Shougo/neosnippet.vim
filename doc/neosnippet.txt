@@ -2,7 +2,7 @@
 		The neo-snippet plugin contains snippet source
 
 Version: 5.0
-Author: Shougo <Shougo.Matsu@gmail.com>
+Author: Shougo <Shougo.Matsu at gmail.com>
 License: MIT license
 
 CONTENTS			*neosnippet-contents*

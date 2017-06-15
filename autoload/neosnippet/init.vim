@@ -1,11 +1,8 @@
 "=============================================================================
 " FILE: init.vim
-" AUTHOR:  Shougo Matsushita <Shougo.Matsu@gmail.com>
+" AUTHOR:  Shougo Matsushita <Shougo.Matsu at gmail.com>
 " License: MIT license
 "=============================================================================
-
-let s:save_cpo = &cpo
-set cpo&vim
 
 function! neosnippet#init#_initialize() abort "{{{
   let s:is_initialized = 1
@@ -89,8 +86,5 @@ function! s:initialize_others() abort "{{{
     endfunction
   endif"}}}
 endfunction"}}}
-
-let &cpo = s:save_cpo
-unlet s:save_cpo
 
 " vim: foldmethod=marker

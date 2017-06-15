@@ -1,11 +1,8 @@
 "=============================================================================
 " FILE: neosnippet_file.vim
-" AUTHOR:  Shougo Matsushita <Shougo.Matsu@gmail.com>
+" AUTHOR:  Shougo Matsushita <Shougo.Matsu at gmail.com>
 " License: MIT license
 "=============================================================================
-
-let s:save_cpo = &cpo
-set cpo&vim
 
 function! unite#sources#neosnippet_file#define() abort "{{{
   return [s:source_user, s:source_runtime]
@@ -90,8 +87,5 @@ function! s:get_snippet_candidates(dirs) abort "{{{
 
   return _
 endfunction "}}}
-
-let &cpo = s:save_cpo
-unlet s:save_cpo
 
 " vim: foldmethod=marker

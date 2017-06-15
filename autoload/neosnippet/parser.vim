@@ -1,11 +1,8 @@
 "=============================================================================
 " FILE: parser.vim
-" AUTHOR:  Shougo Matsushita <Shougo.Matsu@gmail.com>
+" AUTHOR:  Shougo Matsushita <Shougo.Matsu at gmail.com>
 " License: MIT license
 "=============================================================================
-
-let s:save_cpo = &cpo
-set cpo&vim
 
 let s:Cache = neosnippet#util#get_vital().import('System.Cache.Deprecated')
 
@@ -408,9 +405,5 @@ function! neosnippet#parser#_get_in_paren(key, pair, str) abort "{{{
 
   return ''
 endfunction"}}}
-
-
-let &cpo = s:save_cpo
-unlet s:save_cpo
 
 " vim: foldmethod=marker

@@ -1,11 +1,8 @@
 "=============================================================================
 " FILE: commands.vim
-" AUTHOR:  Shougo Matsushita <Shougo.Matsu@gmail.com>
+" AUTHOR:  Shougo Matsushita <Shougo.Matsu at gmail.com>
 " License: MIT license
 "=============================================================================
-
-let s:save_cpo = &cpo
-set cpo&vim
 
 " Variables  "{{{
 let s:edit_options = [
@@ -204,8 +201,5 @@ function! s:get_snippet_files(path, filetype) abort "{{{
   endfor
   return reverse(s:get_list().uniq(snippet_files))
 endfunction"}}}
-
-let &cpo = s:save_cpo
-unlet s:save_cpo
 
 " vim: foldmethod=marker
