@@ -46,6 +46,8 @@ class Source(Base):
         candidates = self.__cache.get(context['filetype'], [])
         if context['filetype'] not in self.__cache:
             self.on_event(context)
-        if not re.match(r'\w\+$', context['complete_str']):
+        m1 = re.match(r'\w+$', context['complete_str'])
+        m2 = re.match(r'\S+$', context['complete_str'])
+        if m1 and m2 and m1.group(0) != m2.group(0):
             candidates = [x for x in candidates if x['options']['word']]
         return candidates
