@@ -216,6 +216,15 @@ g:neosnippet#enable_completed_snippet
 		prototype.
 
 		The default value is 0.
+		
+					*g:neosnippet#arguments_are_optional*
+g:neosnippet#arguments_are_optional
+		If this variable is not 0, neosnippet expanded function
+		arguments will conceal commas.
+		
+		Useful for languages where arguments are optional by default.
+
+		The default value is 1.
 
 					*g:neosnippet#enable_auto_clear_markers*
 g:neosnippet#enable_auto_clear_markers
