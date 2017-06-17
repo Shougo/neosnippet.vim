@@ -388,6 +388,11 @@ EXAMPLES					*neosnippet-examples*
 	" Enable snipMate compatibility feature.
 	" let g:neosnippet#enable_snipmate_compatibility = 1
 
+	" Expand the completed snippet trigger by <CR>.
+	"imap <expr><CR>
+	"\ (pumvisible() && neosnippet#expandable()) ?
+	"\ "\<Plug>(neosnippet_expand)" : "\<CR>"
+
 ==============================================================================
 SNIPPET SYNTAX					*neosnippet-snippet-syntax*
 
