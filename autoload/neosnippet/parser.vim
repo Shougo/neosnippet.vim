@@ -339,9 +339,7 @@ function! neosnippet#parser#_get_completed_snippet(completed_item, cur_text, nex
     for arg in split(substitute(
           \ neosnippet#parser#_get_in_paren('<', '>', abbr),
           \ '<\zs.\{-}\ze>', '', 'g'), '[^[]\zs\s*,\s*')
-      let args .= printf('${%d:#:%s%s}',
-            \ cnt, ((args != '') ? ', ' : ''),
-            \ escape(arg, '{}'))
+      let args .= neosnippet#parser#_conceal_argument(arg, cnt, args)
       let cnt += 1
     endfor
     let snippet .= args
@@ -362,9 +360,7 @@ function! neosnippet#parser#_get_completed_snippet(completed_item, cur_text, nex
       continue
     endif
 
-    let args .= printf('${%d:#:%s%s}',
-          \ cnt, ((args != '') ? ', ' : ''),
-          \ escape(arg, '{}'))
+    let args .= neosnippet#parser#_conceal_argument(arg, cnt, args)
     let cnt += 1
   endfor
   let snippet .= args
@@ -406,4 +402,16 @@ function! neosnippet#parser#_get_in_paren(key, pair, str) abort "{{{
   return ''
 endfunction"}}}
 
+function! neosnippet#parser#_conceal_argument(arg, cnt, args) abort "{{{
+  let outside = ''
+  let inside = ''
+  if (a:args != '')
+    if g:neosnippet#arguments_are_optional
+      let inside = ', '
+    else
+      let outside = ', '
+    endif
+  endif
+  return printf('%s${%d:#:%s%s}', outside, a:cnt, inside, escape(a:arg, '{}'))
+endfunction"}}}
 " vim: foldmethod=marker
