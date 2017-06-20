@@ -406,7 +406,7 @@ function! neosnippet#parser#_conceal_argument(arg, cnt, args) abort "{{{
   let outside = ''
   let inside = ''
   if (a:args != '')
-    if g:neosnippet#arguments_are_optional
+    if g:neosnippet#enable_optional_arguments
       let inside = ', '
     else
       let outside = ', '

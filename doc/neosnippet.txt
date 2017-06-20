@@ -217,12 +217,14 @@ g:neosnippet#enable_completed_snippet
 
 		The default value is 0.
 		
-					*g:neosnippet#arguments_are_optional*
-g:neosnippet#arguments_are_optional
-		If this variable is not 0, neosnippet expanded function
-		arguments will conceal commas.
+					*g:neosnippet#enable_optional_arguments*
+g:neosnippet#enable_optional_arguments
+		If this variable is not 0, neosnippet will conceal commas in
+		expanded arguments from completed snippets.
 		
 		Useful for languages where arguments are optional by default.
+
+		Note: For use with |g:neosnippet#enable_completed_snippet| = 1
 
 		The default value is 1.
 
