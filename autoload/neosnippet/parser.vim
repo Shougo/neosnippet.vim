@@ -357,7 +357,9 @@ function! neosnippet#parser#_get_completed_snippet(completed_item, cur_text, nex
         \ neosnippet#parser#_get_in_paren(key, pair, abbr),
         \ key.'\zs.\{-}\ze'.pair . '\|<\zs.\{-}\ze>', '', 'g'),
         \ '[^[]\zs\s*,\s*')
-    if key ==# '(' && arg ==# 'self' && &filetype ==# 'python'
+    if key ==# '(' && (
+          \ (&filetype ==# 'python' && arg ==# 'self') ||
+          \ (&filetype ==# 'rust' && arg =~# '\m^&\?\(mut \)\?self$'))
       " Ignore self argument
       continue
     endif
