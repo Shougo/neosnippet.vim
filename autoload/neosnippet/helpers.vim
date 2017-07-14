@@ -158,10 +158,10 @@ function! neosnippet#helpers#substitute_selected_text(type, text) abort "{{{
 endfunction"}}}
 
 function! neosnippet#helpers#vim2json(expr) abort "{{{
-  return has('patch-7.4.1498') ? js_encode(a:expr) : string(a:expr)
+  return has('patch-7.4.1498') ? json_encode(a:expr) : string(a:expr)
 endfunction "}}}
 function! neosnippet#helpers#json2vim(expr) abort "{{{
-  sandbox return has('patch-7.4.1498') ? js_decode(a:expr) : eval(a:expr)
+  sandbox return has('patch-7.4.1498') ? json_decode(a:expr) : eval(a:expr)
 endfunction "}}}
 
 function! s:is_beginning_of_line(cur_text) abort "{{{
