@@ -144,4 +144,22 @@ function! neosnippet#util#option2list(str) abort "{{{
   return type(a:str) == type('') ? split(a:str, '\s*,\s*') : a:str
 endfunction"}}}
 
+function! neosnippet#util#uniq(list) abort
+  let list = copy(a:list)
+  let i = 0
+  let seen = {}
+  while i < len(list)
+    let key = list[i]
+    if key !=# '' && has_key(seen, key)
+      call remove(list, i)
+    else
+      if key !=# ''
+        let seen[key] = 1
+      endif
+      let i += 1
+    endif
+  endwhile
+  return list
+endfunction
+
 " vim: foldmethod=marker
