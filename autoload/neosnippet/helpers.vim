@@ -178,7 +178,7 @@ function! s:get_sources_filetypes(filetype) abort "{{{
         \ exists('*context_filetype#get_filetypes') ?
         \   context_filetype#get_filetypes(a:filetype) :
         \ split(((a:filetype == '') ? 'nothing' : a:filetype), '\.')
-  return neosnippet#util#uniq(['_', a:filetype] + filetypes)
+  return neosnippet#util#uniq(['_'] + filetypes + [a:filetype])
 endfunction"}}}
 
 " vim: foldmethod=marker
