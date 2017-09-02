@@ -147,13 +147,8 @@ function! neosnippet#mappings#_expand(trigger) abort "{{{
 endfunction"}}}
 
 function! s:snippets_expand(cur_text, col) abort "{{{
-  if s:enabled_completed_snippet()
-    let snippet = neosnippet#parser#_get_completed_snippet(
-          \ v:completed_item, a:cur_text, neosnippet#util#get_next_text())
-    if snippet != ''
-      call neosnippet#view#_insert(snippet, {}, a:cur_text, a:col)
-      return 0
-    endif
+  if s:expand_completed_snippets(a:cur_text, a:col)
+    return 0
   endif
 
   let cur_word = neosnippet#helpers#get_cursor_snippet(
@@ -166,6 +161,38 @@ function! s:snippets_expand(cur_text, col) abort "{{{
     return 0
   endif
 
+  return 1
+endfunction"}}}
+function! s:expand_completed_snippets(cur_text, col) abort "{{{
+  if !s:enabled_completed_snippet()
+    return 0
+  endif
+
+  let cur_text = a:cur_text
+
+  if !empty(get(g:, 'deoplete#_context', []))
+        \ && has_key(v:completed_item, 'word')
+    let completed_candidates = filter(copy(g:deoplete#_context),
+          \ "has_key(v:val, 'snippet') && has_key(v:val, 'snippet_trigger')
+          \  && v:val.word ==# v:completed_item.word")
+    if !empty(completed_candidates)
+      let v:completed_item.snippet = completed_candidates[0].snippet
+      let v:completed_item.snippet_trigger =
+            \ completed_candidates[0].snippet_trigger
+    endif
+  endif
+
+  let snippet = neosnippet#parser#_get_completed_snippet(
+        \ v:completed_item, cur_text, neosnippet#util#get_next_text())
+  if snippet == ''
+    return 0
+  endif
+
+  if has_key(v:completed_item, 'snippet_trigger')
+    let cur_text = cur_text[: -1-len(v:completed_item.snippet_trigger)]
+  endif
+
+  call neosnippet#view#_insert(snippet, {}, cur_text, a:col)
   return 1
 endfunction"}}}
 
