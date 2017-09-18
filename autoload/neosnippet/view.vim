@@ -531,9 +531,7 @@ function! s:eval_snippet(snippet_text) abort "{{{
     let prev_match = matchend(a:snippet_text,
           \ '\\\@<!`.\{-}\\\@<!`', match)
     let expr = a:snippet_text[match+1 : prev_match - 2]
-    if expr != ''
-      let snip_word .= eval(expr)
-    endif
+    let snip_word .= (expr == '' ? '`' : eval(expr))
 
     let match = match(a:snippet_text, '\\\@<!`.\{-}\\\@<!`', prev_match)
   endwhile
