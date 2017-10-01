@@ -4,7 +4,7 @@
 " License: MIT license
 "=============================================================================
 
-function! neosnippet#variables#current_neosnippet() abort "{{{
+function! neosnippet#variables#current_neosnippet() abort
   if !exists('b:neosnippet')
     let b:neosnippet = {
           \ 'snippets' : {},
@@ -17,42 +17,42 @@ function! neosnippet#variables#current_neosnippet() abort "{{{
   endif
 
   return b:neosnippet
-endfunction"}}}
-function! neosnippet#variables#expand_stack() abort "{{{
+endfunction
+function! neosnippet#variables#expand_stack() abort
   if !exists('s:expand_stack')
     let s:expand_stack = []
   endif
 
   return s:expand_stack
-endfunction"}}}
-function! neosnippet#variables#pop_expand_stack() abort "{{{
+endfunction
+function! neosnippet#variables#pop_expand_stack() abort
   let s:expand_stack = s:expand_stack[: -2]
-endfunction"}}}
-function! neosnippet#variables#clear_expand_stack() abort "{{{
+endfunction
+function! neosnippet#variables#clear_expand_stack() abort
   let s:expand_stack = []
-endfunction"}}}
-function! neosnippet#variables#snippets() abort "{{{
+endfunction
+function! neosnippet#variables#snippets() abort
   if !exists('s:snippets')
     let s:snippets= {}
   endif
 
   return s:snippets
-endfunction"}}}
-function! neosnippet#variables#set_snippets(list) abort "{{{
+endfunction
+function! neosnippet#variables#set_snippets(list) abort
   if !exists('s:snippets')
     let s:snippets= {}
   endif
 
   let s:snippets = a:list
-endfunction"}}}
-function! neosnippet#variables#snippets_dir() abort "{{{
+endfunction
+function! neosnippet#variables#snippets_dir() abort
   " Set snippets_dir.
   let snippets_dir = map(neosnippet#util#option2list(
         \   g:neosnippet#snippets_directory),
         \ 'neosnippet#util#expand(v:val)')
   return map(snippets_dir, 'substitute(v:val, "[\\\\/]$", "", "")')
-endfunction"}}}
-function! neosnippet#variables#runtime_dir() abort "{{{
+endfunction
+function! neosnippet#variables#runtime_dir() abort
   " Set runtime dir.
   let runtime_dir = split(globpath(&runtimepath, 'neosnippets'), '\n')
   if empty(runtime_dir) && empty(g:neosnippet#disable_runtime_snippets)
@@ -71,8 +71,8 @@ function! neosnippet#variables#runtime_dir() abort "{{{
   endif
 
   return map(runtime_dir, 'substitute(v:val, "[\\\\/]$", "", "")')
-endfunction"}}}
-function! neosnippet#variables#data_dir() abort "{{{
+endfunction
+function! neosnippet#variables#data_dir() abort
   let g:neosnippet#data_directory =
         \ substitute(fnamemodify(get(
         \   g:, 'neosnippet#data_directory',
@@ -84,6 +84,4 @@ function! neosnippet#variables#data_dir() abort "{{{
   endif
 
   return g:neosnippet#data_directory
-endfunction"}}}
-
-" vim: foldmethod=marker
+endfunction

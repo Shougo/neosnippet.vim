@@ -4,28 +4,28 @@
 " License: MIT license
 "=============================================================================
 
-function! neosnippet#init#_initialize() abort "{{{
+function! neosnippet#init#_initialize() abort
   let s:is_initialized = 1
 
   call s:initialize_others()
   call s:initialize_cache()
-endfunction"}}}
+endfunction
 
-function! neosnippet#init#check() abort "{{{
+function! neosnippet#init#check() abort
   if !exists('s:is_initialized')
     call neosnippet#init#_initialize()
   endif
-endfunction"}}}
+endfunction
 
-function! s:initialize_cache() abort "{{{
+function! s:initialize_cache() abort
   " Make cache for _ snippets.
   call neosnippet#commands#_make_cache('_')
 
   " Initialize check.
   call neosnippet#commands#_make_cache(&filetype)
-endfunction"}}}
-function! s:initialize_others() abort "{{{
-  augroup neosnippet "{{{
+endfunction
+function! s:initialize_others() abort
+  augroup neosnippet
     autocmd!
     " Set make cache event.
     autocmd FileType *
@@ -35,7 +35,7 @@ function! s:initialize_others() abort "{{{
           \ call neosnippet#variables#set_snippets({})
     autocmd BufEnter *
           \ call neosnippet#mappings#_clear_select_mode_mappings()
-  augroup END"}}}
+  augroup END
 
   if g:neosnippet#enable_auto_clear_markers
     autocmd neosnippet CursorMoved,CursorMovedI *
@@ -72,7 +72,7 @@ function! s:initialize_others() abort "{{{
 
   call neosnippet#mappings#_clear_select_mode_mappings()
 
-  if g:neosnippet#enable_snipmate_compatibility "{{{
+  if g:neosnippet#enable_snipmate_compatibility
     " For snipMate function.
     function! Filename(...) abort
       let filename = expand('%:t:r')
@@ -84,7 +84,5 @@ function! s:initialize_others() abort "{{{
         return substitute(a:1, '$1', filename, 'g')
       endif
     endfunction
-  endif"}}}
-endfunction"}}}
-
-" vim: foldmethod=marker
+  endif
+endfunction

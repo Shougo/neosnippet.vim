@@ -4,7 +4,7 @@
 " License: MIT license
 "=============================================================================
 
-" Global options definition. "{{{
+" Global options definition.
 call neosnippet#util#set_default(
       \ 'g:neosnippet#disable_runtime_snippets', {})
 call neosnippet#util#set_default(
@@ -31,64 +31,62 @@ call neosnippet#util#set_default(
 call neosnippet#util#set_default(
       \ 'g:neosnippet#_completed_pairs',
       \ {'_':{ '(' : ')', '{' : '}', '"' : '"', '[' : ']' }})
-"}}}
 
-function! neosnippet#expandable_or_jumpable() abort "{{{
+
+function! neosnippet#expandable_or_jumpable() abort
   return neosnippet#mappings#expandable_or_jumpable()
-endfunction"}}}
-function! neosnippet#expandable() abort "{{{
+endfunction
+function! neosnippet#expandable() abort
   return neosnippet#mappings#expandable()
-endfunction"}}}
-function! neosnippet#jumpable() abort "{{{
+endfunction
+function! neosnippet#jumpable() abort
   return neosnippet#mappings#jumpable()
-endfunction"}}}
-function! neosnippet#anonymous(snippet) abort "{{{
+endfunction
+function! neosnippet#anonymous(snippet) abort
   return neosnippet#mappings#_anonymous(a:snippet)
-endfunction"}}}
-function! neosnippet#expand(trigger) abort "{{{
+endfunction
+function! neosnippet#expand(trigger) abort
   return neosnippet#mappings#_expand(a:trigger)
-endfunction"}}}
+endfunction
 
-function! neosnippet#get_snippets_directory() abort "{{{
+function! neosnippet#get_snippets_directory() abort
   return neosnippet#helpers#get_snippets_directory()
-endfunction"}}}
-function! neosnippet#get_user_snippets_directory() abort "{{{
+endfunction
+function! neosnippet#get_user_snippets_directory() abort
   return copy(neosnippet#variables#snippets_dir())
-endfunction"}}}
-function! neosnippet#get_runtime_snippets_directory() abort "{{{
+endfunction
+function! neosnippet#get_runtime_snippets_directory() abort
   return copy(neosnippet#variables#runtime_dir())
-endfunction"}}}
+endfunction
 
 " Get marker patterns.
-function! neosnippet#get_placeholder_target_marker_pattern() abort "{{{
+function! neosnippet#get_placeholder_target_marker_pattern() abort
   return '\%(\\\@<!\|\\\\\zs\)\${\d\+:\(#:\)\?TARGET\%(:.\{-}\)\?\\\@<!}'
-endfunction"}}}
-function! neosnippet#get_placeholder_marker_pattern() abort "{{{
+endfunction
+function! neosnippet#get_placeholder_marker_pattern() abort
   return '<`\d\+\%(:.\{-}\)\?\\\@<!`>'
-endfunction"}}}
-function! neosnippet#get_placeholder_marker_substitute_pattern() abort "{{{
+endfunction
+function! neosnippet#get_placeholder_marker_substitute_pattern() abort
   return '\%(\\\@<!\|\\\\\zs\)\${\(\d\+\%(:.\{-}\)\?\\\@<!\)}'
-endfunction"}}}
-function! neosnippet#get_placeholder_marker_substitute_nonzero_pattern() abort "{{{
+endfunction
+function! neosnippet#get_placeholder_marker_substitute_nonzero_pattern() abort
   return '\%(\\\@<!\|\\\\\zs\)\${\([1-9]\d*\%(:.\{-}\)\?\\\@<!\)}'
-endfunction"}}}
-function! neosnippet#get_placeholder_marker_substitute_zero_pattern() abort "{{{
+endfunction
+function! neosnippet#get_placeholder_marker_substitute_zero_pattern() abort
   return '\%(\\\@<!\|\\\\\zs\)\${\(0\%(:.\{-}\)\?\\\@<!\)}'
-endfunction"}}}
-function! neosnippet#get_placeholder_marker_default_pattern() abort "{{{
+endfunction
+function! neosnippet#get_placeholder_marker_default_pattern() abort
   return '<`\d\+:\zs.\{-}\ze\\\@<!`>'
-endfunction"}}}
-function! neosnippet#get_sync_placeholder_marker_pattern() abort "{{{
+endfunction
+function! neosnippet#get_sync_placeholder_marker_pattern() abort
   return '<{\d\+\%(:.\{-}\)\?\\\@<!}>'
-endfunction"}}}
-function! neosnippet#get_sync_placeholder_marker_default_pattern() abort "{{{
+endfunction
+function! neosnippet#get_sync_placeholder_marker_default_pattern() abort
   return '<{\d\+:\zs.\{-}\ze\\\@<!}>'
-endfunction"}}}
-function! neosnippet#get_mirror_placeholder_marker_pattern() abort "{{{
+endfunction
+function! neosnippet#get_mirror_placeholder_marker_pattern() abort
   return '<|\d\+|>'
-endfunction"}}}
-function! neosnippet#get_mirror_placeholder_marker_substitute_pattern() abort "{{{
+endfunction
+function! neosnippet#get_mirror_placeholder_marker_substitute_pattern() abort
   return '\\\@<!\$\(\d\+\)'
-endfunction"}}}
-
-" vim: foldmethod=marker
+endfunction

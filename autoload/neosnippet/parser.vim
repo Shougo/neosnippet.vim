@@ -6,7 +6,7 @@
 
 let s:Cache = neosnippet#util#get_vital().import('System.Cache.Deprecated')
 
-function! neosnippet#parser#_parse_snippets(filename) abort "{{{
+function! neosnippet#parser#_parse_snippets(filename) abort
   if !filereadable(a:filename)
     call neosnippet#util#print_error(
           \ printf('snippet file "%s" is not found.', a:filename))
@@ -32,8 +32,8 @@ function! neosnippet#parser#_parse_snippets(filename) abort "{{{
   endif
 
   return snippets
-endfunction"}}}
-function! neosnippet#parser#_parse_snippet(filename, trigger) abort "{{{
+endfunction
+function! neosnippet#parser#_parse_snippet(filename, trigger) abort
   if !filereadable(a:filename)
     call neosnippet#util#print_error(
           \ printf('snippet file "%s" is not found.', a:filename))
@@ -48,9 +48,9 @@ function! neosnippet#parser#_parse_snippet(filename, trigger) abort "{{{
 
   return neosnippet#parser#_initialize_snippet(
         \ snippet_dict, a:filename, 1, '', a:trigger)
-endfunction"}}}
+endfunction
 
-function! s:parse(snippets_file) abort "{{{
+function! s:parse(snippets_file) abort
   let dup_check = {}
   let snippet_dict = {}
   let linenr = 1
@@ -120,9 +120,9 @@ function! s:parse(snippets_file) abort "{{{
   endif
 
   return [snippets, sourced]
-endfunction"}}}
+endfunction
 
-function! s:parse_snippet_name(snippets_file, line, linenr, dup_check) abort "{{{
+function! s:parse_snippet_name(snippets_file, line, linenr, dup_check) abort
   " Initialize snippet dict.
   let snippet_dict = {
         \ 'word' : '',
@@ -162,9 +162,9 @@ function! s:parse_snippet_name(snippets_file, line, linenr, dup_check) abort "{{
   endif
 
   return snippet_dict
-endfunction"}}}
+endfunction
 
-function! s:add_snippet_attribute(snippets_file, line, linenr, snippet_dict) abort "{{{
+function! s:add_snippet_attribute(snippets_file, line, linenr, snippet_dict) abort
   " Allow overriding/setting of the description (abbr) of the snippet.
   " This will override what was set via the snippet line.
   if a:line =~ '^abbr\s'
@@ -203,9 +203,9 @@ function! s:add_snippet_attribute(snippets_file, line, linenr, snippet_dict) abo
     call neosnippet#util#print_error(
           \ printf('Invalid syntax : "%s"', a:line))
   endif
-endfunction"}}}
+endfunction
 
-function! s:set_snippet_dict(snippet_dict, snippets, dup_check, snippets_file) abort "{{{
+function! s:set_snippet_dict(snippet_dict, snippets, dup_check, snippets_file) abort
   if empty(a:snippet_dict)
     return
   endif
@@ -225,9 +225,9 @@ function! s:set_snippet_dict(snippet_dict, snippets, dup_check, snippets_file) a
     let a:snippets[alias] = alias_snippet
     let a:dup_check[alias] = alias_snippet
   endfor
-endfunction"}}}
+endfunction
 
-function! neosnippet#parser#_initialize_snippet(dict, path, line, pattern, name) abort "{{{
+function! neosnippet#parser#_initialize_snippet(dict, path, line, pattern, name) abort
   let a:dict.word = substitute(a:dict.word, '\n\+$', '', '')
   if a:dict.word !~ '\n'
         \ && a:dict.word !~
@@ -265,9 +265,9 @@ function! neosnippet#parser#_initialize_snippet(dict, path, line, pattern, name)
   endif
 
   return snippet
-endfunction"}}}
+endfunction
 
-function! neosnippet#parser#_initialize_snippet_options() abort "{{{
+function! neosnippet#parser#_initialize_snippet_options() abort
   return {
         \ 'head' : 0,
         \ 'word' :
@@ -275,9 +275,9 @@ function! neosnippet#parser#_initialize_snippet_options() abort "{{{
         \ 'indent' : 0,
         \ 'oneshot' : 0,
         \ }
-endfunction"}}}
+endfunction
 
-function! neosnippet#parser#_get_completed_snippet(completed_item, cur_text, next_text) abort "{{{
+function! neosnippet#parser#_get_completed_snippet(completed_item, cur_text, next_text) abort
   let item = a:completed_item
 
   if strridx(a:cur_text, item.word) != len(a:cur_text) - len(item.word)
@@ -376,9 +376,9 @@ function! neosnippet#parser#_get_completed_snippet(completed_item, cur_text, nex
   let snippet .= '${' . cnt . '}'
 
   return snippet
-endfunction"}}}
+endfunction
 
-function! neosnippet#parser#_get_in_paren(key, pair, str) abort "{{{
+function! neosnippet#parser#_get_in_paren(key, pair, str) abort
   let s = ''
   let level = 0
   for c in split(a:str, '\zs')
@@ -402,9 +402,9 @@ function! neosnippet#parser#_get_in_paren(key, pair, str) abort "{{{
   endfor
 
   return ''
-endfunction"}}}
+endfunction
 
-function! neosnippet#parser#_conceal_argument(arg, cnt, args) abort "{{{
+function! neosnippet#parser#_conceal_argument(arg, cnt, args) abort
   let outside = ''
   let inside = ''
   if (a:args != '')
@@ -415,5 +415,4 @@ function! neosnippet#parser#_conceal_argument(arg, cnt, args) abort "{{{
     endif
   endif
   return printf('%s${%d:#:%s%s}', outside, a:cnt, inside, escape(a:arg, '{}'))
-endfunction"}}}
-" vim: foldmethod=marker
+endfunction

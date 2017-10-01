@@ -4,22 +4,22 @@
 " License: MIT license
 "=============================================================================
 
-function! neosnippet#mappings#expandable_or_jumpable() abort "{{{
+function! neosnippet#mappings#expandable_or_jumpable() abort
   return neosnippet#mappings#expandable() || neosnippet#mappings#jumpable()
-endfunction"}}}
-function! neosnippet#mappings#expandable() abort "{{{
+endfunction
+function! neosnippet#mappings#expandable() abort
   " Check snippet trigger.
   return neosnippet#mappings#completed_expandable()
         \ || neosnippet#helpers#get_cursor_snippet(
         \      neosnippet#helpers#get_snippets('i'),
         \      neosnippet#util#get_cur_text()) != ''
-endfunction"}}}
-function! neosnippet#mappings#jumpable() abort "{{{
+endfunction
+function! neosnippet#mappings#jumpable() abort
   " Found snippet placeholder.
   return search(neosnippet#get_placeholder_marker_pattern(). '\|'
             \ .neosnippet#get_sync_placeholder_marker_pattern(), 'nw') > 0
-endfunction"}}}
-function! neosnippet#mappings#completed_expandable() abort "{{{
+endfunction
+function! neosnippet#mappings#completed_expandable() abort
   if !s:enabled_completed_snippet()
     return 0
   endif
@@ -28,14 +28,14 @@ function! neosnippet#mappings#completed_expandable() abort "{{{
         \ v:completed_item, neosnippet#util#get_cur_text(),
         \ neosnippet#util#get_next_text())
   return snippet != ''
-endfunction"}}}
-function! s:enabled_completed_snippet() abort "{{{
+endfunction
+function! s:enabled_completed_snippet() abort
   return exists('v:completed_item')
         \ && !empty(v:completed_item)
         \ && g:neosnippet#enable_completed_snippet
-endfunction"}}}
+endfunction
 
-function! neosnippet#mappings#_clear_select_mode_mappings() abort "{{{
+function! neosnippet#mappings#_clear_select_mode_mappings() abort
   if !g:neosnippet#disable_select_mode_mappings
     return
   endif
@@ -56,9 +56,9 @@ function! neosnippet#mappings#_clear_select_mode_mappings() abort "{{{
   snoremap <BS>     a<BS>
   snoremap <Del>    a<BS>
   snoremap <C-h>    a<BS>
-endfunction"}}}
+endfunction
 
-function! neosnippet#mappings#_register_oneshot_snippet() abort "{{{
+function! neosnippet#mappings#_register_oneshot_snippet() abort
   let trigger = input('Please input snippet trigger: ', 'oneshot')
   if trigger == ''
     return
@@ -84,9 +84,9 @@ function! neosnippet#mappings#_register_oneshot_snippet() abort "{{{
         \ '', 0, '', trigger)
 
   echo 'Registered trigger : ' . trigger
-endfunction"}}}
+endfunction
 
-function! neosnippet#mappings#_expand_target() abort "{{{
+function! neosnippet#mappings#_expand_target() abort
   let trigger = input('Please input snippet trigger: ',
         \ '', 'customlist,neosnippet#commands#_complete_target_snippets')
   let neosnippet = neosnippet#variables#current_neosnippet()
@@ -102,8 +102,8 @@ function! neosnippet#mappings#_expand_target() abort "{{{
   endif
 
   call neosnippet#mappings#_expand_target_trigger(trigger)
-endfunction"}}}
-function! neosnippet#mappings#_expand_target_trigger(trigger) abort "{{{
+endfunction
+function! neosnippet#mappings#_expand_target_trigger(trigger) abort
   let neosnippet = neosnippet#variables#current_neosnippet()
   let neosnippet.target = substitute(
         \ neosnippet#helpers#get_selected_text(visualmode(), 1), '\n$', '', '')
@@ -128,25 +128,25 @@ function! neosnippet#mappings#_expand_target_trigger(trigger) abort "{{{
     call cursor(0, col('.') - 1)
     stopinsert
   endif
-endfunction"}}}
+endfunction
 
-function! neosnippet#mappings#_anonymous(snippet) abort "{{{
+function! neosnippet#mappings#_anonymous(snippet) abort
   let [cur_text, col, expr] = neosnippet#mappings#_pre_trigger()
   let expr .= printf("\<ESC>:call neosnippet#view#_insert(%s, {}, %s, %d)\<CR>",
         \ string(a:snippet), string(cur_text), col)
 
   return expr
-endfunction"}}}
-function! neosnippet#mappings#_expand(trigger) abort "{{{
+endfunction
+function! neosnippet#mappings#_expand(trigger) abort
   let [cur_text, col, expr] = neosnippet#mappings#_pre_trigger()
 
   let expr .= printf("\<ESC>:call neosnippet#view#_expand(%s, %d, %s)\<CR>",
         \ string(cur_text), col, string(a:trigger))
 
   return expr
-endfunction"}}}
+endfunction
 
-function! s:snippets_expand(cur_text, col) abort "{{{
+function! s:snippets_expand(cur_text, col) abort
   if s:expand_completed_snippets(a:cur_text, a:col)
     return 0
   endif
@@ -162,8 +162,8 @@ function! s:snippets_expand(cur_text, col) abort "{{{
   endif
 
   return 1
-endfunction"}}}
-function! s:expand_completed_snippets(cur_text, col) abort "{{{
+endfunction
+function! s:expand_completed_snippets(cur_text, col) abort
   if !s:enabled_completed_snippet()
     return 0
   endif
@@ -194,15 +194,15 @@ function! s:expand_completed_snippets(cur_text, col) abort "{{{
 
   call neosnippet#view#_insert(snippet, {}, cur_text, a:col)
   return 1
-endfunction"}}}
+endfunction
 
-function! s:snippets_expand_or_jump(cur_text, col) abort "{{{
+function! s:snippets_expand_or_jump(cur_text, col) abort
   if s:snippets_expand(a:cur_text, a:col)
     call neosnippet#view#_jump('', a:col)
   endif
-endfunction"}}}
+endfunction
 
-function! s:snippets_jump_or_expand(cur_text, col) abort "{{{
+function! s:snippets_jump_or_expand(cur_text, col) abort
   if search(neosnippet#get_placeholder_marker_pattern(). '\|'
             \ .neosnippet#get_sync_placeholder_marker_pattern(), 'nw') > 0
     " Found snippet placeholder.
@@ -210,13 +210,13 @@ function! s:snippets_jump_or_expand(cur_text, col) abort "{{{
   else
     return s:snippets_expand(a:cur_text, a:col)
   endif
-endfunction"}}}
+endfunction
 
-function! s:SID_PREFIX() abort "{{{
+function! s:SID_PREFIX() abort
   return matchstr(expand('<sfile>'), '<SNR>\d\+_\ze\w\+$')
-endfunction"}}}
+endfunction
 
-function! neosnippet#mappings#_trigger(function) abort "{{{
+function! neosnippet#mappings#_trigger(function) abort
   let [cur_text, col, expr] = neosnippet#mappings#_pre_trigger()
 
   if !neosnippet#mappings#expandable_or_jumpable()
@@ -227,9 +227,9 @@ function! neosnippet#mappings#_trigger(function) abort "{{{
         \ a:function, string(cur_text), col)
 
   return expr
-endfunction"}}}
+endfunction
 
-function! neosnippet#mappings#_pre_trigger() abort "{{{
+function! neosnippet#mappings#_pre_trigger() abort
   call neosnippet#init#check()
 
   let cur_text = neosnippet#util#get_cur_text()
@@ -249,7 +249,7 @@ function! neosnippet#mappings#_pre_trigger() abort "{{{
   endif
 
   return [cur_text, col, expr]
-endfunction"}}}
+endfunction
 
 " Plugin key-mappings.
 function! neosnippet#mappings#expand_or_jump_impl() abort
@@ -270,5 +270,3 @@ endfunction
 function! neosnippet#mappings#jump_impl() abort
   return neosnippet#mappings#_trigger('neosnippet#view#_jump')
 endfunction
-
-" vim: foldmethod=marker

@@ -11,7 +11,7 @@ elseif v:version < 704
   finish
 endif
 
-" Plugin key-mappings. "{{{
+" Plugin key-mappings.
 inoremap <silent><expr> <Plug>(neosnippet_expand_or_jump)
       \ neosnippet#mappings#expand_or_jump_impl()
 inoremap <silent><expr> <Plug>(neosnippet_jump_or_expand)
@@ -39,13 +39,13 @@ xnoremap <silent> <Plug>(neosnippet_register_oneshot_snippet)
 
 inoremap <expr><silent> <Plug>(neosnippet_start_unite_snippet)
       \ unite#sources#neosnippet#start_complete()
-"}}}
 
-augroup neosnippet "{{{
+
+augroup neosnippet
   autocmd InsertEnter * call neosnippet#init#_initialize()
-augroup END"}}}
+augroup END
 
-" Commands. "{{{
+" Commands.
 command! -nargs=? -bar
       \ -complete=customlist,neosnippet#commands#_edit_complete
       \ NeoSnippetEdit
@@ -62,9 +62,6 @@ command! -nargs=1 -bar -complete=file
 
 command! -bar NeoSnippetClearMarkers
       \ call neosnippet#commands#_clear_markers()
-"}}}
+
 
 let g:loaded_neosnippet = 1
-
-" __END__
-" vim: foldmethod=marker

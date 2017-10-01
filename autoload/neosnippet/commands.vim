@@ -4,22 +4,22 @@
 " License: MIT license
 "=============================================================================
 
-" Variables  "{{{
+" Variables
 let s:edit_options = [
       \ '-runtime',
       \ '-vertical', '-horizontal', '-direction=', '-split',
       \]
 let s:Cache = neosnippet#util#get_vital().import('System.Cache.Deprecated')
-"}}}
 
-function! s:get_list() abort "{{{
+
+function! s:get_list() abort
   if !exists('s:List')
     let s:List = vital#of('neosnippet').import('Data.List')
   endif
   return s:List
-endfunction"}}}
+endfunction
 
-function! neosnippet#commands#_edit(args) abort "{{{
+function! neosnippet#commands#_edit(args) abort
   if neosnippet#util#is_sudo()
     call neosnippet#util#print_error(
           \ '"sudo vim" is detected. This feature is disabled.')
@@ -72,9 +72,9 @@ function! neosnippet#commands#_edit(args) abort "{{{
     execute 'edit' fnameescape(filename)
   catch /^Vim\%((\a\+)\)\=:E749/
   endtry
-endfunction"}}}
+endfunction
 
-function! neosnippet#commands#_make_cache(filetype) abort "{{{
+function! neosnippet#commands#_make_cache(filetype) abort
   call neosnippet#init#check()
 
   let filetype = a:filetype == '' ?
@@ -108,17 +108,17 @@ function! neosnippet#commands#_make_cache(filetype) abort "{{{
             \ neosnippet#parser#_parse_snippet(filename, trigger)
     endfor
   endif
-endfunction"}}}
+endfunction
 
-function! neosnippet#commands#_source(filename) abort "{{{
+function! neosnippet#commands#_source(filename) abort
   call neosnippet#init#check()
 
   let neosnippet = neosnippet#variables#current_neosnippet()
   let neosnippet.snippets = extend(neosnippet.snippets,
         \ neosnippet#parser#_parse_snippets(a:filename))
-endfunction"}}}
+endfunction
 
-function! neosnippet#commands#_clear_markers() abort "{{{
+function! neosnippet#commands#_clear_markers() abort
   let expand_stack = neosnippet#variables#expand_stack()
 
   " Get patterns and count.
@@ -129,15 +129,15 @@ function! neosnippet#commands#_clear_markers() abort "{{{
   endif
 
   call neosnippet#view#_clear_markers(expand_stack[-1])
-endfunction"}}}
+endfunction
 
 " Complete helpers.
-function! neosnippet#commands#_edit_complete(arglead, cmdline, cursorpos) abort "{{{
+function! neosnippet#commands#_edit_complete(arglead, cmdline, cursorpos) abort
   return filter(s:edit_options +
         \ neosnippet#commands#_filetype_complete(a:arglead, a:cmdline, a:cursorpos),
         \ 'stridx(v:val, a:arglead) == 0')
-endfunction"}}}
-function! neosnippet#commands#_filetype_complete(arglead, cmdline, cursorpos) abort "{{{
+endfunction
+function! neosnippet#commands#_filetype_complete(arglead, cmdline, cursorpos) abort
   " Dup check.
   let ret = {}
   for item in map(
@@ -151,14 +151,14 @@ function! neosnippet#commands#_filetype_complete(arglead, cmdline, cursorpos) ab
   endfor
 
   return sort(keys(ret))
-endfunction"}}}
-function! neosnippet#commands#_complete_target_snippets(arglead, cmdline, cursorpos) abort "{{{
+endfunction
+function! neosnippet#commands#_complete_target_snippets(arglead, cmdline, cursorpos) abort
   return map(filter(values(neosnippet#helpers#get_snippets()),
         \ "stridx(v:val.word, a:arglead) == 0
         \ && v:val.snip =~# neosnippet#get_placeholder_target_marker_pattern()"), 'v:val.word')
-endfunction"}}}
+endfunction
 
-function! s:initialize_options(options) abort "{{{
+function! s:initialize_options(options) abort
   let default_options = {
         \ 'runtime' : 0,
         \ 'vertical' : 0,
@@ -175,9 +175,9 @@ function! s:initialize_options(options) abort "{{{
   endif
 
   return options
-endfunction"}}}
+endfunction
 
-function! s:get_snippets_files(path, filetype) abort "{{{
+function! s:get_snippets_files(path, filetype) abort
   let snippets_files = []
   for glob in s:get_list().flatten(
         \ map(split(get(g:neosnippet#scope_aliases,
@@ -190,8 +190,8 @@ function! s:get_snippets_files(path, filetype) abort "{{{
     let snippets_files += split(globpath(a:path, glob), '\n')
   endfor
   return reverse(s:get_list().uniq(snippets_files))
-endfunction"}}}
-function! s:get_snippet_files(path, filetype) abort "{{{
+endfunction
+function! s:get_snippet_files(path, filetype) abort
   let snippet_files = []
   for glob in s:get_list().flatten(
         \ map(split(get(g:neosnippet#scope_aliases,
@@ -200,6 +200,4 @@ function! s:get_snippet_files(path, filetype) abort "{{{
     let snippet_files += split(globpath(a:path, glob), '\n')
   endfor
   return reverse(s:get_list().uniq(snippet_files))
-endfunction"}}}
-
-" vim: foldmethod=marker
+endfunction

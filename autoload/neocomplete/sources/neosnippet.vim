@@ -15,7 +15,7 @@ let s:source = {
       \          ['matcher_fuzzy'] : ['matcher_head']),
       \}
 
-function! s:source.gather_candidates(context) abort "{{{
+function! s:source.gather_candidates(context) abort
   let snippets = values(neosnippet#helpers#get_completion_snippets())
   if matchstr(a:context.input, '\S\+$') !=#
         \ matchstr(a:context.input, '\w\+$')
@@ -23,9 +23,9 @@ function! s:source.gather_candidates(context) abort "{{{
     call filter(snippets, 'v:val.options.word')
   endif
   return snippets
-endfunction"}}}
+endfunction
 
-function! s:source.hooks.on_post_filter(context) abort "{{{
+function! s:source.hooks.on_post_filter(context) abort
   for snippet in a:context.candidates
     let snippet.dup = 1
     let snippet.menu = neosnippet#util#strwidthpart(
@@ -33,10 +33,8 @@ function! s:source.hooks.on_post_filter(context) abort "{{{
   endfor
 
   return a:context.candidates
-endfunction"}}}
+endfunction
 
-function! neocomplete#sources#neosnippet#define() abort "{{{
+function! neocomplete#sources#neosnippet#define() abort
   return s:source
-endfunction"}}}
-
-" vim: foldmethod=marker
+endfunction

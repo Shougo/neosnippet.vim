@@ -4,7 +4,7 @@
 " License: MIT license
 "=============================================================================
 
-function! neosnippet#handlers#_cursor_moved() abort "{{{
+function! neosnippet#handlers#_cursor_moved() abort
   let expand_stack = neosnippet#variables#expand_stack()
 
   " Get patterns and count.
@@ -18,9 +18,9 @@ function! neosnippet#handlers#_cursor_moved() abort "{{{
         \ && line('.') != expand_info.begin_line
     call neosnippet#view#_clear_markers(expand_info)
   endif
-endfunction"}}}
+endfunction
 
-function! neosnippet#handlers#_all_clear_markers() abort "{{{
+function! neosnippet#handlers#_all_clear_markers() abort
   if !&l:modifiable
     return
   endif
@@ -36,9 +36,9 @@ function! neosnippet#handlers#_all_clear_markers() abort "{{{
   finally
     call setpos('.', pos)
   endtry
-endfunction"}}}
+endfunction
 
-function! neosnippet#handlers#_restore_unnamed_register() abort "{{{
+function! neosnippet#handlers#_restore_unnamed_register() abort
   let neosnippet = neosnippet#variables#current_neosnippet()
 
   if neosnippet.unnamed_register != ''
@@ -46,6 +46,4 @@ function! neosnippet#handlers#_restore_unnamed_register() abort "{{{
     let @" = neosnippet.unnamed_register
     let neosnippet.unnamed_register = ''
   endif
-endfunction"}}}
-
-" vim: foldmethod=marker
+endfunction

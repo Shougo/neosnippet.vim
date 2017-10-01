@@ -4,7 +4,7 @@
 " License: MIT license
 "=============================================================================
 
-function! neosnippet#view#_expand(cur_text, col, trigger_name) abort "{{{
+function! neosnippet#view#_expand(cur_text, col, trigger_name) abort
   let snippets = neosnippet#helpers#get_snippets()
 
   if a:trigger_name == '' || !has_key(snippets, a:trigger_name)
@@ -25,8 +25,8 @@ function! neosnippet#view#_expand(cur_text, col, trigger_name) abort "{{{
   let cur_text = a:cur_text[: -1-len(a:trigger_name)]
 
   call neosnippet#view#_insert(snippet.snip, snippet.options, cur_text, a:col)
-endfunction"}}}
-function! neosnippet#view#_insert(snippet, options, cur_text, col) abort "{{{
+endfunction
+function! neosnippet#view#_insert(snippet, options, cur_text, col) abort
   let options = extend(
         \ neosnippet#parser#_initialize_snippet_options(),
         \ a:options)
@@ -105,8 +105,8 @@ function! neosnippet#view#_insert(snippet, options, cur_text, col) abort "{{{
       silent! execute begin_line . ',' . end_line . 'foldopen!'
     endif
   endtry
-endfunction"}}}
-function! neosnippet#view#_jump(_, col) abort "{{{
+endfunction
+function! neosnippet#view#_jump(_, col) abort
   try
     let expand_stack = neosnippet#variables#expand_stack()
 
@@ -148,9 +148,9 @@ function! neosnippet#view#_jump(_, col) abort "{{{
   finally
     call s:skip_next_auto_completion()
   endtry
-endfunction"}}}
+endfunction
 
-function! s:indent_snippet(begin, end) abort "{{{
+function! s:indent_snippet(begin, end) abort
   if a:begin > a:end
     return
   endif
@@ -187,9 +187,9 @@ function! s:indent_snippet(begin, end) abort "{{{
     let &l:equalprg = equalprg
     call setpos('.', pos)
   endtry
-endfunction"}}}
+endfunction
 
-function! neosnippet#view#_get_snippet_range(begin_line, begin_patterns, end_line, end_patterns) abort "{{{
+function! neosnippet#view#_get_snippet_range(begin_line, begin_patterns, end_line, end_patterns) abort
   let pos = getpos('.')
 
   call cursor(a:begin_line, 0)
@@ -227,8 +227,8 @@ function! neosnippet#view#_get_snippet_range(begin_line, begin_patterns, end_lin
 
   call setpos('.', pos)
   return [begin, end]
-endfunction"}}}
-function! neosnippet#view#_search_snippet_range(start, end, cnt, ...) abort "{{{
+endfunction
+function! neosnippet#view#_search_snippet_range(start, end, cnt, ...) abort
   let is_select = get(a:000, 0, 1)
   call s:substitute_placeholder_marker(a:start, a:end, a:cnt)
 
@@ -250,8 +250,8 @@ function! neosnippet#view#_search_snippet_range(start, end, cnt, ...) abort "{{{
   endfor
 
   return 0
-endfunction"}}}
-function! neosnippet#view#_search_outof_range(col) abort "{{{
+endfunction
+function! neosnippet#view#_search_outof_range(col) abort
   call s:substitute_placeholder_marker(1, 0, 0)
 
   let pattern = neosnippet#get_placeholder_marker_pattern()
@@ -275,8 +275,8 @@ function! neosnippet#view#_search_outof_range(col) abort "{{{
 
   " Not found.
   return 0
-endfunction"}}}
-function! neosnippet#view#_clear_markers(expand_info) abort "{{{
+endfunction
+function! neosnippet#view#_clear_markers(expand_info) abort
   " Search patterns.
   let [begin, end] = neosnippet#view#_get_snippet_range(
         \ a:expand_info.begin_line,
@@ -311,8 +311,8 @@ function! neosnippet#view#_clear_markers(expand_info) abort "{{{
 
     call neosnippet#variables#pop_expand_stack()
   endtry
-endfunction"}}}
-function! s:expand_placeholder(start, end, holder_cnt, line, ...) abort "{{{
+endfunction
+function! s:expand_placeholder(start, end, holder_cnt, line, ...) abort
   let is_select = get(a:000, 0, 1)
 
   let pattern = substitute(neosnippet#get_placeholder_marker_pattern(),
@@ -401,8 +401,8 @@ function! s:expand_placeholder(start, end, holder_cnt, line, ...) abort "{{{
   else
     startinsert!
   endif
-endfunction"}}}
-function! s:expand_target_placeholder(line, col) abort "{{{
+endfunction
+function! s:expand_target_placeholder(line, col) abort
   " Expand target
   let neosnippet = neosnippet#variables#current_neosnippet()
   let next_line = getline(a:line)[a:col-1 :]
@@ -461,8 +461,8 @@ function! s:expand_target_placeholder(line, col) abort "{{{
   let neosnippet.target = ''
 
   call neosnippet#view#_jump('', col)
-endfunction"}}}
-function! s:search_sync_placeholder(start, end, number) abort "{{{
+endfunction
+function! s:search_sync_placeholder(start, end, number) abort
   if a:end == 0
     " Search in current buffer.
     let cnt = matchstr(getline('.'),
@@ -482,8 +482,8 @@ function! s:search_sync_placeholder(start, end, number) abort "{{{
   endif
 
   return -1
-endfunction"}}}
-function! s:substitute_placeholder_marker(start, end, snippet_holder_cnt) abort "{{{
+endfunction
+function! s:substitute_placeholder_marker(start, end, snippet_holder_cnt) abort
   if a:snippet_holder_cnt > 0
     let cnt = a:snippet_holder_cnt-1
     let sync_marker = substitute(neosnippet#get_sync_placeholder_marker_pattern(),
@@ -518,8 +518,8 @@ function! s:substitute_placeholder_marker(start, end, snippet_holder_cnt) abort 
         \ '\\d\\+', cnt, '')
     call setline('.', substitute(getline('.'), sync_marker, sub, ''))
   endif
-endfunction"}}}
-function! s:eval_snippet(snippet_text) abort "{{{
+endfunction
+function! s:eval_snippet(snippet_text) abort
   let snip_word = ''
   let prev_match = 0
   let match = match(a:snippet_text, '\\\@<!`.\{-}\\\@<!`')
@@ -540,8 +540,8 @@ function! s:eval_snippet(snippet_text) abort "{{{
   endif
 
   return snip_word
-endfunction"}}}
-function! s:skip_next_auto_completion() abort "{{{
+endfunction
+function! s:skip_next_auto_completion() abort
   " Skip next auto completion.
   let neosnippet = neosnippet#variables#current_neosnippet()
   let neosnippet.trigger = 0
@@ -552,6 +552,4 @@ function! s:skip_next_auto_completion() abort "{{{
   if exists('#deoplete#CompleteDone')
     doautocmd deoplete CompleteDone
   endif
-endfunction"}}}
-
-" vim: foldmethod=marker
+endfunction

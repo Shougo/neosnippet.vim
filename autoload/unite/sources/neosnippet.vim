@@ -4,7 +4,7 @@
 " License: MIT license
 "=============================================================================
 
-function! unite#sources#neosnippet#define() abort "{{{
+function! unite#sources#neosnippet#define() abort
   let kind = {
         \ 'name' : 'neosnippet',
         \ 'default_action' : 'expand',
@@ -15,7 +15,7 @@ function! unite#sources#neosnippet#define() abort "{{{
   call unite#define_kind(kind)
 
   return s:source
-endfunction "}}}
+endfunction
 
 " neosnippet source.
 let s:source = {
@@ -24,14 +24,14 @@ let s:source = {
       \ 'action_table' : {},
       \ }
 
-function! s:source.hooks.on_init(args, context) abort "{{{
+function! s:source.hooks.on_init(args, context) abort
   let a:context.source__cur_keyword_pos =
         \ s:get_keyword_pos(neosnippet#util#get_cur_text())
   let a:context.source__snippets =
         \ sort(values(neosnippet#helpers#get_completion_snippets()))
-endfunction"}}}
+endfunction
 
-function! s:source.gather_candidates(args, context) abort "{{{
+function! s:source.gather_candidates(args, context) abort
   return map(copy(a:context.source__snippets), "{
         \   'word' : v:val.word,
         \   'abbr' : printf('%-50s %s', v:val.word, v:val.menu_abbr),
@@ -44,29 +44,29 @@ function! s:source.gather_candidates(args, context) abort "{{{
         \   'source__snip' : v:val.snip,
         \   'source__snip_ref' : v:val,
         \ }")
-endfunction "}}}
+endfunction
 
-" Actions "{{{
+" Actions
 let s:action_table = {}
 
 let s:action_table.expand = {
       \ 'description' : 'expand snippet',
       \ }
-function! s:action_table.expand.func(candidate) abort "{{{
+function! s:action_table.expand.func(candidate) abort
   let cur_text = neosnippet#util#get_cur_text()
   let cur_keyword_str = matchstr(cur_text, '\S\+$')
   let context = unite#get_context()
   call neosnippet#view#_expand(
         \ cur_text . a:candidate.action__complete_word[len(cur_keyword_str)],
         \ context.col, a:candidate.action__complete_word)
-endfunction"}}}
+endfunction
 
 let s:action_table.preview = {
       \ 'description' : 'preview snippet',
       \ 'is_selectable' : 1,
       \ 'is_quit' : 0,
       \ }
-function! s:action_table.preview.func(candidates) abort "{{{
+function! s:action_table.preview.func(candidates) abort
   for snip in a:candidates
     echohl String
     echo snip.action__complete_word
@@ -74,13 +74,13 @@ function! s:action_table.preview.func(candidates) abort "{{{
     echo snip.source__snip
     echo ' '
   endfor
-endfunction"}}}
+endfunction
 
 let s:action_table.unite__new_candidate = {
       \ 'description' : 'add new snippet',
       \ 'is_quit' : 1,
       \ }
-function! s:action_table.unite__new_candidate.func(candidate) abort "{{{
+function! s:action_table.unite__new_candidate.func(candidate) abort
   let trigger = unite#util#input('Please input snippet trigger: ')
   if trigger == ''
     echo 'Canceled.'
@@ -107,14 +107,14 @@ function! s:action_table.unite__new_candidate.func(candidate) abort "{{{
 
   call cursor(line('$'), 0)
   call cursor(0, col('$'))
-endfunction"}}}
+endfunction
 
 
 let s:source.action_table = s:action_table
 unlet! s:action_table
-"}}}
 
-function! unite#sources#neosnippet#start_complete() abort "{{{
+
+function! unite#sources#neosnippet#start_complete() abort
   if !exists(':Unite')
     call neosnippet#util#print_error(
           \ 'unite.vim is not installed.')
@@ -125,9 +125,9 @@ function! unite#sources#neosnippet#start_complete() abort "{{{
 
   return unite#start_complete(['neosnippet'],
         \ { 'input': neosnippet#util#get_cur_text(), 'buffer_name' : '' })
-endfunction "}}}
+endfunction
 
-function! s:get_keyword_pos(cur_text) abort "{{{
+function! s:get_keyword_pos(cur_text) abort
   let cur_keyword_pos = match(a:cur_text, '\S\+$')
   if cur_keyword_pos < 0
     " Empty string.
@@ -135,6 +135,4 @@ function! s:get_keyword_pos(cur_text) abort "{{{
   endif
 
   return cur_keyword_pos
-endfunction"}}}
-
-" vim: foldmethod=marker
+endfunction
