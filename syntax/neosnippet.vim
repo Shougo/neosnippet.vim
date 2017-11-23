@@ -30,7 +30,7 @@ syntax match   neosnippetEscape
       \ '\\[`]' contained
 
 syntax match   neosnippetKeyword
-      \ '^\%(include\|source\|snippet\|abbr\|prev_word\|delete\|alias\|options\|regexp\|TARGET\)' contained
+      \ '^\%(include\|extends\|source\|snippet\|abbr\|prev_word\|delete\|alias\|options\|regexp\|TARGET\)' contained
 syntax keyword   neosnippetOption
       \ head word indent contained
 syntax match   neosnippetPrevWords

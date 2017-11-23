@@ -67,11 +67,14 @@ function! s:parse(snippets_file) abort
       " Ignore.
     elseif line =~ '^include'
       " Include snippets file.
-      for file in split(globpath(join(
-            \ neosnippet#helpers#get_snippets_directory(), ','),
-            \ matchstr(line, '^include\s\+\zs.*$')), '\n')
-        let snippets = extend(snippets,
-              \ neosnippet#parser#_parse_snippets(file))
+      let snippets = extend(snippets, s:include_snippets(
+            \ [matchstr(line, '^include\s\+\zs.*$')]))
+    elseif line =~ '^extends'
+      " Extend snippets files.
+      let fts = split(matchstr(line, '^extends\s\+\zs.*$'), '\s*,\s*')
+      for ft in fts
+        let snippets = extend(snippets, s:include_snippets(
+              \ [ft.'.snip', ft.'.snippets', ft.'/*']))
       endfor
     elseif line =~ '^source'
       " Source Vim script file.
@@ -415,4 +418,16 @@ function! neosnippet#parser#_conceal_argument(arg, cnt, args) abort
     endif
   endif
   return printf('%s${%d:#:%s%s}', outside, a:cnt, inside, escape(a:arg, '{}'))
+endfunction
+
+function! s:include_snippets(globs) abort
+  let snippets = {}
+  for glob in a:globs
+      for file in split(globpath(join(
+            \ neosnippet#helpers#get_snippets_directory(), ','), glob), '\n')
+        call extend(snippets, neosnippet#parser#_parse_snippets(file))
+      endfor
+  endfor
+
+  return snippets
 endfunction

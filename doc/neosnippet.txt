@@ -672,7 +672,18 @@ Or if you want to include a whole directory with file type snippets.
 >
 	include javascript/*
 <
+Neosnippet also supports "extends" syntax like snipMate.
 
+>
+	extends c
+<
+It behaves like this:
+
+>
+	include c.snip
+	include c.snippets
+	include c/*
+<
 If you include snippet files it can happen that the same snippet name is used
 multiple times in snippet files. Neosnippet produces a warning if it detects
 this. If you want to overwrite a snippet explicitly, please use:
