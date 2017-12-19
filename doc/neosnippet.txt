@@ -115,7 +115,7 @@ COMMANDS 					*neosnippet-commands*
 
 							*:NeoSnippetSource*
 :NeoSnippetSource [filename]
-		Load the snippets of a [filetype].
+		Load the snippets contained in [filename].
 		Note: The loaded snippets are enabled in current buffer only.
 
 						*:NeoSnippetClearMarkers*
