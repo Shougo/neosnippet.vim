@@ -232,8 +232,7 @@ endfunction
 
 function! neosnippet#parser#_initialize_snippet(dict, path, line, pattern, name) abort
   let a:dict.word = substitute(a:dict.word, '\n\+$', '', '')
-  if a:dict.word !~ '\n'
-        \ && a:dict.word !~
+  if a:dict.word !~
         \    neosnippet#get_placeholder_marker_substitute_pattern().'$'
         \ && a:dict.word !~
         \    neosnippet#get_placeholder_marker_substitute_zero_pattern()
