@@ -14,8 +14,7 @@ function! neosnippet#parser#_parse_snippets(filename) abort
   endif
 
   if neosnippet#util#is_sudo()
-    let [snippets, sourced] = s:parse(a:filename)
-    return snippets
+    return s:parse(a:filename)[0]
   endif
 
   let cache_dir = neosnippet#variables#data_dir()
