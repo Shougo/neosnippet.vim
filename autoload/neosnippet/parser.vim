@@ -295,15 +295,18 @@ function! neosnippet#parser#_get_completed_snippet(completed_item, cur_text, nex
   endif
 
   " Set abbr
-  let abbr = (item.abbr != '') ? item.abbr : item.word
-  if len(item.menu) > 5
-    " Combine menu.
-    let abbr .= ' ' . item.menu
-  endif
-  if item.info != ''
-    let abbr .= split(item.info, '\n')[0]
+  let abbr = ''
+  if get(item, 'info', '') =~# '^.\+('
+    let abbr = matchstr(item.info, '^\_s*\zs.*')
+  elseif get(item, 'abbr', '') =~# '^.\+('
+    let abbr = item.abbr
+  elseif get(item, 'menu', '') =~# '^.\+('
+    let abbr = item.menu
+  elseif item.word =~# '^.\+(' || get(item, 'kind', '') == 'f'
+    let abbr = item.word
   endif
   let abbr = escape(abbr, '\')
+
   let pairs = neosnippet#util#get_buffer_config(
       \ &filetype, '',
       \ 'g:neosnippet#completed_pairs', 'g:neosnippet#_completed_pairs', {})
