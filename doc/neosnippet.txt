@@ -373,6 +373,11 @@ neosnippet#get_snippets_directory()
 		snippets directories and |g:neosnippet#snippets_directory|
 		directories.
 
+						*neosnippet#complete_done()*
+neosnippet#complete_done()
+		It expands the snippet for |CompleteDone| event.
+>
+		autocmd CompleteDone * call neosnippet#complete_done()
 
 ==============================================================================
 EXAMPLES					*neosnippet-examples*

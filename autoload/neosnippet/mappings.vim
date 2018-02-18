@@ -140,7 +140,7 @@ function! neosnippet#mappings#_expand(trigger) abort
 endfunction
 
 function! s:snippets_expand(cur_text, col) abort
-  if s:expand_completed_snippets(a:cur_text, a:col)
+  if neosnippet#mappings#_complete_done(a:cur_text, a:col)
     return 0
   endif
 
@@ -184,8 +184,13 @@ function! s:get_completed_snippets(cur_text, col) abort
 
   return []
 endfunction
-function! s:expand_completed_snippets(cur_text, col) abort
-  let [cur_text, snippet] = s:get_completed_snippets(a:cur_text, a:col)
+function! neosnippet#mappings#_complete_done(cur_text, col) abort
+  let ret = s:get_completed_snippets(a:cur_text, a:col)
+  if empty(ret)
+    return 0
+  endif
+
+  let [cur_text, snippet] = ret
   call neosnippet#view#_insert(snippet, {}, cur_text, a:col)
   return 1
 endfunction

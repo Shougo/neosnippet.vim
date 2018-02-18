@@ -42,6 +42,10 @@ endfunction
 function! neosnippet#expand(trigger) abort
   return neosnippet#mappings#_expand(a:trigger)
 endfunction
+function! neosnippet#complete_done() abort
+  return neosnippet#mappings#_complete_done(
+        \ neosnippet#util#get_cur_text(), col('.'))
+endfunction
 
 function! neosnippet#get_snippets_directory() abort
   return neosnippet#helpers#get_snippets_directory()
