@@ -310,7 +310,7 @@ function! neosnippet#parser#_get_completed_snippet(completed_item, cur_text, nex
   let pairs = neosnippet#util#get_buffer_config(
       \ &filetype, '',
       \ 'g:neosnippet#completed_pairs', 'g:neosnippet#_completed_pairs', {})
-  let word_pattern = neosnippet#util#escape_pattern(item.word)
+  let word_pattern = '\<' . neosnippet#util#escape_pattern(item.word)
   let angle_pattern = word_pattern . '<.\+>(.*)'
   let no_key = index(keys(pairs), item.word[-1:]) < 0
   if no_key && abbr !~# word_pattern . '\%(<.\+>\)\?(.*)'
