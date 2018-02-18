@@ -163,7 +163,7 @@ function! s:get_completed_snippets(cur_text, col) abort
 
   let cur_text = a:cur_text
 
-  if !empty(get(v:completed_item, 'user_data', '{}'))
+  if get(v:completed_item, 'user_data', '') !=# ''
     let user_data = json_decode(v:completed_item.user_data)
     if has_key(user_data, 'snippet')
       let snippet = user_data.snippet
