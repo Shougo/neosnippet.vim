@@ -259,14 +259,23 @@ function! neosnippet#parser#_initialize_snippet(dict, path, line, pattern, name)
   endif
 
   let snippet = {
-        \ 'word' : a:dict.name, 'snip' : a:dict.word,
-        \ 'description' : a:dict.word,
-        \ 'menu_template' : abbr,
-        \ 'menu_abbr' : abbr,
-        \ 'options' : a:dict.options,
-        \ 'action__path' : a:path, 'action__line' : a:line,
-        \ 'action__pattern' : a:pattern, 'real_name' : a:name,
+        \ 'word': a:dict.name, 'snip': a:dict.word,
+        \ 'description': a:dict.word,
+        \ 'menu_template': abbr,
+        \ 'menu_abbr': abbr,
+        \ 'options': a:dict.options,
+        \ 'real_name': a:name,
+        \ 'action__path': a:path,
+        \ 'action__line': a:line,
+        \ 'action__pattern': a:pattern,
         \}
+
+  if exists('*json_encode')
+    let snippet.user_data = json_encode({
+          \   'snippet': a:dict.word,
+          \   'snippet_trigger': a:dict.name
+          \ })
+  endif
 
   if has_key(a:dict, 'regexp')
     let snippet.regexp = a:dict.regexp
@@ -290,10 +299,6 @@ function! neosnippet#parser#_get_completed_snippet(completed_item, cur_text, nex
 
   if strridx(a:cur_text, item.word) != len(a:cur_text) - len(item.word)
     return ''
-  endif
-
-  if has_key(item, 'snippet')
-    return item.snippet
   endif
 
   " Set abbr

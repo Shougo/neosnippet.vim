@@ -125,12 +125,7 @@ function! s:suite.get_completed_snippet() abort
 
   call s:assert.equals(neosnippet#parser#_get_completed_snippet({
         \ 'word' : 'something', 'abbr' : 'something(else)',
-        \ 'menu' : '', 'info' : '', 'snippet' : '(${1:custom})${2}'
-        \ }, 'something', ''), '(${1:custom})${2}')
-
-  call s:assert.equals(neosnippet#parser#_get_completed_snippet({
-        \ 'word' : 'something', 'abbr' : 'something(else)',
-        \ 'menu' : '', 'info' : 'func()', 'snippet' : '(${1:custom})${2}'
-        \ }, 'something', ''), '(${1:custom})${2}')
+        \ 'menu' : '', 'info' : 'func()',
+        \ }, 'something', ''), '(${1:#:else})${2}')
 endfunction
 
