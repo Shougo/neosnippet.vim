@@ -26,12 +26,6 @@ call neosnippet#util#set_default(
       \ 'g:neosnippet#enable_optional_arguments', 1)
 call neosnippet#util#set_default(
       \ 'g:neosnippet#enable_auto_clear_markers', 1)
-call neosnippet#util#set_default(
-      \ 'g:neosnippet#completed_pairs', {})
-call neosnippet#util#set_default(
-      \ 'g:neosnippet#_completed_pairs',
-      \ {'_':{ '(' : ')', '{' : '}', '"' : '"', '[' : ']' }})
-
 
 function! neosnippet#expandable_or_jumpable() abort
   return neosnippet#mappings#expandable_or_jumpable()

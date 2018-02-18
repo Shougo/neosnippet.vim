@@ -297,27 +297,33 @@ function! neosnippet#parser#_get_completed_snippet(completed_item, cur_text, nex
   endif
 
   " Set abbr
-  let abbr = ''
+  let abbrs = []
   if get(item, 'info', '') =~# '^.\+('
-    let abbr = matchstr(item.info, '^\_s*\zs.*')
-  elseif get(item, 'abbr', '') =~# '^.\+('
-    let abbr = item.abbr
-  elseif get(item, 'menu', '') =~# '^.\+('
-    let abbr = item.menu
-  elseif item.word =~# '^.\+(' || get(item, 'kind', '') == 'f'
-    let abbr = item.word
+    call add(abbrs, matchstr(item.info, '^\_s*\zs.*'))
   endif
-  let abbr = escape(abbr, '\')
+  if get(item, 'abbr', '') =~# '^.\+('
+    call add(abbrs, item.abbr)
+  endif
+  if get(item, 'menu', '') =~# '^.\+('
+    call add(abbrs, item.menu)
+  endif
+  if item.word =~# '^.\+(' || get(item, 'kind', '') == 'f'
+    call add(abbrs, item.word)
+  endif
+  call map(abbrs, "escape(v:val, '\')")
 
-  let pairs = neosnippet#util#get_buffer_config(
-      \ &filetype, '',
-      \ 'g:neosnippet#completed_pairs', 'g:neosnippet#_completed_pairs', {})
+  " () Only supported
+  let pairs = {'(': ')'}
+  let no_key = index(keys(pairs), item.word[-1:]) < 0
   let word_pattern = '\<' . neosnippet#util#escape_pattern(item.word)
   let angle_pattern = word_pattern . '<.\+>(.*)'
-  let no_key = index(keys(pairs), item.word[-1:]) < 0
-  if no_key && abbr !~# word_pattern . '\%(<.\+>\)\?(.*)'
+  let check_pattern = word_pattern . '\%(<.\+>\)\?(.*)'
+  let abbrs = filter(abbrs, '!no_key || v:val =~# check_pattern')
+
+  if empty(abbrs)
     return ''
   endif
+  let abbr = abbrs[0]
 
   let key = no_key ? '(' : item.word[-1:]
   if a:next_text[:0] ==# key
