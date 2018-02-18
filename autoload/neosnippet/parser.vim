@@ -144,11 +144,13 @@ function! s:parse_snippet_name(snippets_file, line, linenr, dup_check) abort
   " SnipMate snippets may have duplicate names, but different
   " descriptions (abbrs).
   let description = matchstr(a:line, '^snippet\s\+\S\+\s\+\zs.*$')
-  if description != '' && description !=# snippet_dict.name
+  if g:neosnippet#enable_snipmate_compatibility
+        \ && description != '' && description !=# snippet_dict.name
     " Convert description.
     let snippet_dict.name .= '_' .
           \ substitute(substitute(
-          \    description, '\W\+', '_', 'g'), '_\+$', '', '')
+          \    substitute(description, '\a\zs\a\+', '', 'g'),
+          \ '\W\+', '_', 'g'), '_\+$', '', '')
   endif
 
   " Collect the description (abbr) of the snippet, if set on snippet line.

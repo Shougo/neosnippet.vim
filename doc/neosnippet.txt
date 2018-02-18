@@ -192,6 +192,7 @@ g:neosnippet#enable_snipmate_compatibility
 		2. Load |g:snippets_dir| and snipMate snippets files from
 		'runtimepath'.
 		3. Enable file snippets feature in snipMate.
+		4. snipMate optional abbr syntax.
 
 		The default value is 0.
 
