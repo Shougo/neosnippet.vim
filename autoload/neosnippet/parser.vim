@@ -138,19 +138,23 @@ function! s:parse_snippet_name(snippets_file, line, linenr, dup_check) abort
         \ }
 
   " Try using the name without the description (abbr).
-  let snippet_dict.name = matchstr(a:line, '^snippet\s\+\zs\S\+')
+  let base_name = matchstr(a:line, '^snippet\s\+\zs\S\+')
+  let snippet_dict.name = base_name
 
-  " Fall back to using the name and description (abbr) combined.
+  " Fall back to using the name with integer counter,
+  " but only if the name is a duplicate.
   " SnipMate snippets may have duplicate names, but different
   " descriptions (abbrs).
   let description = matchstr(a:line, '^snippet\s\+\S\+\s\+\zs.*$')
   if g:neosnippet#enable_snipmate_compatibility
         \ && description != '' && description !=# snippet_dict.name
+        \ && has_key(a:dup_check, snippet_dict.name)
     " Convert description.
-    let snippet_dict.name .= '_' .
-          \ substitute(substitute(
-          \    substitute(description, '\a\zs\a\+', '', 'g'),
-          \ '\W\+', '_', 'g'), '_\+$', '', '')
+    let i = 0
+    while has_key(a:dup_check, snippet_dict.name)
+      let snippet_dict.name = base_name . '__' . i
+      let i += 1
+    endwhile
   endif
 
   " Collect the description (abbr) of the snippet, if set on snippet line.
