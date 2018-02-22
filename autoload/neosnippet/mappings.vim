@@ -112,7 +112,7 @@ function! neosnippet#mappings#_expand_target_trigger(trigger) abort
     let cur_text = a:trigger
   else
     let cur_text = neosnippet#util#get_cur_text()
-    let cur_text = cur_text[: col-2] . a:trigger . cur_text[col :]
+    let cur_text = cur_text[: col-2] . a:trigger
   endif
 
   call neosnippet#view#_expand(cur_text, col, a:trigger)
