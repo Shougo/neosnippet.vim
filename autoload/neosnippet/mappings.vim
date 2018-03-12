@@ -165,7 +165,7 @@ function! s:get_completed_snippets(cur_text, col) abort
 
   if get(v:completed_item, 'user_data', '') !=# ''
     let user_data = json_decode(v:completed_item.user_data)
-    if has_key(user_data, 'snippet')
+    if type(user_data) == v:t_dict && has_key(user_data, 'snippet')
       let snippet = user_data.snippet
       if has_key(user_data, 'snippet_trigger')
         let cur_text = cur_text[: -1-len(user_data.snippet_trigger)]
