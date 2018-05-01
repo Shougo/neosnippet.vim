@@ -23,9 +23,8 @@ INTRODUCTION					*neosnippet-introduction*
 
 *neosnippet* offers functionality similar to snipMate.vim or snippetsEmu.vim.
 This analyzes snippet files which you can use for the completion.  Since you
-can choose snippets with the neocomplcache/neocomplete interface, you might
-have less trouble using them, because you do not have to remember each snippet
-name.
+can choose snippets with the deoplete interface, you might have less trouble
+using them, because you do not have to remember each snippet name.
 
 ==============================================================================
 INSTALL						*neosnippet-install*
@@ -33,9 +32,8 @@ INSTALL						*neosnippet-install*
 1: Extract the file and put files in your Vim directory
    (usually ~/.vim/ or Program Files/Vim/vimfiles on Windows).
 
-Note: If you want to complete snippets, you must install either neocomplcache
-(https://github.com/Shougo/neocomplcache.vim) or neocomplete
-(https://github.com/Shougo/neocomplete.vim). It's not required, but highly
+Note: If you want to complete snippets, you must install deoplete
+(https://github.com/Shougo/deoplete.nvim). It's not required, but highly
 recommended.
 
 Default snippets files are available in neosnippet-snippets.
@@ -56,7 +54,6 @@ current 'filetype' of the file, but also depends on the cursor location, such
 as javascript inside html, or lua inside Vim scripts.
 https://github.com/Shougo/context_filetype.vim
 
-==============================================================================
 INTERFACE					*neosnippet-interface*
 
 ------------------------------------------------------------------------------

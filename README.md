@@ -5,11 +5,9 @@ The Neosnippet plug-In adds snippet support to Vim. Snippets are
 small templates for commonly used code that you can fill in on the
 fly. To use snippets can increase your productivity in Vim a lot.
 The functionality of this plug-in is quite similar to plug-ins like
-snipMate.vim or snippetsEmu.vim. But since you can choose snippets with the
-[neocomplcache](https://github.com/Shougo/neocomplcache.vim) /
-[neocomplete](https://github.com/Shougo/neocomplete.vim) interface, you might
-have less trouble using them, because you do not have to remember each snippet
-name.
+snipMate.vim. But since you can choose snippets with the
+[deoplete](https://github.com/Shougo/deoplete.nvim) interface, you might have
+less trouble using them, because you do not have to remember each snippet name.
 
 Installation
 ------------
@@ -22,84 +20,73 @@ Notes:
 
 * Vim 7.4 or above is needed.
 
+* Vim 8.0 or above or neovim is recommended.
+
 * Default snippets files are available in:
   [neosnippet-snippets](https://github.com/Shougo/neosnippet-snippets)
+
 * Installing default snippets is optional. If choose not to install them,
   you must deactivate them with `g:neosnippet#disable_runtime_snippets`.
-* neocomplcache/neocomplete is not required to use neosnippet, but it's highly recommended.
+
+* deoplete is not required to use neosnippet, but it's highly recommended.
+
 * Extra snippets files can be found in:
   [vim-snippets](https://github.com/honza/vim-snippets).
 
-### Manual (not recommended)
-
-1. Install the
-   [neocomplcache](https://github.com/Shougo/neocomplcache.vim)/
-   [neocomplete](https://github.com/Shougo/neocomplete.vim) and
-   [neosnippet-snippets](https://github.com/Shougo/neosnippet-snippets)
-   first.
-2. Put files in your Vim directory (usually `~/.vim/` or
-   `%PROGRAMFILES%/Vim/vimfiles` on Windows).
-
 ### Vundle
 
-1. Setup the [vundle](https://github.com/gmarik/vundle) package manager
-2. Set the bundles for [neocomplcache](https://github.com/Shougo/neocomplcache)
-   or [neocomplete](https://github.com/Shougo/neocomplete.vim)
-   And [neosnippet](https://github.com/Shougo/neosnippet)
-   And [neosnippet-snippets](https://github.com/Shougo/neosnippet-snippets)
-
     ```vim
-    Plugin 'Shougo/neocomplcache'
-    or
-    Plugin 'Shougo/neocomplete'
+    Plugin 'Shougo/deoplete.nvim'
+    if !has('nvim')
+      Plugin 'roxma/nvim-yarp'
+      Plugin 'roxma/vim-hug-neovim-rpc'
+    endif
 
-    Plugin 'Shougo/neosnippet'
+    Plugin 'Shougo/neosnippet.vim'
     Plugin 'Shougo/neosnippet-snippets'
     ```
 
-3. Open up Vim and start installation with `:PluginInstall`
-
-### Neobundle
-
-1. Setup the [neobundle](https://github.com/Shougo/neobundle.vim) package manager
-2. Set the bundles for [neocomplcache](https://github.com/Shougo/neocomplcache)
-   or [neocomplete](https://github.com/Shougo/neocomplete.vim)
-   And [neosnippet](https://github.com/Shougo/neosnippet)
-   And [neosnippet-snippets](https://github.com/Shougo/neosnippet-snippets)
+### dein.vim
 
     ```vim
-    NeoBundle 'Shougo/neocomplcache'
-    or
-    NeoBundle 'Shougo/neocomplete'
+    call dein#add('Shougo/deoplete.nvim')
+    if !has('nvim')
+      call dein#add('roxma/nvim-yarp')
+      call dein#add('roxma/vim-hug-neovim-rpc')
+    endif
+    let g:deoplete#enable_at_startup = 1
 
-    NeoBundle 'Shougo/neosnippet'
-    NeoBundle 'Shougo/neosnippet-snippets'
+    call dein#add('Shougo/neosnippet.vim')
+    call dein#add('Shougo/neosnippet-snippets')
     ```
 
-3. Open up Vim and start installation with `:NeoBundleInstall`
-
-### VAM (vim-addon-manager)
-
-1. Setup the [vim-addon-manager](https://github.com/MarcWeber/vim-addon-manager)
-   package manager.
-2. Add `neosnippet` to the list of addons in your vimrc:
+### vim-plug
 
     ```vim
-    call vam#ActivateAddons(['neosnippet', 'neosnippet-snippets'])
-    ```
+    if has('nvim')
+      Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+    else
+      Plug 'Shougo/deoplete.nvim'
+      Plug 'roxma/nvim-yarp'
+      Plug 'roxma/vim-hug-neovim-rpc'
+    endif
+    let g:deoplete#enable_at_startup = 1
 
-    . Installation will start automatically when you open vim next time.
+    Plug 'Shougo/neosnippet.vim'
+    Plug 'Shougo/neosnippet-snippets'
+    ```
 
 Configuration
 -------------
 
 This is an example `~/.vimrc` configuration for Neosnippet. It is assumed you
-already have Neocomplcache configured. With the settings of the example, you
-can use the following keys:
+already have deoplete configured. With the settings of the example, you can use
+the following keys:
 
-* `C-k` to select-and-expand a snippet from the Neocomplcache popup (Use `C-n`
+* `C-k` to select-and-expand a snippet from the deoplete popup (Use `C-n`
   and `C-p` to select it). `C-k` can also be used to jump to the next field in
   the snippet.
+
 * `Tab` to select the next field to fill in the snippet.
 
 ```vim
