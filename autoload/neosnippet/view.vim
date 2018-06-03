@@ -336,6 +336,7 @@ function! s:expand_placeholder(start, end, holder_cnt, line, ...) abort
   " Remove optional marker
   let default = substitute(default, '^#:', '', '')
 
+  let default = substitute(default, '\${VISUAL\(:.\{-}\)\?}', 'TARGET\1', '')
   let is_target = (default =~ '^TARGET\>' && neosnippet.target != '')
   let default = substitute(default, '^TARGET:\?', neosnippet.target, '')
 

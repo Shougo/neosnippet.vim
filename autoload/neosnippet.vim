@@ -59,19 +59,19 @@ endfunction
 
 " Get marker patterns.
 function! neosnippet#get_placeholder_target_marker_pattern() abort
-  return '\%(\\\@<!\|\\\\\zs\)\${\d\+:\(#:\)\?TARGET\%(:.\{-}\)\?\\\@<!}'
+  return '\%(\\\@<!\|\\\\\zs\)\${\d\+:\(#:\)\?\%(TARGET\|\${VISUAL\%(:.\{-}\)\?}\)\%(:.\{-}\)\?\\\@<!}'
 endfunction
 function! neosnippet#get_placeholder_marker_pattern() abort
   return '<`\d\+\%(:.\{-}\)\?\\\@<!`>'
 endfunction
 function! neosnippet#get_placeholder_marker_substitute_pattern() abort
-  return '\%(\\\@<!\|\\\\\zs\)\${\(\d\+\%(:.\{-}\)\?\\\@<!\)}'
+  return '\%(\\\@<!\|\\\\\zs\)\${\(\d\+\%(:\%(\${VISUAL\%(:.\{-}\)\?}\)\?.\{-}\)\?\\\@<!\)}'
 endfunction
 function! neosnippet#get_placeholder_marker_substitute_nonzero_pattern() abort
-  return '\%(\\\@<!\|\\\\\zs\)\${\([1-9]\d*\%(:.\{-}\)\?\\\@<!\)}'
+  return '\%(\\\@<!\|\\\\\zs\)\${\([1-9]\d*\%(:\%(\${VISUAL\%(:.\{-}\)\?}\)\?.\{-}\)\?\\\@<!\)}'
 endfunction
 function! neosnippet#get_placeholder_marker_substitute_zero_pattern() abort
-  return '\%(\\\@<!\|\\\\\zs\)\${\(0\%(:.\{-}\)\?\\\@<!\)}'
+  return '\%(\\\@<!\|\\\\\zs\)\${\(0\%(:\%(\${VISUAL\%(:.\{-}\)\?}\)\?.\{-}\)\?\\\@<!\)}'
 endfunction
 function! neosnippet#get_placeholder_marker_default_pattern() abort
   return '<`\d\+:\zs.\{-}\ze\\\@<!`>'
