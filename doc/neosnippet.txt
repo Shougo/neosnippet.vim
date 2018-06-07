@@ -593,6 +593,9 @@ The structure of a placeholder can be:
 	synchronized to ${1} and so on. ${0} will be the final jump
 	placeholder.
 
+	Note: If you don't use ${0} in snippet, ${0} will be added
+	automatically.
+
 	Example
 
 >
