@@ -55,12 +55,6 @@ endfunction
 function! neosnippet#variables#runtime_dir() abort
   " Set runtime dir.
   let runtime_dir = split(globpath(&runtimepath, 'neosnippets'), '\n')
-  if empty(runtime_dir) && empty(g:neosnippet#disable_runtime_snippets)
-    call neosnippet#util#print_error(
-          \ 'neosnippet default snippets cannot be loaded.')
-    call neosnippet#util#print_error(
-          \ 'You must install neosnippet-snippets or disable runtime snippets.')
-  endif
   if g:neosnippet#enable_snipmate_compatibility
     " Load snipMate snippet directories.
     let runtime_dir += split(globpath(&runtimepath,
@@ -68,6 +62,12 @@ function! neosnippet#variables#runtime_dir() abort
     if exists('g:snippets_dir')
       let runtime_dir += neosnippet#util#option2list(g:snippets_dir)
     endif
+  endif
+  if empty(runtime_dir) && empty(g:neosnippet#disable_runtime_snippets)
+    call neosnippet#util#print_error(
+          \ 'neosnippet default snippets cannot be loaded.')
+    call neosnippet#util#print_error(
+          \ 'You must install neosnippet-snippets or disable runtime snippets.')
   endif
 
   return map(runtime_dir, 'substitute(v:val, "[\\\\/]$", "", "")')
