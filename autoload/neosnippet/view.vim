@@ -163,13 +163,15 @@ function! s:indent_snippet(begin, end) abort
 
     let neosnippet = neosnippet#variables#current_neosnippet()
     let base_indent = matchstr(getline(a:begin), '^\s\+')
-    for line_nr in range((neosnippet.target != '' ?
-          \ a:begin : a:begin + 1), a:end)
+    for line_nr in range(a:begin, a:end)
       call cursor(line_nr, 0)
 
       if getline('.') =~ '^\t\+'
-        " Delete head tab character.
-        let current_line = substitute(getline('.'), '^\t', '', '')
+        let current_line = getline('.')
+        if line_nr != a:begin
+          " Delete head tab character.
+          let current_line = substitute(current_line, '^\t', '', '')
+        endif
 
         if &l:expandtab && current_line =~ '^\t\+'
           " Expand tab.
