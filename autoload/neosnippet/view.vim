@@ -71,13 +71,14 @@ function! neosnippet#view#_insert(snippet, options, cur_text, col) abort
   let expand_stack = neosnippet#variables#expand_stack()
 
   try
+    let base_indent = matchstr(getline(begin_line), '^\s\+')
     if len(snippet_lines) > 1
       call append('.', snippet_lines[1:])
     endif
     call setline('.', snippet_lines[0])
 
     if begin_line != end_line || options.indent
-      call s:indent_snippet(begin_line, end_line)
+      call s:indent_snippet(begin_line, end_line, base_indent)
     endif
 
     let begin_patterns = (begin_line > 1) ?
@@ -150,7 +151,7 @@ function! neosnippet#view#_jump(_, col) abort
   endtry
 endfunction
 
-function! s:indent_snippet(begin, end) abort
+function! s:indent_snippet(begin, end, base_indent) abort
   if a:begin > a:end
     return
   endif
@@ -162,8 +163,8 @@ function! s:indent_snippet(begin, end) abort
     setlocal equalprg=
 
     let neosnippet = neosnippet#variables#current_neosnippet()
-    let base_indent = matchstr(getline(a:begin), '^\s\+')
-    for line_nr in range(a:begin, a:end)
+    for line_nr in range((neosnippet.target != '' ?
+          \ a:begin : a:begin + 1), a:end)
       call cursor(line_nr, 0)
 
       if getline('.') =~ '^\t\+'
@@ -176,10 +177,10 @@ function! s:indent_snippet(begin, end) abort
         if &l:expandtab && current_line =~ '^\t\+'
           " Expand tab.
           cal setline('.', substitute(current_line,
-                \ '^\t\+', base_indent . repeat(' ', shiftwidth() *
+                \ '^\t\+', a:base_indent . repeat(' ', shiftwidth() *
                 \    len(matchstr(current_line, '^\t\+'))), ''))
         elseif line_nr != a:begin
-          call setline('.', base_indent . current_line)
+          call setline('.', a:base_indent . current_line)
         endif
       else
         silent normal! ==

@@ -104,13 +104,14 @@ function! s:parse(snippets_file) abort
             \ a:snippets_file, line, linenr, dup_check)
     elseif !empty(snippet_dict)
       if line =~ '^\s' || line == ''
-        if snippet_dict.word == ''
+        if snippet_dict.word == '' && line =~# '^\t'
           " Substitute head tab character.
           let line = substitute(line, '^\t', '', '')
+        else
+          let line = substitute(line, '^ *', '', '')
         endif
 
-        let snippet_dict.word .=
-              \ substitute(line, '^ *', '', '') . "\n"
+        let snippet_dict.word .= line . "\n"
       else
         call s:add_snippet_attribute(
               \ a:snippets_file, line, linenr, snippet_dict)
