@@ -57,10 +57,10 @@ function! neosnippet#helpers#get_completion_snippets() abort
         \ "!get(v:val.options, 'oneshot', 0)")
 endfunction
 
-function! neosnippet#helpers#get_snippets_directory() abort
+function! neosnippet#helpers#get_snippets_directory(...) abort
+  let filetype = get(a:000, 0, neosnippet#helpers#get_filetype())
   let snippets_dir = copy(neosnippet#variables#snippets_dir())
-  if !get(g:neosnippet#disable_runtime_snippets,
-        \ neosnippet#helpers#get_filetype(),
+  if !get(g:neosnippet#disable_runtime_snippets, filetype,
         \ get(g:neosnippet#disable_runtime_snippets, '_', 0))
     let snippets_dir += neosnippet#variables#runtime_dir()
   endif
