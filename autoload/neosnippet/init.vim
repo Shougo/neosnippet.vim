@@ -63,6 +63,7 @@ function! s:initialize_others() abort
             \ start='<`\d\+:\=\%(#:\)\?\|<{\d\+:\=\%(#:\)\?\|<|'
             \ end='`>\|}>\||>'
             \ containedin=ALL
+            \ cchar=|
             \ concealends oneline
     endif
   augroup END
