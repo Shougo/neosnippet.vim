@@ -12,13 +12,6 @@ let s:edit_options = [
 let s:Cache = neosnippet#util#get_vital().import('System.Cache.Deprecated')
 
 
-function! s:get_list() abort
-  if !exists('s:List')
-    let s:List = vital#of('neosnippet').import('Data.List')
-  endif
-  return s:List
-endfunction
-
 function! neosnippet#commands#_edit(args) abort
   if neosnippet#util#is_sudo()
     call neosnippet#util#print_error(
@@ -90,10 +83,9 @@ function! neosnippet#commands#_make_cache(filetype) abort
 
   let snippets[filetype] = {}
 
-  let path = join(neosnippet#helpers#get_snippets_directory(), ',')
   let cache_dir = neosnippet#variables#data_dir()
 
-  for filename in s:get_snippets_files(path, filetype)
+  for filename in neosnippet#helpers#get_snippets_files(filetype)
     " Clear cache file
     call s:Cache.deletefile(cache_dir, filename)
     let snippets[filetype] = extend(snippets[filetype],
@@ -102,7 +94,7 @@ function! neosnippet#commands#_make_cache(filetype) abort
 
   if g:neosnippet#enable_snipmate_compatibility
     " Load file snippets
-    for filename in s:get_snippet_files(path, filetype)
+    for filename in neosnippet#helpers#get_snippet_files(filetype)
       let trigger = fnamemodify(filename, ':t:r')
       let snippets[filetype][trigger] =
             \ neosnippet#parser#_parse_snippet(filename, trigger)
@@ -175,29 +167,4 @@ function! s:initialize_options(options) abort
   endif
 
   return options
-endfunction
-
-function! s:get_snippets_files(path, filetype) abort
-  let snippets_files = []
-  for glob in s:get_list().flatten(
-        \ map(split(get(g:neosnippet#scope_aliases,
-        \   a:filetype, a:filetype), '\s*,\s*'), "
-        \   [v:val.'.snip', v:val.'.snippets',
-        \    v:val.'/**/*.snip', v:val.'/**/*.snippets']
-        \ + (a:filetype != '_' &&
-        \    !has_key(g:neosnippet#scope_aliases, a:filetype) ?
-        \    [v:val . '_*.snip', v:val . '_*.snippets'] : [])"))
-    let snippets_files += split(globpath(a:path, glob), '\n')
-  endfor
-  return s:get_list().uniq(snippets_files)
-endfunction
-function! s:get_snippet_files(path, filetype) abort
-  let snippet_files = []
-  for glob in s:get_list().flatten(
-        \ map(split(get(g:neosnippet#scope_aliases,
-        \   a:filetype, a:filetype), '\s*,\s*'), "
-        \   [v:val.'/*.snippet']"))
-    let snippet_files += split(globpath(a:path, glob), '\n')
-  endfor
-  return s:get_list().uniq(snippet_files)
 endfunction
