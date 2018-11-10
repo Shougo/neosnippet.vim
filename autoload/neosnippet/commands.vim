@@ -189,7 +189,7 @@ function! s:get_snippets_files(path, filetype) abort
         \    [v:val . '_*.snip', v:val . '_*.snippets'] : [])"))
     let snippets_files += split(globpath(a:path, glob), '\n')
   endfor
-  return reverse(s:get_list().uniq(snippets_files))
+  return s:get_list().uniq(snippets_files)
 endfunction
 function! s:get_snippet_files(path, filetype) abort
   let snippet_files = []
