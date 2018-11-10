@@ -199,5 +199,5 @@ function! s:get_snippet_files(path, filetype) abort
         \   [v:val.'/*.snippet']"))
     let snippet_files += split(globpath(a:path, glob), '\n')
   endfor
-  return reverse(s:get_list().uniq(snippet_files))
+  return s:get_list().uniq(snippet_files)
 endfunction
