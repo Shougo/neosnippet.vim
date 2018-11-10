@@ -31,8 +31,6 @@ syntax match   neosnippetEscape
 
 syntax match   neosnippetKeyword
       \ '^\%(include\|extends\|source\|snippet\|abbr\|prev_word\|delete\|alias\|options\|regexp\|TARGET\)' contained
-syntax keyword   neosnippetOption
-      \ head word indent contained
 syntax match   neosnippetPrevWords
       \ '^prev_word\s\+.*$' contains=neosnippetString,neosnippetKeyword
 syntax match   neosnippetRegexpr
@@ -67,6 +65,12 @@ syntax match   neosnippetAlias
       \ '\s\+.*$' contained
 syntax match   neosnippetStatementOptions
       \ '^options\s.*$' contains=neosnippetOption,neosnippetKeyword
+syntax keyword   neosnippetOption
+      \ head word indent contained
+syntax match   neosnippetStatementExtends
+      \ '^extends\s.*$' contains=neosnippetExtend,neosnippetKeyword
+syntax match   neosnippetExtend
+      \ '\s\+.*$' contained
 syntax match   neosnippetPlaceHolderComment
       \ '{\d\+:\zs#:.\{-}\ze\\\@<!}' contained
 
