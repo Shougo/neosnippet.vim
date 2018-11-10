@@ -59,11 +59,12 @@ endfunction
 
 function! neosnippet#helpers#get_snippets_directory(...) abort
   let filetype = get(a:000, 0, neosnippet#helpers#get_filetype())
-  let snippets_dir = copy(neosnippet#variables#snippets_dir())
+  let snippets_dir = []
   if !get(g:neosnippet#disable_runtime_snippets, filetype,
         \ get(g:neosnippet#disable_runtime_snippets, '_', 0))
     let snippets_dir += neosnippet#variables#runtime_dir()
   endif
+  let snippets_dir += copy(neosnippet#variables#snippets_dir())
 
   return snippets_dir
 endfunction
