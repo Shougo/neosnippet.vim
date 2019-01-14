@@ -640,16 +640,21 @@ inserted by expanding the output of the strftime command.
 
 >
 	snippet     header
-	   File: ${1:`expand('%:t')`}
-	   ${2:Created at: `strftime("%B %d, %Y")`}
+	    File: ${1:`expand('%:t')`}
+	    ${2:Created at: `strftime("%B %d, %Y")`}
 <
 
 You can also nest placeholders if you escape the special characters.
 
 >
 	snippet div
-	   <div ${1:id="${2:someid\}"}>${3}</div>${4}
+	    <div ${1:id="${2:someid\}"}>${3}</div>${4}
 <
+If you need to use literal "$" in default, you must escape the special
+characters.
+>
+	snippet  test
+	    ${1:escape \\${2:foobar\} value}
 
 In some cases you need to escape the curly brace "}" twice as shown in the
 example below.

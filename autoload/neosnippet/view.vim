@@ -329,7 +329,7 @@ function! s:expand_placeholder(start, end, holder_cnt, line, ...) abort
         \ '\\d\\+', a:holder_cnt, '')
   let default = substitute(
         \ matchstr(current_line, default_pattern),
-        \ '\\\ze[^\\]', '', 'g')
+        \ '\\\ze[^$\\]', '', 'g')
   let neosnippet.optional_tabstop = (default =~ '^#:')
   if !is_select && default =~ '^#:'
     " Delete comments.
@@ -352,6 +352,7 @@ function! s:expand_placeholder(start, end, holder_cnt, line, ...) abort
   let default = substitute(default,
         \ neosnippet#get_mirror_placeholder_marker_substitute_pattern(),
         \ '<|\1|>', 'g')
+  let default = substitute(default, '\\\$', '$', 'g')
 
   " len() cannot use for multibyte.
   let default_len = len(substitute(default, '.', 'x', 'g'))
