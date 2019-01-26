@@ -161,25 +161,37 @@ function! s:get_completed_snippets(cur_text, col) abort
     return []
   endif
 
-  let cur_text = a:cur_text
-
   if get(v:completed_item, 'user_data', '') !=# ''
-    let user_data = json_decode(v:completed_item.user_data)
-    if type(user_data) == v:t_dict && has_key(user_data, 'snippet')
-      let snippet = user_data.snippet
-      if has_key(user_data, 'snippet_trigger')
-        let cur_text = cur_text[: -1-len(user_data.snippet_trigger)]
-      endif
-      return [cur_text, snippet]
+    let ret = s:get_user_data(cur_text)
+    if !empty(ret)
+      return [ret[0], ret[1]]
     endif
   endif
 
   if g:neosnippet#enable_completed_snippet
     let snippet = neosnippet#parser#_get_completed_snippet(
-          \ v:completed_item, cur_text, neosnippet#util#get_next_text())
+          \ v:completed_item, a:cur_text, neosnippet#util#get_next_text())
     if snippet != ''
-      return [cur_text, snippet]
+      return [a:cur_text, snippet]
     endif
+  endif
+
+  return []
+endfunction
+function! s:get_user_data(cur_text) abort
+  let user_data = json_decode(v:completed_item.user_data)
+  if type(user_data) !=# v:t_dict
+    return []
+  endif
+
+  let cur_text = a:cur_text
+
+  if get(user_data, 'snippet', '') !=# ''
+    let snippet = user_data.snippet
+    if has_key(user_data, 'snippet_trigger')
+      let cur_text = cur_text[: -1-len(user_data.snippet_trigger)]
+    endif
+    return [cur_text, snippet]
   endif
 
   return []
