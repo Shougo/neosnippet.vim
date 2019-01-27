@@ -194,7 +194,7 @@ function! s:get_user_data(cur_text) abort
     return [cur_text, snippet]
   endif
 
-  if has_key(user_data, 'lspitem', '')
+  if has_key(user_data, 'lspitem')
     let lspitem = user_data.lspitem
     if has_key(lspitem, 'insertText')
       let snippet = lspitem.insertText
