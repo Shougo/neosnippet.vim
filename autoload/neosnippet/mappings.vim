@@ -162,7 +162,7 @@ function! s:get_completed_snippets(cur_text, col) abort
   endif
 
   if get(v:completed_item, 'user_data', '') !=# ''
-    let ret = s:get_user_data(cur_text)
+    let ret = s:get_user_data(a:cur_text)
     if !empty(ret)
       return [ret[0], ret[1]]
     endif
