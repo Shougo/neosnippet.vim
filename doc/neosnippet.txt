@@ -215,6 +215,16 @@ g:neosnippet#enable_completed_snippet
 
 		The default value is 0.
 		
+					*g:neosnippet#enable_complete_done*
+g:neosnippet#enable_complete_done
+		If this variable is not 0, neosnippet can expand on
+		|CompleteDone|.
+		Note: If the feature is enabled, you cannot expand snippet
+		trigger manually when |pumvisible()|to prevent conflicts with
+		|CompleteDone| expand.
+
+		The default value is 0.
+		
 					*g:neosnippet#enable_optional_arguments*
 g:neosnippet#enable_optional_arguments
 		If this variable is not 0, neosnippet will conceal commas in
@@ -373,8 +383,7 @@ neosnippet#get_snippets_directory()
 						*neosnippet#complete_done()*
 neosnippet#complete_done()
 		It expands the snippet for |CompleteDone| event.
->
-		autocmd CompleteDone * call neosnippet#complete_done()
+		Note: The function is deprecated.
 
 ==============================================================================
 EXAMPLES					*neosnippet-examples*
@@ -872,7 +881,7 @@ Q: I want to auto complete with parameters.
 
 A: >
 	let g:neosnippet#enable_completed_snippet = 1
-	autocmd CompleteDone * call neosnippet#complete_done()
+	let g:neosnippet#enable_complete_done = 1
 
 ==============================================================================
 vim:tw=78:ts=8:ft=help:norl:noet:fen:noet:

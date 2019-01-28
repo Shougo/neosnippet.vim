@@ -237,11 +237,28 @@ function! s:SID_PREFIX() abort
 endfunction
 
 function! neosnippet#mappings#_trigger(function) abort
-  let [cur_text, col, expr] = neosnippet#mappings#_pre_trigger()
-
-  if !neosnippet#mappings#expandable_or_jumpable()
-    return ''
+  let expand = 0
+  let jump = 0
+  if stridx(a:function, 'expand')
+    let expand = 1
   endif
+  if stridx(a:function, 'jump')
+    let jump = 1
+  endif
+
+  if expand
+    if !neosnippet#mappings#expandable() ||
+          \ (g:neosnippet#enable_complete_done && pumvisible())
+      return ''
+    endif
+  endif
+  if jump
+    if !neosnippet#mappings#jumpable()
+      return ''
+    endif
+  endif
+
+  let [cur_text, col, expr] = neosnippet#mappings#_pre_trigger()
 
   let expr .= printf("\<ESC>:call %s(%s,%d)\<CR>",
         \ a:function, string(cur_text), col)

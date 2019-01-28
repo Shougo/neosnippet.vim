@@ -73,6 +73,10 @@ function! s:initialize_others() abort
 
   call neosnippet#mappings#_clear_select_mode_mappings()
 
+  if g:neosnippet#enable_complete_done
+    autocmd neosnippet CompleteDone * call neosnippet#complete_done()
+  endif
+
   if g:neosnippet#enable_snipmate_compatibility
     " For snipMate function.
     function! Filename(...) abort
