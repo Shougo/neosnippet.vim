@@ -41,6 +41,9 @@ function! neosnippet#view#_insert(snippet, options, cur_text, col) abort
         \ neosnippet#get_placeholder_marker_substitute_pattern(),
         \ '<`\1`>', 'g')
   let snip_word = substitute(snip_word,
+        \ neosnippet#get_placeholder_marker_substitute_zero_pattern(),
+        \ '<`\1`>', 'g')
+  let snip_word = substitute(snip_word,
         \ neosnippet#get_mirror_placeholder_marker_substitute_pattern(),
         \ '<|\1|>', 'g')
 
