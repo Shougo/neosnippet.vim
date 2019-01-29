@@ -593,13 +593,13 @@ The structure of a placeholder can be:
 <
 
 - $number
-- ${0}
+- ${0}, $0
 
 	This is a synchronized placeholder. Sometimes it is required to repeat
 	a value in several positions inside a snippet. If you set the number
 	of this placeholder to the same number as one of the other
 	placeholders in the snippet, it will repeat its content. $1 is
-	synchronized to ${1} and so on. ${0} will be the final jump
+	synchronized to ${1} and so on. ${0} or $0 will be the final jump
 	placeholder.
 
 	Note: If you don't use ${0} in snippet, ${0} will be added
