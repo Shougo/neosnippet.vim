@@ -237,25 +237,15 @@ function! s:SID_PREFIX() abort
 endfunction
 
 function! neosnippet#mappings#_trigger(function) abort
-  let expand = 0
-  let jump = 0
-  if stridx(a:function, 'expand')
-    let expand = 1
-  endif
-  if stridx(a:function, 'jump')
-    let jump = 1
+  let expand = stridx(a:function, 'expand') >= 0 ? 1 : 0
+
+  if expand && g:neosnippet#enable_complete_done && pumvisible()
+        \ && neosnippet#mappings#expandable()
+      return ''
   endif
 
-  if expand
-    if !neosnippet#mappings#expandable() ||
-          \ (g:neosnippet#enable_complete_done && pumvisible())
-      return ''
-    endif
-  endif
-  if jump
-    if !neosnippet#mappings#jumpable()
-      return ''
-    endif
+  if !neosnippet#mappings#expandable_or_jumpable()
+    return ''
   endif
 
   let [cur_text, col, expr] = neosnippet#mappings#_pre_trigger()
