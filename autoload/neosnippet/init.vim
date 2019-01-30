@@ -57,14 +57,16 @@ function! s:initialize_others() abort
           \ .neosnippet#get_mirror_placeholder_marker_pattern()."'"
           \ 'containedin=ALL oneline'
     if g:neosnippet#enable_conceal_markers && has('conceal')
-      autocmd BufNewFile,BufRead,Syntax *
-            \ syntax region neosnippetConcealExpandSnippets
-            \ matchgroup=neosnippetExpandSnippets
-            \ start='<`\d\+:\=\%(#:\|TARGET:\?\)\?\|<{\d\+:\=\%(#:\|TARGET:\?\)\?\|<|'
-            \ end='`>\|}>\||>'
-            \ containedin=ALL
-            \ cchar=|
-            \ concealends oneline
+      let start = '<`0\|<`\|<{\d\+:\=\%(#:\|TARGET:\?\)\?\|%\w\+(<|'
+      let end = '\(#:\|TARGET\)\?`>\|}>\||>)\?'
+      execute " autocmd BufNewFile,BufRead,Syntax * " .
+            \ " syntax region neosnippetConcealExpandSnippets " .
+            \ " matchgroup=neosnippetExpandSnippets " .
+            \ " start='" . start . "' " .
+            \ " end='" . end . "' " .
+            \ " containedin=ALL " .
+            \ " cchar=" . g:neosnippet_conceal_char .
+            \ " concealends oneline"
     endif
   augroup END
   doautocmd neosnippet BufRead
