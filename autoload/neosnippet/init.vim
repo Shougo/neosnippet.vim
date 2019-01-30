@@ -58,7 +58,7 @@ function! s:initialize_others() abort
           \ 'containedin=ALL oneline'
     if g:neosnippet#enable_conceal_markers && has('conceal')
       let start = '<`0\|<`\|<{\d\+:\=\%(#:\|TARGET:\?\)\?\|%\w\+(<|'
-      let end = '\(#:\|TARGET\)\?`>\|}>\||>)\?'
+      let end = '\(:\w\+\|:#:\w\+\)\?`>\|}>\||>)\?'
       execute " autocmd BufNewFile,BufRead,Syntax * " .
             \ " syntax region neosnippetConcealExpandSnippets " .
             \ " matchgroup=neosnippetExpandSnippets " .
