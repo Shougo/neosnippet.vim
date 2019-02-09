@@ -316,6 +316,18 @@ function! neosnippet#parser#_get_completed_snippet(completed_item, cur_text, nex
   if item.word =~# '^.\+(' || get(item, 'kind', '') == 'f'
     call add(abbrs, item.word)
   endif
+
+  if has_key(item, 'user_data')
+    let user_data = json_decode(item.user_data)
+    if has_key(user_data, 'lspitem')
+      " Use lspitem userdata
+      let lspitem = user_data.lspitem
+      if has_key(lspitem, 'label')
+        call add(abbrs, lspitem.label)
+      endif
+    endif
+  endif
+
   call map(abbrs, "escape(v:val, '\')")
 
   " () Only supported

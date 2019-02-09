@@ -188,9 +188,9 @@ function! s:get_user_data(cur_text) abort
 
   if get(user_data, 'snippet', '') !=# ''
     let snippet = user_data.snippet
-    if has_key(user_data, 'snippet_trigger')
-      let cur_text = cur_text[: -1-len(user_data.snippet_trigger)]
-    endif
+    let snippet_trigger = get(user_data, 'snippet_trigger',
+          \ v:completed_item.word)
+    let cur_text = cur_text[: -1-len(snippet_trigger)]
     return [cur_text, snippet]
   endif
 
