@@ -82,18 +82,18 @@ let s:action_table.unite__new_candidate = {
       \ }
 function! s:action_table.unite__new_candidate.func(candidate) abort
   let trigger = unite#util#input('Please input snippet trigger: ')
-  if trigger == ''
+  if trigger ==# ''
     echo 'Canceled.'
     return
   endif
 
   call unite#take_action('open', a:candidate)
-  if &filetype != 'snippet'
+  if &filetype !=# 'snippet'
     " Open failed.
     return
   endif
 
-  if getline('$') != ''
+  if getline('$') !=# ''
     " Append line.
     call append('$', '')
   endif

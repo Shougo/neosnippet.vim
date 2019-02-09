@@ -12,7 +12,7 @@ function! neosnippet#mappings#expandable() abort
   return neosnippet#mappings#completed_expandable()
         \ || neosnippet#helpers#get_cursor_snippet(
         \      neosnippet#helpers#get_snippets('i'),
-        \      neosnippet#util#get_cur_text()) != ''
+        \      neosnippet#util#get_cur_text()) !=# ''
 endfunction
 function! neosnippet#mappings#jumpable() abort
   " Found snippet placeholder.
@@ -38,7 +38,7 @@ function! neosnippet#mappings#_clear_select_mode_mappings() abort
   redir END
 
   for map in map(filter(split(mappings, '\n'),
-        \ "v:val !~# '^s' && v:val !~ '^\\a*\\s*<\\S\\+>'"),
+        \ "v:val !~# '^s' && v:val !~# '^\\a*\\s*<\\S\\+>'"),
         \ "matchstr(v:val, '^\\a*\\s*\\zs\\S\\+')")
     silent! execute 'sunmap' map
     silent! execute 'sunmap <buffer>' map
@@ -53,7 +53,7 @@ endfunction
 
 function! neosnippet#mappings#_register_oneshot_snippet() abort
   let trigger = input('Please input snippet trigger: ', 'oneshot')
-  if trigger == ''
+  if trigger ==# ''
     return
   endif
 
@@ -86,7 +86,7 @@ function! neosnippet#mappings#_expand_target() abort
   if !has_key(neosnippet#helpers#get_snippets('i'), trigger) ||
         \ neosnippet#helpers#get_snippets('i')[trigger].snip !~#
         \   neosnippet#get_placeholder_target_marker_pattern()
-    if trigger != ''
+    if trigger !=# ''
       echo 'The trigger is invalid.'
     endif
 
@@ -147,7 +147,7 @@ function! s:snippets_expand(cur_text, col) abort
   let cur_word = neosnippet#helpers#get_cursor_snippet(
         \ neosnippet#helpers#get_snippets('i'),
         \ a:cur_text)
-  if cur_word != ''
+  if cur_word !=# ''
     " Found snippet trigger.
     call neosnippet#view#_expand(
           \ neosnippet#util#get_cur_text(), a:col, cur_word)
@@ -171,7 +171,7 @@ function! s:get_completed_snippets(cur_text, col) abort
   if g:neosnippet#enable_completed_snippet
     let snippet = neosnippet#parser#_get_completed_snippet(
           \ v:completed_item, a:cur_text, neosnippet#util#get_next_text())
-    if snippet != ''
+    if snippet !=# ''
       return [a:cur_text, snippet]
     endif
   endif

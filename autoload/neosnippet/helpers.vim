@@ -6,11 +6,11 @@
 
 function! neosnippet#helpers#get_cursor_snippet(snippets, cur_text) abort
   let cur_word = matchstr(a:cur_text, '\S\+$')
-  if cur_word != '' && has_key(a:snippets, cur_word)
+  if cur_word !=# '' && has_key(a:snippets, cur_word)
       return cur_word
   endif
 
-  while cur_word != ''
+  while cur_word !=# ''
     if has_key(a:snippets, cur_word) &&
           \ a:snippets[cur_word].options.word
       return cur_word
@@ -47,7 +47,7 @@ function! neosnippet#helpers#get_snippets(...) abort
 
   if exists('b:neosnippet_disable_snippet_triggers')
     call filter(snippets,
-          \ "index(b:neosnippet_disable_snippet_triggers, v:val.word) < 0")
+          \ 'index(b:neosnippet_disable_snippet_triggers, v:val.word) < 0')
   endif
 
   return snippets
@@ -79,7 +79,7 @@ function! neosnippet#helpers#get_filetype() abort
   let context_filetype =
         \ s:exists_context_filetype ?
         \ context_filetype#get_filetype() : &filetype
-  if context_filetype == ''
+  if context_filetype ==# ''
     let context_filetype = 'nothing'
   endif
 
@@ -95,13 +95,13 @@ function! neosnippet#helpers#get_selected_text(type, ...) abort
   try
     " Invoked from Visual mode, use '< and '> marks.
     if a:0
-      silent exe "normal! `<" . a:type . "`>y"
-    elseif a:type == 'line'
+      silent exe 'normal! `<' . a:type . '`>y'
+    elseif a:type ==# 'line'
       silent exe "normal! '[V']y"
-    elseif a:type == 'block'
-      silent exe "normal! `[\<C-v>`]y"
+    elseif a:type ==# 'block'
+      silent exe 'normal! `[\<C-v>`]y'
     else
-      silent exe "normal! `[v`]y"
+      silent exe 'normal! `[v`]y'
     endif
 
     return @@
@@ -120,13 +120,13 @@ function! neosnippet#helpers#delete_selected_text(type, ...) abort
   try
     " Invoked from Visual mode, use '< and '> marks.
     if a:0
-      silent exe "normal! `<" . a:type . "`>d"
+      silent exe 'normal! `<' . a:type . '`>d'
     elseif a:type ==# 'V'
-      silent exe "normal! `[V`]s"
+      silent exe 'normal! `[V`]s'
     elseif a:type ==# "\<C-v>"
-      silent exe "normal! `[\<C-v>`]d"
+      silent exe 'normal! `[\<C-v>`]d'
     else
-      silent exe "normal! `[v`]d"
+      silent exe 'normal! `[v`]d'
     endif
   finally
     let &selection = sel_save
@@ -143,13 +143,13 @@ function! neosnippet#helpers#substitute_selected_text(type, text) abort
   try
     " Invoked from Visual mode, use '< and '> marks.
     if a:0
-      silent exe "normal! `<" . a:type . "`>s" . a:text
+      silent exe 'normal! `<' . a:type . '`>s' . a:text
     elseif a:type ==# 'V'
       silent exe "normal! '[V']hs" . a:text
     elseif a:type ==# "\<C-v>"
       silent exe "normal! `[\<C-v>`]s" . a:text
     else
-      silent exe "normal! `[v`]s" . a:text
+      silent exe 'normal! `[v`]s' . a:text
     endif
   finally
     let &selection = sel_save
@@ -178,7 +178,7 @@ function! s:get_sources_filetypes(filetype) abort
   let filetypes =
         \ exists('*context_filetype#get_filetypes') ?
         \   context_filetype#get_filetypes(a:filetype) :
-        \ split(((a:filetype == '') ? 'nothing' : a:filetype), '\.')
+        \ split(((a:filetype ==# '') ? 'nothing' : a:filetype), '\.')
   return neosnippet#util#uniq(['_'] + filetypes + [a:filetype])
 endfunction
 
@@ -197,7 +197,7 @@ function! neosnippet#helpers#get_snippets_files(filetype) abort
         \   a:filetype, a:filetype), '\s*,\s*'), "
         \   [v:val.'.snip', v:val.'.snippets',
         \    v:val.'/**/*.snip', v:val.'/**/*.snippets']
-        \ + (a:filetype != '_' &&
+        \ + (a:filetype !=# '_' &&
         \    !has_key(g:neosnippet#scope_aliases, a:filetype) ?
         \    [v:val . '_*.snip', v:val . '_*.snippets'] : [])"))
     let snippets_files += split(globpath(path, glob), '\n')

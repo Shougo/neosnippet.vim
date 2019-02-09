@@ -18,7 +18,7 @@ let s:action_table.neosnippet_source = {
 function! s:action_table.neosnippet_source.func(candidates) abort
   for candidate in a:candidates
     let snippet_name = candidate.action__path
-    if snippet_name != ''
+    if snippet_name !=# ''
       call neosnippet#commands#_source(snippet_name)
     endif
   endfor
@@ -43,7 +43,7 @@ let s:source_user.action_table.unite__new_candidate = {
 function! s:source_user.action_table.unite__new_candidate.func(candidate) abort
   let filename = input(
         \ 'New snippet file name: ', neosnippet#helpers#get_filetype())
-  if filename != ''
+  if filename !=# ''
     call neosnippet#commands#_edit(filename)
   endif
 endfunction
@@ -68,7 +68,7 @@ let s:source_runtime.action_table.unite__new_candidate = {
 function! s:source_runtime.action_table.unite__new_candidate.func(candidate) abort
   let filename = input(
         \ 'New snippet file name: ', neosnippet#helpers#get_filetype())
-  if filename != ''
+  if filename !=# ''
     call neosnippet#commands#_edit('-runtime ' . filename)
   endif
 endfunction

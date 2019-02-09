@@ -106,7 +106,7 @@ function! neosnippet#util#parse_options(args, options_list) abort
           \  'stridx(arg, v:val) == 0')
     for option in matched_list
       let key = substitute(substitute(option, '-', '_', 'g'), '=$', '', '')[1:]
-      let options[key] = (option =~ '=$') ?
+      let options[key] = (option =~# '=$') ?
             \ arg[len(option) :] : 1
       break
     endfor
@@ -135,7 +135,7 @@ endfunction
 
 " Sudo check.
 function! neosnippet#util#is_sudo() abort
-  return $SUDO_USER != '' && $USER !=# $SUDO_USER
+  return $SUDO_USER !=# '' && $USER !=# $SUDO_USER
       \ && $HOME !=# expand('~'.$USER)
       \ && $HOME ==# expand('~'.$SUDO_USER)
 endfunction
