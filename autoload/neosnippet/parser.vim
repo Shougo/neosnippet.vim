@@ -317,7 +317,7 @@ function! neosnippet#parser#_get_completed_snippet(completed_item, cur_text, nex
     call add(abbrs, item.word)
   endif
 
-  if has_key(item, 'user_data')
+  if get(item, 'user_data', '') !=# ''
     let user_data = json_decode(item.user_data)
     if has_key(user_data, 'lspitem')
       " Use lspitem userdata
