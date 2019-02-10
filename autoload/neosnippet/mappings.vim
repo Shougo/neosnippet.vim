@@ -194,15 +194,6 @@ function! s:get_user_data(cur_text) abort
     return [cur_text, snippet]
   endif
 
-  if has_key(user_data, 'lspitem')
-    let lspitem = user_data.lspitem
-    if has_key(lspitem, 'insertText')
-      let snippet = lspitem.insertText
-      let cur_text = cur_text[: -1-len(snippet)]
-      return [cur_text, snippet]
-    endif
-  endif
-
   return []
 endfunction
 function! neosnippet#mappings#_complete_done(cur_text, col) abort
