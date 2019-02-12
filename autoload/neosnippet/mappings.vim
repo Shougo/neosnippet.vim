@@ -228,9 +228,7 @@ function! s:SID_PREFIX() abort
 endfunction
 
 function! neosnippet#mappings#_trigger(function) abort
-  let expand = stridx(a:function, 'expand') >= 0 ? 1 : 0
-
-  if expand && g:neosnippet#enable_complete_done && pumvisible()
+  if g:neosnippet#enable_complete_done && pumvisible()
         \ && neosnippet#mappings#expandable()
       return ''
   endif
