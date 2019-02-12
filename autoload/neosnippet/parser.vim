@@ -245,8 +245,6 @@ function! neosnippet#parser#_initialize_snippet(dict, path, line, pattern, name)
   let a:dict.word = substitute(a:dict.word, '\n\+$', '', '')
   if a:dict.word !~
         \    neosnippet#get_placeholder_marker_substitute_pattern().'$'
-        \ && a:dict.word !~
-        \    neosnippet#get_placeholder_marker_substitute_zero_pattern()
     " Add placeholder.
     let a:dict.word .= '${0}'
   endif
