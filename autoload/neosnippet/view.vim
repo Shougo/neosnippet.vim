@@ -80,6 +80,13 @@ function! neosnippet#view#_insert(snippet, options, cur_text, col) abort
     endif
     call setline('.', snippet_lines[0])
 
+    call cursor([begin_line, col('.') + len(snippet_lines[0])])
+    if col('.') + len(snippet_lines[0]) < col('$')
+      startinsert
+    else
+      startinsert!
+    endif
+
     if begin_line != end_line || options.indent
       call s:indent_snippet(begin_line, end_line, base_indent)
     endif
