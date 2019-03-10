@@ -60,6 +60,8 @@ function! neosnippet#view#_insert(snippet, options, cur_text, col) abort
   let begin_line = line('.')
   let end_line = line('.') + len(snippet_lines) - 1
 
+  let expanded_word = snippet_lines[0]
+
   let snippet_lines[0] = a:cur_text . snippet_lines[0]
   let snippet_lines[-1] = snippet_lines[-1] . next_line
 
@@ -80,11 +82,12 @@ function! neosnippet#view#_insert(snippet, options, cur_text, col) abort
     endif
     call setline('.', snippet_lines[0])
 
-    call cursor([begin_line, col('.') + len(snippet_lines[0])])
-    if col('.') + len(snippet_lines[0]) < col('$')
-      startinsert
-    else
+    let next_col = len(a:cur_text) + len(expanded_word) + 1
+    call cursor([begin_line, next_col])
+    if next_col >= col('$')
       startinsert!
+    else
+      startinsert
     endif
 
     if begin_line != end_line || options.indent
