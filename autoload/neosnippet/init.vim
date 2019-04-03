@@ -83,9 +83,9 @@ function! s:initialize_others() abort
     " For snipMate function.
     function! Filename(...) abort
       let filename = expand('%:t:r')
-      if filename == ''
+      if filename ==# ''
         return a:0 == 2 ? a:2 : ''
-      elseif a:0 == 0 || a:1 == ''
+      elseif a:0 == 0 || a:1 ==# ''
         return filename
       else
         return substitute(a:1, '$1', filename, 'g')

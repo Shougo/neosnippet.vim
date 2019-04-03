@@ -7,7 +7,7 @@
 function! neosnippet#view#_expand(cur_text, col, trigger_name) abort
   let snippets = neosnippet#helpers#get_snippets()
 
-  if a:trigger_name == '' || !has_key(snippets, a:trigger_name)
+  if a:trigger_name ==# '' || !has_key(snippets, a:trigger_name)
     let pos = getpos('.')
     let pos[2] = len(a:cur_text)+1
     call setpos('.', pos)
@@ -32,7 +32,7 @@ function! neosnippet#view#_insert(snippet, options, cur_text, col) abort
         \ a:options)
 
   let snip_word = a:snippet
-  if snip_word =~ '\\\@<!`.*\\\@<!`'
+  if snip_word =~# '\\\@<!`.*\\\@<!`'
     let snip_word = s:eval_snippet(snip_word)
   endif
 
@@ -60,6 +60,8 @@ function! neosnippet#view#_insert(snippet, options, cur_text, col) abort
   let begin_line = line('.')
   let end_line = line('.') + len(snippet_lines) - 1
 
+  let expanded_word = snippet_lines[0]
+
   let snippet_lines[0] = a:cur_text . snippet_lines[0]
   let snippet_lines[-1] = snippet_lines[-1] . next_line
 
@@ -79,6 +81,14 @@ function! neosnippet#view#_insert(snippet, options, cur_text, col) abort
       call append('.', snippet_lines[1:])
     endif
     call setline('.', snippet_lines[0])
+
+    let next_col = len(a:cur_text) + len(expanded_word) + 1
+    call cursor([begin_line, next_col])
+    if next_col >= col('$')
+      startinsert!
+    else
+      startinsert
+    endif
 
     if begin_line != end_line || options.indent
       call s:indent_snippet(begin_line, end_line, base_indent)
@@ -166,18 +176,18 @@ function! s:indent_snippet(begin, end, base_indent) abort
     setlocal equalprg=
 
     let neosnippet = neosnippet#variables#current_neosnippet()
-    for line_nr in range((neosnippet.target != '' ?
+    for line_nr in range((neosnippet.target !=# '' ?
           \ a:begin : a:begin + 1), a:end)
       call cursor(line_nr, 0)
 
-      if getline('.') =~ '^\t\+'
+      if getline('.') =~# '^\t\+'
         let current_line = getline('.')
         if line_nr != a:begin
           " Delete head tab character.
           let current_line = substitute(current_line, '^\t', '', '')
         endif
 
-        if &l:expandtab && current_line =~ '^\t\+'
+        if &l:expandtab && current_line =~# '^\t\+'
           " Expand tab.
           cal setline('.', substitute(current_line,
                 \ '^\t\+', a:base_indent . repeat(' ', shiftwidth() *
@@ -333,8 +343,8 @@ function! s:expand_placeholder(start, end, holder_cnt, line, ...) abort
   let default = substitute(
         \ matchstr(current_line, default_pattern),
         \ '\\\ze[^$\\]', '', 'g')
-  let neosnippet.optional_tabstop = (default =~ '^#:')
-  if !is_select && default =~ '^#:'
+  let neosnippet.optional_tabstop = (default =~# '^#:')
+  if !is_select && default =~# '^#:'
     " Delete comments.
     let default = ''
   endif
@@ -343,7 +353,7 @@ function! s:expand_placeholder(start, end, holder_cnt, line, ...) abort
   let default = substitute(default, '^#:', '', '')
 
   let default = substitute(default, '\${VISUAL\(:.\{-}\)\?}', 'TARGET\1', '')
-  let is_target = (default =~ '^TARGET\>' && neosnippet.target != '')
+  let is_target = (default =~# '^TARGET\>' && neosnippet.target !=# '')
   let default = substitute(default, '^TARGET:\?', neosnippet.target, '')
 
   let neosnippet.selected_text = default
@@ -393,7 +403,7 @@ function! s:expand_placeholder(start, end, holder_cnt, line, ...) abort
     let neosnippet.unnamed_register = @"
 
     let len = default_len-1
-    if &l:selection == 'exclusive'
+    if &l:selection ==# 'exclusive'
       let len += 1
     endif
 
@@ -444,7 +454,7 @@ function! s:expand_target_placeholder(line, col) abort
         \ repeat(' ', target_base_indent) . '\|^' .
         \ repeat('\t', target_base_indent / &tabstop)
     call map(target_lines, 'substitute(v:val, target_strip_indent_regex, "", "")')
-    call map(target_lines, 'v:val == "" ? "" : base_indent . v:val')
+    call map(target_lines, 'v:val ==# "" ? "" : base_indent . v:val')
 
     call setline(a:line, target_lines[0])
     if len(target_lines) > 1
@@ -453,7 +463,7 @@ function! s:expand_target_placeholder(line, col) abort
 
     call cursor(end_line, 0)
 
-    if next_line != ''
+    if next_line !=# ''
       startinsert
       let col = col('.')
     else
@@ -539,7 +549,7 @@ function! s:eval_snippet(snippet_text) abort
     let prev_match = matchend(a:snippet_text,
           \ '\\\@<!`.\{-}\\\@<!`', match)
     let expr = a:snippet_text[match+1 : prev_match - 2]
-    let snip_word .= (expr == '' ? '`' : eval(expr))
+    let snip_word .= (expr ==# '' ? '`' : eval(expr))
 
     let match = match(a:snippet_text, '\\\@<!`.\{-}\\\@<!`', prev_match)
   endwhile

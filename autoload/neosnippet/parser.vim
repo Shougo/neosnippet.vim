@@ -62,25 +62,25 @@ function! s:parse(snippets_file) abort
   let sourced = 0
 
   for line in readfile(a:snippets_file)
-    if line =~ '^\h\w*.*\s$'
+    if line =~# '^\h\w*.*\s$'
       " Delete spaces.
       let line = substitute(line, '\s\+$', '', '')
     endif
 
-    if line =~ '^#'
+    if line =~# '^#'
       " Ignore.
-    elseif line =~ '^include'
+    elseif line =~# '^include'
       " Include snippets file.
       let snippets = extend(snippets, s:include_snippets(
             \ [matchstr(line, '^include\s\+\zs.*$')]))
-    elseif line =~ '^extends'
+    elseif line =~# '^extends'
       " Extend snippets files.
       let fts = split(matchstr(line, '^extends\s\+\zs.*$'), '\s*,\s*')
       for ft in fts
         let snippets = extend(snippets, s:include_snippets(
               \ [ft.'.snip', ft.'.snippets', ft.'/*']))
       endfor
-    elseif line =~ '^source'
+    elseif line =~# '^source'
       " Source Vim script file.
       for file in split(globpath(join(
             \ neosnippet#helpers#get_snippets_directory(), ','),
@@ -88,12 +88,12 @@ function! s:parse(snippets_file) abort
         execute 'source' fnameescape(file)
         let sourced = 1
       endfor
-    elseif line =~ '^delete\s'
+    elseif line =~# '^delete\s'
       let name = matchstr(line, '^delete\s\+\zs.*$')
-      if name != '' && has_key(snippets, name)
+      if name !=# '' && has_key(snippets, name)
         call filter(snippets, 'v:val.real_name !=# name')
       endif
-    elseif line =~ '^snippet\s'
+    elseif line =~# '^snippet\s'
       if !empty(snippet_dict)
         " Set previous snippet.
         call s:set_snippet_dict(snippet_dict,
@@ -103,8 +103,8 @@ function! s:parse(snippets_file) abort
       let snippet_dict = s:parse_snippet_name(
             \ a:snippets_file, line, linenr, dup_check)
     elseif !empty(snippet_dict)
-      if line =~ '^\s' || line == ''
-        if snippet_dict.word == '' && line =~# '^\t'
+      if line =~# '^\s' || line ==# ''
+        if snippet_dict.word ==# '' && line =~# '^\t'
           " Substitute head tab character.
           let line = substitute(line, '^\t', '', '')
         else
@@ -148,7 +148,7 @@ function! s:parse_snippet_name(snippets_file, line, linenr, dup_check) abort
   " descriptions (abbrs).
   let description = matchstr(a:line, '^snippet\s\+\S\+\s\+\zs.*$')
   if g:neosnippet#enable_snipmate_compatibility
-        \ && description != '' && description !=# snippet_dict.name
+        \ && description !=# '' && description !=# snippet_dict.name
         \ && has_key(a:dup_check, snippet_dict.name)
     " Convert description.
     let i = 0
@@ -181,25 +181,25 @@ endfunction
 function! s:add_snippet_attribute(snippets_file, line, linenr, snippet_dict) abort
   " Allow overriding/setting of the description (abbr) of the snippet.
   " This will override what was set via the snippet line.
-  if a:line =~ '^abbr\s'
+  if a:line =~# '^abbr\s'
     let a:snippet_dict.abbr = matchstr(a:line, '^abbr\s\+\zs.*$')
-  elseif a:line =~ '^alias\s'
+  elseif a:line =~# '^alias\s'
     let a:snippet_dict.alias = split(matchstr(a:line,
           \ '^alias\s\+\zs.*$'), '[,[:space:]]\+')
-  elseif a:line =~ '^prev_word\s'
+  elseif a:line =~# '^prev_word\s'
     let prev_word = matchstr(a:line,
           \ '^prev_word\s\+[''"]\zs.*\ze[''"]$')
-    if prev_word == '^'
+    if prev_word ==# '^'
       " For backward compatibility.
       let a:snippet_dict.options.head = 1
     else
       call neosnippet#util#print_error(
             \ 'prev_word must be "^" character.')
     endif
-  elseif a:line =~ '^regexp\s'
+  elseif a:line =~# '^regexp\s'
     let a:snippet_dict.regexp = matchstr(a:line,
           \ '^regexp\s\+[''"]\zs.*\ze[''"]$')
-  elseif a:line =~ '^options\s\+'
+  elseif a:line =~# '^options\s\+'
     for option in split(matchstr(a:line,
           \ '^options\s\+\zs.*$'), '[,[:space:]]\+')
       if !has_key(a:snippet_dict.options, option)
@@ -243,15 +243,8 @@ endfunction
 
 function! neosnippet#parser#_initialize_snippet(dict, path, line, pattern, name) abort
   let a:dict.word = substitute(a:dict.word, '\n\+$', '', '')
-  if a:dict.word !~
-        \    neosnippet#get_placeholder_marker_substitute_pattern().'$'
-        \ && a:dict.word !~
-        \    neosnippet#get_placeholder_marker_substitute_zero_pattern()
-    " Add placeholder.
-    let a:dict.word .= '${0}'
-  endif
 
-  if !has_key(a:dict, 'abbr') || a:dict.abbr == ''
+  if !has_key(a:dict, 'abbr') || a:dict.abbr ==# ''
     " Set default abbr.
     let abbr = ''
     let a:dict.abbr = a:dict.name
@@ -313,9 +306,21 @@ function! neosnippet#parser#_get_completed_snippet(completed_item, cur_text, nex
   if get(item, 'menu', '') =~# '^.\+('
     call add(abbrs, item.menu)
   endif
-  if item.word =~# '^.\+(' || get(item, 'kind', '') == 'f'
+  if item.word =~# '^.\+(' || get(item, 'kind', '') ==# 'f'
     call add(abbrs, item.word)
   endif
+
+  if get(item, 'user_data', '') !=# ''
+    let user_data = json_decode(item.user_data)
+    if has_key(user_data, 'lspitem')
+      " Use lspitem userdata
+      let lspitem = user_data.lspitem
+      if has_key(lspitem, 'label')
+        call add(abbrs, lspitem.label)
+      endif
+    endif
+  endif
+
   call map(abbrs, "escape(v:val, '\')")
 
   " () Only supported
@@ -390,7 +395,7 @@ function! neosnippet#parser#_get_completed_snippet(completed_item, cur_text, nex
   endfor
   let snippet .= args
 
-  if key != '(' && snippet == ''
+  if key !=# '(' && snippet ==# ''
     let snippet .= '${' . cnt . '}'
     let cnt += 1
   endif
@@ -412,7 +417,7 @@ function! neosnippet#parser#_get_in_paren(key, pair, str) abort
         continue
       endif
     elseif c ==# a:pair
-      if level == 1 && (s != '' || a:str =~ '()\s*(.\{-})')
+      if level == 1 && (s !=# '' || a:str =~# '()\s*(.\{-})')
         return s
       else
         let level -= 1
@@ -430,7 +435,7 @@ endfunction
 function! neosnippet#parser#_conceal_argument(arg, cnt, args) abort
   let outside = ''
   let inside = ''
-  if a:args != ''
+  if a:args !=# ''
     if g:neosnippet#enable_optional_arguments
       let inside = ', '
     else

@@ -25,7 +25,7 @@ function! neosnippet#commands#_edit(args) abort
         \ a:args, s:edit_options)
 
   let filetype = get(args, 0, '')
-  if filetype == ''
+  if filetype ==# ''
     let filetype = neosnippet#helpers#get_filetype()
   endif
 
@@ -34,7 +34,7 @@ function! neosnippet#commands#_edit(args) abort
         \ get(neosnippet#get_runtime_snippets_directory(), 0, '') :
         \ get(neosnippet#get_user_snippets_directory(), -1, ''))
 
-  if snippet_dir == ''
+  if snippet_dir ==# ''
     call neosnippet#util#print_error('Snippet directory is not found.')
     return
   endif
@@ -51,7 +51,7 @@ function! neosnippet#commands#_edit(args) abort
     let filename .= '/'.filetype
   endif
 
-  if filename !~ '\.snip*$'
+  if filename !~# '\.snip*$'
     let filename .= '.snip'
   endif
 
@@ -70,7 +70,7 @@ endfunction
 function! neosnippet#commands#_make_cache(filetype) abort
   call neosnippet#init#check()
 
-  let filetype = a:filetype == '' ?
+  let filetype = a:filetype ==# '' ?
         \ &filetype : a:filetype
   if filetype ==# ''
     let filetype = 'nothing'
@@ -146,8 +146,8 @@ function! neosnippet#commands#_filetype_complete(arglead, cmdline, cursorpos) ab
 endfunction
 function! neosnippet#commands#_complete_target_snippets(arglead, cmdline, cursorpos) abort
   return map(filter(values(neosnippet#helpers#get_snippets()),
-        \ "stridx(v:val.word, a:arglead) == 0
-        \ && v:val.snip =~# neosnippet#get_placeholder_target_marker_pattern()"), 'v:val.word')
+        \ 'stridx(v:val.word, a:arglead) == 0
+        \ && v:val.snip =~# neosnippet#get_placeholder_target_marker_pattern()'), 'v:val.word')
 endfunction
 
 function! s:initialize_options(options) abort

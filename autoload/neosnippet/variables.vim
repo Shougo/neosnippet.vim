@@ -77,7 +77,7 @@ function! neosnippet#variables#data_dir() abort
   let g:neosnippet#data_directory =
         \ substitute(fnamemodify(get(
         \   g:, 'neosnippet#data_directory',
-        \  ($XDG_CACHE_HOME != '' ?
+        \  ($XDG_CACHE_HOME !=# '' ?
         \   $XDG_CACHE_HOME . '/neosnippet' : expand('~/.cache/neosnippet'))),
         \  ':p'), '\\', '/', 'g')
   if !isdirectory(g:neosnippet#data_directory)
