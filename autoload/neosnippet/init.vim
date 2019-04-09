@@ -65,7 +65,7 @@ function! s:initialize_others() abort
             \ " start='" . start . "' " .
             \ " end='" . end . "' " .
             \ " containedin=ALL " .
-            \ " cchar=" . g:neosnippet_conceal_char .
+            \ " cchar=" . g:neosnippet#conceal_char .
             \ " concealends oneline"
     endif
   augroup END
