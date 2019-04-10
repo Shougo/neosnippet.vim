@@ -59,14 +59,13 @@ function! s:initialize_others() abort
     if g:neosnippet#enable_conceal_markers && has('conceal')
       let start = '<`0\|<`\|<{\d\+:\=\%(#:\|TARGET:\?\)\?\|%\w\+(<|'
       let end = '\(:\w\+\|:#:\w\+\)\?`>\|}>\||>)\?'
-      execute " autocmd BufNewFile,BufRead,Syntax * " .
-            \ " syntax region neosnippetConcealExpandSnippets " .
-            \ " matchgroup=neosnippetExpandSnippets " .
-            \ " start='" . start . "' " .
-            \ " end='" . end . "' " .
-            \ " containedin=ALL " .
-            \ " cchar=" . g:neosnippet#conceal_char .
-            \ " concealends oneline"
+      execute ' autocmd BufNewFile,BufRead,Syntax * ' .
+            \ ' syntax region neosnippetConcealExpandSnippets ' .
+            \ ' matchgroup=neosnippetExpandSnippets ' .
+            \ printf(' start=%s end=%s', string(start), string(end)) .
+            \ ' containedin=ALL ' .
+            \ ' cchar=' . g:neosnippet#conceal_char .
+            \ ' concealends oneline'
     endif
   augroup END
   doautocmd neosnippet BufRead
