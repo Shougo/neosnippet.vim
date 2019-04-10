@@ -267,6 +267,12 @@ g:neosnippet#data_directory			*g:neosnippet#data_directory*
 		Default value is "$XDG_CACHE_HOME/neosnippet" or
 		expand("~/.cache/neosnippet"); the absolute path of it.
 
+g:neosnippet#conceal_char			*g:neosnippet#conceal_char*
+		This variable can customize how the jump position is concealed
+		after snippet expansion.
+
+		The default value is '|'.
+
 				*b:neosnippet_disable_snippet_triggers*
 b:neosnippet_disable_snippet_triggers
 		Specifies the triggers which disables in the buffer.
