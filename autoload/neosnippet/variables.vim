@@ -12,7 +12,6 @@ function! neosnippet#variables#current_neosnippet() abort
           \ 'target' : '',
           \ 'trigger' : 0,
           \ 'optional_tabstop' : 0,
-          \ 'unnamed_register' : '',
           \}
   endif
 

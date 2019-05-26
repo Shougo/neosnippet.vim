@@ -37,13 +37,3 @@ function! neosnippet#handlers#_all_clear_markers() abort
     call setpos('.', pos)
   endtry
 endfunction
-
-function! neosnippet#handlers#_restore_unnamed_register() abort
-  let neosnippet = neosnippet#variables#current_neosnippet()
-
-  if neosnippet.unnamed_register !=# ''
-        \ && @" !=# neosnippet.unnamed_register
-    let @" = neosnippet.unnamed_register
-    let neosnippet.unnamed_register = ''
-  endif
-endfunction

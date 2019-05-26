@@ -400,8 +400,6 @@ function! s:expand_placeholder(start, end, holder_cnt, line, ...) abort
 
   if default_len > 0 && is_select
     " Select default value.
-    let neosnippet.unnamed_register = @"
-
     let len = default_len-1
     if &l:selection ==# 'exclusive'
       let len += 1
@@ -441,8 +439,10 @@ function! s:expand_target_placeholder(line, col) abort
     let target_base_indent = -1
     for target_line in target_lines
       if match(target_line, '^\s\+$') < 0
-        let target_current_indent = max([matchend(target_line, '^ *'), matchend(target_line, '^\t*') * &tabstop])
-        if target_base_indent < 0 || target_current_indent < target_base_indent
+        let target_current_indent = max([matchend(target_line, '^ *'),
+              \ matchend(target_line, '^\t*') * &tabstop])
+        if target_base_indent < 0
+              \ || target_current_indent < target_base_indent
           let target_base_indent = target_current_indent
         endif
       endif
@@ -453,8 +453,10 @@ function! s:expand_target_placeholder(line, col) abort
     let target_strip_indent_regex = '^\s\+$\|^' .
         \ repeat(' ', target_base_indent) . '\|^' .
         \ repeat('\t', target_base_indent / &tabstop)
-    call map(target_lines, 'substitute(v:val, target_strip_indent_regex, "", "")')
-    call map(target_lines, 'v:val ==# "" ? "" : base_indent . v:val')
+    call map(target_lines,
+          \ 'substitute(v:val, target_strip_indent_regex, "", "")')
+    call map(target_lines,
+          \ 'v:val ==# "" ? "" : base_indent . v:val')
 
     call setline(a:line, target_lines[0])
     if len(target_lines) > 1
