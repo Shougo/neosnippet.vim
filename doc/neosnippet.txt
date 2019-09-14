@@ -865,7 +865,9 @@ A: You can use |:NeoSnippetSource| for it.
 Q: I want to delete markers when InsertLeave event.
 
 A: You can use |:NeoSnippetClearMarkers| command. >
+
 	autocmd InsertLeave * NeoSnippetClearMarkers
+	snoremap <silent><ESC>  <ESC>:NeoSnippetClearMarkers<CR>
 
 Q: Why did you separate default snippets from neosnippet core?
 
