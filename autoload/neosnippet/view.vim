@@ -188,7 +188,7 @@ function! s:indent_snippet(begin, end, base_indent, options) abort
 
       if getline('.') =~# '^\t\+'
         let current_line = getline('.')
-        if line_nr != a:begin && !a:options.completed
+        if line_nr != a:begin && !a:options.lspitem
           " Delete head tab character.
           let current_line = substitute(current_line, '^\t', '', '')
         endif

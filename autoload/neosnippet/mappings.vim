@@ -161,10 +161,11 @@ function! s:get_completed_snippets(cur_text, col) abort
     return []
   endif
 
-  if get(v:completed_item, 'user_data', '') !=# ''
+  let user_data = get(v:completed_item, 'user_data', '')
+  if user_data !=# ''
     let ret = s:get_user_data(a:cur_text)
     if !empty(ret)
-      return [ret[0], ret[1]]
+      return [ret[0], ret[1], ret[2]]
     endif
   endif
 
@@ -172,7 +173,7 @@ function! s:get_completed_snippets(cur_text, col) abort
     let snippet = neosnippet#parser#_get_completed_snippet(
           \ v:completed_item, a:cur_text, neosnippet#util#get_next_text())
     if snippet !=# ''
-      return [a:cur_text, snippet]
+      return [a:cur_text, snippet, {}]
     endif
   endif
 
@@ -191,7 +192,7 @@ function! s:get_user_data(cur_text) abort
     let snippet_trigger = get(user_data, 'snippet_trigger',
           \ v:completed_item.word)
     let cur_text = cur_text[: -1-len(snippet_trigger)]
-    return [cur_text, snippet]
+    return [cur_text, snippet, {'lspitem': has_key(user_data, 'lspitem')}]
   endif
 
   return []
@@ -202,8 +203,8 @@ function! neosnippet#mappings#_complete_done(cur_text, col) abort
     return 0
   endif
 
-  let [cur_text, snippet] = ret
-  call neosnippet#view#_insert(snippet, {'completed': 1}, cur_text, a:col)
+  let [cur_text, snippet, options] = ret
+  call neosnippet#view#_insert(snippet, options, cur_text, a:col)
   return 1
 endfunction
 

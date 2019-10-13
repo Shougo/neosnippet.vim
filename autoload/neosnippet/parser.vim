@@ -285,7 +285,7 @@ function! neosnippet#parser#_initialize_snippet_options() abort
         \   g:neosnippet#expand_word_boundary,
         \ 'indent' : 0,
         \ 'oneshot' : 0,
-        \ 'completed' : 0,
+        \ 'lspitem' : 0,
         \ }
 endfunction
 
@@ -313,7 +313,7 @@ function! neosnippet#parser#_get_completed_snippet(completed_item, cur_text, nex
 
   if get(item, 'user_data', '') !=# ''
     let user_data = json_decode(item.user_data)
-    if has_key(user_data, 'lspitem')
+    if type(user_data) ==# v:t_dict && has_key(user_data, 'lspitem')
       " Use lspitem userdata
       let lspitem = user_data.lspitem
       if has_key(lspitem, 'label')
