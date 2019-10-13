@@ -96,8 +96,8 @@ function! neosnippet#view#_insert(snippet, options, cur_text, col) abort
       startinsert
     endif
 
-    if !options.completed && (begin_line != end_line || options.indent)
-      call s:indent_snippet(begin_line, end_line, base_indent)
+    if begin_line != end_line || options.indent
+      call s:indent_snippet(begin_line, end_line, base_indent, options)
     endif
 
     let begin_patterns = (begin_line > 1) ?
@@ -170,7 +170,7 @@ function! neosnippet#view#_jump(_, col) abort
   endtry
 endfunction
 
-function! s:indent_snippet(begin, end, base_indent) abort
+function! s:indent_snippet(begin, end, base_indent, options) abort
   if a:begin > a:end
     return
   endif
@@ -188,7 +188,7 @@ function! s:indent_snippet(begin, end, base_indent) abort
 
       if getline('.') =~# '^\t\+'
         let current_line = getline('.')
-        if line_nr != a:begin
+        if line_nr != a:begin && !a:options.completed
           " Delete head tab character.
           let current_line = substitute(current_line, '^\t', '', '')
         endif
