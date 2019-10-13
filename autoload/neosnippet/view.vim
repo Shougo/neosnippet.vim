@@ -37,15 +37,21 @@ function! neosnippet#view#_insert(snippet, options, cur_text, col) abort
   endif
 
   " Substitute markers.
-  let snip_word = substitute(snip_word,
-        \ neosnippet#get_placeholder_marker_substitute_pattern(),
-        \ '<`\1`>', 'g')
+  if snip_word =~# neosnippet#get_placeholder_marker_substitute_pattern()
+    let snip_word = substitute(snip_word,
+          \ neosnippet#get_placeholder_marker_substitute_pattern(),
+          \ '<`\1`>', 'g')
+    let snip_word = substitute(snip_word,
+          \ neosnippet#get_mirror_placeholder_marker_substitute_pattern(),
+          \ '<|\1|>', 'g')
+  else
+    let snip_word = substitute(snip_word,
+          \ neosnippet#get_mirror_placeholder_marker_substitute_pattern(),
+          \ '<`\1`>', 'g')
+  endif
   let snip_word = substitute(snip_word,
         \ neosnippet#get_placeholder_marker_substitute_zero_pattern(),
         \ '<`\1`>', 'g')
-  let snip_word = substitute(snip_word,
-        \ neosnippet#get_mirror_placeholder_marker_substitute_pattern(),
-        \ '<|\1|>', 'g')
 
   " Substitute escaped characters.
   let snip_word = substitute(snip_word, '\\\(\\\|`\|\$\)', '\1', 'g')
@@ -90,7 +96,7 @@ function! neosnippet#view#_insert(snippet, options, cur_text, col) abort
       startinsert
     endif
 
-    if begin_line != end_line || options.indent
+    if !options.completed && (begin_line != end_line || options.indent)
       call s:indent_snippet(begin_line, end_line, base_indent)
     endif
 

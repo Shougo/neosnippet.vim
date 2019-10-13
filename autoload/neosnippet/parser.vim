@@ -285,6 +285,7 @@ function! neosnippet#parser#_initialize_snippet_options() abort
         \   g:neosnippet#expand_word_boundary,
         \ 'indent' : 0,
         \ 'oneshot' : 0,
+        \ 'completed' : 0,
         \ }
 endfunction
 

@@ -203,7 +203,7 @@ function! neosnippet#mappings#_complete_done(cur_text, col) abort
   endif
 
   let [cur_text, snippet] = ret
-  call neosnippet#view#_insert(snippet, {}, cur_text, a:col)
+  call neosnippet#view#_insert(snippet, {'completed': 1}, cur_text, a:col)
   return 1
 endfunction
 
