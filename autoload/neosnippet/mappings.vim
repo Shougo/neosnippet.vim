@@ -140,10 +140,6 @@ function! neosnippet#mappings#_expand(trigger) abort
 endfunction
 
 function! s:snippets_expand(cur_text, col) abort
-  if neosnippet#mappings#_complete_done(a:cur_text, a:col)
-    return 0
-  endif
-
   let cur_word = neosnippet#helpers#get_cursor_snippet(
         \ neosnippet#helpers#get_snippets('i'),
         \ a:cur_text)

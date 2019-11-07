@@ -235,6 +235,12 @@ function! s:set_snippet_dict(snippet_dict, snippets, dup_check, snippets_file) a
   for alias in get(a:snippet_dict, 'alias', [])
     let alias_snippet = copy(snippet)
     let alias_snippet.word = alias
+    if exists('*json_encode')
+      let alias_snippet.user_data = json_encode({
+           \   'snippet': alias_snippet.snip,
+           \   'snippet_trigger': alias,
+           \ })
+    endif
 
     let a:snippets[alias] = alias_snippet
     let a:dup_check[alias] = alias_snippet
@@ -267,7 +273,7 @@ function! neosnippet#parser#_initialize_snippet(dict, path, line, pattern, name)
   if exists('*json_encode')
     let snippet.user_data = json_encode({
           \   'snippet': a:dict.word,
-          \   'snippet_trigger': a:dict.name
+          \   'snippet_trigger': a:dict.name,
           \ })
   endif
 
