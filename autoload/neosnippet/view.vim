@@ -538,7 +538,7 @@ function! s:substitute_placeholder_marker(start, end, snippet_holder_cnt) abort
     let mirror_marker = substitute(
           \ neosnippet#get_mirror_placeholder_marker_pattern(),
           \ '\\d\\+', cnt, '')
-    silent execute printf('%%s/\m' . mirror_marker . '/%s/'
+    silent! execute printf('%%s/\m' . mirror_marker . '/%s/'
           \ . (&gdefault ? 'g' : ''), sub)
     let sync_marker = substitute(neosnippet#get_sync_placeholder_marker_pattern(),
         \ '\\d\\+', cnt, '')
