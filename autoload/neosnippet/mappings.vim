@@ -183,6 +183,16 @@ function! s:get_user_data(cur_text) abort
 
   let cur_text = a:cur_text
 
+  if has_key(user_data, 'lspitem') && type(user_data.lspitem) == v:t_dict
+    let lspitem = user_data.lspitem
+    if get(lspitem, 'insertTextFormat', -1) == 2
+      let snippet = lspitem.word
+      let snippet_trigger = lspitem.word
+      let cur_text = cur_text[: -1-len(snippet_trigger)]
+      return [cur_text, snippet, {'lspitem': 1}]
+    endif
+  endif
+
   if get(user_data, 'snippet', '') !=# ''
     let snippet = user_data.snippet
     let snippet_trigger = get(user_data, 'snippet_trigger',
