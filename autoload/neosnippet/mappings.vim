@@ -182,14 +182,15 @@ function! s:get_user_data(cur_text) abort
   endif
 
   let cur_text = a:cur_text
+  let has_lspitem = has_key(user_data, 'lspitem')
 
-  if has_key(user_data, 'lspitem') && type(user_data.lspitem) == v:t_dict
+  if has_lspitem && type(user_data.lspitem) == v:t_dict
     let lspitem = user_data.lspitem
     if get(lspitem, 'insertTextFormat', -1) == 2
       let snippet = lspitem.word
       let snippet_trigger = lspitem.word
       let cur_text = cur_text[: -1-len(snippet_trigger)]
-      return [cur_text, snippet, {'lspitem': 1}]
+      return [cur_text, snippet, {'lspitem': has_lspitem}]
     endif
   endif
 
@@ -198,7 +199,7 @@ function! s:get_user_data(cur_text) abort
     let snippet_trigger = get(user_data, 'snippet_trigger',
           \ v:completed_item.word)
     let cur_text = cur_text[: -1-len(snippet_trigger)]
-    return [cur_text, snippet, {'lspitem': has_key(user_data, 'lspitem')}]
+    return [cur_text, snippet, {'lspitem': has_lspitem}]
   endif
 
   return []
