@@ -187,8 +187,8 @@ function! s:get_user_data(cur_text) abort
   if has_lspitem && type(user_data.lspitem) == v:t_dict
     let lspitem = user_data.lspitem
     if get(lspitem, 'insertTextFormat', -1) == 2
-      let snippet = lspitem.word
-      let snippet_trigger = lspitem.word
+      let snippet = lspitem.insertText
+      let snippet_trigger = lspitem.insertText
       let cur_text = cur_text[: -1-len(snippet_trigger)]
       return [cur_text, snippet, {'lspitem': has_lspitem}]
     endif
