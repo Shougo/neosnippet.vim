@@ -428,7 +428,9 @@ SNIPPET SYNTAX					*neosnippet-snippet-syntax*
 It is quite easy to create your own snippets. You can use the example below to
 get started.
 
-Note: The snippets file extension must be ".snip" or ".snippets".
+Note: The snippets file extension must be ".snip" or ".snippets" and its filename
+corresponds to [filetype] regularly. If you want to avoid trouble about filename,
+use :NeoSnippetEdit command without specifying [filetype].
 
 Example:
 
