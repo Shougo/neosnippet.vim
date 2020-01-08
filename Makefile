@@ -13,7 +13,7 @@ lint:
 
 test:
 	themis --version
-	themis test/autoload/*
+	themis test/
 
 vim-themis:
 	git clone https://github.com/thinca/vim-themis vim-themis
