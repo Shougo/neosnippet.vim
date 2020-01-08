@@ -39,7 +39,8 @@ recommended.
 Default snippets files are available in neosnippet-snippets.
 https://github.com/Shougo/neosnippet-snippets
 
-Note: Installing the default snippets is optional. If you choose not to install
+Note: Installing the default snippets is optional. If you choose not to
+install them, you must set |g:neosnippet#disable_runtime_snippets|. >
 them, you must set |g:neosnippet#disable_runtime_snippets|. >
 		let g:neosnippet#disable_runtime_snippets = {
 		\   '_' : 1,
@@ -62,8 +63,8 @@ COMMANDS 					*neosnippet-commands*
 						*:NeoSnippetMakeCache*
 :NeoSnippetMakeCache [filetype]
 		Creates a cache for the snippets of the given [filetype]. It
-		automatically chooses the current buffer's file type unless you
-		specify another one by [filetype].
+		automatically chooses the current buffer's file type unless
+		you specify another one by [filetype].
 
 					*:NeoSnippetEdit*
 :NeoSnippetEdit [{options}] [filetype]
@@ -162,7 +163,8 @@ g:neosnippet#disable_runtime_snippets
 		loading "neosnippets" directories from 'runtimepath'. This is
 		very useful to prevent snippet conflicts between self defined
 		snippet files and the built-in snippet files of neosnippet. If
-		you use an "_" as key for an entry this will treat the value of
+		you use an "_" as key for an entry this will treat the value
+		of the entry as default value for all file types.
 		the entry as default value for all file types.
 
 		Note: This dictionary must be set in your .vimrc.
@@ -179,7 +181,6 @@ g:neosnippet#disable_runtime_snippets
 		\ }
 <
 		The default value is {}.
-
 				*g:neosnippet#enable_snipmate_compatibility*
 g:neosnippet#enable_snipmate_compatibility
 		If this variable is not 0, neosnippet will enable the snipMate
@@ -208,7 +209,7 @@ g:neosnippet#enable_conceal_markers
 
 		The default value is 1.
 
-					*g:neosnippet#enable_completed_snippet*
+				*g:neosnippet#enable_completed_snippet*
 g:neosnippet#enable_completed_snippet
 		If this variable is not 0, neosnippet can expand the function
 		prototype.
@@ -225,7 +226,7 @@ g:neosnippet#enable_complete_done
 
 		The default value is 0.
 		
-					*g:neosnippet#enable_optional_arguments*
+				*g:neosnippet#enable_optional_arguments*
 g:neosnippet#enable_optional_arguments
 		If this variable is not 0, neosnippet will conceal commas in
 		expanded arguments from completed snippets.
@@ -236,7 +237,7 @@ g:neosnippet#enable_optional_arguments
 
 		The default value is 1.
 
-					*g:neosnippet#enable_auto_clear_markers*
+				*g:neosnippet#enable_auto_clear_markers*
 g:neosnippet#enable_auto_clear_markers
 		If this variable is not 0, neosnippet will clear the markers
 		in the buffer when |BufWritePost|, |CursorMoved| and
@@ -254,7 +255,7 @@ g:neosnippet#scope_aliases
 		other snippet files.
 		The key is filetype, and the value is comma separated snippet
 		filenames excluded extensions.
-		It works like |g:snipMate.scope_aliases|.
+		It works like "g:snipMate.scope_aliases".
 		The default value is {}. >
 
 		let g:neosnippet#scope_aliases = {}
@@ -343,8 +344,8 @@ neosnippet#expandable_or_jumpable()
 		You can use this function with imap <expr>. It checks if
 		the cursor text is a snippet trigger or a placeholder. This is
 		useful to save key mappings.
-		Note: If you don't like to jump to the next placeholder, you must use
-		|neosnippet#expandable()| instead of
+		Note: If you don't like to jump to the next placeholder, you
+		must use |neosnippet#expandable()| instead of
 		|neosnippet#expandable_or_jumpable()|.
 >
 		imap <expr><C-l>
@@ -358,7 +359,7 @@ neosnippet#anonymous({snippet})
 		{options} is snippet option.
 		You can expand snippet definition without defining snippet
 		trigger.
-		Note: You can use this function with |map-<expr>|.
+		Note: You can use this function with |:map-<expr>|.
 >
 		inoremap <silent> ((
 		\ <C-r>=neosnippet#anonymous('\left(${1}\right)${0}')<CR>
@@ -370,7 +371,7 @@ neosnippet#anonymous({snippet})
 neosnippet#expand({trigger})
 		It expands the snippet trigger.
 		{trigger} is snippet trigger.
-		Note: You can use this function with |map-<expr>|.
+		Note: You can use this function with |:map-<expr>|.
 >
 		inoremap <silent> test
 		\ i<C-r>=neosnippet#expand('date_english')<CR>
@@ -390,7 +391,6 @@ neosnippet#get_snippets_directory()
 neosnippet#complete_done()
 		It expands the snippet for |CompleteDone| event.
 		Note: The function is deprecated.
-
 ==============================================================================
 EXAMPLES					*neosnippet-examples*
 >
@@ -428,9 +428,13 @@ SNIPPET SYNTAX					*neosnippet-snippet-syntax*
 It is quite easy to create your own snippets. You can use the example below to
 get started.
 
-Note: The snippets file extension must be ".snip" or ".snippets" and its filename
-corresponds to [filetype] regularly. If you want to avoid trouble about filename,
-use :NeoSnippetEdit command without specifying [filetype].
+Note: The snippets file extension must be ".snip" or ".snippets" and its
+filename corresponds to [filetype] regularly. If you want to avoid trouble
+about filename, use :NeoSnippetEdit command without specifying [filetype].
+corresponds to [filetype] regularly. If you want to avoid trouble about
+filename, use :NeoSnippetEdit command without specifying [filetype].
+corresponds to [filetype] regularly. If you want to avoid trouble about
+filename, use :NeoSnippetEdit command without specifying [filetype].
 
 Example:
 
@@ -569,7 +573,7 @@ The structure of a placeholder can be:
 	Note: You need to make a visual selection and expand your
 	snippet with the key mapping below for this to work.
 
-	|<Plug>(neosnippet_expand_target)|.
+	|x_<Plug>(neosnippet_expand_target)|.
 
 	This is very useful if you edit text and decide to put something in an
 	environment or some sort of brackets for folding.
@@ -721,7 +725,9 @@ this. If you want to overwrite a snippet explicitly, please use:
 <
 
 After that you can redefine the snippet. But this does not work if you include
-external snippet files. There will be no warning when snippets get overwritten.
+external snippet files. There will be no warning when snippets get
+overwritten external snippet files. There will be no warning when snippets get
+overwritten.
 
 Multi snippet feature in snipMate is available. Neosnippet substitutes trigger
 and descriptions spaces to '_'.
@@ -774,15 +780,13 @@ You can load a Vim script file for snippets.
 >
 	source go.vim
 <
-
-==============================================================================
 UNITE SOURCES					*neosnippet-unite-sources*
 
 					*neosnippet-unite-source-neosnippet*
 neosnippet
 		The candidates of the snippet source are neosnippet snippets.
 		and their kind is "snippet". You can use the snippet source
-		with the mapping |<Plug>(neosnippet_start_unite_snippet)|.
+		with the mapping |i_<Plug>(neosnippet_start_unite_snippet)|.
 		But you can also execute it by ":Unite neosnippet". The
 		snippet source offers an edit action you can use to edit the
 		snippet files.
@@ -805,8 +809,6 @@ neosnippet				*neosnippet-unite-action-neosnippet*
 	expand		Expand snippet (default action)
 	edit		Edit snippet
 	preview		View snippet definition
-
-==============================================================================
 FAQ						*neosnippet-faq*
 
 Q: What if I want to expand a snippet trigger after (, [, " etc...:
@@ -892,6 +894,5 @@ Q: I want to auto complete with parameters.
 A: >
 	let g:neosnippet#enable_completed_snippet = 1
 	let g:neosnippet#enable_complete_done = 1
-
 ==============================================================================
 vim:tw=78:ts=8:ft=help:norl:noet:fen:noet:
