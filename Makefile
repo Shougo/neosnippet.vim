@@ -5,6 +5,7 @@ export THEMIS_HOME := ./vim-themis
 
 
 install: vim-themis
+	pip install --upgrade vim-vint
 
 lint:
 	vint --version
