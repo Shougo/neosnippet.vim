@@ -9,6 +9,11 @@ snipMate.vim. But since you can choose snippets with the
 [deoplete](https://github.com/Shougo/deoplete.nvim) interface, you might have
 less trouble using them, because you do not have to remember each snippet name.
 
+**Note**: Active development on neosnippet.vim has stopped. The only future
+changes will be bug fixes.
+
+Please see [Deoppet.nvim](https://github.com/Shougo/deoppet.nvim).
+
 Installation
 ------------
 
