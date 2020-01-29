@@ -291,7 +291,6 @@ KEY MAPPINGS 					*neosnippet-key-mappings*
 		position.
 
 						*i_<Plug>(neosnippet_expand)*
-<Plug>(neosnippet_expand)
 						*s_<Plug>(neosnippet_expand)*
 <Plug>(neosnippet_expand)
 		Expand a snippet in current cursor position. It only takes
@@ -299,7 +298,6 @@ KEY MAPPINGS 					*neosnippet-key-mappings*
 		chosen a snippet from popup menu.
 
 						*i_<Plug>(neosnippet_jump)*
-<Plug>(neosnippet_jump)
 						*s_<Plug>(neosnippet_jump)*
 <Plug>(neosnippet_jump)
 		Jump to the next placeholder key. It does not expand any
