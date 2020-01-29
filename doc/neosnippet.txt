@@ -283,48 +283,40 @@ b:neosnippet_disable_snippet_triggers
 KEY MAPPINGS 					*neosnippet-key-mappings*
 
 					*i_<Plug>(neosnippet_expand_or_jump)*
-i_<Plug>(neosnippet_expand_or_jump)
-					*s_<Plug>(neosnippet_expand_or_jump)*
-s_<Plug>(neosnippet_expand_or_jump)
-		Expand a snippet in the current cursor position. If there is
-		no snippet available it jumps to the next placeholder of the
-		buffer.
-
-				*i_<Plug>(neosnippet_jump_or_expand)*
-i_<Plug>(neosnippet_jump_or_expand)
+<Plug>(neosnippet_expand_or_jump)
 				*s_<Plug>(neosnippet_jump_or_expand)*
-s_<Plug>(neosnippet_jump_or_expand)
+<Plug>(neosnippet_jump_or_expand)
 		Jump to the next available placeholder in the buffer. If there
 		is no placeholder it expands a snippet in the current cursor
 		position.
 
 						*i_<Plug>(neosnippet_expand)*
-i_<Plug>(neosnippet_expand)
+<Plug>(neosnippet_expand)
 						*s_<Plug>(neosnippet_expand)*
-s_<Plug>(neosnippet_expand)
+<Plug>(neosnippet_expand)
 		Expand a snippet in current cursor position. It only takes
 		effect if there is a snippet text to expand or if you have
 		chosen a snippet from popup menu.
 
 						*i_<Plug>(neosnippet_jump)*
-i_<Plug>(neosnippet_jump)
+<Plug>(neosnippet_jump)
 						*s_<Plug>(neosnippet_jump)*
-s_<Plug>(neosnippet_jump)
+<Plug>(neosnippet_jump)
 		Jump to the next placeholder key. It does not expand any
 		snippets.
 
 				*i_<Plug>(neosnippet_start_unite_snippet)*
-i_<Plug>(neosnippet_start_unite_snippet)
+<Plug>(neosnippet_start_unite_snippet)
 		Starts the unite snippet source. You can expand a snippet by
 		the unite interface.
 		Note: The plug-in |unite.vim| is required for that feature.
 
 					*x_<Plug>(neosnippet_expand_target)*
-x_<Plug>(neosnippet_expand_target)
+<Plug>(neosnippet_expand_target)
 		Expand the input trigger by a selected target text.
 
 			*x_<Plug>(neosnippet_register_oneshot_snippet)*
-x_<Plug>(neosnippet_register_oneshot_snippet)
+<Plug>(neosnippet_register_oneshot_snippet)
 		Register oneshot snippet in the current buffer.
 
 						*neosnippet#expandable()*
