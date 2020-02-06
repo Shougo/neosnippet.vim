@@ -165,7 +165,6 @@ g:neosnippet#disable_runtime_snippets
 		snippet files and the built-in snippet files of neosnippet. If
 		you use an "_" as key for an entry this will treat the value
 		of the entry as default value for all file types.
-		the entry as default value for all file types.
 
 		Note: This dictionary must be set in your .vimrc.
 
