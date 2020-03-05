@@ -214,7 +214,7 @@ g:neosnippet#enable_completed_snippet
 		prototype.
 
 		The default value is 0.
-		
+
 					*g:neosnippet#enable_complete_done*
 g:neosnippet#enable_complete_done
 		If this variable is not 0, neosnippet can expand on
@@ -224,12 +224,12 @@ g:neosnippet#enable_complete_done
 		|CompleteDone| expand.
 
 		The default value is 0.
-		
+
 				*g:neosnippet#enable_optional_arguments*
 g:neosnippet#enable_optional_arguments
 		If this variable is not 0, neosnippet will conceal commas in
 		expanded arguments from completed snippets.
-		
+
 		Useful for languages where arguments are optional by default.
 
 		Note: For use with |g:neosnippet#enable_completed_snippet| = 1
@@ -263,7 +263,7 @@ g:neosnippet#scope_aliases
 g:neosnippet#data_directory			*g:neosnippet#data_directory*
 		Specifies directory for neosnippet cache.  If the directory
 		doesn't exist the directory will be automatically generated.
-		
+
 		Default value is "$XDG_CACHE_HOME/neosnippet" or
 		expand("~/.cache/neosnippet"); the absolute path of it.
 
@@ -833,18 +833,6 @@ A: Please try the setting below. It defines the snipMate function.
 >
 	let g:neosnippet#enable_snipmate_compatibility = 1
 <
-Q: Cannot jump over placeholder
-https://github.com/Shougo/neosnippet/issues/120
-
-A: You must use smap in .vimrc.
->
-	imap <expr><TAB> neosnippet#expandable_or_jumpable() ?
-	\ "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
-	smap <expr><TAB> neosnippet#expandable_or_jumpable() ?
-	\ "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
-<
-Because neosnippet uses select-mode to jump over placeholder.
-
 Q: I want to disable preview window in neosnippet candidates.
 
 A:
