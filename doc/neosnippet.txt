@@ -281,23 +281,21 @@ b:neosnippet_disable_snippet_triggers
 ------------------------------------------------------------------------------
 KEY MAPPINGS 					*neosnippet-key-mappings*
 
-					*i_<Plug>(neosnippet_expand_or_jump)*
+					*<Plug>(neosnippet_expand_or_jump)*
 <Plug>(neosnippet_expand_or_jump)
-				*s_<Plug>(neosnippet_jump_or_expand)*
+					*<Plug>(neosnippet_jump_or_expand)*
 <Plug>(neosnippet_jump_or_expand)
 		Jump to the next available placeholder in the buffer. If there
 		is no placeholder it expands a snippet in the current cursor
 		position.
 
-						*i_<Plug>(neosnippet_expand)*
-						*s_<Plug>(neosnippet_expand)*
+						*<Plug>(neosnippet_expand)*
 <Plug>(neosnippet_expand)
 		Expand a snippet in current cursor position. It only takes
 		effect if there is a snippet text to expand or if you have
 		chosen a snippet from popup menu.
 
-						*i_<Plug>(neosnippet_jump)*
-						*s_<Plug>(neosnippet_jump)*
+						*<Plug>(neosnippet_jump)*
 <Plug>(neosnippet_jump)
 		Jump to the next placeholder key. It does not expand any
 		snippets.
