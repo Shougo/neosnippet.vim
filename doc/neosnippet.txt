@@ -214,7 +214,7 @@ g:neosnippet#enable_completed_snippet
 		prototype.
 
 		The default value is 0.
-		
+
 					*g:neosnippet#enable_complete_done*
 g:neosnippet#enable_complete_done
 		If this variable is not 0, neosnippet can expand on
@@ -224,12 +224,12 @@ g:neosnippet#enable_complete_done
 		|CompleteDone| expand.
 
 		The default value is 0.
-		
+
 				*g:neosnippet#enable_optional_arguments*
 g:neosnippet#enable_optional_arguments
 		If this variable is not 0, neosnippet will conceal commas in
 		expanded arguments from completed snippets.
-		
+
 		Useful for languages where arguments are optional by default.
 
 		Note: For use with |g:neosnippet#enable_completed_snippet| = 1
@@ -263,7 +263,7 @@ g:neosnippet#scope_aliases
 g:neosnippet#data_directory			*g:neosnippet#data_directory*
 		Specifies directory for neosnippet cache.  If the directory
 		doesn't exist the directory will be automatically generated.
-		
+
 		Default value is "$XDG_CACHE_HOME/neosnippet" or
 		expand("~/.cache/neosnippet"); the absolute path of it.
 
@@ -281,23 +281,21 @@ b:neosnippet_disable_snippet_triggers
 ------------------------------------------------------------------------------
 KEY MAPPINGS 					*neosnippet-key-mappings*
 
-					*i_<Plug>(neosnippet_expand_or_jump)*
+					*<Plug>(neosnippet_expand_or_jump)*
 <Plug>(neosnippet_expand_or_jump)
-				*s_<Plug>(neosnippet_jump_or_expand)*
+					*<Plug>(neosnippet_jump_or_expand)*
 <Plug>(neosnippet_jump_or_expand)
 		Jump to the next available placeholder in the buffer. If there
 		is no placeholder it expands a snippet in the current cursor
 		position.
 
-						*i_<Plug>(neosnippet_expand)*
-						*s_<Plug>(neosnippet_expand)*
+						*<Plug>(neosnippet_expand)*
 <Plug>(neosnippet_expand)
 		Expand a snippet in current cursor position. It only takes
 		effect if there is a snippet text to expand or if you have
 		chosen a snippet from popup menu.
 
-						*i_<Plug>(neosnippet_jump)*
-						*s_<Plug>(neosnippet_jump)*
+						*<Plug>(neosnippet_jump)*
 <Plug>(neosnippet_jump)
 		Jump to the next placeholder key. It does not expand any
 		snippets.
@@ -384,13 +382,23 @@ neosnippet#complete_done()
 EXAMPLES					*neosnippet-examples*
 >
 	" Plugin key-mappings.
-	" Note: It must be "imap" and "smap".  It uses <Plug> mappings.
+	" Note: It can be "nmap", "xmap", "imap" and "smap", and don't forget
+	" "smap" and "imap" unless you have some specific reasons.  It uses
+	" <Plug> mappings.
+	" Note: It is unrecommended to map <Plug>(neosnippet_foo) at once by
+	" "map", which could fail to work in some features.
+	" Note: Don't forget to make a "smap" out of "<Plug>(neosnippet_jump)"
+	" "<Plug>(neosnippet_expand_or_jump)" or
+	" "Plug>(neosnippet_jump_or_expand)" at least. This note is especially
+	" for you who are unfamiliar with Vim Script.
 	imap <C-k>     <Plug>(neosnippet_expand_or_jump)
 	smap <C-k>     <Plug>(neosnippet_expand_or_jump)
-	xmap <C-k>     <Plug>(neosnippet_expand_target)
+	xmap <C-k>     <Plug>(neosnippet_expand_or_jump)
+	nmap <C-k>     <Plug>(neosnippet_expand_or_jump)
 
 	" SuperTab like snippets' behavior.
-	" Note: It must be "imap" and "smap".  It uses <Plug> mappings.
+	" Note: Be careful to map <TAB> because <TAB> is equivalent to <C-i> in
+	" Vim and <C-i> is a very important key especially in Normal Mode.
 	"imap <expr><TAB>
 	" \ pumvisible() ? "\<C-n>" :
 	" \ neosnippet#expandable_or_jumpable() ?
@@ -833,18 +841,6 @@ A: Please try the setting below. It defines the snipMate function.
 >
 	let g:neosnippet#enable_snipmate_compatibility = 1
 <
-Q: Cannot jump over placeholder
-https://github.com/Shougo/neosnippet/issues/120
-
-A: You must use smap in .vimrc.
->
-	imap <expr><TAB> neosnippet#expandable_or_jumpable() ?
-	\ "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
-	smap <expr><TAB> neosnippet#expandable_or_jumpable() ?
-	\ "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
-<
-Because neosnippet uses select-mode to jump over placeholder.
-
 Q: I want to disable preview window in neosnippet candidates.
 
 A:
