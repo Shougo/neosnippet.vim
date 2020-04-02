@@ -263,6 +263,7 @@ function! neosnippet#parser#_initialize_snippet(dict, path, line, pattern, name)
         \ 'description': a:dict.word,
         \ 'menu_template': abbr,
         \ 'menu_abbr': abbr,
+        \ 'info': a:dict.word,
         \ 'options': a:dict.options,
         \ 'real_name': a:name,
         \ 'action__path': a:path,
