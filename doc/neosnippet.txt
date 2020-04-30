@@ -428,10 +428,6 @@ get started.
 Note: The snippets file extension must be ".snip" or ".snippets" and its
 filename corresponds to [filetype] regularly. If you want to avoid trouble
 about filename, use :NeoSnippetEdit command without specifying [filetype].
-corresponds to [filetype] regularly. If you want to avoid trouble about
-filename, use :NeoSnippetEdit command without specifying [filetype].
-corresponds to [filetype] regularly. If you want to avoid trouble about
-filename, use :NeoSnippetEdit command without specifying [filetype].
 
 Example:
 
