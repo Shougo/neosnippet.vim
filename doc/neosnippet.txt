@@ -130,6 +130,11 @@ g:neosnippet#snippets_directory		*g:neosnippet#snippets_directory*
 		You can set multiple values in comma-separated string or list.
 		Non existing directories are ignored.
 
+		Note: The directory name must not be "snippets" or
+		"neosnippets".
+		It is as runtime snippet directory.  It does not work as
+		user expected.
+
 		User defined snippet files are read after the built-in snippet
 		files. If redundant snippets occur they get overwritten and
 		only the last one remains.
