@@ -131,8 +131,9 @@ g:neosnippet#snippets_directory		*g:neosnippet#snippets_directory*
 		Non existing directories are ignored.
 
 		Note: The directory name must not be "snippets" or
-		"neosnippets".
-		It is as runtime snippet directory.  It does not work as
+		"neosnippets" under 'runtimepath'.  For example,
+		"~/.vim/snippets" or "~/.config/nvim/neosnippets".
+		It is used as runtime snippet directory.  It does not work as
 		user expected.
 
 		User defined snippet files are read after the built-in snippet
