@@ -174,8 +174,9 @@ function! s:get_completed_snippets(cur_text, col) abort
   return []
 endfunction
 function! s:get_user_data(cur_text) abort
-  let user_data = json_decode(v:completed_item.user_data)
-  if type(user_data) !=# v:t_dict
+  let user_data = {}
+  silent! let user_data = json_decode(v:completed_item.user_data)
+  if type(user_data) !=# v:t_dict || empty(user_data)
     return []
   endif
 
