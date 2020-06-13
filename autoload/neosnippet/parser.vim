@@ -238,7 +238,6 @@ function! s:set_snippet_dict(snippet_dict, snippets, dup_check, snippets_file) a
     if exists('*json_encode')
       let alias_snippet.user_data = json_encode({
            \   'snippet': alias_snippet.snip,
-           \   'snippet_trigger': alias,
            \ })
     endif
 
@@ -274,7 +273,6 @@ function! neosnippet#parser#_initialize_snippet(dict, path, line, pattern, name)
   if exists('*json_encode')
     let snippet.user_data = json_encode({
           \   'snippet': a:dict.word,
-          \   'snippet_trigger': a:dict.name,
           \ })
   endif
 

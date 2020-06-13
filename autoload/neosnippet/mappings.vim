@@ -182,34 +182,31 @@ function! s:get_user_data(cur_text) abort
 
   let cur_text = a:cur_text
   let has_lspitem = has_key(user_data, 'lspitem')
-  let snippet_trigger = ''
+  let snippet = ''
+  let snippet_trigger = v:completed_item.word
 
   if has_lspitem && type(user_data.lspitem) == v:t_dict
     let lspitem = user_data.lspitem
     if has_key(lspitem, 'textEdit') && type(lspitem.textEdit) == v:t_dict
       let snippet = lspitem.textEdit.newText
-      let snippet_trigger = v:completed_item.word
     elseif get(lspitem, 'insertTextFormat', -1) == 2
       let snippet = lspitem.insertText
-      let snippet_trigger = v:completed_item.word
     endif
   elseif get(user_data, 'snippet', '') !=# ''
     let snippet = user_data.snippet
-    let snippet_trigger = get(user_data, 'snippet_trigger',
-          \ v:completed_item.word)
   endif
 
-  if snippet_trigger !=# ''
-    " Substitute $0, $1, $2,... to ${0}, ${1}, ${2}...
-    let snippet = substitute(snippet, '\$\(\d\+\)', '${\1}', 'g')
-    " Substitute quotes
-    let snippet = substitute(snippet, "'", "''", 'g')
-
-    let cur_text = cur_text[: -1-len(snippet_trigger)]
-    return [cur_text, snippet, {'lspitem': has_lspitem}]
+  if snippet ==# ''
+    return []
   endif
 
-  return []
+  " Substitute $0, $1, $2,... to ${0}, ${1}, ${2}...
+  let snippet = substitute(snippet, '\$\(\d\+\)', '${\1}', 'g')
+  " Substitute quotes
+  let snippet = substitute(snippet, "'", "''", 'g')
+
+  let cur_text = cur_text[: -1-len(snippet_trigger)]
+  return [cur_text, snippet, {'lspitem': has_lspitem}]
 endfunction
 function! neosnippet#mappings#_complete_done(cur_text, col) abort
   let ret = s:get_completed_snippets(a:cur_text, a:col)
