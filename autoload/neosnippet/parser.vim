@@ -316,15 +316,11 @@ function! neosnippet#parser#_get_completed_snippet(completed_item, cur_text, nex
     call add(abbrs, item.word)
   endif
 
-  if type(get(item, 'user_data', 0)) ==# v:t_string && item.user_data !=# ''
-    let user_data = {}
-    silent! let user_data = json_decode(item.user_data)
-    if type(user_data) ==# v:t_dict && has_key(user_data, 'lspitem')
-      " Use lspitem userdata
-      let lspitem = user_data.lspitem
-      if has_key(lspitem, 'label')
-        call add(abbrs, lspitem.label)
-      endif
+  let user_data = neosnippet#helpers#get_user_data(v:completed_item)
+  if !empty(user_data)
+    let lspitem = neosnippet#helpers#get_lspitem(user_data)
+    if has_key(lspitem, 'label')
+      call add(abbrs, lspitem.label)
     endif
   endif
 

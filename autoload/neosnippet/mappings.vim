@@ -155,8 +155,7 @@ function! s:get_completed_snippets(cur_text, col) abort
     return []
   endif
 
-  let user_data = get(v:completed_item, 'user_data', '')
-  if user_data !=# ''
+  if has_key(v:completed_item, 'user_data')
     let ret = s:get_user_data(a:cur_text)
     if !empty(ret)
       return [ret[0], ret[1], ret[2]]
@@ -174,23 +173,30 @@ function! s:get_completed_snippets(cur_text, col) abort
   return []
 endfunction
 function! s:get_user_data(cur_text) abort
-  let user_data = {}
-  silent! let user_data = json_decode(v:completed_item.user_data)
+  let user_data = neosnippet#helpers#get_user_data(v:completed_item)
+  if type(v:completed_item.user_data) ==# v:t_dict
+    let user_data = v:completed_item.user_data
+  else
+    silent! let user_data = json_decode(v:completed_item.user_data)
+  endif
   if type(user_data) !=# v:t_dict || empty(user_data)
     return []
   endif
 
   let cur_text = a:cur_text
-  let has_lspitem = has_key(user_data, 'lspitem')
   let snippet = ''
   let snippet_trigger = v:completed_item.word
 
-  if has_lspitem && type(user_data.lspitem) == v:t_dict
-    let lspitem = user_data.lspitem
+  let lspitem = neosnippet#helpers#get_lspitem(user_data)
+  let has_lspitem = v:false
+
+  if !empty(lspitem)
     if has_key(lspitem, 'textEdit') && type(lspitem.textEdit) == v:t_dict
       let snippet = lspitem.textEdit.newText
+      let has_lspitem = v:true
     elseif get(lspitem, 'insertTextFormat', -1) == 2
       let snippet = lspitem.insertText
+      let has_lspitem = v:true
     endif
   elseif get(user_data, 'snippet', '') !=# ''
     let snippet = user_data.snippet

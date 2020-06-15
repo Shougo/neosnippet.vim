@@ -216,3 +216,35 @@ function! neosnippet#helpers#get_snippet_files(filetype) abort
   endfor
   return s:get_list().uniq(snippet_files)
 endfunction
+
+function! neosnippet#helpers#get_user_data(completed_item) abort
+  let user_data = {}
+  if type(a:completed_item.user_data) ==# v:t_dict
+    let user_data = a:completed_item.user_data
+  else
+    silent! let user_data = json_decode(a:completed_item.user_data)
+  endif
+  if type(user_data) !=# v:t_dict || empty(user_data)
+    return {}
+  endif
+
+  return user_data
+endfunction
+function! neosnippet#helpers#get_lspitem(user_data) abort
+  if has_key(a:user_data, 'lspitem') && type(a:user_data.lspitem) == v:t_dict
+    " For vim-lsp
+    let lspitem = a:user_data.lspitem
+  elseif has_key(a:user_data, 'nvim')
+        \ && type(a:user_data.nvim) == v:t_dict
+        \ && has_key(a:user_data.nvim, 'lsp')
+        \ && type(a:user_data.nvim.lsp) == v:t_dict
+        \ && has_key(a:user_data.nvim.lsp, 'completion_item')
+        \ && type(a:user_data.nvim.lsp.completion_item) == v:t_dict
+    " For nvim-lsp
+    let lspitem = a:user_data.nvim.lsp.completion_item
+  else
+    let lspitem = {}
+  endif
+
+  return lspitem
+endfunction
