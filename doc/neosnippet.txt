@@ -218,6 +218,7 @@ g:neosnippet#enable_conceal_markers
 g:neosnippet#enable_completed_snippet
 		If this variable is not 0, neosnippet can expand the function
 		prototype.
+		Note: It supports |vim-lsp| or |nvim-lsp| snippets.
 
 		The default value is 0.
 
