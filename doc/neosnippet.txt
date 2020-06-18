@@ -809,6 +809,8 @@ neosnippet				*neosnippet-unite-action-neosnippet*
 	expand		Expand snippet (default action)
 	edit		Edit snippet
 	preview		View snippet definition
+
+==============================================================================
 FAQ						*neosnippet-faq*
 
 Q: What if I want to expand a snippet trigger after (, [, " etc...:
