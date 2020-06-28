@@ -218,6 +218,10 @@ function! neosnippet#helpers#get_snippet_files(filetype) abort
 endfunction
 
 function! neosnippet#helpers#get_user_data(completed_item) abort
+  if !has_key(a:completed_item, 'user_data')
+    return {}
+  endif
+
   let user_data = {}
   if type(a:completed_item.user_data) ==# v:t_dict
     let user_data = a:completed_item.user_data
