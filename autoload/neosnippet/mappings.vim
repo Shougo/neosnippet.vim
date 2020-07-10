@@ -195,7 +195,7 @@ function! s:get_user_data(cur_text) abort
       let snippet = lspitem.textEdit.newText
       let has_lspitem = v:true
     elseif get(lspitem, 'insertTextFormat', -1) == 2
-      let snippet = lspitem.insertText
+      let snippet = get(lspitem, 'insertText', lspitem.label)
       let has_lspitem = v:true
     endif
   elseif get(user_data, 'snippet', '') !=# ''
