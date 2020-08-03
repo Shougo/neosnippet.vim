@@ -444,9 +444,9 @@ Example:
 	alias      [aliases]
 	regexp     [pattern]
 	options    [options]
-	   if ${1:condition}
-	     ${2}
-	   endif
+	    if ${1:condition}
+	      ${2}
+	    endif
 
 The snippet syntax is close to the one of |snipMate|. Each snippet starts with
 some keywords that define the name and modify the expansion and treatment of
@@ -491,9 +491,9 @@ Snippet Keywords:
 >
 	snippet     if
 	regexp     '^\s*'
-	  if ${1:condition}
-	     ${2}
-	  endif
+	    if ${1:condition}
+	      ${2}
+	    endif
 <
 - options [options] (Optional)
 
@@ -516,9 +516,9 @@ Snippet Keywords:
 >
 	snippet     if
 	options     head
-	  if ${1:condition}
-	     ${2}
-	  endif
+	    if ${1:condition}
+	      ${2}
+	    endif
 <
 
 	+ indent The horizontal position of the snippet will be adjusted
@@ -546,9 +546,9 @@ The structure of a placeholder can be:
 
 >
 	snippet     if
-	   if ${1:condition}
-	     ${2}
-	   endif
+	    if ${1:condition}
+	      ${2}
+	    endif
 <
 
 - ${number:#:optional placeholder text}
@@ -561,9 +561,9 @@ The structure of a placeholder can be:
 
 >
 	snippet if
-	   if ${1:#:condition}
-	     ${2}
-	   endif
+	    if ${1:condition}
+	      ${2}
+	    endif
 <
 
 - ${number:TARGET}
@@ -582,9 +582,9 @@ The structure of a placeholder can be:
 
 >
 	snippet if
-	   if ${1:#:condition}
-	     ${2:TARGET}
-	   endif
+	    if ${1:condition}
+	      ${2}
+	    endif
 <
 
 - ${number}
@@ -597,11 +597,11 @@ The structure of a placeholder can be:
 
 >
 	snippet     if
-	   if ${1:#:condition}
-	     ${2:do}
-	   endif
+	    if ${1:condition}
+	      ${2}
+	    endif
 
-	   ${3}
+	    ${3}
 <
 
 - $number
