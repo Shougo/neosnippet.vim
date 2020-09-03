@@ -40,11 +40,9 @@ Default snippets files are available in neosnippet-snippets.
 https://github.com/Shougo/neosnippet-snippets
 
 Note: Installing the default snippets is optional. If you choose not to
-install them, you must set |g:neosnippet#disable_runtime_snippets|. >
-them, you must set |g:neosnippet#disable_runtime_snippets|. >
-		let g:neosnippet#disable_runtime_snippets = {
-		\   '_' : 1,
-		\ }
+install them, you must set |g:neosnippet#disable_runtime_snippets| like so:
+>
+	let g:neosnippet#disable_runtime_snippets = {'_' : 1}
 
 Extra snippets files are also available. e.g.:
 https://github.com/honza/vim-snippets
