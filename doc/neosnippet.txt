@@ -485,14 +485,6 @@ Snippet Keywords:
 >
 	regexp '^% '
 <
-	This snippet works same as "options head".
->
-	snippet     if
-	regexp     '^\s*'
-	    if ${1:condition}
-	      ${2}
-	    endif
-<
 - options [options] (Optional)
 
 	Options influence the snippet behavior. The possible values are:
