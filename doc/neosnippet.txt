@@ -803,6 +803,13 @@ neosnippet				*neosnippet-unite-action-neosnippet*
 ==============================================================================
 FAQ						*neosnippet-faq*
 
+Q: How to donate money to you?
+
+A: I have started github sponsorship to spend more time for Vim/neovim
+plugins.  You can donate money to help me!
+
+https://github.com/sponsors/Shougo
+
 Q: What if I want to expand a snippet trigger after (, [, " etc...:
 
 A: You should use "options word" in the snippet definition. This changes the
