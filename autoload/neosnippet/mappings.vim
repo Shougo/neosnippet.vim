@@ -208,8 +208,6 @@ function! s:get_user_data(cur_text) abort
 
   " Substitute $0, $1, $2,... to ${0}, ${1}, ${2}...
   let snippet = substitute(snippet, '\$\(\d\+\)', '${\1}', 'g')
-  " Substitute quotes
-  let snippet = substitute(snippet, "'", "''", 'g')
 
   let cur_text = cur_text[: -1-len(snippet_trigger)]
   return [cur_text, snippet, {'lspitem': has_lspitem}]
