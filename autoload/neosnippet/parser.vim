@@ -294,6 +294,19 @@ function! neosnippet#parser#_initialize_snippet_options() abort
         \ }
 endfunction
 
+function! s:include_snippets(globs) abort
+  let snippets = {}
+  for glob in a:globs
+    let snippets_dir = neosnippet#helpers#get_snippets_directory(
+          \ fnamemodify(glob, ':r'))
+    for file in split(globpath(join(snippets_dir, ','), glob), '\n')
+      call extend(snippets, neosnippet#parser#_parse_snippets(file))
+    endfor
+  endfor
+
+  return snippets
+endfunction
+
 function! neosnippet#parser#_get_completed_snippet(completed_item, cur_text, next_text) abort
   let item = a:completed_item
 
@@ -446,17 +459,4 @@ function! neosnippet#parser#_conceal_argument(arg, cnt, args) abort
     endif
   endif
   return printf('%s${%d:#:%s%s}', outside, a:cnt, inside, escape(a:arg, '{}'))
-endfunction
-
-function! s:include_snippets(globs) abort
-  let snippets = {}
-  for glob in a:globs
-    let snippets_dir = neosnippet#helpers#get_snippets_directory(
-          \ fnamemodify(glob, ':r'))
-    for file in split(globpath(join(snippets_dir, ','), glob), '\n')
-      call extend(snippets, neosnippet#parser#_parse_snippets(file))
-    endfor
-  endfor
-
-  return snippets
 endfunction
