@@ -479,9 +479,10 @@ Snippet Keywords:
 
 	A pattern can be defined via a regular expression. The snippet expands
 	only when the expression pattern is matched.
+	Note: [pattern] must be quoted by "'" or '"'.
+	Note: It does not mean auto expand feature.
 
 	Example
-
 >
 	regexp '^% '
 <
