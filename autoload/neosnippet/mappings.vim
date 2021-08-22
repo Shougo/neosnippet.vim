@@ -123,7 +123,7 @@ endfunction
 
 function! neosnippet#mappings#_anonymous(snippet) abort
   let [cur_text, col, expr] = neosnippet#mappings#_pre_trigger()
-  let expr .= printf("\<ESC>:call neosnippet#view#_insert(%s, {}, %s, %d)\<CR>",
+  let expr .= printf("\<C-c>:call neosnippet#view#_insert(%s, {}, %s, %d)\<CR>",
         \ string(a:snippet), string(cur_text), col)
 
   return expr
@@ -131,7 +131,7 @@ endfunction
 function! neosnippet#mappings#_expand(trigger) abort
   let [cur_text, col, expr] = neosnippet#mappings#_pre_trigger()
 
-  let expr .= printf("\<ESC>:call neosnippet#view#_expand(%s, %d, %s)\<CR>",
+  let expr .= printf("\<C-c>:call neosnippet#view#_expand(%s, %d, %s)\<CR>",
         \ string(cur_text), col, string(a:trigger))
 
   return expr
@@ -255,7 +255,7 @@ function! neosnippet#mappings#_trigger(function) abort
 
   let [cur_text, col, expr] = neosnippet#mappings#_pre_trigger()
 
-  let expr .= printf("\<ESC>:call %s(%s,%d)\<CR>",
+  let expr .= printf("\<C-c>:call %s(%s,%d)\<CR>",
         \ a:function, string(cur_text), col)
 
   return expr
