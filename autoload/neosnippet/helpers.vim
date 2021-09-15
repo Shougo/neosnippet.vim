@@ -53,8 +53,8 @@ function! neosnippet#helpers#get_snippets(...) abort
   return snippets
 endfunction
 function! neosnippet#helpers#get_completion_snippets() abort
-  return filter(neosnippet#helpers#get_snippets(),
-        \ "!get(v:val.options, 'oneshot', 0)")
+  return values(filter(neosnippet#helpers#get_snippets(),
+        \ "!get(v:val.options, 'oneshot', 0)"))
 endfunction
 
 function! neosnippet#helpers#get_snippets_directory(...) abort
