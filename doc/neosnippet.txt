@@ -223,9 +223,9 @@ g:neosnippet#enable_completed_snippet
 					*g:neosnippet#enable_complete_done*
 g:neosnippet#enable_complete_done
 		If this variable is not 0, neosnippet can expand on
-		|CompleteDone|.
+		|CompleteDone| or |PumCompleteDone|for |pum.vim|.
 		Note: If the feature is enabled, you cannot expand snippet
-		trigger manually when |pumvisible()|to prevent conflicts with
+		trigger manually when |pumvisible()| to prevent conflicts with
 		|CompleteDone| expand.
 
 		The default value is 0.
