@@ -151,11 +151,12 @@ function! s:snippets_expand(cur_text, col) abort
   return 1
 endfunction
 function! s:get_completed_snippets(cur_text, col) abort
-  if empty(get(v:, 'completed_item', {}))
+  let completed_item = neosnippet#util#get_completed_item()
+  if empty(completed_item)
     return []
   endif
 
-  if has_key(v:completed_item, 'user_data')
+  if has_key(completed_item, 'user_data')
     let ret = s:get_user_data(a:cur_text)
     if !empty(ret)
       return [ret[0], ret[1], ret[2]]
@@ -164,7 +165,7 @@ function! s:get_completed_snippets(cur_text, col) abort
 
   if g:neosnippet#enable_completed_snippet
     let snippet = neosnippet#parser#_get_completed_snippet(
-          \ v:completed_item, a:cur_text, neosnippet#util#get_next_text())
+          \ completed_item, a:cur_text, neosnippet#util#get_next_text())
     if snippet !=# ''
       return [a:cur_text, snippet, {}]
     endif
@@ -173,11 +174,12 @@ function! s:get_completed_snippets(cur_text, col) abort
   return []
 endfunction
 function! s:get_user_data(cur_text) abort
-  let user_data = neosnippet#helpers#get_user_data(v:completed_item)
-  if type(v:completed_item.user_data) ==# v:t_dict
-    let user_data = v:completed_item.user_data
+  let completed_item = neosnippet#util#get_completed_item()
+  let user_data = neosnippet#helpers#get_user_data(completed_item)
+  if type(completed_item.user_data) ==# v:t_dict
+    let user_data = completed_item.user_data
   else
-    silent! let user_data = json_decode(v:completed_item.user_data)
+    silent! let user_data = json_decode(completed_item.user_data)
   endif
   if type(user_data) !=# v:t_dict || empty(user_data)
     return []
@@ -185,7 +187,7 @@ function! s:get_user_data(cur_text) abort
 
   let cur_text = a:cur_text
   let snippet = ''
-  let snippet_trigger = v:completed_item.word
+  let snippet_trigger = completed_item.word
 
   let lspitem = neosnippet#helpers#get_lspitem(user_data)
   let has_lspitem = v:false

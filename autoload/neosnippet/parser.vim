@@ -329,7 +329,8 @@ function! neosnippet#parser#_get_completed_snippet(completed_item, cur_text, nex
     call add(abbrs, item.word)
   endif
 
-  let user_data = neosnippet#helpers#get_user_data(v:completed_item)
+  let completed_item = neosnippet#util#get_completed_item()
+  let user_data = neosnippet#helpers#get_user_data(completed_item)
   if !empty(user_data)
     let lspitem = neosnippet#helpers#get_lspitem(user_data)
     if has_key(lspitem, 'label')
