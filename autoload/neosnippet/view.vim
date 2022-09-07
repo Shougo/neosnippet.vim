@@ -385,7 +385,7 @@ function! s:expand_placeholder(start, end, holder_cnt, line, ...) abort
     let pattern = substitute(neosnippet#get_placeholder_marker_pattern(),
           \ '\\d\\+', cnt, '')
     call setline(a:line, substitute(current_line, pattern,
-          \ '<{'.cnt.':'.escape(default, '\').'}>', ''))
+          \ '<{'.cnt.':'.escape(default, '&\').'}>', ''))
     let pos[2] += len('<{'.cnt.':')
   else
     if is_target
