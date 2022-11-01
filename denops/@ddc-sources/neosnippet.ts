@@ -3,7 +3,7 @@ import {
   Context,
   Item,
 } from "https://deno.land/x/ddc_vim@v3.1.0/types.ts";
-import { Denops, fn } from "https://deno.land/x/ddc_vim@v3.1.0/deps.ts;
+import { Denops, fn } from "https://deno.land/x/ddc_vim@v3.1.0/deps.ts";
 
 type Params = Record<never, never>;
 
